@@ -150,50 +150,6 @@ document.addEventListener("DOMContentLoaded", function() {
 		saveAllProject()
 	}
 
-	// 순우 프리뷰 팝업 창
-	function preViewClick(previousXML){	
-		var popupFeatures = 'width=1000,height=400,toolbar=no,location=no,scrollbars=no';
-
-		var popupWindow = window.open('', '작은팝업', popupFeatures);
-
-		// 팝업 창에 내용 추가 (선택 사항)
-		if (popupWindow) {
-			var script = document.createElement('script');
-			script.src = 'https://www.draw.io/js/viewer.min.js';
-			popupWindow.document.head.appendChild(script);
-
-			var script = document.createElement('script');
-			script.src = 'mxgraph/javascript/mxClient.js';
-			popupWindow.document.head.appendChild(script);
-
-			var popupContent = document.createElement('div');
-
-			var leftPanel = document.createElement('div');
-			leftPanel.id = 'previous';
-			leftPanel.className = 'leftPanel'
-			leftPanel.style.flex = '1';
-			leftPanel.style.backgroundColor = '#f0f0f0';
-
-			// var rightPanel = document.createElement('div');
-			// rightPanel.id = 'attribute';
-			// rightPanel.style.flex = '1';
-			// rightPanel.style.backgroundColor = '#e0e0e0';
-
-			popupContent.style.display = 'flex';
-			popupContent.style.height = '100%';
-
-			popupContent.appendChild(leftPanel);
-			// popupContent.appendChild(rightPanel);
-			popupWindow.document.body.appendChild(popupContent);
-		}
-		var xmlData = previousXML;
-		var container = popupWindow.document.getElementById('previous');
-		var graph = new Graph(container);
-		var doc = mxUtils.parseXml(xmlData);
-		var codec = new mxCodec(doc);
-		codec.decode(doc.documentElement, graph.getModel());
-		graph.refresh();
-	}
 
 	// 버튼을 감싸는 div
 	var buttonContainer = document.createElement("div");
@@ -219,10 +175,15 @@ document.addEventListener("DOMContentLoaded", function() {
 				previousContainer[0].appendChild(createButton("Requirement Process", function() {
 					var previousXML = localStorage.getItem(projectName + '_requirementsProcessXml');
 					// preViewClick(previousXML);
-					window.open("/requirementPrevious?ProjectName="+projectName, "Popup", "width=600, height=600");
-					
-
+					window.open("/previous?ProjectName="+projectName + "&ProcessName=requirementsProcess", "Popup", "width=600, height=600");
 				}));
+				if(process_name=='workflowProcess'){
+					previousContainer[0].appendChild(createButton("Business Process", function() {
+						var previousXML = localStorage.getItem(projectName + '_businessProcessXml');
+						// preViewClick(previousXML);
+						window.open("/previous?ProjectName="+projectName + "&ProcessName=businessProcess", "Popup", "width=600, height=600");
+					}));
+				}
 				
 			}catch{}
 

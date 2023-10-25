@@ -291,10 +291,11 @@ def save_to_server():
             return jsonify({'message': f'Error: {str(e)}'}), 500
 
 """previous"""
-@app.route("/requirementPrevious", methods=['GET', 'POST'])
-def requirementPrevious():
+@app.route("/previous", methods=['GET', 'POST'])
+def previous():
     project_name = request.args.get("ProjectName")
-    return render_template("requirementPrevious.html", project_name = project_name)
+    process_name = request.args.get("ProcessName")
+    return render_template("previous.html", project_name = project_name, process_name = process_name)
 
 
 @app.route('/process/overviewProcess', methods=['GET', 'POST'])

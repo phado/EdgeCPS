@@ -16,13 +16,13 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/grapheditor.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/process.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/requirementPrevious.css')}}">  <!--순우 css 추가-->
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/previous.css')}}">  <!--순우 css 추가-->
 	<meta charset="UTF-8">
 
 	<title>EdgeCPS</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-    <script type="text/javascript" src="{{ url_for('static', filename='js/requirementPrevious.js')}}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/previous.js')}}"></script>
   
     
     <script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/js/Init.js') }}"></script>
@@ -73,6 +73,7 @@
 		var objValueDict = {} //생성된 다디어그램의 값의 value(edit) 이 들어가 있는 곳
 
 		let projectName = "{{ project_name }}";
+		let processName = "{{ process_name }}";
 		console.log(projectName)
 
 		mxLoadResources = false;
@@ -89,12 +90,12 @@
     	<div id = 'graphContainer' class="sub-content1">
 			<div id="buttonContainer"></div>
 			<script>
-				subContent1(projectName)
+				subContent1(projectName,processName)
 			</script>
     	</div>
 
     	<div id = 'graphContainer2' class="sub-content">
-			<h3>여기에는 클릭한 다이어그램 셀의 속성 값을 보여줄 예정</h3>
+			<!-- <h3>여기에는 클릭한 다이어그램 셀의 속성 값을 보여줄 예정</h3> -->
 		</div>
 	</div>
 	
