@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mariadb
+spec:
+  selector:
+    matchLabels:
+      app: mariadb
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mariadb
+    spec:
+      containers:
+      - image: mariadb:10.7 
+        # command: ["bash"]
+        # args: ["-c", "chmod 777 /docker-entrypoint-initdb.d/init.sql &&./docker-entrypoint-initdb.d/init.sql"]
+        name: mariadb
+        ports:
+        - containerPort: 3306 
+          name: mariadb
+        volumeMounts:
+        - name: mariadb-persistent-storage
+          mountPath: /docker-entrypoint-initdb.d # 해당 폴더에 .sql 파일 존재 하면 Container 생성 시 실행
+        - mountPath: /var/lib/mysql 
+          subPath: "mysql"
+          name: mairadb-data
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+           secretKeyRef:
+             name: mariadb-secret # secret의 이름
+             key: password # secret의 data에 들어간 key:value
+      volumes:
+      - name: mariadb-persistent-storage
+        configMap:
+          name: mariadb-initdb-config # configMap 설정
+      - name: mairadb-data
+        persistentVolumeClaim:
+          claimName: mariadb-pv-claim 

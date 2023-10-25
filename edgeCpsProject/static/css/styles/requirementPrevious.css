@@ -1,0 +1,78 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    }
+    /* .sidebar {
+    background-color: #f8f9fa;
+    height: 65%;
+    width: 10%;
+    position: fixed;
+    top: 20;
+    right: 0;
+    } */
+    .main-content {
+    width: 100%;
+    float: left;
+    height: 100%;
+    overflow: auto;
+    }
+    
+    .sub-content {
+    width: 50%;
+    float: left;
+    height: 100%;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 10px;
+    overflow: auto;
+    }
+    .sub-content1 {
+    width: 50%;
+    float: left;
+    height: 100%;
+    background-color: #f0f0f0;
+    border: 1px solid #ddd;
+    padding: 10px;
+    overflow: auto;
+    }
+    
+    /* .logContainer2 {
+    flex: 1;
+    background-color: #ffffff;
+    color: #000000;
+    font-family: monospace;
+    font-size: 14px;
+    padding: 10px;
+    position: fixed; 
+    top: 21%;
+    width: 560px;
+    bottom:227px;
+    overflow: auto;
+    } */
+    /* .logContainer {
+    
+        background-color: #000;
+        color: #fff;
+        font-family: monospace;
+        font-size: 14px;
+        padding: 10px;
+        position: fixed; 
+        top: 78%;
+        width: 100%;
+        bottom: 3%; 
+        overflow: auto;
+    }
+    
+    .footer {
+        height: 3%;
+        width: 100%;
+        background-color: #343a40;
+        color: white;
+        text-align: center;
+        position: fixed; 
+        bottom: 0;
+        left: 0;
+        
+    } */

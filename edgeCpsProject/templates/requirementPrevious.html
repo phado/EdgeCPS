@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+
+    <meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<!--BOOTSTRAP START 순우-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+	<!--BOOTSTRAP END-->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/grapheditor.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/process.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/requirementPrevious.css')}}">  <!--순우 css 추가-->
+	<meta charset="UTF-8">
+
+	<title>EdgeCPS</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/requirementPrevious.js')}}"></script>
+  
+    
+    <script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/js/Init.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/deflate/pako.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/deflate/base64.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/jscolor/jscolor.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/sanitizer/sanitizer.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/src/js/mxClient.js') }}"></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/js/EditorUi.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/js/Editor.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/js/Sidebar.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/js/Graph.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/js/Format.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/js/Shapes.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/js/Actions.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/js/Menus.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/js/Toolbar.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/js/Dialogs.js') }}"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/process.css')}}"> <!--순우 css 추가-->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap">
+	<script type="text/javascript" src="{{ url_for('static', filename='js/processCommon.js') }}"></script>
+
+	<script type="text/javascript" src="{{ url_for('static', filename='js/userManagement.js')}}"></script>
+	<script src="https://www.draw.io/js/viewer.min.js"></script>
+	<script>
+		/**
+		 * 로컬스토리지에 저장된 프로세스를 불러오는 기능
+		 */
+		let universalGraph; // 페이지가 열릴때 GraphView 에서 할당하기 위한 변수(로컬스토리지에 저장된 프로세스를 불러오는 기능중 하나)
+
+		let processGraphxml = ''; // 실시간으로 xml을 불러와서 저장한다.
+		var intervalLogContainer2; // logContainer 반복하기 위한 변수
+		
+
+		let current_process = 7
+
+		let createDiagramClicked = false ;// 민수 다이그램 성성 확인하는 플래그
+
+		let DiagramClicked = [] ;// 순우 클릭된 다이어그램 추적
+		var clicked=[];
+		let projectPath = "{{ pj_pth }}";
+
+		var createDiagramSape = ""; // 민수 다이어그램 변수를 넣는 곳 민수
+
+		var flowDict = {} // 생성된 다이어그램의 값들을 저장해두는 곳
+
+		var objValueDict = {} //생성된 다디어그램의 값의 value(edit) 이 들어가 있는 곳
+
+		let projectName = "{{ project_name }}";
+		console.log(projectName)
+
+		mxLoadResources = false;
+	</script>
+
+
+	<!-- 다이어그램 불러오기위한 라이브러리 추가 -->
+	<script src="https://www.draw.io/js/viewer.min.js"></script>
+</head>
+<body class="geEditor">
+
+
+  	<div class="main-content">
+    	<div id = 'graphContainer' class="sub-content1">
+			<div id="buttonContainer"></div>
+			<script>
+				subContent1(projectName)
+			</script>
+    	</div>
+
+    	<div id = 'graphContainer2' class="sub-content">
+			<h3>여기에는 클릭한 다이어그램 셀의 속성 값을 보여줄 예정</h3>
+		</div>
+	</div>
+	
+	
+  	
+</body>
+</html>

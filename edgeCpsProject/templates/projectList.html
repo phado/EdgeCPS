@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project List</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<script type="text/javascript" src="{{ url_for('static', filename='js/userManagement.js')}}"></script>
+</head>
+<script>
+    let loginUserInfo =  '{{ loginUserInfo }}';
+
+    if (loginUserInfo){
+        localStorage.setItem('loginUserInfo',loginUserInfo)
+    }
+</script>
+<body>
+	<div id="title" class="title">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/process.css')}}"> <!--순우 css 추가-->
+		<h2> <a class="home" href="">EdgeCPS</a></h2>
+	</div>
+
+    <div class="container">
+    <div style="float: right" >
+        {% if session["userid"] %}
+    <!-- <div class="nav-links">
+        <h6>ID: {{ session["userid"] }}</h6>
+        <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
+        <a class="nav-link" href="{{ url_for('logout') }}">내정보</a>
+    </div> -->
+    <div class="nav-links d-flex justify-content-between align-items-center mt-3">
+        <h6 class="mb-0">ID: {{ session["userid"] }}</h6>
+        <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
+        <a class="nav-link" href="{{ url_for('logout') }}">내정보</a>
+    </div>
+    
+    
+        {% endif %}
+    </div>
+
+        <div>
+            <h2 class="mt-5">Project List</h2>
+        </div>
+
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Project Name</th>
+                    <th>작성자</th>
+                    <th style="text-align:center" >삭 제</th>
+                    <th style="text-align:center" >열 기</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td>{{ project.id }}</td>
+                    <td>{{ project.name }}</td>
+                    <td>{{ project.user }}</td>
+                    <td style="text-align:center" >
+                        <form method="post" action="{{ url_for('delete_project', project_id=project.id) }}">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
+
+                    </td>
+                    <td style="text-align:center" >
+                            <form method="post" action="{{ url_for('open_process', project_id=project.id, project_name=project.name,project_user=project.user ) }}">
+                                <button type="submit" class="btn btn-primary btn-sm">Open Project</button>
+                            </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="text-right mt-4">
+            <a href="{{ url_for('overview_process', newPj=true)}}" class="btn btn-primary">Create Project</a>
+        </div>
+    </div>
+</body>
+</html>

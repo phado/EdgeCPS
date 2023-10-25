@@ -1,0 +1,881 @@
+@font-face {
+  font-family: 'Inter Extra Bold';
+  src: url('/static/font/Inter-ExtraBold.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Inter Extra Light';
+  src: url('/static/font/Inter-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+/* EdgeCPS */
+.title h2 {
+    color: #3391FF;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+    font-size: 30px;
+    font-family: 'Inter Extra Bold';
+    margin-left: 20px; 
+    font-style: normal;
+    font-weight: 800;
+    line-height: normal;
+}
+
+
+.dot {
+    position: relative;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    /* background: #0075FF; */
+    background: #ffffff;
+    margin: 0 5px; /* 원하는 간격으로 조정합니다. */
+    border-radius: 50%;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  }
+  
+
+.nav-item-separator {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 0 50px;
+}
+
+.nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+.nav-list li {
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+.nav-button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+
+    width: 185px;
+    height: 40px;
+    border-radius: 10px;
+    background: #F8F9FA;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  }
+
+.nav-button:hover {
+    position: relative;
+    width: 185px;
+    height: 40px;
+    border-radius: 10px;
+    background: #F8F9FA;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  }
+
+
+.nav-button:active {
+    position: relative;
+    width: 185px;
+    height: 40px;
+    border-radius: 10px;
+    background: #0075FF;
+    box-shadow: 2px 2px 4px  rgba(0, 0, 0, 0.25);
+  }
+
+
+/*------------------------------ 각 버튼의 텍스트&아이콘 ---------------------------------------*/
+/*------------------------overview--------------------------------------------------*/
+.nav-button .button-text-Overview {
+    color: #A4A4A4;
+    font-size: 15px;
+    font-family: 'Inter Extra Light';
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    position: absolute;
+    top: 50%;
+    right: 20%;
+    transform: translateY(-50%);
+  }
+.nav-button .button-text-Overview_page {
+    color: #0075FF ;
+    font-size: 15px;
+    font-family: 'Inter Extra Light';
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    position: absolute;
+    top: 50%;
+    right: 20%; /* 오른쪽 여백 조정 */
+    transform: translateY(-50%);
+}
+
+.nav-button:active .button-text-Overview {
+    color: #ffffff !important ;
+    font-size: 15px;
+    font-family: 'Inter Extra Light';
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    position: absolute;
+    top: 50%;
+    right: 20%; /* 오른쪽 여백 조정 */
+    transform: translateY(-50%);
+  }
+
+.nav-button:hover .button-text-Overview {
+    color: #0075FF ;
+    font-size: 15px;
+    font-family: 'Inter Extra Light';
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    position: absolute;
+    top: 50%;
+    right: 20%; /* 오른쪽 여백 조정 */
+    transform: translateY(-50%);
+  }
+  
+.nav-button .button-icon-Overview {
+
+  margin-right: 10px;
+  position: absolute;
+  left: 30px;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  /* 일반 상태 아이콘 스타일 */
+  fill:#A4A4A4;
+}
+
+.nav-button .button-icon-Overview_page {
+
+  margin-right: 10px;
+  position: absolute;
+  left: 30px;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  /* 일반 상태 아이콘 스타일 */
+  fill:#0075FF;
+}
+
+.nav-button:hover .button-icon-Overview {
+  /* 호버 상태 아이콘 스타일 */
+  fill: #0075FF;
+}
+
+.nav-button:active .button-icon-Overview {
+  /* 액티브 상태 아이콘 스타일 */
+  fill: #ffffff;
+}
+
+
+/*--------------requirements_process--------------------------------*/
+.nav-button .button-text-requirements_process {
+  color: #A4A4A4;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translateY(-50%);
+}
+.nav-button .button-text-requirements_process_page {
+  color: #0075FF ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 10%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+.nav-button .button-icon-requirements_process_page {
+  margin-right: 10px;
+  position: absolute;
+  left: 20px;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  /* 일반 상태 아이콘 스타일 */
+  fill:#0075FF;
+}
+
+.nav-button:active .button-text-requirements_process {
+  color: #ffffff !important ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 10%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+
+.nav-button:hover .button-text-requirements_process {
+  color: #0075FF ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 10%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+
+.nav-button .button-icon-requirements_process {
+
+margin-right: 10px;
+position: absolute;
+left: 20px;
+top: 40%;
+transform: translateY(-50%);
+width: 14px;
+height: 14px;
+/* 일반 상태 아이콘 스타일 */
+fill:#A4A4A4;
+}
+
+.nav-button:hover .button-icon-requirements_process {
+  /* 호버 상태 아이콘 스타일 */
+  fill: #0075FF;
+}
+
+.nav-button:active .button-icon-requirements_process {
+  /* 액티브 상태 아이콘 스타일 */
+  fill: #ffffff;
+}
+
+/*--------------overview_process--------------------------------*/
+.nav-button .button-text-overview_process {
+  color: #A4A4A4;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+}
+.nav-button .button-text-overview_process_page {
+  color: #0075FF ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+}
+
+.nav-button:active .button-text-overview_process {
+  color: #ffffff !important ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+
+.nav-button:hover .button-text-overview_process {
+  color: #0075FF ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+}
+
+.nav-button .button-icon-overview_process_page {
+
+  margin-right: 10px;
+  position: absolute;
+  left: 10px;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  fill: #0075FF;
+  }
+
+.nav-button .button-icon-overview_process {
+
+margin-right: 10px;
+position: absolute;
+left: 10px;
+top: 40%;
+transform: translateY(-50%);
+width: 14px;
+height: 14px;
+/* 일반 상태 아이콘 스타일 */
+fill:#A4A4A4;
+}
+
+.nav-button:hover .button-icon-overview_process {
+  /* 호버 상태 아이콘 스타일 */
+  fill: #0075FF;
+}
+
+.nav-button:active .button-icon-overview_process {
+  /* 액티브 상태 아이콘 스타일 */
+  fill: #ffffff;
+}
+
+
+
+/*--------------business_process--------------------------------*/
+.nav-button .button-text-business_process {
+  color: #A4A4A4;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+}
+.nav-button .button-text-business_process_page {
+  color: #0075FF ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+}
+
+.nav-button:active .button-text-business_process {
+  color: #ffffff !important ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+
+.nav-button:hover .button-text-business_process {
+  color: #0075FF ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+}
+
+.nav-button .button-icon-business_process_page {
+
+  margin-right: 10px;
+  position: absolute;
+  left: 10px;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  fill: #0075FF;
+  }
+
+.nav-button .button-icon-business_process {
+
+margin-right: 10px;
+position: absolute;
+left: 10px;
+top: 40%;
+transform: translateY(-50%);
+width: 14px;
+height: 14px;
+/* 일반 상태 아이콘 스타일 */
+fill:#A4A4A4;
+}
+
+.nav-button:hover .button-icon-business_process {
+  /* 호버 상태 아이콘 스타일 */
+  fill: #0075FF;
+}
+
+.nav-button:active .button-icon-business_process {
+  /* 액티브 상태 아이콘 스타일 */
+  fill: #ffffff;
+}
+
+
+/*--------------workflow_process--------------------------------*/
+.nav-button .button-text-workflow_process {
+  color: #A4A4A4;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+}
+.nav-button .button-text-workflow_process_page {
+  color: #0075FF ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+.nav-button .button-icon-workflow_process_page {
+
+  margin-right: 10px;
+  position: absolute;
+  left: 5px;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  /* 일반 상태 아이콘 스타일 */
+  fill:#0075FF;
+}
+
+.nav-button:active .button-text-workflow_process {
+  color: #ffffff !important ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+
+.nav-button:hover .button-text-workflow_process {
+  color: #0075FF ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+
+.nav-button .button-icon-workflow_process {
+
+margin-right: 10px;
+position: absolute;
+left: 5px;
+top: 40%;
+transform: translateY(-50%);
+width: 14px;
+height: 14px;
+/* 일반 상태 아이콘 스타일 */
+fill:#A4A4A4;
+}
+
+.nav-button:hover .button-icon-workflow_process {
+  /* 호버 상태 아이콘 스타일 */
+  fill: #0075FF;
+}
+
+.nav-button:active .button-icon-workflow_process {
+  /* 액티브 상태 아이콘 스타일 */
+  fill: #ffffff;
+}
+
+/*--------------search_reusables_process--------------------------------*/
+.nav-button .button-text-search_reusables_process {
+  color: #A4A4A4;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translateY(-50%);
+}
+.nav-button .button-text-search_reusables_process_page {
+  color: #0075FF ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+.nav-button .button-icon-search_reusables_process_page {
+  margin-right: 10px;
+  position: absolute;
+  left: 6px;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  /* 일반 상태 아이콘 스타일 */
+  fill:#0075FF;
+}
+
+.nav-button:active .button-text-search_reusables_process {
+  color: #ffffff !important ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+
+.nav-button:hover .button-text-search_reusables_process {
+  color: #0075FF ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 5%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+
+.nav-button .button-icon-search_reusables_process {
+
+margin-right: 10px;
+position: absolute;
+left: 6px;
+top: 40%;
+transform: translateY(-50%);
+width: 14px;
+height: 14px;
+/* 일반 상태 아이콘 스타일 */
+fill:#A4A4A4;
+}
+
+.nav-button:hover .button-icon-search_reusables_process {
+  /* 호버 상태 아이콘 스타일 */
+  fill: #0075FF;
+}
+
+.nav-button:active .button-icon-search_reusables_process {
+  /* 액티브 상태 아이콘 스타일 */
+  fill: #ffffff;
+}
+
+
+/*--------------workflow_implementation_process--------------------------------*/
+.nav-button .button-text-workflow_implementation_process {
+  color: #A4A4A4;
+  font-size: 14px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 7%;
+  transform: translateY(-50%);
+}
+.nav-button .button-text-workflow_implementation_process_page {
+  color: #0075FF ;
+  font-size: 14px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 7%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+.nav-button .button-icon-workflow_implementation_process_page {
+  margin-right: 10px;
+  position: absolute;
+  left: 13px;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  /* 일반 상태 아이콘 스타일 */
+  fill:#0075FF;
+}
+
+.nav-button:active .button-text-workflow_implementation_process {
+  color: #ffffff !important ;
+  font-size: 14px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 7%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+
+.nav-button:hover .button-text-workflow_implementation_process {
+  color: #0075FF ;
+  font-size: 14px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 7%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+
+.nav-button .button-icon-workflow_implementation_process {
+
+margin-right: 10px;
+position: absolute;
+left: 13px;
+top: 40%;
+transform: translateY(-50%);
+width: 14px;
+height: 14px;
+/* 일반 상태 아이콘 스타일 */
+fill:#A4A4A4;
+}
+
+.nav-button:hover .button-icon-workflow_implementation_process {
+  /* 호버 상태 아이콘 스타일 */
+  fill: #0075FF;
+}
+
+.nav-button:active .button-icon-workflow_implementation_process {
+  /* 액티브 상태 아이콘 스타일 */
+  fill: #ffffff;
+}
+
+
+/*--------------policy_process--------------------------------*/
+.nav-button .button-text-policy_process {
+  color: #A4A4A4;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 20%;
+  transform: translateY(-50%);
+}
+.nav-button .button-text-policy_process_page {
+  color: #0075FF ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 20%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+.nav-button .button-icon-policy_process_page {
+  margin-right: 10px;
+  position: absolute;
+  left: 30px;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  /* 일반 상태 아이콘 스타일 */
+  fill:#0075FF;
+}
+
+.nav-button:active .button-text-policy_process {
+  color: #ffffff !important ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 20%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+
+.nav-button:hover .button-text-policy_process {
+  color: #0075FF ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 20%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+
+.nav-button .button-icon-policy_process {
+
+margin-right: 10px;
+position: absolute;
+left: 30px;
+top: 40%;
+transform: translateY(-50%);
+width: 14px;
+height: 14px;
+/* 일반 상태 아이콘 스타일 */
+fill:#A4A4A4;
+}
+
+.nav-button:hover .button-icon-policy_process {
+  /* 호버 상태 아이콘 스타일 */
+  fill: #0075FF;
+}
+
+.nav-button:active .button-icon-policy_process {
+  /* 액티브 상태 아이콘 스타일 */
+  fill: #ffffff;
+}
+
+
+/*--------------run_process--------------------------------*/
+.nav-button .button-text-run_process {
+  color: #A4A4A4;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 25%;
+  transform: translateY(-50%);
+}
+.nav-button .button-text-run_process_page {
+  color: #0075FF ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 25%;
+  transform: translateY(-50%);
+}
+.nav-button .button-icon-run_process_page {
+  margin-right: 10px;
+  position: absolute;
+  left: 35px;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  /* 일반 상태 아이콘 스타일 */
+  fill:#0075FF;
+}
+
+.nav-button:active .button-text-run_process {
+  color: #ffffff !important ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 25%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+
+.nav-button:hover .button-text-run_process {
+  color: #0075FF ;
+  font-size: 15px;
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 50%;
+  right: 25%; /* 오른쪽 여백 조정 */
+  transform: translateY(-50%);
+}
+
+.nav-button .button-icon-run_process {
+
+margin-right: 10px;
+position: absolute;
+left: 35px;
+top: 40%;
+transform: translateY(-50%);
+width: 14px;
+height: 14px;
+/* 일반 상태 아이콘 스타일 */
+fill:#A4A4A4;
+}
+
+.nav-button:hover .button-icon-run_process {
+  /* 호버 상태 아이콘 스타일 */
+  fill: #0075FF;
+}
+
+.nav-button:active .button-icon-run_process {
+  /* 액티브 상태 아이콘 스타일 */
+  fill: #ffffff;
+}
+
+/* .button-text */

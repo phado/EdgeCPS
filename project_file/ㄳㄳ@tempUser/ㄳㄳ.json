@@ -1,0 +1,14 @@
+{
+	"projectName": "ㄳㄳ",
+	"processData": {
+		"overviewProcessXML": "{\"name\":\"ㄳㄳ\",\"description\":\"ㄳㄳ\",\"category\":\"java\"}",
+		"requirementsProcessXml": null,
+		"businessProcessXml": null,
+		"workflowProcessXml": null,
+		"searchReusablesProcessXml": null,
+		"workflowImplementationProcessXml": null,
+		"policyProcessXml": null,
+		"runProcessXml": null
+	},
+	"workflowData": {}
+}
