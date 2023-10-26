@@ -17,4 +17,3 @@ The development scope of this contract includes:
 - Implementing multi-perspective modeling for workflow services.
 - Enabling Kubernetes-based execution of workflow specifications.
 - Facilitating the sharing and reuse of service specification elements.
-# EdgeCPS
