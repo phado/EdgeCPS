@@ -1,56 +1,33 @@
 let actionList = ['none', 'Container', 'Script', 'Resource', 'Sensor', 'Suspend', 'Operator']
 
 
-function createTypeSelectbox(){ // mxutil 에 넣어야함
+// function createTypeSelectbox(){ // mxutil 에 넣어야함
 
-    // // Create the select element
-    // var selectBox = document.createElement("select");
-    //
-    // // Define the selectbox options
-    // var options = ['none', 'Container', 'Script', 'Resource', 'Sensor', 'Suspend', 'Operator'];
-    //
-    // // Create options and add them to the select element
-    // for (var i = 0; i < options.length; i++) {
-    //     var option = document.createElement("option");
-    //     option.value = options[i];
-    //     option.text = options[i];
-    //     selectBox.appendChild(option);
-    // }
-    //
-    // // Find all elements with class name "geFormatSection"
-    // var geFormatSections = document.getElementsByClassName("geFormatSection");
-    //
-    // // Loop through the elements and add the selectbox to the one with "Arrange" text
-    // for (var i = 0; i < geFormatSections.length; i++) {
-    //     if (geFormatSections[i].textContent.trim() === "Arrange") {
-    //         geFormatSections[i].appendChild(selectBox);
-    //         break; // Once added, no need to continue looping
-    //     }
-    // }
-        var buttons = document.querySelectorAll('[title="Select Requirement Satisfaction"]');
 
-        buttons.forEach(function(button) {
-            var parent = button.parentElement;
+//         var buttons = document.querySelectorAll('[title="Select Requirement Satisfaction"]');
 
-            var br = document.createElement('br');
-            parent.appendChild(br);
+//         buttons.forEach(function(button) {
+//             var parent = button.parentElement;
 
-            var selectBox = document.createElement('select');
-            selectBox.style.width = '202px';
-            selectBox.style.marginBottom = '2px';
+//             var br = document.createElement('br');
+//             parent.appendChild(br);
 
-            var options = ['none', 'Container', 'Script', 'Resource', 'Sensor', 'Suspend', 'Operator'];
+//             var selectBox = document.createElement('select');
+//             selectBox.style.width = '202px';
+//             selectBox.style.marginBottom = '2px';
 
-            for (var i = 0; i < options.length; i++) {
-                var option = document.createElement('option');
-                option.value = options[i];
-                option.text = options[i];
-                selectBox.appendChild(option);
-            }
+//             var options = ['none', 'Container', 'Script', 'Resource', 'Sensor', 'Suspend', 'Operator'];
 
-            parent.appendChild(selectBox);
-        });
-}
+//             for (var i = 0; i < options.length; i++) {
+//                 var option = document.createElement('option');
+//                 option.value = options[i];
+//                 option.text = options[i];
+//                 selectBox.appendChild(option);
+//             }
+
+//             parent.appendChild(selectBox);
+//         });
+// }
 
 
 //universalGraph.model.setValue(cell, 'kid'); 값을 변경 하는 방식

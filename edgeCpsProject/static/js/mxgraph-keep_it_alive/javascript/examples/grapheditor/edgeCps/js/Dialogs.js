@@ -2147,48 +2147,95 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	  innerInput.style.paddingRight = '20px';
 	}
 
-	// 새로운 입력 창 1
-	var input1 = document.createElement('input');
-	input1.type = 'text';
-	input1.placeholder = '첫 번째 입력 창';
-	input1.value = 'kubernetes.io/hostname'; // 기본 값을 설정
+	// 키값 선택 창
+	var input1 = document.createElement('select');
+	input1.id = 'firstListBox';
+	// input1.placeholder = '첫 번째 입력 창';
+	// input1.value = 'kubernetes.io/hostname'; // 기본 값을 설정
 	input1.style.marginTop = '10px'; // 필요한 경우 상단 여백 추가
+	//input1에서 선택한 키 값에 따른 벨류 선택 창
+	var input2 = document.createElement('select');
+	input2.id = 'secondListBox';
 	innerInput.appendChild(input1);
+	innerInput.appendChild(input2);
 
 	fetch("/get_label", {
 		method: 'GET'
 		})
 		.then(function (response) { return response.json(); })
 		.then(function (data) {
-			console.log(data);
-			host_names=Object.values(data);
-			console.log('sdfadfasdfsdf',host_names)
+			 var firstListBox = document.getElementById('firstListBox');
+			 var secondListBox = document.getElementById('secondListBox');
+	 
+			 var uniqueKeys = getUniqueKeys(data);
 
-			for (i=0;i<host_names.length;i++){
-				var option1 = document.createElement('option');
-				option1.text = host_names[i]
-				option1.value = host_names[i]
-				selectBox.appendChild(option1);
-			}
+			 uniqueKeys.forEach(function (key) {
+				 var option = document.createElement('option');
+				 option.value = key;
+				 option.text = key;
+				 firstListBox.appendChild(option);
+			 });
+	 
+			 firstListBox.addEventListener('change', function () {
+				 var selectedOption = firstListBox.options[firstListBox.selectedIndex].value;
+
+				 secondListBox.innerHTML = '';
+	 
+				 var uniqueValues = [];
+	 
+				 for (var key in data) {
+					 if (data[key][selectedOption] !== undefined && !uniqueValues.includes(data[key][selectedOption])) {
+						 var option = document.createElement('option');
+						 option.value = data[key][selectedOption];
+						 option.text = data[key][selectedOption];
+						 secondListBox.appendChild(option);
+						 uniqueValues.push(data[key][selectedOption]);
+					 }
+				 }
+			 });
+	 
+			 firstListBox.dispatchEvent(new Event('change'));
+
+			 function getUniqueKeys(data) {
+				 var keys = [];
+				 for (var key in data) {
+					 keys = keys.concat(Object.keys(data[key]));
+				 }
+				 return [...new Set(keys)];
+			 }
 
 			// 입력했던 Node Selector 다시 불러오기
 			if (localStorage.getItem(localStorage.getItem(projectName + '_nowWorkflow') + '_nodeSelector') != null) {
 				
-				var data = JSON.parse(localStorage.getItem(localStorage.getItem(projectName + '_nowWorkflow') + '_nodeSelector'));
+				var selectedData = JSON.parse(localStorage.getItem(localStorage.getItem(projectName + '_nowWorkflow') + '_nodeSelector'));
 				var selectedKey = cell.id;
-				var arrKey = data[selectedKey][0]
-				var arrValue = data[selectedKey][1];
+				var arrKey = selectedData[selectedKey][0]
+				var arrValue = selectedData[selectedKey][1];
 
-				input1.value = arrKey
-				selectBox.value = arrValue
+				// input1.value = arrKey
+				// input2.value = arrValue
+				for (var i = 0; i < input1.length; i++) {
+					if (input1.options[i].value === arrKey) {
+						input1.options[i].selected = true;
+					  break;
+					}
+				}
+				// input2.options[0].value = arrValue;
+				secondListBox.innerHTML = '<option value="'+arrValue+'">'+ arrValue +'</option>';
+				// for (var i = 0; i < input2.length; i++) {
+				// 	if (input2.options[i].value === arrValue) {
+				// 		input2.options[i].selected = true;
+				// 	  break;
+				// 	}
+				// }
 			}
 		})
 
-	var selectBox = document.createElement('select');
-	selectBox.style.marginTop = '10px';
-	selectBox.style.width = '100px';
-	selectBox.className = 'searchType';
-	innerInput.appendChild(selectBox);
+	// var selectBox = document.createElement('select');
+	// selectBox.style.marginTop = '10px';
+	// selectBox.style.width = '100px';
+	// selectBox.className = 'searchType';
+	// innerInput.appendChild(selectBox);
 
 	div.appendChild(innerInput);
 	
@@ -2201,7 +2248,7 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 		var now_workflow = localStorage.getItem(projectName+'_nowWorkflow');
 		var data = JSON.parse(localStorage.getItem(now_workflow+'_nodeSelector')) || {};
 
-		data[diagram_id] = [input1.value, selectBox.value];
+		data[diagram_id] = [input1.value, input2.value];
 		localStorage.setItem(now_workflow+'_nodeSelector', JSON.stringify(data));
 
 		editorUi.hideDialog();

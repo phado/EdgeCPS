@@ -170,19 +170,20 @@ document.addEventListener("DOMContentLoaded", function() {
 		setTimeout(function() {
 			let targetElementRetry = document.querySelector(".geMenubar");// save, load 버튼 생성
 			// 순우 이전 프로세스 보기
-			var previousContainer = document.getElementsByClassName('processPrevious');
+			var previousContainer = document.getElementsByClassName('previousProcess');
 			try{
 				previousContainer[0].appendChild(createButton("Requirement Process", function() {
 					var previousXML = localStorage.getItem(projectName + '_requirementsProcessXml');
 					// preViewClick(previousXML);
 					window.open("/previous?ProjectName="+projectName + "&ProcessName=requirementsProcess", "Popup", "width=600, height=600");
 				}));
-				if(process_name=='workflowProcess'){
+				if(process_name=='workflowProcess' || process_name=='policyProcess'){
 					previousContainer[0].appendChild(createButton("Business Process", function() {
 						var previousXML = localStorage.getItem(projectName + '_businessProcessXml');
 						// preViewClick(previousXML);
 						window.open("/previous?ProjectName="+projectName + "&ProcessName=businessProcess", "Popup", "width=600, height=600");
 					}));
+					
 				}
 				
 			}catch{}
@@ -195,7 +196,7 @@ document.addEventListener("DOMContentLoaded", function() {
 			if (nowPorcess == 'workflowProcess'){
 				workflowSelectList =  getWorkflowObjList(localStorage.getItem(projectName+'_'+processXml[2]))	// workflow process 일때 Activity 개수 만큼 select box 생성
 				createWorkflowSelectBox(workflowSelectList)
-				createTypeSelectbox();
+				// createTypeSelectbox();
 				uploadXML();
 			}else if (nowPorcess == 'runProcess'){
 				workflowSelectList =  getWorkflowObjList(localStorage.getItem(projectName+'_'+processXml[2]))	// run process 일때 Activity 개수 만큼 select box 생성
@@ -384,9 +385,7 @@ function getWorkflowObjList(xml){
 			roundedObjects.push({id : id, value : value});
 		}
 	}
-
 	return roundedObjects
-
 }
 
 function getNewWorkflow(selectedKey, selectedValue) {
@@ -394,27 +393,21 @@ function getNewWorkflow(selectedKey, selectedValue) {
 	console.log("Selected Value:", selectedValue);
 
 }
-
 function createWorkflowSelectBox(activityCatList){
 	let workflowXML = []
     let data = activityCatList;
-    var selectBox = document.createElement("select");
-    selectBox.className = "workflow-select-box";
 
-    // 처음에 선택된 항목 없음을 나타내는 옵션 추가
-    // var defaultOption = document.createElement("option"); // 사용자가 실수로 항목 없음 상태에서 다이어그램을 그릴 수도 있어서 주석처리 해야하나
-    // defaultOption.disabled = true;
-    // defaultOption.selected = true;
-    // defaultOption.text = "Select an option";
-    // selectBox.appendChild(defaultOption);
+    const selectBox = document.createElement('select');
+	selectBox.multiple = true; // Enable multiple selection
+	selectBox.className = 'workflow-select-box';
+	selectBox.style.width = '200px';
 
 	// workflow 페이지를 최초로 열어 로컬스토리지에 nowWorkflow 값이 없는 경우 넣어줌.
 	if(localStorage.getItem(projectName+'_nowWorkflow')==""){
 		localStorage.setItem(projectName+'_nowWorkflow' ,projectName+'_'+activityCatList[0].id + '#' + activityCatList[0].value); // 샐렉트 박스 첫번째 값
 	}
-	
-
 	let nowWorkflow = localStorage.getItem(projectName+'_nowWorkflow');
+
     for (var i = 0; i < data.length; i++) {
         var option = document.createElement("option");
         option.value = data[i].id;
@@ -428,37 +421,114 @@ function createWorkflowSelectBox(activityCatList){
 
 		if (nowWorkflow === projectName+'_'+data[i].id + '#' + data[i].value) {
             option.selected = true; // 일치하는 경우 선택됨으로 표시
-
         }
     }
 
-    var geMenubar = document.querySelector(".geToolbarContainer");
-    geMenubar.style.display = "flex";
-    geMenubar.style.justifyContent = "flex-end";
-    geMenubar.appendChild(selectBox);
+	// 순우 워크플로우 선택하는 셀렉트 박스 생성 위치 지정
+	var geMenubar = document.getElementsByClassName("selectWorkflow");
+
+    geMenubar[0].appendChild(selectBox);
 
 	// 전부 완료 되면 로컬 스토리지에 저장
 	var workflowXMLList = JSON.stringify(workflowXML);
 	localStorage.setItem(projectName+'_workflowXML',workflowXMLList);
 
-    selectBox.addEventListener("change", function() {
+    selectBox.addEventListener("click", function(event) {
+		if (event.target.tagName === 'OPTION') {
+			localStorage.setItem(localStorage.getItem(projectName+'_nowWorkflow') , processGraphxml); // 현재 작업 중이던 워크 플로우 xml 저장
+			// var selectedOption = selectBox.options[selectBox.selectedIndex];
+			var selectedKey =  event.target.dataset.key;
+			var selectedValue = event.target.dataset.value;
 
-		localStorage.setItem(localStorage.getItem(projectName+'_nowWorkflow') , processGraphxml); // 기존 선택된 워크 플로우 xml
-        var selectedOption = selectBox.options[selectBox.selectedIndex];
-        var selectedKey = selectedOption.dataset.key;
-        var selectedValue = selectedOption.dataset.value;
+			getWorkflowData(flowDict, processGraphxml)
 
-		// 셀렉트 박스로 화면 이동 시 flowDict가 저장되지 않는 오류 있어서 추가
-		getWorkflowData(flowDict, processGraphxml)
+			localStorage.setItem(projectName+'_nowWorkflow' ,projectName+'_'+selectedKey + '#' + selectedValue); // 클릭한 worklfow로 nowWorklfow 업데이트
 
-		localStorage.setItem(projectName+'_nowWorkflow' ,projectName+'_'+selectedKey + '#' + selectedValue); // 현재 작업중이던 워크플로우
+			location.reload(true);
 
-		
-		location.reload(true);
-
-        getNewWorkflow(selectedKey, selectedValue);
+			getNewWorkflow(selectedKey, selectedValue);
+		}
     });
 };
+
+// function createWorkflowSelectBox(activityCatList){
+// 	let workflowXML = []
+//     let data = activityCatList;
+//     var selectBox = document.createElement("select");
+// 	// selectBox.multiple = true;
+// 	// selectBox.size = '6';
+//     selectBox.className = "workflow-select-box";
+
+//     // 처음에 선택된 항목 없음을 나타내는 옵션 추가
+//     // var defaultOption = document.createElement("option"); // 사용자가 실수로 항목 없음 상태에서 다이어그램을 그릴 수도 있어서 주석처리 해야하나
+//     // defaultOption.disabled = true;
+//     // defaultOption.selected = true;
+//     // defaultOption.text = "Select an option";
+//     // selectBox.appendChild(defaultOption);
+
+// 	// workflow 페이지를 최초로 열어 로컬스토리지에 nowWorkflow 값이 없는 경우 넣어줌.
+// 	if(localStorage.getItem(projectName+'_nowWorkflow')==""){
+// 		localStorage.setItem(projectName+'_nowWorkflow' ,projectName+'_'+activityCatList[0].id + '#' + activityCatList[0].value); // 샐렉트 박스 첫번째 값
+// 	}
+	
+
+// 	let nowWorkflow = localStorage.getItem(projectName+'_nowWorkflow');
+//     for (var i = 0; i < data.length; i++) {
+//         var option = document.createElement("option");
+//         option.value = data[i].id;
+//         option.text = data[i].value;
+
+//         // 선택한 옵션의 key와 value를 data-* 속성으로 저장
+//         option.dataset.key = data[i].id;
+//         option.dataset.value = data[i].value;
+// 		workflowXML.push(data[i].id + '#' + data[i].value) // 로컬 스토리지
+//         selectBox.appendChild(option);
+
+// 		if (nowWorkflow === projectName+'_'+data[i].id + '#' + data[i].value) {
+//             option.selected = true; // 일치하는 경우 선택됨으로 표시
+// 			// option.style = 
+
+//         }
+//     }
+
+// 	// 순우 워크플로우 선택하는 셀렉트 박스 생성 위치 지정
+//     // var geMenubar = document.querySelector(".geToolbarContainer");
+// 	var geMenubar = document.getElementsByClassName("selectWorkflow");
+// 	// var geMenubar = document.querySelector("body > div:nth-child(11) > div:nth-child(4) > div");
+//     // geMenubar[0].style.display = "flex";
+//     // geMenubar[0].style.justifyContent = "flex-end";
+//     geMenubar[0].appendChild(selectBox);
+
+// 	// 전부 완료 되면 로컬 스토리지에 저장
+// 	var workflowXMLList = JSON.stringify(workflowXML);
+// 	localStorage.setItem(projectName+'_workflowXML',workflowXMLList);
+
+//     selectBox.addEventListener("change", function() {
+
+// 		localStorage.setItem(localStorage.getItem(projectName+'_nowWorkflow') , processGraphxml); // 현재 작업 중이던 워크 플로우 xml 저장
+//         var selectedOption = selectBox.options[selectBox.selectedIndex];
+//         var selectedKey = selectedOption.dataset.key;
+//         var selectedValue = selectedOption.dataset.value;
+
+// 		// // 모든 옵션의 배경색 초기화 (선택되지 않은 옵션은 원래 색상으로 돌아갑니다)
+// 		// for (var i = 0; i < selectBox.options.length; i++) {
+// 		// 	selectBox.options[i].style.backgroundColor = "";
+// 		//   }
+		
+// 		//   // 선택한 옵션에 배경색 적용
+// 		//   selectedOption.style.backgroundColor = "yellow"; // 원하는 배경색으로 변경
+
+// 		// 셀렉트 박스로 화면 이동 시 flowDict가 저장되지 않는 오류 있어서 추가
+// 		getWorkflowData(flowDict, processGraphxml)
+
+// 		localStorage.setItem(projectName+'_nowWorkflow' ,projectName+'_'+selectedKey + '#' + selectedValue); // 클릭한 worklfow로 nowWorklfow 업데이트
+
+		
+// 		location.reload(true);
+
+//         getNewWorkflow(selectedKey, selectedValue);
+//     });
+// };
 
 // function runCreateWorkflowSelectBox(activityCatList){
 // 	let workflowXML = []

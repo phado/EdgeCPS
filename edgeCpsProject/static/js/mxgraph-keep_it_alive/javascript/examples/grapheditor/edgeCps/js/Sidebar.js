@@ -88,12 +88,15 @@ Sidebar.prototype.init = function()// 순우 각 프로세스 별 불러올 좌�
 	}
 	else if (process_name =='workflowProcess'){
 		this.processPrevious(true);
+		this.selectWorkflow(true);
 		this.addGeneralPaletteWorkflow(true);
 	}
 	else if (process_name =="requirementsProcess"){
 		this.addUmlPaletteReqirement(true);
 	}
 	else if (process_name =="policyProcess"){
+		this.processPrevious(true);
+		this.selectWorkflow(true);
 		// this.addUmlPalettePolicy(true);
 	}
 
@@ -1187,16 +1190,31 @@ Sidebar.prototype.addGeneralPaletteBusinessProcess = function(expand)
 	this.setCurrentSearchEntryLibrary();
 };
 
-Sidebar.prototype.processPrevious = function(expand)
+// 순우 워크플로우 선택 하는 버튼 좌측 사이드바에 추가
+Sidebar.prototype.selectWorkflow = function(expand)
 {
-	var lineTags = 'line lines connector connectors connection connections arrow arrows ';
+	var lineTags = 'Click to select a workflow';
 	// this.setCurrentSearchEntryLibrary('general', 'general');
 	var dt = 'uml static class ';
 	var fns = [
 
 	];
 	
-	this.addPaletteFunctions('general', 'Previous Process ', (expand != null) ? expand : true, fns);
+	this.addPaletteFunctions('general', 'Select Workflow', (expand != null) ? expand : true, fns);
+	// this.setCurrentSearchEntryLibrary();
+};
+
+// 순우 프리뷰 버튼 좌측 사이드바에 추가
+Sidebar.prototype.processPrevious = function(expand)
+{
+	var lineTags = 'Click to check the previous process';
+	// this.setCurrentSearchEntryLibrary('general', 'general');
+	var dt = 'uml static class ';
+	var fns = [
+
+	];
+	
+	this.addPaletteFunctions('general', 'Previous Process', (expand != null) ? expand : true, fns);
 	// this.setCurrentSearchEntryLibrary();
 };
 
@@ -4285,14 +4303,20 @@ Sidebar.prototype.addPalette = function(id, title, expanded, onInit)
 	var div = document.createElement('div');
 	
 	div.className = 'geSidebar';
-	if(process_name =='businessProcess'||process_name=='workflowProcess'){
-		div.className = 'processPrevious';
+	if(process_name =='businessProcess'||process_name=='workflowProcess'|| process_name =='policyProcess'){
+		if(title =='Select Workflow'){
+			div.className = 'selectWorkflow';
+		}
+		else if(title == 'Previous Process'){
+			div.className = 'previousProcess';
+		}
+		
 	// }else if(process_name =='businessProcess'){
 
 	// }else if(process_name =='workflowProcess'){
 	// 	div.className = 'workflowProcessPrevious';
 	}
-	
+
 	// Disables built-in pan and zoom in IE10 and later
 	if (mxClient.IS_POINTER)
 	{
