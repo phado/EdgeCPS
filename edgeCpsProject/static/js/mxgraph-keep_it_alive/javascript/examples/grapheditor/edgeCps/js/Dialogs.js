@@ -1920,10 +1920,19 @@ var ReqDialog = function(editorUi, ui, cell) {
 		}
 	}else if (process_name == 'workflowProcess'){
 		var actName = localStorage.getItem(projectName+'_nowWorkflow');
-		var stepNameHtml = cell.value;
-		var start = stepNameHtml.indexOf("&gt;&gt;<br>") + "&gt;&gt;<br>".length;
-		var end = stepNameHtml.indexOf("</div>");
+		
+		try{
+			var stepNameHtml = cell.value;
+			var start = stepNameHtml.indexOf("&gt;&gt;<br>") + "&gt;&gt;<br>".length;
+			var end = stepNameHtml.indexOf("</div>");
+		}catch{
+			var stepNameHtml = cell.value.outerHTML;
+			var start = stepNameHtml.indexOf("&gt;&gt;<br>") + "&gt;&gt;<br>".length;
+			var end = stepNameHtml.indexOf("</div>");
+		}
+		
 		var stepName = stepNameHtml.substring(start, end);
+		var stepId = cell.id;
 		if(stepName.includes('['||']')){
 			stepName = stepName.substring(1,stepName.length-1);
 		}
@@ -2052,7 +2061,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 		}
 	}
 	else if(process_name == 'workflowProcess'){
-		var check = localStorage.getItem(actName +'_'+ stepName + '_requirement');
+		var check = localStorage.getItem(actName +'_'+ stepId+'#'+stepName + '_requirement');
 		if (check != null){
 			leftListOptions.forEach(function(optionText, index) {
 				if(check.includes(optionText)){
@@ -2089,7 +2098,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 			localStorage.setItem(projectName+'_' + actName + '_requirement',targetList); 
 		}
 		else if(process_name =='workflowProcess'){
-			localStorage.setItem(actName + '_' + stepName + '_requirement',targetList); 
+			localStorage.setItem(actName + '_' + stepId + '#' + stepName + '_requirement',targetList); 
 		}
 		console.log('apply btn clicked')
 		editorUi.hideDialog();
@@ -2134,75 +2143,123 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	var div = document.createElement('div');
 	var host_names =[]
 	mxUtils.write(div, mxResources.get('nodeSelector'));
+	var innerInputContainer = document.createElement('div');
+
+	var innerInput1Title = document.createElement('div');
+	innerInput1Title.textContent = 'Select label key';
+	innerInput1Title.style.marginTop = '20px'; // 필요한 경우 상단 여백 추가
+
+	var innerInput1 = document.createElement('div');
+	innerInput1.className = 'geTitle';
+	innerInput1.style.backgroundColor = 'transparent';
+	innerInput1.style.borderColor = 'transparent';
+	innerInput1.style.whiteSpace = 'nowrap';
+	innerInput1.style.textOverflow = 'clip';
+	innerInput1.style.cursor = 'default';
 	
-	var innerInput = document.createElement('div');
-	innerInput.className = 'geTitle';
-	innerInput.style.backgroundColor = 'transparent';
-	innerInput.style.borderColor = 'transparent';
-	innerInput.style.whiteSpace = 'nowrap';
-	innerInput.style.textOverflow = 'clip';
-	innerInput.style.cursor = 'default';
+	var innerInput2Title = document.createElement('div');
+	innerInput2Title.textContent = 'Select label value';
+	innerInput2Title.style.marginTop = '10px';
+
+	var innerInput2 = document.createElement('div');
+	innerInput2.className = 'geTitle';
+	innerInput2.style.backgroundColor = 'transparent';
+	innerInput2.style.borderColor = 'transparent';
+	innerInput2.style.whiteSpace = 'nowrap';
+	innerInput2.style.textOverflow = 'clip';
+	innerInput2.style.cursor = 'default';
 	
-	if (!mxClient.IS_VML) {
-	  innerInput.style.paddingRight = '20px';
-	}
+	innerInputContainer.appendChild(innerInput1Title);
+	innerInputContainer.appendChild(innerInput1);
+	innerInputContainer.appendChild(innerInput2Title);
+	innerInputContainer.appendChild(innerInput2);
+	
+	// if (!mxClient.IS_VML) {
+	//   innerInput.style.paddingRight = '20px';
+	// }
 
 	// 키값 선택 창
 	var input1 = document.createElement('select');
 	input1.id = 'firstListBox';
+	input1.multiple = 'true';
 	// input1.placeholder = '첫 번째 입력 창';
 	// input1.value = 'kubernetes.io/hostname'; // 기본 값을 설정
-	input1.style.marginTop = '10px'; // 필요한 경우 상단 여백 추가
+	input1.style.width = '500px';
+	input1.style.height = '200px';
+
 	//input1에서 선택한 키 값에 따른 벨류 선택 창
 	var input2 = document.createElement('select');
 	input2.id = 'secondListBox';
-	innerInput.appendChild(input1);
-	innerInput.appendChild(input2);
+	input2.multiple = 'true';
+	input2.style.width = '500px'
+	input2.style.height = '200px';
+
+	innerInput1.appendChild(input1);
+	innerInput2.appendChild(input2);
 
 	fetch("/get_label", {
 		method: 'GET'
 		})
 		.then(function (response) { return response.json(); })
 		.then(function (data) {
-			 var firstListBox = document.getElementById('firstListBox');
-			 var secondListBox = document.getElementById('secondListBox');
-	 
-			 var uniqueKeys = getUniqueKeys(data);
+			var firstListBox = document.getElementById('firstListBox');
+			var secondListBox = document.getElementById('secondListBox');
+	
+			var uniqueKeys = getUniqueKeys(data);
 
-			 uniqueKeys.forEach(function (key) {
-				 var option = document.createElement('option');
-				 option.value = key;
-				 option.text = key;
-				 firstListBox.appendChild(option);
-			 });
+			uniqueKeys.forEach(function (key) {
+				var option = document.createElement('option');
+				option.value = key;
+				option.text = key;
+				firstListBox.appendChild(option);
+			});
 	 
-			 firstListBox.addEventListener('change', function () {
-				 var selectedOption = firstListBox.options[firstListBox.selectedIndex].value;
+			// firstListBox.addEventListener('change', function () {
+			// 	var selectedOption = firstListBox.options[firstListBox.selectedIndex].value;
 
-				 secondListBox.innerHTML = '';
-	 
-				 var uniqueValues = [];
-	 
-				 for (var key in data) {
-					 if (data[key][selectedOption] !== undefined && !uniqueValues.includes(data[key][selectedOption])) {
-						 var option = document.createElement('option');
-						 option.value = data[key][selectedOption];
-						 option.text = data[key][selectedOption];
-						 secondListBox.appendChild(option);
-						 uniqueValues.push(data[key][selectedOption]);
-					 }
-				 }
-			 });
-	 
-			 firstListBox.dispatchEvent(new Event('change'));
+			// 	secondListBox.innerHTML = '';
+	
+			// 	var uniqueValues = [];
+	
+			// 	for (var key in data) {
+			// 		if (data[key][selectedOption] !== undefined && !uniqueValues.includes(data[key][selectedOption])) {
+			// 			var option = document.createElement('option');
+			// 			option.value = data[key][selectedOption];
+			// 			option.text = data[key][selectedOption];
+			// 			secondListBox.appendChild(option);
+			// 			uniqueValues.push(data[key][selectedOption]);
+			// 		}
+			// 	}
+			// });
+			function handleFirstListBoxChange() {
+				var selectedOption = firstListBox.options[firstListBox.selectedIndex].value;
 
-			 function getUniqueKeys(data) {
-				 var keys = [];
-				 for (var key in data) {
-					 keys = keys.concat(Object.keys(data[key]));
-				 }
-				 return [...new Set(keys)];
-			 }
+				secondListBox.innerHTML = '';
+	
+				var uniqueValues = [];
+	
+				for (var key in data) {
+					if (data[key][selectedOption] !== undefined && !uniqueValues.includes(data[key][selectedOption])) {
+						var option = document.createElement('option');
+						option.value = data[key][selectedOption];
+						option.text = data[key][selectedOption];
+						secondListBox.appendChild(option);
+						uniqueValues.push(data[key][selectedOption]);
+					}
+				}
+			}
+
+			firstListBox.addEventListener("change",handleFirstListBoxChange);
+	 
+			
+
+			function getUniqueKeys(data) {
+				var keys = [];
+				for (var key in data) {
+					keys = keys.concat(Object.keys(data[key]));
+				}
+				return [...new Set(keys)];
+			}
 
 			// 입력했던 Node Selector 다시 불러오기
 			if (localStorage.getItem(localStorage.getItem(projectName + '_nowWorkflow') + '_nodeSelector') != null) {
@@ -2217,27 +2274,23 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 				for (var i = 0; i < input1.length; i++) {
 					if (input1.options[i].value === arrKey) {
 						input1.options[i].selected = true;
+						handleFirstListBoxChange();
+					  break;
+					}
+				}
+				for (var i = 0; i < input2.length; i++) {
+					if (input2.options[i].value === arrValue) {
+						input2.options[i].selected = true;
 					  break;
 					}
 				}
 				// input2.options[0].value = arrValue;
-				secondListBox.innerHTML = '<option value="'+arrValue+'">'+ arrValue +'</option>';
-				// for (var i = 0; i < input2.length; i++) {
-				// 	if (input2.options[i].value === arrValue) {
-				// 		input2.options[i].selected = true;
-				// 	  break;
-				// 	}
-				// }
+				// secondListBox.innerHTML = '<option value="'+arrValue+'">'+ arrValue +'</option>';
 			}
 		})
 
-	// var selectBox = document.createElement('select');
-	// selectBox.style.marginTop = '10px';
-	// selectBox.style.width = '100px';
-	// selectBox.className = 'searchType';
-	// innerInput.appendChild(selectBox);
-
-	div.appendChild(innerInput);
+	div.appendChild(innerInputContainer);
+	// div.appendChild(innerInput2);
 	
 	var innerButtons = document.createElement('div');
 
@@ -2268,7 +2321,7 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	div.appendChild(innerButtons);
 
 	// Show the dialog
-	editorUi.showDialog(div, 600, 150, true, true);
+	editorUi.showDialog(div, 600, 650, true, true);
 	editorUi.dialog.container.style.overflow = 'hidden';
 	mxEvent.addListener(window, 'resize', function() {
 	editorUi.dialog.container.style.overflow = 'hidden';

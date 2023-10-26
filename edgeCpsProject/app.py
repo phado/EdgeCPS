@@ -430,7 +430,7 @@ def get_label():
 
         # except client.exceptions.ApiException as e:
         #     print(f"Error: {e}")
-    # label_dict = {'sadf':'aaa','asdfaf':'bbb','asdfdsfa':'ccc'}
+    label_dict = {'etri-1': {'beta.kubernetes.io/arch': 'amd64', 'beta.kubernetes.io/os': 'linux', 'kubernetes.io/arch': 'amd64', 'kubernetes.io/hostip': '192.168.0.181', 'kubernetes.io/hostname': 'etri-1', 'kubernetes.io/os': 'linux', 'node-role.kubernetes.io/control-plane': '', 'node-role.kubernetes.io/master': '', 'node.kubernetes.io/exclude-from-external-load-balancers': ''}, 'etri-3': {'beta.kubernetes.io/arch': 'amd64', 'beta.kubernetes.io/os': 'linux', 'kubernetes.io/arch': 'amd64', 'kubernetes.io/hostip': '192.168.0.189', 'kubernetes.io/hostname': 'etri-3', 'kubernetes.io/os': 'linux'}}
     return jsonify(label_dict)
 
 #############""" 아르고 """#########
