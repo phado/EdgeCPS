@@ -54,9 +54,9 @@ print('적재 완료')
 
 
 print('argo 제이슨 기본 생성')
-{
+json_base_template = {
   "namespace": "argo",
-  "serverDryRun": false,
+  "serverDryRun": False,
     "workflow": {}
 }
 print('argo 제이슨 기본 완료')
