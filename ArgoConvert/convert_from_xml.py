@@ -12,6 +12,8 @@ tree = ET.parse(xml_file_path)  # XML 파일 파싱
 root = tree.getroot()  # XML 트리의 루트 요소 획득
 
 print('적재 시작')
+# argo json의 베이스 포맷
+json_base_template = {}
 # 시작
 start_point = ''
 # 종료
@@ -22,7 +24,8 @@ arrow_dict = {}
 container_dict = {}
 #input/output box
 parameter_box = {}
-
+# step dict
+step_dict = {}
 
 for cell in root.iter('mxCell'):
     attributes = cell.attrib
@@ -57,7 +60,25 @@ print('argo 제이슨 기본 생성')
 json_base_template = {
   "namespace": "argo",
   "serverDryRun": False,
-    "workflow": {}
+    "workflow": {
+        "metadata": {
+            "name": "워크플로우이름" #워크플로우 이름 들어가는 곳
+        },
+        "spec": {
+            "entrypoint": "EdgeCps_Argo", # 엔트리포인트 고정으로 통일
+            "templates": [
+                {
+                    "name": "EdgeCps_Argo",
+                    "steps": [
+                        #스텝 정보 들어가는 곳 // json_base_template['workflow']['spec']['templates'][0]['steps']
+                    ]
+                },
+                {
+                    #컨테이너 들어가는 곳 //json_base_template['workflow']['spec']['templates'][1]
+                }
+            ]
+        }
+    }
 }
 print('argo 제이슨 기본 완료')
 
@@ -88,6 +109,28 @@ for k,v in container_dict.items():
     json_containers_dict[json_template['name']] = json_template
 
 print('컨테이터 템플릿 완료')
+
+
+print('컨테이터 step 생성')
+for k,v in container_dict.items():
+
+    step = [
+        {
+            "name": re.search(r'\[(.*?)\]', v['label'])[1],
+            "template": re.search(r'\[(.*?)\]', v['label'])[1],
+            "arguments": {
+                "parameters": [
+                    {
+                        "name": "message",
+                        "value": v['parameters'].split('value: "')[1].strip(' "')
+                    }
+                ]
+            }
+        }
+    ]
+    step_dict[v['id']] = step
+print('컨테이터 step 생성 완료')
+
 
 # for cell in root.iter('mxCell'):
 #     attributes = cell.attrib
