@@ -1,0 +1,91 @@
+{
+  "namespace": "argo",
+  "serverDryRun": false,
+  "workflow": {
+    "apiVersion": "argoproj.io/v1alpha1",
+    "kind": "Workflow",
+    "metadata": {
+      "name": "wokr"
+    },
+    "spec": {
+      "entrypoint": "output-parameter",
+      "templates": [
+        {
+          "name": "output-parameter",
+          "steps": [
+            // 첫번쨰 스텝
+            [
+              {
+                "name": "generate-parameter",
+                "template": "whalesay"
+              }
+            ],
+            // 두번째 스텝
+            [
+              {
+                "name": "consume-parameter",
+                "template": "print-message",
+                "arguments": {
+                  "parameters": [
+                    {
+                      "name": "message",
+                      "value": "{{steps.generate-parameter.outputs.parameters.hello-param}}"
+                    }
+                  ]
+                }
+              },
+              {
+                "name": "generate-parameter2",
+                "template": "whalesay"
+              }
+            ]
+
+          ]
+        },
+        // 템플릿
+        {
+          "name": "whalesay",
+          "container": {
+            "image": "docker/whalesay:latest",
+            "command": [
+              "sh",
+              "-c"
+            ],
+            "args": [
+              "echo -n hello world > /tmp/hello_world.txt"
+            ]
+          },
+          "outputs": {
+            "parameters": [
+              {
+                "name": "hello-param",
+                "valueFrom": {
+                  "path": "/tmp/hello_world.txt"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "name": "print-message",
+          "inputs": {
+            "parameters": [
+              {
+                "name": "message"
+              }
+            ]
+          },
+          "container": {
+            "image": "docker/whalesay:latest",
+            "command": [
+              "cowsay"
+            ],
+            "args": [
+              "{{inputs.parameters.message}}"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
