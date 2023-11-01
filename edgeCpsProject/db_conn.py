@@ -35,22 +35,12 @@ def get_pool_conn():
     return mariadb_pool
 
 
-def add_table(project_name, project_data, userid):
+def add_table(mariadb_pool, project_name, project_data, userid):
     dotenv_file = dotenv.find_dotenv()
     dotenv.load_dotenv(dotenv_file)
     data = project_data
 
     try:
-        config = {
-        'user': os.environ['root']
-        , 'password':  os.environ['pw']
-        , 'host': os.environ['ip']
-        , 'port': os.environ['port']
-        , 'database': 'EdgeCPS'
-                }
-        
-        mariadb_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **config)
-
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor(prepared=True)
         
@@ -90,7 +80,10 @@ def add_table(project_name, project_data, userid):
                     if client_row == db_row[0]:
                         if x != db_row[1]:
                             # 수정된 내용이 있다면 업데이트 쿼리 생성
-                            update_query = f"UPDATE `{project_name}` SET `value` = '{x}' WHERE `key` = '{client_row}'"
+                            # update_query = f"UPDATE `TB_PROCESS` SET `PROC_DATA` = '{x}' WHERE `PROC_NAME` = '{client_row}' AND `PROJ_IDX` = '{project_index[0][0]}'"
+                            ## 
+                            update_query = "UPDATE TB_PROCESS SET PROC_DATA = %s WHERE PROC_NAME = %s AND PROJ_IDX = %s"
+                            cursor.execute(update_query, (x, client_row, project_index[0][0]))
                             cursor.execute(update_query)
                             connection.commit()
     except Exception as e:
@@ -101,28 +94,26 @@ def add_table(project_name, project_data, userid):
         connection.close()
 
 
-def get_projet_info():
+def get_projet_info(mariadb_pool):
     dotenv_file = dotenv.find_dotenv()
     dotenv.load_dotenv(dotenv_file)
 
     try:
-        config = {
-        'user': os.environ['root']
-        , 'password':  os.environ['pw']
-        , 'host': os.environ['ip']
-        , 'port': os.environ['port']
-        , 'database': 'EdgeCPS'
-                }
-        
-        mariadb_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **config)
-
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor(buffered=True)
 
         sql = f"SELECT * FROM TB_PROJ"
         cursor.execute(sql)
         db_data = cursor.fetchall()
+        
 
+        for i in range(len(db_data)):
+            list_db_data = list(db_data[i])
+            sql = f"SELECT USER_NAME FROM TB_USER WHERE USER_IDX = {list_db_data[3]}"
+            cursor.execute(sql)
+            user_name = cursor.fetchall()
+            list_db_data[3] = user_name[0][0]
+            db_data[i] = tuple(list_db_data)
         return db_data
         
     except Exception as e:
@@ -132,27 +123,24 @@ def get_projet_info():
         cursor.close()
         connection.close()
 
-def load_project(project_index):
+def load_project(project_index, mariadb_pool):
     dotenv_file = dotenv.find_dotenv()
     dotenv.load_dotenv(dotenv_file)
 
     try:
-        config = {
-            'user': os.environ['root'],
-            'password': os.environ['pw'],
-            'host': os.environ['ip'],
-            'port': os.environ['port'],
-            'database': 'EdgeCPS'
-        }
-
-        mariadb_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **config)
-
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor(buffered=True)
 
         sql = f"SELECT PROC_NAME, PROC_DATA FROM TB_PROCESS WHERE PROJ_IDX = '{project_index}'"
         cursor.execute(sql)
-        data = cursor.fetchall()
+        # data = cursor.fetchall()
+        # data = [dict(row) for row in cursor.fetchall()]
+        results = cursor.fetchall()
+        # data = [dict(PROC_NAME=row[0], PROC_DATA=row[1]) for row in results]
+        data={}
+        for row in results:
+            data[row[0]]= row[1]
+
 
         return data
 

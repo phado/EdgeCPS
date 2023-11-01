@@ -1,6 +1,8 @@
 
 import logging
 import traceback
+import os
+import mysql.connector.pooling
 
 # 로그 기록 함수
 logging.basicConfig(filename='./DB_Query.log', level=logging.ERROR)
@@ -91,6 +93,7 @@ def sign_up(mariadb_pool, name,userId ,password,email,birthdate,group):
 
     :return: 성공 여부
     """
+
     sign_up_info = {'sign_up' : False}
     try:
         connection = mariadb_pool.get_connection()
@@ -132,3 +135,50 @@ def change_pwd(mariadb_pool, new_pwd):
         connection.close()
 
     return response
+
+def cheack_id(mariadb_pool, user_id):
+    # 비밀 번호 수정
+    response = {'error': False , 'result': False}
+    try:
+        connection = mariadb_pool.get_connection()
+
+        cursor = connection.cursor()
+        query = "SELECT COUNT(*) FROM TB_USER WHERE USER_ID = %s"
+
+        cursor.execute(query, (user_id,))
+        result = cursor.fetchone()
+
+        if result[0] > 0:
+            response['error'] = True 
+        else:
+            response['result'] = True   
+
+    except:
+        logging.error(traceback.format_exc())
+        response['result'] = False
+        response['error'] = True
+    finally:
+        cursor.close()
+        connection.close()
+
+    return response
+
+
+def delete_project(mariadb_pool, project_id):
+    try:
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor()
+
+        delete_process_query = 'DELETE FROM TB_PROCESS WHERE PROJ_IDX = %s'
+        cursor.execute(delete_process_query, (project_id,))
+
+        delete_project_query = 'DELETE FROM TB_PROJ WHERE PROJ_IDX = %s'
+        cursor.execute(delete_project_query,(project_id,))
+
+        connection.commit()
+    except:
+        logging.error(traceback.format_exc())
+
+    finally:
+        cursor.close()
+        connection.close()

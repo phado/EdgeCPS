@@ -33,6 +33,7 @@
 		let projectPath = "{{ pj_pth }}";
 
 		let projectName = "{{ project_name }}";
+		let projectInfo = "{{ project_info }}";
 
 		let projectData = "{{ project_data }}"; // 블러오기된 프로젝트 데이터
 		let openProject = "{{ open_project }}"; // 불러온것인지 확인
@@ -40,46 +41,70 @@
 		let project_name = "{{ project_name }}"; // 불러온것인지 확인
 		let xml_process = "{{ xml_process }}"; // 불러온것인지 확인
 		let workflow_xml = "{{ workflow_xml }}"; // 불러온것인지 확인
+		let passOverview = "{{ pass_overview }}";
 
         let sessiondata = "{{ session['data'] }}"
-		var jsonString =  sessiondata.replace(/\&\#34;/g, '"');
-		var b = jsonString.slice(1,-1); 
-		// var stringToArray = jsonString.replace(/\\"/g, '"');
-		// var data = JSON.parse(stringToArray);
-		
-    	// jsonString = jsonString.replace(/[\[\]']+/g, '');
-    	var array = [];
-    	var array2 = [];
-    	array = b.split('],');
-    	
-    	for (var i = 0; i < array.length; i++) {
-    		array[i] = array[i].trim();
-    	}
-    	
-    	// 1차원 array -> 2차원 array
-        while (array.length > 0) {
-        	array2.push(array.splice(0, 3));
-        }
- 
 
+
+
+		function decodeHTMLEntities(str) {
+			// &lt;&lt;와 &gt;&gt;을 임시 문자열로 대체
+			// <<나, >>처럼 반복해서 나오는 경우는 대체 하면 <<container>> 같은 요소가 꺠져서..
+			str = str.replace(/&lt;&lt;/g, '##LT##');
+			str = str.replace(/&gt;&gt;/g, '##GT##');
+			// 나머지  대체
+			str = str.replace(/&gt;/g, '>');
+			str = str.replace(/&lt;/g, '<');
+			str = str.replace(/&#34;/g, '"');
+			str = str.replace(/&#39;/g, "'");
+			str = str.replace(/&amp;/g, '&');
+			// 다시 임시 문자열을 오리지날 값으로 되돌려놓음
+			str = str.replace(/##LT##/g, '&lt;&lt;');
+			str = str.replace(/##GT##/g, '&gt;&gt;');
+
+			return str;
+		}
+
+		//파이썬에서넘어온 엔티티를 일반 문자열로 변환
+		var decodedString = decodeHTMLEntities(sessiondata);
+		var modifiedString = '';
+
+		// 모든 문자열 하나씩 읽으면서 큰따옴표 작은따옴표 서로 바꿈
+		for (var i = 0; i < decodedString.length; i++) {
+			var currentChar = decodedString.charAt(i);
+
+			if (currentChar === "'") {
+				modifiedString += '"';
+			} else if (currentChar === '"') {
+				modifiedString += "'";
+			} else {
+				modifiedString += currentChar;
+			}
+		}
+
+		
+		var result = JSON.parse(modifiedString);
+		var keys = Object.keys(result);
+		for (i=0 ; i<keys.length;i++){
+			if(keys[0]=='category'){
+				projectInfo = result;
+				break;
+			}
+			else{
+				localStorage.setItem(project_name+'_'+keys[i],result[keys[i]])
+			}
+		}
+	
         let sessionstr_json = "{{ session['str_json'] }}"
         let sessionproject_name = "{{ session['project_name'] }}"
         let sessionxml_process = "{{ session['xml_process'] }}"
         let sessionworkflow_xml = "{{ session['workflow_xml'] }}"
 
-		// let data = "{{data}}"
+		let data = "{{ project_data }}"
 	</script>
 
 
-
-
-
-
-
-
-
 <body>
-
 	<!--BOOTSTRAP START 순우-->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -89,15 +114,12 @@
 	<!--BOOTSTRAP END-->
 	<script type="text/javascript" src="{{ url_for('static', filename='js/overviewProcessJs.js') }}"></script>
 
-
-
 	<style>
         /* 스타일을 지정하여 링크가 보라색으로 변하는 효과를 없앰 */
         a.home {
             color: inherit;
             text-decoration: none;
         }
-        
         .title {
             display: flex;
             justify-content: space-between;
@@ -203,27 +225,30 @@
 	</nav>
 
     <div class="container">
-        <h2 class="mt-5">Create Project</h2>
-        <form method="post" action="">
-            <div class="form-group">
-                <label for="project_name">Project Name:</label>
-                <input type="text" class="form-control" id="project_name" name="project_name" required>
-            </div>
-            <div class="form-group">
-                <label for="project_description">Project Description:</label>
-                <textarea class="form-control" id="project_description" name="project_description" required></textarea>
-            </div>
-            <div class="form-group">
-                <label for="project_category">Project Category:</label>
-                <select class="form-control" id="project_category" name="project_category" required>
-                    {% for category in categories %}
-                    <option value="{{ category }}">{{ category }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary" onclick="savePorjectInfo()">Save Project</button>
-        </form>
-    </div>
+		<h2 class="mt-5">Create Project</h2>
+		<form method="post" action="", id = formtag>
+			<div class="form-group">
+				<label for="project_name">Project Name:</label>
+				<input type="text" class="form-control" id="project_name" name="project_name" required>
+			</div>
+			<div class="form-group">
+				<label for="project_description">Project Description:</label>
+				<textarea class="form-control" id="project_description" name="project_description" required></textarea>
+			</div>
+			<div class="form-group">
+				<label for="project_category">Project Category:</label>
+				<select class="form-control" id="project_category" name="project_category" required>
+					{% for category in categories %}
+					<option value="{{ category }}">{{ category }}</option>
+					{% endfor %}
+				</select>
+			</div>
+	
+			
+	
+			<button type="submit" class="btn btn-primary" onclick="savePorjectInfo()">Save Project</button>
+		</form>
+	</div>
 
 
 </body>
@@ -232,23 +257,52 @@
 <script>
 	window.onload = function() {
 
+		
+
+
 		var newPjValue = "{{ new_pj }}";
 		console.log('newPjValue = ' , newPjValue)
 		if (newPjValue != "True"){
-			var savedProjectInfo = localStorage.getItem(projectName+'_'+'overviewProcessXML');
+			// var savedProjectInfo = localStorage.getItem(projectName+'_'+'overviewProcessXML');
 
-			if (savedProjectInfo) {
-				var projectInfo = JSON.parse(savedProjectInfo);
+			// if (savedProjectInfo) {
+			// 	var projectInfo = JSON.parse(savedProjectInfo);
 
-				if (projectInfo.name){
-					document.getElementById("project_name").value = projectInfo.name;
-					var projectInput = document.getElementById("project_name")
-					projectInput.readOnly = true
+				// if (projectInfo.name){
+				// 	document.getElementById("project_name").value = projectInfo.name;
+				// 	var projectInput = document.getElementById("project_name")
+				// 	projectInput.readOnly = true
+				// }
+				// document.getElementById("project_description").value = projectInfo.description;
+				// document.getElementById("project_category").value = projectInfo.category;
+				var overviewData = localStorage.getItem(project_name+'_overviewProcessXML');
+				var modifiedOverviewData = ''
+				for (var i = 0; i < overviewData.length; i++) {
+					var currentChar = overviewData.charAt(i);
+
+					if (currentChar === "'") {
+						modifiedOverviewData += '"';
+					} else if (currentChar === '"') {
+						modifiedOverviewData += "'";
+					} else {
+						modifiedOverviewData += currentChar;
+					}
 				}
-				document.getElementById("project_description").value = projectInfo.description;
-				document.getElementById("project_category").value = projectInfo.category;
-			}
+				var jsonOverview = JSON.parse(modifiedOverviewData);
+
+						
+				document.getElementById("project_name").value = jsonOverview['name'];
+				// var projectInput = document.getElementById("project_name")
+				// projectInput.readOnly = true
+				
+				document.getElementById("project_description").value = jsonOverview['description']
+				document.getElementById("project_category").value = jsonOverview['category'];
+			
+			
 		}
+		// <div class="form-group">
+		// 		<textarea class="form-control" id="create_project" name="create_project" >True</textarea>
+		// 	</div>
 
 		if(openProject == 'True'){
 			var div = document.createElement('div');
@@ -267,10 +321,20 @@
 			div.innerHTML = workflow_xml.replace(/&#39;/g, "\"");;
 			workflow_xml = div.textContent || div.innerText;
 
+			var container = document.getElementById("formtag");
+			var div = document.createElement('div');
+			div.className = "form-group";
+			var textarea = document.createElement('textarea');
+			textarea.className = "form-control";
+			textarea.id = "load_project";
+			textarea.name = "load_project";
+			textarea.textContent = "True";
+			div.appendChild(textarea);
+			container.appendChild(div);
+			textarea.style.display = 'none';
 
 
-
-
+	
 
 		}
 

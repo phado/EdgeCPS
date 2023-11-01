@@ -49,6 +49,7 @@
                     <th>ID</th>
                     <th>Project Name</th>
                     <th>작성자</th>
+                    <th>수정 날짜</th>
                     <th style="text-align:center" >삭 제</th>
                     <th style="text-align:center" >열 기</th>
                 </tr>
@@ -59,6 +60,7 @@
                     <td>{{ project.id }}</td>
                     <td>{{ project.name }}</td>
                     <td>{{ project.user }}</td>
+                    <td>{{ project.create_date }}</td>
                     <td style="text-align:center" >
                         <form method="post" action="{{ url_for('delete_project', project_id=project.id) }}">
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>

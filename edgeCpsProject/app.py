@@ -14,6 +14,7 @@ import urllib
 import cairosvg
 import base64
 import urllib.parse
+import mysql.connector.pooling
 
 from kubernetes import client, config
 from kubernetes.stream import stream
@@ -28,8 +29,8 @@ app.secret_key = 'EdgeCPS_workflow'
 # 임의의 프로젝트 목록 데이터
 
 
-# mariadb_pool = get_pool_conn()
-mariadb_pool = 'none'
+mariadb_pool = get_pool_conn()
+
 def getProjectDict():
     # 로컬 디렉토리에 저장 되어있는 목록에서 프로젝트 정보 가져오는 부분.
     # pj_dir = glob.glob('project_file/*')
@@ -43,11 +44,11 @@ def getProjectDict():
     #     projects.append({'id': idx, 'name': pj_name, 'user': pj_user})
     #     idx += 1
 
-    prjs = get_projet_info()
+    prjs = get_projet_info(mariadb_pool)
     projects = []
 
     for idx in range(len(prjs)):
-        projects.append({'id': prjs[idx][0], 'name': prjs[idx][1], 'user': prjs[idx][2]})
+        projects.append({'id': prjs[idx][0], 'name': prjs[idx][1], 'create_date': prjs[idx][2], 'user': prjs[idx][3]})
     return projects
 
 
@@ -74,10 +75,10 @@ def index():
         userid = request.form["username"]
         password = request.form["password"]
         # userid = 'aaa'
-        # password = 'aaa'
-        # login = db_query.login(mariadb_pool,id = userid, pwd = password )
-        login = {}
-        login['login'] = True
+        # # password = 'aaa'
+        login = db_query.login(mariadb_pool, id = userid, pwd = password )
+        # login = {}
+        # login['login'] = True
 
         if login['login']:
             session['userId'] = userid
@@ -114,14 +115,16 @@ def project_list():
 
 @app.route('/projects/delete/<int:project_id>', methods=['POST'])
 def delete_project(project_id): # todo 프로젝트 삭제 기능
-    projects = getProjectDict()
+    # projects = getProjectDict()
+    db_query.delete_project(mariadb_pool, project_id)
 
     # # todo 회원의 소속 확인, 회원의 프로젝트인지 확인 필요
-    for project in projects:
-        if project['id'] == project_id:
-            rm_dir_name = '@'.join([project['name'],project['user']])
-            shutil.rmtree('project_file/'+rm_dir_name)
-            break
+    # for project in projects:
+    #     if project['id'] == project_id:
+            
+            # rm_dir_name = '@'.join([project['name'],project['user']])
+            # shutil.rmtree('project_file/'+rm_dir_name)
+            # break
 
     return redirect(url_for('project_list'))
 
@@ -189,7 +192,7 @@ def save_project():
         #     json.dump(data, file)
 
         # db에 저장하는 함수
-        add_table(proj_name,data,session['userId'])
+        add_table(mariadb_pool, proj_name,data,session['userId'])
 
         response = {"status": "success", "message": "Project data saved successfully."}
         return jsonify(response), 200
@@ -240,16 +243,19 @@ def open_process(project_id,project_user,project_name):
 
             # db에서 불러오는 경우
             
-                data = json.dumps(load_project(project_id))
-                # data = data.replace('[[', '').replace(']]', '')
-                session['data'] = data
-                # session['str_json'] = str_json
-                # session['project_name'] = project_name
-                # session['xml_process'] = xml_process
-                # session['workflow_xml'] = workflow_xml
+            data = load_project(project_id, mariadb_pool)
+            # data = data.replace('[[', '').replace(']]', '')
+            # session['data'] = json.dumps(data)
+            session['data'] = data
 
-                # return redirect(url_for('overview_process', active_overview=active_overview, project_data = data, project_name=project_name ,xml_process=xml_process, workflow_xml=workflow_xml))
-                return redirect(url_for('overview_process', active_overview=active_overview, data = data, project_name=project_name))
+
+            # session['str_json'] = str_json
+            # session['project_name'] = project_name
+            # session['xml_process'] = xml_process
+            # session['workflow_xml'] = workflow_xml
+
+            return redirect(url_for('overview_process', active_overview=active_overview, data = data, project_name = project_name, openProject=True))
+            # return redirect(url_for('overview_process', active_overview=active_overview, project_data = data , project_name=project_name))
 
     return redirect(url_for('project_list'))
 
@@ -302,21 +308,36 @@ def previous():
 def overview_process():
     catlist = ['java', 'python']
     active_overview = True
+    pass_overview = request.form.get('load_project')
+    
 
-    data = request.args.get('project_data')
-    if data:
+    data = request.args.get('data')
+    open_project = request.args.get('openProject')
+    # try:
+    #     if pass_overview == 'True':
+    #         project_name = request.args.get('projectName')
+
+    #         return redirect(url_for('requirements_process', project_name=project_name, pass_overview = 'True'))
+    # except:
+    #     pass
+    if pass_overview =='True':
+        project_name = request.form.get('project_name')
+        return redirect(url_for('requirements_process', project_name=project_name))
+
+    #  불러오기
+    if open_project:
         project_name = request.args.get('project_name')
-        xml_process = request.args.get('xml_process')
-        workflow_xml = request.args.get('workflow_xml')
+        # pass_overview = request.args.get('pass_overview')
 
-        return render_template('process/overviewProcess.html', active_overview=active_overview, categories=catlist,  project_data = data, open_project = 'True', project_name=project_name ,xml_process=xml_process, workflow_xml=workflow_xml)
+        return render_template('process/overviewProcess.html', active_overview=active_overview, categories=catlist, project_data = data, open_project = 'True', project_name=project_name )
 
     if request.method == 'POST': # 프로젝트 생성
         project_name = request.form.get('project_name')
         project_description = request.form.get('project_description')
         project_category = request.form.get('project_category')
         return redirect(url_for('requirements_process', project_name=project_name))
-
+    
+    # create project
     if request.method == 'GET': #최초이동
         new_pj = request.args.get('newPj')
         project_name = request.args.get('projectName')
@@ -326,6 +347,10 @@ def overview_process():
 @app.route('/process/requirementsProcess', methods=['GET', 'POST'])
 def requirements_process():
     active_requirements = True
+    # pass_overview = request.args.get('pass_overview')
+    # if pass_overview =='True':
+    #      return render_template('process/requirementsProcess.html', active_requirements=active_requirements , project_name=project_name)
+
 
     if request.method == 'GET':
         project_name = request.args.get('project_name')
@@ -335,7 +360,7 @@ def requirements_process():
                 return redirect(url_for('overview_process', newPj=True))
 
 
-        return render_template('process/requirementsProcess.html', active_requirements=active_requirements , project_name=project_name)
+    return render_template('process/requirementsProcess.html', active_requirements=active_requirements , project_name=project_name)
 
     # return render_template('process/requirementsProcess.html', active_requirements=active_requirements)
 
@@ -609,10 +634,23 @@ def find_user_pwd():
 @app.route('/changePwd', methods=['POST'])
 def change_pwd():
     # 새로운 비밀번호 수정
+    
     try:
         data = request.get_json()
         new_pwd = data['newPwd']
         response = db_query.change_pwd(mariadb_pool,new_pwd=new_pwd)
+    except:
+        response = {'error': True ,'result': False }
+
+    return jsonify(response)
+
+@app.route('/checkUserId', methods=['POST'])
+def check_user_id():
+    # 새로운 비밀번호 수정
+    try:
+        data = request.get_json()
+        user_id = data['userId']
+        response = db_query.cheack_id(mariadb_pool,user_id=user_id)
     except:
         response = {'error': True ,'result': False }
 

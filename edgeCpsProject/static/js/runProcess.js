@@ -357,15 +357,15 @@ function getDeployInfo(actionKeys,actionStatus){
         }
     }
 
-    // var deployInfo = [
-    //     ['soonwoo', 'hello1', 'Succeeded'],
-    //     ['soonwoo', 'hello2', 'Succeeded'],
-    //     ['soonwoo', 'hello3', 'Succeeded'],
-    //     ['soonwoo1', 'hello4', 'Succeeded'],
-    //     ['soonwoo1', 'hello5', 'Succeeded'],
-    //     ['soonwoo3', 'hello6', 'Succeeded'],
-    //     ['poontoo', 'hello11', 'fail']
-    //   ];
+    var deployInfo = [
+        ['soonwoo', 'hello1', 'Succeeded'],
+        ['soonwoo', 'hello2', 'Succeeded'],
+        ['soonwoo', 'hello3', 'Succeeded'],
+        ['soonwoo1', 'hello4', 'Succeeded'],
+        ['soonwoo1', 'hello5', 'Succeeded'],
+        ['soonwoo3', 'hello6', 'Succeeded'],
+        ['poontoo', 'hello11', 'fail']
+      ];
 
     var uniqueKeys = Array.from(new Set(deployInfo.map(item => item[0])));
     var uniqueKeyCount = uniqueKeys.length;
