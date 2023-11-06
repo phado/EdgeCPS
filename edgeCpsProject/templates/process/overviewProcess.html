@@ -263,18 +263,7 @@
 		var newPjValue = "{{ new_pj }}";
 		console.log('newPjValue = ' , newPjValue)
 		if (newPjValue != "True"){
-			// var savedProjectInfo = localStorage.getItem(projectName+'_'+'overviewProcessXML');
-
-			// if (savedProjectInfo) {
-			// 	var projectInfo = JSON.parse(savedProjectInfo);
-
-				// if (projectInfo.name){
-				// 	document.getElementById("project_name").value = projectInfo.name;
-				// 	var projectInput = document.getElementById("project_name")
-				// 	projectInput.readOnly = true
-				// }
-				// document.getElementById("project_description").value = projectInfo.description;
-				// document.getElementById("project_category").value = projectInfo.category;
+			// getElementById("project_category").value = projectInfo.category;
 				var overviewData = localStorage.getItem(project_name+'_overviewProcessXML');
 				var modifiedOverviewData = ''
 				for (var i = 0; i < overviewData.length; i++) {

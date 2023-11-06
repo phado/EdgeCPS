@@ -1157,9 +1157,9 @@ Sidebar.prototype.addGeneralPaletteBusinessProcess = function(expand)
 
 	var fns = [
 	 	// this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectanglㅇㅇe', null, null, 'rect rectangle box'),
-	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),//uml꺼 훔쳐오기
-		this.createVertexTemplateEntry('ellipse;fillColor=#000000;strokeColor=none;', 30, 30, '', 'Initial state', null, null, dt + 'initial state'),	//uml꺼 훔쳐오기
-		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Join/Fork', null, null, dt + 'join fork'),//uml꺼 훔쳐오기
+	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '<div style="font-weight:bold;">[Activity name]</div>', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),
+		this.createVertexTemplateEntry('ellipse;fillColor=#000000;strokeColor=none;', 30, 30, '', 'Initial state', null, null, dt + 'initial state'),
+		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Join/Fork', null, null, dt + 'join fork'),
 		this.createVertexTemplateEntry('ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'Final state', null, null, dt + 'final state'),
 	 	this.createVertexTemplateEntry('rhombus;whiteSpace=wrap;html=1;', 80, 80, '', 'Diamond', null, null, 'diamond rhombus if condition decision conditional question test'),
 	 	// this.createEdgeTemplateEntry('endArrow=none;dashed=1;html=1;', 50, 50, '', 'Dashed Line', null, lineTags + 'dashed undirected no'),
@@ -1167,7 +1167,7 @@ Sidebar.prototype.addGeneralPaletteBusinessProcess = function(expand)
 	 	this.createEdgeTemplateEntry('endArrow=none;html=1;', 50, 50, '', 'Line', null, lineTags + 'simple undirected plain blank no'),
 	 	// this.createEdgeTemplateEntry('endArrow=classic;startArrow=classic;html=1;', 50, 50, '', 'Bidirectional Connector', null, lineTags + 'bidirectional'),
 	 	this.createEdgeTemplateEntry('endArrow=classic;html=1;', 50, 50, '', 'Directional Connector', null, lineTags + 'directional directed'),
-	 	// this.createEdgeTemplateEntry('shape=link;html=1;', 100, 0, '', 'Link', null, lineTags + 'link'),
+
 	 	this.addEntry(lineTags + 'edge title', mxUtils.bind(this, function()
 		{
 			var edge = new mxCell('', new mxGeometry(0, 0, 0, 0), 'endArrow=classic;html=1;');

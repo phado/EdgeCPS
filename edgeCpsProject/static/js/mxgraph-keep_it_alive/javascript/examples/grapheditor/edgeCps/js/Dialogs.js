@@ -1478,15 +1478,15 @@ var EditDataDialog = function(ui, cell)
 	try{
 		if (extracted=='object label="" '|| extracted =='mxCell '){
 			if (DiagramClicked.includes('RoundedRectangle')){
-				var RoundedRectangleFixProperty = document.createAttribute('Name')
-				RoundedRectangleFixProperty.value = ''
+				// var RoundedRectangleFixProperty = document.createAttribute('Name')
+				// RoundedRectangleFixProperty.value = ''
 				var RoundedRectangleFixProperty2 = document.createAttribute('Description')
 				RoundedRectangleFixProperty2.value = ''
 				var RoundedRectangleFixProperty3 = document.createAttribute('Input_information')
 				RoundedRectangleFixProperty3.value = ''
 				var RoundedRectangleFixProperty4 = document.createAttribute('output_information')
 				RoundedRectangleFixProperty4.value = ''
-				attrs.setNamedItem(RoundedRectangleFixProperty)
+				// attrs.setNamedItem(RoundedRectangleFixProperty)
 				attrs.setNamedItem(RoundedRectangleFixProperty2)
 				attrs.setNamedItem(RoundedRectangleFixProperty3)
 				attrs.setNamedItem(RoundedRectangleFixProperty4)

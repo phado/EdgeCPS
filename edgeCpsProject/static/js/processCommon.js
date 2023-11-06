@@ -381,7 +381,20 @@ function getWorkflowObjList(xml){
 		var mxCell = mxCells[i];
 		if (mxCell.getElementsByTagName('mxCell')[0].attributes[0].nodeValue.includes("rounded=1;")){
 			var id = mxCell.getAttribute('id');
-			var value = mxCell.getAttribute('name');
+			// var value = mxCell.getAttribute('name');
+			var valueString = mxCell.outerHTML;
+			// var regex = /\[([^\]]+)\]/g;
+			var regex = /&quot;&gt;(.+?)&lt;/;
+			var matches = [];
+			// var match;
+			var match = regex.exec(valueString);
+			var extractedString = match ? match[1] : null;
+			if(extractedString.includes('['||']')){
+				extractedString=extractedString.substring(1,extractedString.length -1);
+			}
+			matches.push(extractedString);
+			
+			var value = matches;
 			roundedObjects.push({id : id, value : value});
 		}
 	}
