@@ -1910,14 +1910,26 @@ EditDataDialog.placeholderHelpLink = null;
 // 순우 req 다이어로그
 var ReqDialog = function(editorUi, ui, cell) {
 	if (process_name =='businessProcess'){
-		if(typeof(cell.value)=='object'){
-			var actId = cell.id
-			var actName = actId+'#'+cell.value.attributes[1].nodeValue
+		// if(typeof(cell.value)=='object'){
+		var actId = cell.id
+		// 	var actName = actId+'#'+cell.value.attributes[1].nodeValue
+		// }
+		// else{
+		// 	var actName = cell.id+'#'+cell.value; // html actName 변수에 현재 선택한 activiy가 뭔지 아이디랑 이름 저장
+		// 	var actId = cell.id
+		// }
+		var valueString = cell.value.outerHTML;
+		var regex = /&quot;&gt;(.+?)&lt;/;
+		// var matches = [];
+		// var match;
+		var match = regex.exec(valueString);
+		var extractedString = match ? match[1] : null;
+		if(extractedString.includes('['||']')){
+			extractedString=extractedString.substring(1,extractedString.length -1);
 		}
-		else{
-			var actName = cell.id+'#'+cell.value; // html actName 변수에 현재 선택한 activiy가 뭔지 아이디랑 이름 저장
-			var actId = cell.id
-		}
+		// matches.push(extractedString);
+		var actName = actId+'#'+extractedString
+
 	}else if (process_name == 'workflowProcess'){
 		var actName = localStorage.getItem(projectName+'_nowWorkflow');
 		
@@ -2124,13 +2136,13 @@ var ReqDialog = function(editorUi, ui, cell) {
 
 	inner.appendChild(buttonsContainer);
 
-	inner.appendChild(cancelButton);
 	inner.appendChild(applyBtn);
+	inner.appendChild(cancelButton);
 
 	div.appendChild(inner);
 
 	// Show 
-	editorUi.showDialog(div, 700, 700, true, true);
+	editorUi.showDialog(div, 700, 500, true, true);
 	editorUi.dialog.container.style.overflow = 'hidden';
 	mxEvent.addListener(window, 'resize', function() {
 	editorUi.dialog.container.style.overflow = 'hidden';

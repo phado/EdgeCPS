@@ -36,9 +36,20 @@ function executeFunctionWithFileContent(content,workflowName) {
 function subContent1ClickHandler(sender, evt) {
     var cell = evt.getProperty('cell'); // 클릭한 셀
     if (cell != null && cell.style.includes('rounded=1')) { //cell이 null아니고 엣지도 아닌경우 
-        var cellName = cell.value.attributes[1].value
+        var valueString = cell.value.outerHTML;
+        var regex = /&quot;&gt;(.+?)&lt;/;
+			var matches = [];
+			// var match;
+			var match = regex.exec(valueString);
+			var extractedString = match ? match[1] : null;
+			if(extractedString.includes('['||']')){
+				extractedString=extractedString.substring(1,extractedString.length -1);
+			}
+			matches.push(extractedString);
+			
+			var cellName = matches;
         var cellId = cell.id
-        localStorage.setItem(projectName+'_current_workflowName', cell.value.attributes[1].value)
+        localStorage.setItem(projectName+'_current_workflowName', cellName)
         subContent2(cellName,cellId,cell)
     }
 }

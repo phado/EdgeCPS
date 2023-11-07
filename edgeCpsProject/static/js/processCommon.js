@@ -48,15 +48,22 @@ function uploadXML(){
 function saveAllProject() {
 	updateLocalStorage(flowDict, processGraphxml)
 ////////////////yaml생성에 필요한 데이터들////////////////////////
-	let get_localstorage_xml_list = ['overviewProcessXML','requirementsProcessXml','requirementsProcess_flowDict','businessProcessXml','businessProcess_flowDict'];
+	var workflowXMLValue = [];
+	let get_localstorage_xml_list = ['overviewProcessXML','requirementsProcessXml','businessProcessXml',];
 	var stringWorkflowList = localStorage.getItem(projectName+'_workflowXML');
 	var workflowList = JSON.parse(stringWorkflowList);
 	try{
 		for (var i = 0 ; i< workflowList.length ; i++){
-			get_localstorage_xml_list.push(workflowList[i]);
-			get_localstorage_xml_list.push(workflowList[i]+'_requirement');
-			get_localstorage_xml_list.push(workflowList[i]+'_nodeSelector');
-			get_localstorage_xml_list.push(workflowList[i]+'_flowDict');
+			// get_localstorage_xml_list.push(workflowList[i]);
+			// get_localstorage_xml_list.push(workflowList[i]+'_requirement');
+			// get_localstorage_xml_list.push(workflowList[i]+'_nodeSelector');
+			for (var j = 0; j < localStorage.length; j++){
+				const key = localStorage.key(j);
+				if(key.includes(projectName+'_'+workflowList[i])){
+					workflowXMLValue.push(key);
+				}
+			}
+			// get_localstorage_xml_list.push(workflowList[i]+'_flowDict');
 		}
 	}
 	catch{
@@ -79,13 +86,13 @@ function saveAllProject() {
 	}
 
 	//워크플로우 저장
-	var workflowXMLValue = localStorage.getItem(projectName + '_workflowXML');
-	workflowXMLValue = JSON.parse(workflowXMLValue);
+	// var workflowXMLValue = localStorage.getItem(projectName + '_workflowXML');
+	// workflowXMLValue = JSON.parse(workflowXMLValue);
 
 	if (workflowXMLValue) {
 		for (var i = 0; i < workflowXMLValue.length; i++) {
 			var key = workflowXMLValue[i];
-			var value = localStorage.getItem(projectName + '_' + key);
+			var value = localStorage.getItem( key);
 			workflowData[key] = value;
 		}
 	}
@@ -175,13 +182,13 @@ document.addEventListener("DOMContentLoaded", function() {
 				previousContainer[0].appendChild(createButton("Requirement Process", function() {
 					var previousXML = localStorage.getItem(projectName + '_requirementsProcessXml');
 					// preViewClick(previousXML);
-					window.open("/previous?ProjectName="+projectName + "&ProcessName=requirementsProcess", "Popup", "width=600, height=600");
+					window.open("/previous?ProjectName="+projectName + "&ProcessName=requirementsProcess", "Popup", "width=1200, height=700");
 				}));
 				if(process_name=='workflowProcess' || process_name=='policyProcess'){
 					previousContainer[0].appendChild(createButton("Business Process", function() {
 						var previousXML = localStorage.getItem(projectName + '_businessProcessXml');
 						// preViewClick(previousXML);
-						window.open("/previous?ProjectName="+projectName + "&ProcessName=businessProcess", "Popup", "width=600, height=600");
+						window.open("/previous?ProjectName="+projectName + "&ProcessName=businessProcess", "Popup", "width=1200, height=700");
 					}));
 					
 				}
@@ -216,13 +223,6 @@ document.addEventListener("DOMContentLoaded", function() {
 					uploadXML();
 				}
 			}
-			
-			// var xmlData = localStorage.getItem(projectName+'_requirementsProcessXml')
-			// var container = document.getElementById('previous');
-			// var graph = new Graph(container);
-			// var doc = mxUtils.parseXml(xmlData);
-			// var codec = new mxCodec(doc);
-			// codec.decode(doc.documentElement, graph.getModel());
 		}, 250);
 	}
 });
@@ -237,9 +237,9 @@ function getLatestXml(flowDict,strXml){
 	}
 	
 	// 프로세스간 이동 중 다이어그램 간 링크 연결 없이 이동 할 경우 빈 딕셔너리flowDict가 들어가는 오류 있어서 조건문 추가 
-	if(JSON.stringify(flowDict) != '{}'){ 
-		localStorage.setItem(projectName+'_'+localStorage.getItem(projectName+'_current_processDict')+'_flowDict',JSON.stringify(flowDict)) // dict 저장
-	}
+	// if(JSON.stringify(flowDict) != '{}'){ 
+	// 	localStorage.setItem(projectName+'_'+localStorage.getItem(projectName+'_current_processDict')+'_flowDict',JSON.stringify(flowDict)) // dict 저장
+	// }
 }
 
 function getRunData(flowDict,strXml){
@@ -255,9 +255,9 @@ function getWorkflowData(flowDict,processGraphxml){
 		captureAndDownloadImage(localStorage.getItem(projectName+'_nowWorkflow'))
 	}
 	// 프로세스간 이동 중 다이어그램 간 링크 연결 없이 이동 할 경우 빈 딕셔너리flowDict가 들어가는 오류 있어서 조건문 추가 
-	if(JSON.stringify(flowDict) != '{}'){
-		localStorage.setItem(localStorage.getItem(projectName+'_nowWorkflow')+'_flowDict',JSON.stringify(flowDict)) // dict 저장
-	}
+	// if(JSON.stringify(flowDict) != '{}'){
+	// 	localStorage.setItem(localStorage.getItem(projectName+'_nowWorkflow')+'_flowDict',JSON.stringify(flowDict)) // dict 저장
+	// }
 }
 
 // saveAll 버튼 눌렀을 때 로컬 스토리지 업데이트 후 db에 저장하기 위한 함수
@@ -265,9 +265,9 @@ function updateLocalStorage(flowDict,strXml){
 	localStorage.setItem(projectName+'_'+localStorage.getItem(projectName+'_current_processXml'),strXml) // xml 저장
 	
 	// 프로세스간 이동 중 다이어그램 간 링크 연결 없이 이동 할 경우 빈 딕셔너리flowDict가 들어가는 오류 있어서 조건문 추가 
-	if(JSON.stringify(flowDict) != '{}'){ 
-		localStorage.setItem(projectName+'_'+localStorage.getItem(projectName+'_current_processDict')+'_flowDict',JSON.stringify(flowDict)) // dict 저장
-	}
+	// if(JSON.stringify(flowDict) != '{}'){ 
+	// 	localStorage.setItem(projectName+'_'+localStorage.getItem(projectName+'_current_processDict')+'_flowDict',JSON.stringify(flowDict)) // dict 저장
+	// }
 }
 
 /**

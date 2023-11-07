@@ -38,7 +38,10 @@ def get_pool_conn():
 def add_table(mariadb_pool, project_name, project_data, userid):
     dotenv_file = dotenv.find_dotenv()
     dotenv.load_dotenv(dotenv_file)
-    data = project_data
+    data = project_data['processDatajsonData']
+    data2 = project_data['workflowDatajsonData']
+    data.update(data2)
+    
 
     try:
         connection = mariadb_pool.get_connection()
@@ -64,9 +67,10 @@ def add_table(mariadb_pool, project_name, project_data, userid):
                 # create_project_table_sql = f"CREATE TABLE `{userid}` (id INT AUTO_INCREMENT PRIMARY KEY, `projectname` VARCHAR(255), `userid` VARCHAR(255));"
                 # cursor.execute(create_project_table_sql)
 
-            for key, value in data['processDatajsonData'].items():
+            for key, value in data.items():
                 insert_data_sql = f"INSERT INTO `TB_PROCESS` (`PROJ_IDX`, `PROC_NAME`, `PROC_DATA`) VALUES(%s, %s, %s);"
                 cursor.execute(insert_data_sql, (project_index, key,value))
+
             connection.commit()
         else:
             cursor.execute(f"SELECT `PROJ_IDX` FROM TB_PROJ WHERE PROJ_NAME = '{project_name}'")
@@ -75,17 +79,30 @@ def add_table(mariadb_pool, project_name, project_data, userid):
             cursor.execute(sql)
             db_data = cursor.fetchall()
 
-            for client_row,x in data['processDatajsonData'].items():
+            for client_row, x in data.items():
                 for db_row in db_data:
                     if client_row == db_row[0]:
                         if x != db_row[1]:
+                            # x = x.replace('"',"'")
                             # 수정된 내용이 있다면 업데이트 쿼리 생성
-                            # update_query = f"UPDATE `TB_PROCESS` SET `PROC_DATA` = '{x}' WHERE `PROC_NAME` = '{client_row}' AND `PROJ_IDX` = '{project_index[0][0]}'"
-                            ## 
-                            update_query = "UPDATE TB_PROCESS SET PROC_DATA = %s WHERE PROC_NAME = %s AND PROJ_IDX = %s"
+                            update_query = f"UPDATE `TB_PROCESS` SET `PROC_DATA` = %s WHERE `PROC_NAME` = %s AND `PROJ_IDX` = %s;"
                             cursor.execute(update_query, (x, client_row, project_index[0][0]))
-                            cursor.execute(update_query)
                             connection.commit()
+                        break  # 일치하는 요소를 찾았으므로 루프 종료
+                else:
+                    # 루프가 break로 종료되지 않았다면 (즉, 데이터베이스에 존재하지 않는 요소)
+                    # 추가하는 쿼리 생성
+                    # x = x.replace('"',"'")
+                    insert_query = f"INSERT INTO `TB_PROCESS` (`PROJ_IDX`, `PROC_NAME`, `PROC_DATA`) VALUES(%s, %s, %s);"
+                    cursor.execute(insert_query, (project_index[0][0], client_row, x))
+                    connection.commit()
+
+            # 데이터베이스에 있는 요소 중에서 data['processDatajsonData'].items()에 없는 요소 삭제
+            for db_row in db_data:
+                if db_row[0] not in data['processDatajsonData']:
+                    delete_query = f"DELETE FROM `TB_PROCESS` WHERE `PROC_NAME` = %s AND `PROJ_IDX` = %s;"
+                    cursor.execute(delete_query, (db_row[0], project_index[0][0]))
+                    connection.commit()
     except Exception as e:
         print(str(e))
         logging.error(traceback.format_exc())

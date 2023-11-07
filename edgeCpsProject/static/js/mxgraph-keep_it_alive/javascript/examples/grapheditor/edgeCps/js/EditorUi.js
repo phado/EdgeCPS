@@ -3664,14 +3664,14 @@ EditorUi.prototype.refresh = function(sizeDidChange)
 	// 순우 상단 메뉴바 삭제
 	if (this.menubar != null)
 	{
-		this.menubarContainer.style.top = this.menubarHeight +100+'px'; //순우 상단 메뉴바 재배치
+		this.menubarContainer.style.top = this.menubarHeight +100+10+'px'; //순우 상단 메뉴바 재배치
 		this.menubarContainer.style.height = this.menubarHeight + 'px';
 		tmp += this.menubarHeight;
 	}
 	
 	if (this.toolbar != null)
 	{
-		this.toolbarContainer.style.top = this.menubarHeight + +100+30+'px'; //내림
+		this.toolbarContainer.style.top = this.menubarHeight + +100+40+'px'; //내림
 		this.toolbarContainer.style.height = this.toolbarHeight + 'px';
 		tmp += this.toolbarHeight;
 	}

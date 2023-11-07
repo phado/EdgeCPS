@@ -3,24 +3,20 @@
 <head>
 
 
-    <meta charset="UTF-8">
+    <!-- <meta charset="UTF-8">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<!--BOOTSTRAP START 순우-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-	<!--BOOTSTRAP END-->
+	
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/grapheditor.css') }}">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/process.css')}}">
+   
+
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/runProcess.css')}}">  <!--순우 css 추가-->
 	<meta charset="UTF-8">
 
 	<title>EdgeCPS</title>
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
 
 
 	<script>
@@ -105,15 +101,13 @@
 	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/js/Toolbar.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/js/Dialogs.js') }}"></script>
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/process.css')}}"> <!--순우 css 추가-->
-	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap">
+	
+	<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap"> -->
 	<script type="text/javascript" src="{{ url_for('static', filename='js/processCommon.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/runProcess.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/userManagement.js')}}"></script>
 
-	<!-- 부트스트랩 스크립트 추가 -->
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	
 
 	<!-- 다이어그램 불러오기위한 라이브러리 추가 -->
 	<script src="https://www.draw.io/js/viewer.min.js"></script>
@@ -121,24 +115,6 @@
 </head>
 <body class="geEditor">
 
-
-
-	<style>
-        /* 스타일을 지정하여 링크가 보라색으로 변하는 효과를 없앰 */
-        a.home {
-            color: inherit;
-            text-decoration: none;
-        }
-        
-        .title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            height: 50px;
-            margin-top: 1%;
-            padding: 0 20px;
-        }
-    </style>
 	<div>
         <div id="title" class="title">
             <h2> <a class="home" href="http://localhost:5000/project/projectsList">EdgeCPS</a></h2>
@@ -159,12 +135,12 @@
 
 		  <!-- <a class="nav-button" href="{{ url_for('overview_process', projectName=project_name) }}" onclick="getLatestXml(flowDict, processGraphxml)"> -->
 		  <a class="nav-button" href="{{ url_for('overview_process', projectName=project_name) }}" >
-			<span class="button-icon-Overview">
+			<span class="button-icon">
 				<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32">
 					<path d="M5.33342 26.6663C4.60008 26.6663 3.97208 26.405 3.44942 25.8823C2.92675 25.3597 2.66586 24.7321 2.66675 23.9997V7.99968C2.66675 7.26634 2.92808 6.63834 3.45075 6.11568C3.97342 5.59301 4.60097 5.33212 5.33342 5.33301H12.2334C12.589 5.33301 12.9281 5.39968 13.2508 5.53301C13.5734 5.66634 13.8565 5.85523 14.1001 6.09968L16.0001 7.99968H26.6668C27.4001 7.99968 28.0281 8.26101 28.5508 8.78368C29.0734 9.30634 29.3343 9.9339 29.3334 10.6663H14.9001L12.2334 7.99968H5.33342V23.9997L7.96675 15.233C8.14453 14.6552 8.47253 14.1939 8.95075 13.849C9.42897 13.5041 9.95653 13.3321 10.5334 13.333H27.7334C28.6445 13.333 29.3614 13.6943 29.8841 14.417C30.4068 15.1397 30.5454 15.9228 30.3001 16.7663L27.9001 24.7663C27.7223 25.3441 27.3943 25.8055 26.9161 26.1503C26.4379 26.4952 25.9103 26.6672 25.3334 26.6663H5.33342ZM8.13342 23.9997H25.3334L27.7334 15.9997H10.5334L8.13342 23.9997Z"/>
 				</svg>
 			</span>
-		  <span class="button-text-Overview">Overview</span>
+		  <span class="button-text">Overview</span>
 		  </a>
 		  	<li class="nav-item-separator">
 			<span class="dot"></span>
@@ -173,12 +149,12 @@
 		  </li>
 		  <!-- <a class="nav-button" href="{{ url_for('requirements_process', projectName=project_name) }}" onclick="getLatestXml(flowDict, processGraphxml)"> -->
 		  <a class="nav-button" href="{{ url_for('requirements_process', projectName=project_name) }}">
-			<span class="button-icon-requirements_process">
+			<span class="button-icon">
 				<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32">
 					<path d="M5.33317 26.6663C4.59984 26.6663 3.97184 26.405 3.44917 25.8823C2.92651 25.3597 2.66562 24.7321 2.66651 23.9997V7.99968C2.66651 7.26634 2.92784 6.63834 3.45051 6.11568C3.97317 5.59301 4.60073 5.33212 5.33317 5.33301H12.2332C12.5887 5.33301 12.9278 5.39968 13.2505 5.53301C13.5732 5.66634 13.8563 5.85523 14.0998 6.09968L15.9998 7.99968H26.6665C27.3998 7.99968 28.0278 8.26101 28.5505 8.78368C29.0732 9.30634 29.3341 9.9339 29.3332 10.6663V14.9997C28.9332 14.7108 28.511 14.4663 28.0665 14.2663C27.6221 14.0663 27.1554 13.8886 26.6665 13.733V10.6663H5.33317V23.9997H14.7665C14.8332 24.4663 14.9332 24.9219 15.0665 25.3663C15.1998 25.8108 15.3665 26.2441 15.5665 26.6663H5.33317ZM23.9998 25.333C24.7332 25.333 25.3612 25.0717 25.8838 24.549C26.4065 24.0263 26.6674 23.3988 26.6665 22.6663C26.6665 21.933 26.4052 21.305 25.8825 20.7823C25.3598 20.2597 24.7323 19.9988 23.9998 19.9997C23.2665 19.9997 22.6385 20.261 22.1158 20.7837C21.5932 21.3063 21.3323 21.9339 21.3332 22.6663C21.3332 23.3997 21.5945 24.0277 22.1172 24.5503C22.6398 25.073 23.2674 25.3339 23.9998 25.333ZM23.7332 29.333C23.4221 29.333 23.1496 29.233 22.9158 29.033C22.6821 28.833 22.5323 28.5775 22.4665 28.2663L22.2665 27.333C21.9998 27.2219 21.7501 27.1055 21.5172 26.9837C21.2843 26.8619 21.0452 26.7117 20.7998 26.533L19.8332 26.833C19.5443 26.9219 19.2612 26.9108 18.9838 26.7997C18.7065 26.6886 18.4896 26.5108 18.3332 26.2663L18.0665 25.7997C17.911 25.533 17.8554 25.2441 17.8998 24.933C17.9443 24.6219 18.0887 24.3663 18.3332 24.1663L19.0665 23.533C19.0221 23.2663 18.9998 22.9775 18.9998 22.6663C18.9998 22.3552 19.0221 22.0663 19.0665 21.7997L18.3332 21.1663C18.0887 20.9663 17.9443 20.7166 17.8998 20.417C17.8554 20.1175 17.911 19.8339 18.0665 19.5663L18.3665 19.0663C18.5221 18.8219 18.7332 18.6441 18.9998 18.533C19.2665 18.4219 19.5443 18.4108 19.8332 18.4997L20.7998 18.7997C21.0443 18.6219 21.2829 18.4721 21.5158 18.3503C21.7487 18.2286 21.999 18.1117 22.2665 17.9997L22.4665 17.033C22.5332 16.7219 22.683 16.4717 22.9158 16.2823C23.1487 16.093 23.4212 15.9988 23.7332 15.9997H24.2665C24.5776 15.9997 24.8501 16.0997 25.0838 16.2997C25.3176 16.4997 25.4674 16.7552 25.5332 17.0663L25.7332 17.9997C25.9998 18.1108 26.2496 18.2272 26.4825 18.349C26.7154 18.4708 26.9545 18.621 27.1998 18.7997L28.1665 18.4997C28.4554 18.4108 28.739 18.4219 29.0172 18.533C29.2954 18.6441 29.5118 18.8219 29.6665 19.0663L29.9332 19.533C30.0887 19.7997 30.1443 20.0886 30.0998 20.3997C30.0554 20.7108 29.911 20.9663 29.6665 21.1663L28.9332 21.7997C28.9776 22.0663 28.9998 22.3552 28.9998 22.6663C28.9998 22.9775 28.9776 23.2663 28.9332 23.533L29.6665 24.1663C29.911 24.3663 30.0554 24.6166 30.0998 24.917C30.1443 25.2175 30.0887 25.5006 29.9332 25.7663L29.6332 26.2663C29.4776 26.5108 29.2665 26.6886 28.9998 26.7997C28.7332 26.9108 28.4554 26.9219 28.1665 26.833L27.1998 26.533C26.9554 26.7108 26.7167 26.8606 26.4838 26.9823C26.251 27.1041 26.0007 27.221 25.7332 27.333L25.5332 28.2997C25.4665 28.6108 25.3167 28.861 25.0838 29.0503C24.851 29.2397 24.5785 29.3339 24.2665 29.333H23.7332Z"/>
 				</svg>
 			</span>
-			<span class="button-text-requirements_process">Requirements</span></a>
+			<span class="button-text">Requirements</span></a>
 		  <li class="nav-item-separator">
 			<span class="dot"></span>
 			<span class="dot"></span>
@@ -186,13 +162,13 @@
 		  </li>
 			<!-- <a class="nav-button" href="{{ url_for('business_process', projectName=project_name) }}" onclick="getLatestXml(flowDict, processGraphxml)"> -->
 			<a class="nav-button" href="{{ url_for('business_process', projectName=project_name) }}">
-				<span class="button-icon-business_process">
+				<span class="button-icon">
 					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32">
 						<path d="M6.6665 30.6663C5.55539 30.6663 4.61095 30.2775 3.83317 29.4997C3.05539 28.7219 2.6665 27.7775 2.6665 26.6663C2.6665 25.5552 3.05539 24.6108 3.83317 23.833C4.61095 23.0552 5.55539 22.6663 6.6665 22.6663C7.2665 22.6663 7.84428 22.8055 8.39984 23.0837C8.95539 23.3619 9.42206 23.7339 9.79984 24.1997C11.1109 23.4886 12.1776 22.533 12.9998 21.333C13.8221 20.133 14.3332 18.7997 14.5332 17.333H10.3998C10.1332 18.133 9.65539 18.7775 8.9665 19.2663C8.27762 19.7552 7.51095 19.9997 6.6665 19.9997C5.55539 19.9997 4.61095 19.6108 3.83317 18.833C3.05539 18.0552 2.6665 17.1108 2.6665 15.9997C2.6665 14.8886 3.05539 13.9441 3.83317 13.1663C4.61095 12.3886 5.55539 11.9997 6.6665 11.9997C7.51095 11.9997 8.27762 12.2441 8.9665 12.733C9.65539 13.2219 10.1332 13.8663 10.3998 14.6663H14.5332C14.3332 13.1997 13.8221 11.8663 12.9998 10.6663C12.1776 9.46634 11.1109 8.51079 9.79984 7.79967C9.42206 8.26634 8.95539 8.63879 8.39984 8.91701C7.84428 9.19523 7.2665 9.3339 6.6665 9.33301C5.55539 9.33301 4.61095 8.94412 3.83317 8.16634C3.05539 7.38856 2.6665 6.44412 2.6665 5.33301C2.6665 4.2219 3.05539 3.27745 3.83317 2.49967C4.61095 1.7219 5.55539 1.33301 6.6665 1.33301C7.77762 1.33301 8.71095 1.71079 9.4665 2.46634C10.2221 3.2219 10.6221 4.15523 10.6665 5.26634C12.4665 6.19967 13.9554 7.48856 15.1332 9.13301C16.3109 10.7775 17.0221 12.6219 17.2665 14.6663H24.2665L23.0665 13.4663C22.8221 13.2219 22.6998 12.9108 22.6998 12.533C22.6998 12.1552 22.8221 11.8441 23.0665 11.5997C23.3109 11.3552 23.6221 11.233 23.9998 11.233C24.3776 11.233 24.6887 11.3552 24.9332 11.5997L28.3998 15.0663C28.5332 15.1997 28.6278 15.3441 28.6838 15.4997C28.7398 15.6552 28.7674 15.8219 28.7665 15.9997C28.7665 16.1775 28.7385 16.3441 28.6825 16.4997C28.6265 16.6552 28.5323 16.7997 28.3998 16.933L24.9332 20.3997C24.6887 20.6441 24.3776 20.7663 23.9998 20.7663C23.6221 20.7663 23.3109 20.6441 23.0665 20.3997C22.8221 20.1552 22.6998 19.8441 22.6998 19.4663C22.6998 19.0886 22.8221 18.7775 23.0665 18.533L24.2665 17.333H17.2665C17.0221 19.3775 16.3221 21.2277 15.1665 22.8837C14.0109 24.5397 12.5109 25.8228 10.6665 26.733C10.6221 27.8441 10.2221 28.7775 9.4665 29.533C8.71095 30.2886 7.77762 30.6663 6.6665 30.6663Z"/>
 
 					</svg>
 				</span>
-				<span class="button-text-business_process">Business Process</span></a>
+				<span class="button-text">Business Process</span></a>
 				<li class="nav-item-separator">
 					<span class="dot"></span>
 					<span class="dot"></span>
@@ -200,14 +176,14 @@
 				  </li>
 			<!-- <a class="nav-button" href="{{ url_for('workflow_process', projectName=project_name) }}" onclick="getWorkflowData(flowDict, processGraphxml)"> -->
 			<a class="nav-button" href="{{ url_for('workflow_process', projectName=project_name) }}" >
-				<span class="button-icon-workflow_process">
+				<span class="button-icon">
 					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32">
 						<path d="M22.6665 28C21.9332 28 21.3052 27.7387 20.7825 27.216C20.2598 26.6933 19.999 26.0658 19.9998 25.3333V24H17.3332C16.5998 24 15.9718 23.7387 15.4492 23.216C14.9265 22.6933 14.6656 22.0658 14.6665 21.3333V10.6667H11.9998V12C11.9998 12.7333 11.7385 13.3613 11.2158 13.884C10.6932 14.4067 10.0656 14.6676 9.33317 14.6667H5.33317C4.59984 14.6667 3.97184 14.4053 3.44917 13.8827C2.92651 13.36 2.66562 12.7324 2.66651 12V6.66667C2.66651 5.93334 2.92784 5.30534 3.45051 4.78267C3.97317 4.26 4.60073 3.99911 5.33317 4H9.33317C10.0665 4 10.6945 4.26134 11.2172 4.784C11.7398 5.30667 12.0007 5.93422 11.9998 6.66667V8H19.9998V6.66667C19.9998 5.93334 20.2612 5.30534 20.7838 4.78267C21.3065 4.26 21.9341 3.99911 22.6665 4H26.6665C27.3998 4 28.0278 4.26134 28.5505 4.784C29.0732 5.30667 29.3341 5.93422 29.3332 6.66667V12C29.3332 12.7333 29.0718 13.3613 28.5492 13.884C28.0265 14.4067 27.399 14.6676 26.6665 14.6667H22.6665C21.9332 14.6667 21.3052 14.4053 20.7825 13.8827C20.2598 13.36 19.999 12.7324 19.9998 12V10.6667H17.3332V21.3333H19.9998V20C19.9998 19.2667 20.2612 18.6387 20.7838 18.116C21.3065 17.5933 21.9341 17.3324 22.6665 17.3333H26.6665C27.3998 17.3333 28.0278 17.5947 28.5505 18.1173C29.0732 18.64 29.3341 19.2676 29.3332 20V25.3333C29.3332 26.0667 29.0718 26.6947 28.5492 27.2173C28.0265 27.74 27.399 28.0009 26.6665 28H22.6665ZM22.6665 12H26.6665V6.66667H22.6665V12ZM22.6665 25.3333H26.6665V20H22.6665V25.3333ZM5.33317 12H9.33317V6.66667H5.33317V12Z"/>
 
 
 					</svg>
 				</span>
-				<span class="button-text-workflow_process">Workflow Process</span></a>
+				<span class="button-text">Workflow Process</span></a>
 				</a>
 				<li class="nav-item-separator">
 					<span class="dot"></span>
@@ -216,21 +192,21 @@
 				  </li>
 			<!-- <a class="nav-button" href="{{ url_for('policy_process', projectName=project_name) }}" onclick="getLatestXml(flowDict, processGraphxml)"> -->
 			<a class="nav-button" href="{{ url_for('policy_process', projectName=project_name) }}" >
-				<span class="button-icon-policy_process">
+				<span class="button-icon">
 					<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32">
 						<path d="M9.3335 24C7.11127 24 5.22238 23.2222 3.66683 21.6667C2.11127 20.1111 1.3335 18.2222 1.3335 16C1.3335 13.7778 2.11127 11.8889 3.66683 10.3333C5.22238 8.77778 7.11127 8 9.3335 8C10.8002 8 12.1446 8.36667 13.3668 9.1C14.5891 9.83333 15.5557 10.8 16.2668 12H28.0002C28.7335 12 29.3615 12.2613 29.8842 12.784C30.4068 13.3067 30.6677 13.9342 30.6668 14.6667V17.3333C30.6668 18.0667 30.4055 18.6947 29.8828 19.2173C29.3602 19.74 28.7326 20.0009 28.0002 20V21.3333C28.0002 22.0667 27.7388 22.6947 27.2162 23.2173C26.6935 23.74 26.0659 24.0009 25.3335 24H22.6668C21.9335 24 21.3055 23.7387 20.7828 23.216C20.2602 22.6933 19.9993 22.0658 20.0002 21.3333V20H16.2668C15.5557 21.2 14.5891 22.1667 13.3668 22.9C12.1446 23.6333 10.8002 24 9.3335 24ZM9.3335 21.3333C10.8002 21.3333 11.9779 20.8836 12.8668 19.984C13.7557 19.0844 14.2891 18.2009 14.4668 17.3333H22.6668V21.3333H25.3335V17.3333H28.0002V14.6667H14.4668C14.2891 13.8 13.7557 12.9164 12.8668 12.016C11.9779 11.1156 10.8002 10.6658 9.3335 10.6667C7.86683 10.6667 6.61127 11.1889 5.56683 12.2333C4.52239 13.2778 4.00016 14.5333 4.00016 16C4.00016 17.4667 4.52239 18.7222 5.56683 19.7667C6.61127 20.8111 7.86683 21.3333 9.3335 21.3333ZM9.3335 18.6667C10.0668 18.6667 10.6948 18.4053 11.2175 17.8827C11.7402 17.36 12.0011 16.7324 12.0002 16C12.0002 15.2667 11.7388 14.6387 11.2162 14.116C10.6935 13.5933 10.0659 13.3324 9.3335 13.3333C8.60016 13.3333 7.97216 13.5947 7.4495 14.1173C6.92683 14.64 6.66594 15.2676 6.66683 16C6.66683 16.7333 6.92816 17.3613 7.45083 17.884C7.9735 18.4067 8.60105 18.6676 9.3335 18.6667Z"/>
 
 
 					</svg>
 				</span>
-				<span class="button-text-policy_process">Policy</span></a>
+				<span class="button-text">Policy</span></a>
 				<li class="nav-item-separator">
 					<span class="dot"></span>
 					<span class="dot"></span>
 					<span class="dot"></span>
 				  </li>
 
-		  <a class="nav-button" href="{{ url_for('run_process', projectName=project_name) }}" onclick="getRunData(flowDict, runData)">
+		  <a class="nav-button-run_process_page" href="{{ url_for('run_process', projectName=project_name) }}" onclick="getRunData(flowDict, runData)">
 			<span class="button-icon-run_process_page">
 				<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 32 32">
 					<path d="M13.3336 18.1337L21.2002 10.2671C21.4447 10.0226 21.7558 9.90039 22.1336 9.90039C22.5113 9.90039 22.8224 10.0226 23.0669 10.2671C23.3113 10.5115 23.4336 10.8226 23.4336 11.2004C23.4336 11.5782 23.3113 11.8893 23.0669 12.1337L14.2669 20.9337C14.0002 21.2004 13.6891 21.3337 13.3336 21.3337C12.978 21.3337 12.6669 21.2004 12.4002 20.9337L8.93356 17.4671C8.68912 17.2226 8.56689 16.9115 8.56689 16.5337C8.56689 16.1559 8.68912 15.8448 8.93356 15.6004C9.17801 15.3559 9.48912 15.2337 9.86689 15.2337C10.2447 15.2337 10.5558 15.3559 10.8002 15.6004L13.3336 18.1337Z"/>

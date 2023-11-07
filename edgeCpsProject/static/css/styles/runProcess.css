@@ -1,3 +1,244 @@
+/* CSS Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Font Styles */
+  @font-face {
+    font-family: 'Inter Extra Bold';
+    src: url('/static/font/Inter-ExtraBold.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  @font-face {
+    font-family: 'Inter Extra Light';
+    src: url('/static/font/Inter-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+  /* EdgeCPS */
+  .title h2 {
+      color: #ffffff;
+      font-size: 25px;
+      font-family: 'Inter Extra Bold';
+      margin-left: 20px;
+      font-style: normal;
+      font-weight: 800;
+      line-height: normal;
+      margin-top: 0.3%;
+  }
+  .title {
+    background: #3853ff;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    height: 50px;
+    padding: 0 20px;
+  }
+  
+  a.home {
+    color: inherit;
+    text-decoration: none;
+  }
+  
+  
+  .nav-item-separator {
+    display: flex;
+    align-items: center;
+    
+  }
+  
+  .nav-item-separator .dot {
+      width: 10px;
+      height: 10px;
+      /* background: #0075FF; */
+      background: #ffffff;
+      margin: 0 5px; /* 원하는 간격으로 조정합니다. */
+      border-radius: 50%;
+      box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+    }
+    
+  .navbar{
+    width: 100%;
+    height: 90px;
+    overflow: hidden; /* 요소들이 부모 컨테이너를 넘어가지 않도록 설정 */
+    display: flex;
+  }
+
+  
+  .nav-item-separator {
+    position: relative;
+    display: flex;
+    align-items: center;
+    /* margin: 0 50px; */
+  }
+  
+  .nav-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      box-sizing: border-box;
+      align-items: center;
+      /* border-bottom: 2px solid #d9d9d9; */
+      margin-left :-1%;
+      /* margin-right:-1%; */
+    }
+
+  
+    
+  /* 기본 버튼 스타일 */
+  .nav-button {
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 185px; /* 고정된 너비로 설정 */
+    height: 40px; /* 고정된 높이로 설정 */
+    border-radius: 10px;
+    background: #F8F9FA;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s;
+    overflow: hidden; /* 버튼 내용이 오버플로우되지 않도록 설정 */
+    margin-right: 2%;
+    margin-left: 2%;
+  }
+  
+  /* 기본 버튼 텍스트 스타일 */
+  .button-text {
+    color: #A4A4A4;
+    font-size: 15px;
+    font-family: 'Inter Extra Light';
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    position: absolute;
+    top: 27%;
+    left: 105px; /* 아이콘과 텍스트 사이의 간격을 조절 */
+    /* transform: translateY(-50%); */
+    transform: translateX(-50%);
+    max-width: calc(100% - 40px); /* 버튼 내용의 최대 너비를 설정 (아이콘과 간격 고려) */
+    white-space: nowrap; /* 긴 텍스트가 줄 바꿈되지 않도록 설정 */
+    overflow: hidden;
+    text-overflow: ellipsis; /* 내용이 오버플로우될 때 말줄임(...) 표시 */
+  }
+  
+  /* 아이콘 스타일 */
+  .button-icon{
+    margin-right: 10px; /* 아이콘 사이의 간격 설정 */
+    position: absolute;
+    left: 14px;
+    top: 45%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 19px;
+    fill: #A4A4A4;
+  }
+  
+  
+  .nav-button:hover{
+    background: #F8F9FA; /* 호버 상태 배경 색상 */
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4); /* 호버 상태 그림자 효과 */
+  }
+  .nav-button:hover .button-icon{
+    /* 호버 상태 아이콘 스타일 */
+    fill: #3853ff;
+  }
+  .nav-button:hover .button-text{
+    color: #3853ff
+  }
+  
+  
+  .nav-button:active {
+    background: #3853ff; /* 클릭한 상태 배경 색상 */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); /* 클릭한 상태 그림자 효과 */
+  }
+  .nav-button:active .button-icon{
+    /* 액티브 상태 아이콘 스타일 */
+    fill: #ffffff;
+  }
+  .nav-button:active .button-text{
+    color: #ffffff;
+  }
+  
+  
+  
+  /*------------------------policy_process_page--------------------------------------------------*/
+  
+  
+  .nav-button-run_process_page {
+    background: #3853ff;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    width: 185px;
+    height: 40px;
+    max-width: 100%; /* 버튼의 최대 너비를 부모 요소에 맞게 설정 */
+    border-radius: 10px;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+    transition: all 0.3s;
+    overflow: hidden; /* 버튼 내용이 오버플로우되지 않도록 설정 */
+    margin-left: 2%;
+    /* margin-right: 1%; */
+  }
+  
+  
+  .nav-button-run_process_page .button-text-run_process_page {
+      color: #ffffff;
+      font-size: 15px;
+      font-family: 'Inter Extra Light';
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      position: absolute;
+      top: 27%;
+      left: 105px;
+      transform: translateX(-50%);
+      max-width: calc(100% - 40px); /* 버튼 내용의 최대 너비를 설정 (아이콘과 간격 고려) */
+      white-space: nowrap; /* 긴 텍스트가 줄 바꿈되지 않도록 설정 */
+      overflow: hidden;
+      text-overflow: ellipsis; /* 내용이 오버플로우될 때 말줄임(...) 표시 */
+  }
+  
+  .nav-button-run_process_page .button-icon-run_process_page {
+    fill:#ffffff;
+    margin-right: 10px;
+    position: absolute;
+    left: 14px;
+    top: 44%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 19px;
+    left: 10px;
+  }
+  
+  /* overview 페이지 활성화 상태에서 호버 상태 그림자 효과 */
+  .nav-button-run_process_page:hover{
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4); 
+  }
+  
+  /* overview 페이지 활성화 상태에서 클릭 했을 때 효과*/
+  .nav-button-run_process_page:active {
+    background: #ffffff; 
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); 
+  }
+  .nav-button-run_process_page:active .button-icon-run_process_page{
+    fill: #0075FF;
+  }
+  .nav-button-run_process_page:active .button-text-run_process_page{
+    color: #0075FF;
+  }
+  
+  
+  
+
+
+
 body, html {
     height: 100%;
     margin: 0;
