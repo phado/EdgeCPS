@@ -1,84 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Project List</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-	<script type="text/javascript" src="{{ url_for('static', filename='js/userManagement.js')}}"></script>
-</head>
-<script>
-    let loginUserInfo =  '{{ loginUserInfo }}';
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/userManagement.js')}}"
+    ></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/styles/managemenetUser.css')}}"
+    />
+  </head>
+  <script>
+    let loginUserInfo = "{{ loginUserInfo }}";
 
-    if (loginUserInfo){
-        localStorage.setItem('loginUserInfo',loginUserInfo)
+    if (loginUserInfo) {
+      localStorage.setItem("loginUserInfo", loginUserInfo);
     }
-</script>
-<body>
-	<div id="title" class="title">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/process.css')}}"> <!--순우 css 추가-->
-		<h2> <a class="home" href="">EdgeCPS</a></h2>
-	</div>
+  </script>
+  <body>
+    <div id="title" class="title">
+      <h2><a class="home" href="">EdgeCPS</a></h2>
+      <div class="userInfo">
+        <button class="user-name" id="user-name">
+          {{ session['userId'] }}
+        </button>
+        <div class="modal" id="userInfoModal">
+          <div class="usermodal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>내 정보</h2>
+            <p>아이디 : {{userIds}}</p>
+            <p>이름 : {{userName}}</p>
+            <p>이메일 : {{userEmail}}</p>
+            <p>소속 : {{userGroup}}</p>
+            {% if userAdmin == 1 %}
+            <a class="nav-link" href="{{ url_for('management_user') }}"
+              >회원 관리</a
+            >
+            {% endif %}
+            <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="container">
-    <div style="float: right" >
-        {% if session["userid"] %}
-    <!-- <div class="nav-links">
-        <h6>ID: {{ session["userid"] }}</h6>
-        <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
-        <a class="nav-link" href="{{ url_for('logout') }}">내정보</a>
-    </div> -->
-    <div class="nav-links d-flex justify-content-between align-items-center mt-3">
-        <h6 class="mb-0">ID: {{ session["userid"] }}</h6>
-        <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
-        <a class="nav-link" href="{{ url_for('logout') }}">내정보</a>
+      <div style="float: right">
+        <div
+          class="nav-links d-flex justify-content-between align-items-center mt-3"
+        ></div>
+      </div>
+
+      <div>
+        <h2 class="mt-5">Project List</h2>
+      </div>
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Project Name</th>
+            <th>작성자</th>
+            <th>수정 날짜</th>
+            <th style="text-align: center">삭 제</th>
+            <th style="text-align: center">열 기</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for project in projects %}
+          <tr>
+            <td>{{ project.id }}</td>
+            <td>{{ project.name }}</td>
+            <td>{{ project.user }}</td>
+            <td>{{ project.create_date }}</td>
+            <td style="text-align: center">
+              <form
+                method="post"
+                action="{{ url_for('delete_project', project_id=project.id) }}"
+              >
+                <button type="submit" class="btn btn-danger btn-sm">
+                  Delete
+                </button>
+              </form>
+            </td>
+            <td style="text-align: center">
+              <form
+                method="post"
+                action="{{ url_for('open_process', project_id=project.id, project_name=project.name,project_user=project.user ) }}"
+              >
+                <button type="submit" class="btn btn-primary btn-sm">
+                  Open Project
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="text-right mt-4">
+        <a
+          href="{{ url_for('overview_process', newPj=true)}}"
+          class="btn btn-primary"
+          >Create Project</a
+        >
+      </div>
     </div>
-    
-    
-        {% endif %}
-    </div>
-
-        <div>
-            <h2 class="mt-5">Project List</h2>
-        </div>
-
-
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Project Name</th>
-                    <th>작성자</th>
-                    <th>수정 날짜</th>
-                    <th style="text-align:center" >삭 제</th>
-                    <th style="text-align:center" >열 기</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for project in projects %}
-                <tr>
-                    <td>{{ project.id }}</td>
-                    <td>{{ project.name }}</td>
-                    <td>{{ project.user }}</td>
-                    <td>{{ project.create_date }}</td>
-                    <td style="text-align:center" >
-                        <form method="post" action="{{ url_for('delete_project', project_id=project.id) }}">
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
-
-                    </td>
-                    <td style="text-align:center" >
-                            <form method="post" action="{{ url_for('open_process', project_id=project.id, project_name=project.name,project_user=project.user ) }}">
-                                <button type="submit" class="btn btn-primary btn-sm">Open Project</button>
-                            </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-        <div class="text-right mt-4">
-            <a href="{{ url_for('overview_process', newPj=true)}}" class="btn btn-primary">Create Project</a>
-        </div>
-    </div>
-</body>
+  </body>
 </html>
+<script>
+  // "관리" 버튼을 클릭했을 때 팝업을 표시하는 함수
+  let currentUser = null;
+  function showPopup(button) {
+    const popupContainer = document.getElementById("popupContainer");
+    const popup = document.getElementById("popup");
+    popupContainer.style.display = "block";
+    popup.style.width = "500px"; // 가로 크기 조절
+    popup.style.height = "500px"; // 세로 크기 조절
+
+    const group = button.getAttribute("data-group");
+    const groupSelect = document.getElementById("group");
+    if (group === "111") {
+      // "tmp" 옵션을 선택합니다.
+      groupSelect.value = "111";
+    } else if (group === "999") {
+      // "admin" 옵션을 선택합니다.
+      groupSelect.value = "999";
+    }
+
+    const valid = button.getAttribute("data-valid");
+    if (valid === "1") {
+      toggleSwitch.checked = true;
+    } else {
+      toggleSwitch.checked = false;
+    }
+
+    const user = button.getAttribute("data-user");
+    currentUser = user;
+  }
+
+  // 팝업을 닫는 함수
+  function closePopup() {
+    const popupContainer = document.getElementById("popupContainer");
+    popupContainer.style.display = "none";
+  }
+
+  function togglePopup() {
+    const popupContainer = document.getElementById("popupContainer");
+    const toggleSwitch = document.getElementById("toggleSwitch");
+
+    if (toggleSwitch.checked) {
+    } else {
+    }
+  }
+
+  function saveInfo() {
+    // select 박스의 값을 가져오기
+    const selectedGroup = document.getElementById("group").value;
+
+    // 토글 버튼의 상태 가져오기
+    const toggleSwitch = document.getElementById("toggleSwitch");
+    if (toggleSwitch.checked == 1) {
+      isActive = 1;
+    } else {
+      isActive = 0;
+    }
+    fetch("/changeInfo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ selectedGroup, isActive, user: currentUser }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.error) {
+          alert("시스템 에러");
+        } else if (data.result) {
+          alert("정보 변경 완료");
+          window.location.reload();
+        } else if (!data.result) {
+          alert("정보 변경 실패.");
+        }
+      });
+  }
+
+  // 버튼 클릭 시 모달 표시
+  const modalButton = document.getElementById("user-name");
+  const modal = document.getElementById("userInfoModal");
+  const closeModalButton = document.getElementById("closeModal");
+  const logoutButton = document.getElementById("logoutButton");
+
+  modalButton.addEventListener("click", function () {
+    modal.style.display = "block";
+  });
+
+  // 모달 닫기 버튼 클릭 시 모달 숨김
+  closeModalButton.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+
+  // 로그아웃 버튼 클릭 시 로그아웃 처리 (예: 페이지 리로드)
+  logoutButton.addEventListener("click", function () {
+    // 로그아웃 처리를 여기에 추가
+    // 예: window.location.href = '/logout';  // 로그아웃 URL로 리다이렉트
+  });
+
+  // 모달 외부 클릭 시 모달 숨김
+  window.addEventListener("click", function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
+</script>

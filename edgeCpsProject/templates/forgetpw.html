@@ -1,145 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Find Password</title>
-    <!-- 부트스트랩 CSS 링크 추가 -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
-<div>
-	<div id="title" class="title">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/process.css')}}"> <!--순우 css 추가-->
-		<h2> <a class="home" href="/">EdgeCPS</a></h2>
-	</div>
-</div>
-<div class="container mt-5">
-    <h1 class="mb-4">비밀 번호 찾기</h1>
-    <form id="resetForm">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/styles/managemenetUser.css')}}"
+    />
+    <link
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div>
+      <div id="title" class="title">
+        <link
+          rel="stylesheet"
+          type="text/css"
+          href="{{ url_for('static', filename='css/styles/process.css')}}"
+        />
+        <!--순우 css 추가-->
+        <h2><a class="home" href="/">EdgeCPS</a></h2>
+      </div>
+    </div>
+    <div class="container mt-5">
+      <h1 class="mb-4">비밀 번호 찾기</h1>
+      <form id="resetForm">
         <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" name="name" required>
-            <small id="nameError" class="text-danger"></small>
+          <label for="name">Name:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            required
+          />
+          <small id="nameError" class="text-danger"></small>
         </div>
         <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" required>
-            <small id="emailError" class="text-danger"></small>
+          <label for="email">Email:</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            required
+          />
+          <small id="emailError" class="text-danger"></small>
         </div>
         <div class="form-group">
-            <label for="userId">ID:</label>
-            <input type="text" class="form-control" id="userId" name="userId" required>
-            <small id="userIdError" class="text-danger"></small>
+          <label for="userId">ID:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="userId"
+            name="userId"
+            required
+          />
+          <small id="userIdError" class="text-danger"></small>
         </div>
-        <button type="button" class="btn btn-primary" id="confirmBtn">비밀번호 찾기</button>
+        <button type="button" class="btn btn-primary" id="confirmBtn">
+          비밀번호 찾기
+        </button>
         <a class="btn btn-secondary" href="/">돌아가기</a>
-    </form>
-</div>
+      </form>
 
-<!-- 부트스트랩 JS 및 jQuery 링크 추가 -->
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const confirmBtn = document.getElementById('confirmBtn');
-        const nameError = document.getElementById('nameError');
-        const emailError = document.getElementById('emailError');
-        const userIdError = document.getElementById('userIdError');
+      <div id="overlay" class="hidden"></div>
+      <div id="popup" class="hidden">
+        <p>현재 비밀번호는 <span id="hiddenUserPw"></span>입니다.</p>
+        <button id="loginButton">로그인</button>
+        <button id="changePasswordButton">비밀번호 변경</button>
+        <button id="closeButton">닫기</button>
+      </div>
 
-        confirmBtn.addEventListener('click', function () {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const userId = document.getElementById('userId').value;
+    <!-- 부트스트랩 JS 및 jQuery 링크 추가 -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const confirmBtn = document.getElementById("confirmBtn");
+        const nameError = document.getElementById("nameError");
+        const emailError = document.getElementById("emailError");
+        const userIdError = document.getElementById("userIdError");
 
-            nameError.textContent = "";
-            emailError.textContent = "";
-            userIdError.textContent = "";
+        confirmBtn.addEventListener("click", function () {
+          const name = document.getElementById("name").value;
+          const email = document.getElementById("email").value;
+          const userId = document.getElementById("userId").value;
 
-            let hasError = false;
+          nameError.textContent = "";
+          emailError.textContent = "";
+          userIdError.textContent = "";
 
-            if (name === "") {
-                nameError.textContent = "Name is required.";
-                hasError = true;
-            }
+          let hasError = false;
 
-            if (email === "") {
-                emailError.textContent = "Email is required.";
-                hasError = true;
-            }
+          if (name === "") {
+            nameError.textContent = "Name is required.";
+            hasError = true;
+          }
 
-            if (userId === "") {
-                userIdError.textContent = "userId is required.";
-                hasError = true;
-            }
+          if (email === "") {
+            emailError.textContent = "Email is required.";
+            hasError = true;
+          }
 
-            if (!hasError) {
-                // 여기에 서버로 정보를 전송하고, 서버에서 응답을 받는 로직을 추가
-                fetch('/findUserPwd', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({name, email, userId})
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.error) {
-                            alert('비밀번호 찾기 오류가 발생 했습니다')
-                            location.replace('/')
-                        } else if (data.exists) {
-                            alert('새로운 밀번호를 입력해주세요 : ', data.userId)
-                            // 비밀번호 새로 입력 과정
-                            const newPwd = prompt('새로운 비밀번호를 입력하세요:');
+          if (userId === "") {
+            userIdError.textContent = "userId is required.";
+            hasError = true;
+          }
 
-                            if (newPwd !== null) {
-                                // 사용자가 확인 버튼을 눌렀을 경우
-                                getNewPwd(newPwd)
-                            }
+          if (!hasError) {
+            // 여기에 서버로 정보를 전송하고, 서버에서 응답을 받는 로직을 추가
+            fetch("/findUserPwd", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ name, email, userId }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.error) {
+                  alert("비밀번호 찾기 오류가 발생 했습니다");
+                  location.replace("/");
+                } else if (data.exists) {
+                  const userPw = data.userPw;
 
-                            // 완료 후 페이지 이동
-                            location.replace('/')
-                        } else if (!data.exists) {
-                            alert('정보가 존재하지 않습니다.')
-                        }
+                  // 사용자에게 현재 비밀번호를 보여줍니다.
+                  const hiddenUserPwSpan =
+                    document.getElementById("hiddenUserPw");
+                  hiddenUserPwSpan.textContent =
+                    userPw.charAt(0) +
+                    "*".repeat(userPw.length - 2) +
+                    userPw.charAt(userPw.length - 1);
 
+                  // 팝업을 표시합니다.
+                  const popup = document.getElementById("popup");
+                  popup.style.display = "block";
+
+                  document.getElementById("closeButton").addEventListener("click", function() {
+                    // 닫기 버튼을 클릭한 경우
+                    overlay.style.display = "none";
+                    popup.style.display = "none";
+                    location.replace("/forgetpw");
+                  });
+                  // 버튼 이벤트를 처리합니다.
+                  document
+                    .getElementById("loginButton")
+                    .addEventListener("click", function () {
+                      // 사용자가 로그인 버튼을 클릭한 경우
+                      location.replace("/"); // 로그인 페이지로 이동
                     });
 
-            }
+                  document
+                    .getElementById("changePasswordButton")
+                    .addEventListener("click", function () {
+                      // 사용자가 비밀번호 변경 버튼을 클릭한 경우
+                      const newPwd = prompt("새로운 비밀번호를 입력하세요:");
+                      if (newPwd !== null) {
+                        // 사용자가 확인 버튼을 눌렀을 경우
+                        getNewPwd(newPwd,userId);
+                      }
+                      // 완료 후 팝업을 숨깁니다.
+                      popup.style.display = "none";
+                      location.replace("/");
+                    });
+                } else if (!data.exists) {
+                  alert("정보가 존재하지 않습니다.");
+                }
+              });
+          }
         });
 
         function showError(errorMessage) {
-            const errorDiv = document.createElement("div");
-            errorDiv.classList.add("alert", "alert-danger");
-            errorDiv.textContent = errorMessage;
-            document.querySelector(".container").appendChild(errorDiv);
+          const errorDiv = document.createElement("div");
+          errorDiv.classList.add("alert", "alert-danger");
+          errorDiv.textContent = errorMessage;
+          document.querySelector(".container").appendChild(errorDiv);
         }
-    });
-</script>
-<script>
-    function getNewPwd(newPwd) {
-        fetch('/changePwd', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({newPwd, newPwd})
+      });
+    </script>
+    <script>
+      function getNewPwd(newPwd,userId) {
+        fetch("/changePwd", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ newPwd, userId }),
         })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert('시스템 에러 : 비밀번호 변경 실패.')
-                } else if (data.result) {
-                    alert('비밀번호 변경 완료')
-                } else if (!data.result) {
-                    alert('비밀번호 변경 실패.')
-                }
-
-            });
-    }
-
-
-</script>
-</body>
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              alert("시스템 에러 : 비밀번호 변경 실패.");
+            } else if (data.exists) {
+              alert("찾으시는 비밀번호는 " + data.userPw + "입니다.");
+              alert("비밀번호 변경 완료");
+            } else if (!data.result) {
+              alert("비밀번호 변경 실패.");
+            }
+          });
+      }
+    </script>
+  </body>
 </html>
+<style>
+.hidden {
+  display: none;
+}
+
+#overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1;
+}
+
+#popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 20px;
+  z-index: 2;
+}
+
+#closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+}
+
+</style>

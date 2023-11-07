@@ -123,6 +123,38 @@ def get_projet_info(mariadb_pool):
         cursor.close()
         connection.close()
 
+def get_projet_info2(mariadb_pool,userId):
+    dotenv_file = dotenv.find_dotenv()
+    dotenv.load_dotenv(dotenv_file)
+
+    try:
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor(buffered=True)
+
+        sql = f"SELECT GROUP_IDX FROM TB_USER WHERE USER_ID = '{userId}'"
+        cursor.execute(sql)
+        user_group = cursor.fetchall()[0][0]
+        sql = f"SELECT TP.PROJ_IDX, TP.PROJ_NAME, TP.PROJ_CREATE_DATE, TU.USER_IDX FROM TB_PROJ TP INNER JOIN TB_USER TU ON TP.USER_IDX = TU.USER_IDX WHERE TU.GROUP_IDX = '{user_group}'"
+        cursor.execute(sql)
+        db_data = cursor.fetchall()
+        
+
+        for i in range(len(db_data)):
+            list_db_data = list(db_data[i])
+            sql = f"SELECT USER_NAME FROM TB_USER WHERE USER_IDX = {list_db_data[3]}"
+            cursor.execute(sql)
+            user_name = cursor.fetchall()
+            list_db_data[3] = user_name[0][0]
+            db_data[i] = tuple(list_db_data)
+        return db_data
+        
+    except Exception as e:
+        print(str(e))
+        logging.error(traceback.format_exc())
+    finally:
+        cursor.close()
+        connection.close()
+
 def load_project(project_index, mariadb_pool):
     dotenv_file = dotenv.find_dotenv()
     dotenv.load_dotenv(dotenv_file)
@@ -147,3 +179,66 @@ def load_project(project_index, mariadb_pool):
     except Exception as e:
         print(str(e))
         logging.error(traceback.format_exc())   
+
+def get_user_info():
+    dotenv_file = dotenv.find_dotenv()
+    dotenv.load_dotenv(dotenv_file)
+
+    try:
+        config = {
+        'user': os.environ['root']
+        , 'password':  os.environ['pw']
+        , 'host': os.environ['ip']
+        , 'port': os.environ['port']
+        , 'database': 'EdgeCPS'
+                }
+        
+        mariadb_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **config)
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor(buffered=True)
+
+        sql = f"SELECT * FROM TB_USER"
+        cursor.execute(sql)
+        db_data = cursor.fetchall()
+
+        return db_data
+        
+    except Exception as e:
+        print(str(e))
+        logging.error(traceback.format_exc())
+    finally:
+        cursor.close()
+        connection.close()
+
+def get_user_single_info(userId):
+    dotenv_file = dotenv.find_dotenv()
+    dotenv.load_dotenv(dotenv_file)
+
+    try:
+        config = {
+        'user': os.environ['root']
+        , 'password':  os.environ['pw']
+        , 'host': os.environ['ip']
+        , 'port': os.environ['port']
+        , 'database': 'EdgeCPS'
+                }
+        
+        mariadb_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **config)
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor(buffered=True)
+
+        sql = f"SELECT * FROM TB_USER WHERE USER_ID = '{userId}'"
+        cursor.execute(sql)
+        db_data = cursor.fetchall()
+
+        return db_data
+        
+    except Exception as e:
+        print(str(e))
+        logging.error(traceback.format_exc())
+    finally:
+        cursor.close()
+        connection.close()
+
