@@ -3,7 +3,7 @@ import os
 import shutil
 import html
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session, make_response
-from db_conn import get_pool_conn, add_table, get_projet_info, load_project
+from db_conn import get_pool_conn, add_table, get_projet_info,get_projet_info2, load_project, get_user_info, get_user_single_info
 import requests
 import urllib3
 import db_query
@@ -31,7 +31,10 @@ app.secret_key = 'EdgeCPS_workflow'
 
 mariadb_pool = get_pool_conn()
 
-def getProjectDict():
+def sessionClear():
+    session.clear()
+
+def getProjectDict(userId):
     # 로컬 디렉토리에 저장 되어있는 목록에서 프로젝트 정보 가져오는 부분.
     # pj_dir = glob.glob('project_file/*')
     # projects = [ ]
@@ -44,7 +47,7 @@ def getProjectDict():
     #     projects.append({'id': idx, 'name': pj_name, 'user': pj_user})
     #     idx += 1
 
-    prjs = get_projet_info(mariadb_pool)
+    prjs = get_projet_info2(mariadb_pool,userId)
     projects = []
 
     for idx in range(len(prjs)):
@@ -89,28 +92,36 @@ def index():
     return render_template('index.html', login_msg='')
 @app.route('/logout', methods=['GET'])
 def logout():
-    session.clear()
+    sessionClear()
     return render_template('index.html')
 
 @app.route('/forgetid', methods=['GET'])
 def forgetid():
-    session.clear()
+    sessionClear()
     return render_template('forgetid.html')
 
 @app.route('/forgetpw', methods=['GET'])
 def forgetpw():
-    session.clear()
+    sessionClear()
     return render_template('forgetpw.html')
 
 @app.route('/project/projectsList', methods=['GET', 'POST'])
 def project_list():
     loginUserInfo = request.args.get('loginUserInfo')
+    userId= session['userId']
 
-    projects_info = getProjectDict()
+    projects_info = getProjectDict(userId)
 
+    userInfo = get_user_single_info(userId)
+    userIds = userInfo[0][1]
+    userName = userInfo[0][2]
+    userEmail = userInfo[0][4]
+    userGroup = userInfo[0][5]
+    userAdmin = userInfo[0][7]
 
     # todo 프로젝트 리스트 정보 조회하는 기능 필요
-    return render_template('projectList.html', projects=projects_info, loginUserInfo=loginUserInfo)
+    return render_template('projectList.html', projects=projects_info, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup, loginUserInfo=loginUserInfo)
+
 
 
 @app.route('/projects/delete/<int:project_id>', methods=['POST'])
@@ -637,8 +648,9 @@ def change_pwd():
     
     try:
         data = request.get_json()
+        userId =  data['userId']
         new_pwd = data['newPwd']
-        response = db_query.change_pwd(mariadb_pool,new_pwd=new_pwd)
+        response = db_query.change_pwd(mariadb_pool,new_pwd=new_pwd, user_id=userId)
     except:
         response = {'error': True ,'result': False }
 
@@ -646,7 +658,6 @@ def change_pwd():
 
 @app.route('/checkUserId', methods=['POST'])
 def check_user_id():
-    # 새로운 비밀번호 수정
     try:
         data = request.get_json()
         user_id = data['userId']
@@ -658,3 +669,50 @@ def check_user_id():
 
 if __name__ == '__main__':
     app.run(debug=True,host = '')
+
+def getUserDict():
+    prjs = get_user_info()
+    projects = []
+
+    for idx in range(len(prjs)):
+        projects.append({'id': prjs[idx][0], 'name': prjs[idx][1], 'user': prjs[idx][2], 'user_pwd': prjs[idx][3], 'user_email': prjs[idx][4], 'group_index': prjs[idx][5], 'vaild': prjs[idx][6], 'admin': prjs[idx][7]})
+    return projects
+
+def getSingleUserDict():
+    prjs = get_user_single_info()
+    projects = []
+
+    for idx in range(len(prjs)):
+        projects.append({'id': prjs[idx][0], 'name': prjs[idx][1], 'user': prjs[idx][2], 'user_pwd': prjs[idx][3], 'user_email': prjs[idx][4], 'group_index': prjs[idx][5], 'vaild': prjs[idx][6], 'admin': prjs[idx][7]})
+    return projects
+
+@app.route('/project/managementUser', methods=['GET', 'POST'])
+def management_user():
+    loginUserInfo = request.args.get('loginUserInfo')
+
+    projects_info = getUserDict()
+
+    userId= session['userId']
+    userInfo = get_user_single_info(userId)
+    userIds = userInfo[0][1]
+    userName = userInfo[0][2]
+    userEmail = userInfo[0][4]
+    userGroup = userInfo[0][5]
+    userAdmin = userInfo[0][7]
+    # todo 프로젝트 리스트 정보 조회하는 기능 필요
+    return render_template('managementUser.html', projects=projects_info, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup,loginUserInfo=loginUserInfo)
+
+
+@app.route('/changeInfo', methods=['POST'])
+def change_info():
+    try:
+        data = request.get_json()
+        
+        new_group = data['selectedGroup']
+        new_valid =  str(data['isActive'])
+        user = data['user']
+        response = db_query.change_Info(mariadb_pool,new_group=new_group,new_valid=new_valid,user = user)
+    except:
+        response = {'error': True ,'result': False }
+
+    return jsonify(response)

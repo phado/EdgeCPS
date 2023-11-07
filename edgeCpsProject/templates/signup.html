@@ -1,176 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>회원가입</title>
-    <!-- 부트스트랩 링크 추가 -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-	<div id="title" class="title">
-        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/process.css')}}"> <!--순우 css 추가-->
-		<h2> <a class="home" href="/">EdgeCPS</a></h2>
-	</div>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div id="title" class="title">
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href="{{ url_for('static', filename='css/styles/managemenetUser.css')}}"
+      />
+      <h2><a class="home" href="/">EdgeCPS</a></h2>
+    </div>
 
     <div class="container mt-5">
-        <h1 class="text-center">회원가입</h1>
-        <form action="/signup" method="post" id="signupForm">
-            <div class="form-group">
-                <label for="name">이름:</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-                <small id="nameError" class="text-danger"></small> <!-- 에러 메시지를 표시할 영역 -->
+      <h1 class="text-center">회원가입</h1>
+      <form action="/signup" method="post" id="signupForm">
+        <div class="form-group">
+          <label for="name">이름:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            required
+          />
+          <small id="nameError" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+          <label for="userId">아이디:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="userId"
+            name="userId"
+            required
+          />
+          <button id="checkDuplicateButton">중복확인</button>
+          <small id="userIdError" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+          <label for="password">비밀번호:</label>
+          <input
+            type="password"
+            class="form-control"
+            id="password"
+            name="password"
+            required
+          />
+          <small id="passwordError" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+          <label for="email">이메일:</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            required
+          />
+          <small id="emailError" class="text-danger"></small>
+        </div>
+        <div class="form-group">
+          <label for="birthdate">생년월일:</label>
+          <input
+            type="date"
+            class="form-control"
+            id="birthdate"
+            name="birthdate"
+            required
+          />
+          <small id="birthdateError" class="text-danger"></small>
+        </div>
 
-            </div>
-            <div class="form-group">
-                <label for="userId">아이디:</label>
-                <input type="text" class="form-control" id="userId" name="userId" required>
-                <small id="userIdError" class="text-danger"></small> <!-- 에러 메시지를 표시할 영역 -->
-            </div>
-            <div class="form-group">
-                <label for="password">비밀번호:</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-                <small id="passwordError" class="text-danger"></small> <!-- 에러 메시지를 표시할 영역 -->
-            </div>
-            <div class="form-group">
-                <label for="email">이메일:</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-                <small id="emailError" class="text-danger"></small> <!-- 에러 메시지를 표시할 영역 -->
-            </div>
-            <div class="form-group">
-                <label for="birthdate">생년월일:</label>
-                <input type="date" class="form-control" id="birthdate" name="birthdate" required>
-                <small id="birthdateError" class="text-danger"></small> <!-- 에러 메시지를 표시할 영역 -->
+        <div class="form-group">
+          <label for="group">소속:</label>
+          <select class="form-control" id="group" name="group" required>
+            <option value="" disabled selected>소속을 선택해주세요</option>
+            <option value="111">temp</option>
+            <option value="999">admin</option>
+          </select>
+          <small id="groupError" class="text-danger"></small>
+        </div>
 
-            </div>
-
-            <div class="form-group">
-                <label for="group">소속:</label>
-                <select class="form-control" id="group" name="group" required>
-                    <option value="" disabled selected>소속을 선택해주세요</option>
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                </select>
-                <small id="groupError" class="text-danger"></small> <!-- 에러 메시지를 표시할 영역 -->
-
-            </div>
-
-            <button type="submit" class="btn btn-primary">가입</button>
-            <a href="/cancel" class="btn btn-secondary">취소</a>
-        </form>
+        <button type="submit" class="btn btn-primary">가입</button>
+        <a href="/cancel" class="btn btn-secondary">취소</a>
+      </form>
     </div>
-    <!-- 부트스트랩 스크립트 추가 -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const signupForm = document.getElementById('signupForm');
-            const nameInput = document.getElementById('name');
-            const userIdInput = document.getElementById('userId');
-            const passwordInput = document.getElementById('password');
-            const emailInput = document.getElementById('email');
-            const birthdateInput = document.getElementById('birthdate');
-            const groupInput = document.getElementById('group');
+      document.addEventListener("DOMContentLoaded", function () {
+        const signupForm = document.getElementById("signupForm");
+        const nameInput = document.getElementById("name");
+        const userIdInput = document.getElementById("userId");
+        const passwordInput = document.getElementById("password");
+        const emailInput = document.getElementById("email");
+        const birthdateInput = document.getElementById("birthdate");
+        const groupInput = document.getElementById("group");
 
-            const nameErrorError = document.getElementById('nameError');
-            const userIdError = document.getElementById('userIdError');
-            const passwordError = document.getElementById('passwordError');
-            const emailError = document.getElementById('emailError');
-            const birthdateError = document.getElementById('birthdateError');
-            const groupError = document.getElementById('groupError');
+        const nameErrorError = document.getElementById("nameError");
+        const userIdError = document.getElementById("userIdError");
+        const passwordError = document.getElementById("passwordError");
+        const emailError = document.getElementById("emailError");
+        const birthdateError = document.getElementById("birthdateError");
+        const groupError = document.getElementById("groupError");
 
-            let signupFlg = true;
-            signupForm.addEventListener('submit', function (event) {
-                // 이름 유효성 검사
-                const nameValid = /^[가-힣a-zA-Z]+$/.test(nameInput.value);
-                if (!nameValid){
-                    event.preventDefault()
-                    nameErrorError.textContent = '잘못된 입력입니다'
-                    signupFlg = false
-                }else {
-                    nameErrorError.textContent = ''
-                }
-
-                // 아이디 유효성 검사, 중복 확인
-                const idValid = /^[a-zA-Z0-9]{6,12}$/.test(userIdInput.value);// 유효성 검사
-                if (!idValid){
-                    event.preventDefault()
-                    userIdError.textContent = '6글자 이상 12글자 미만, 영문과 숫자로 생성 가능 합니다.';
-                    signupFlg = false
-                } else {
-                    userIdError.textContent = ''
-                    checkuserId(userIdInput.value, event,userIdError,signupFlg)// 중복 검사;
-                }
-
-                // 비밀번호 확인
-                const isPasswordValid = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/.test(passwordInput.value); // 비밀번호 성립 조건 (5자 이상, 영문과 숫자 포함)
-                if (!isPasswordValid) {
-                    event.preventDefault()
-                    passwordError.textContent = '비밀번호는 5자 이상이며 영문과 숫자를 포함해야 합니다.';
-                    signupFlg = false
-                }else {
-                    passwordError.textContent = '';
-                }
-
-                // 이메일
-                const emailValid = /^[\w\.-]+@[\w\.-]+\.\w+$/.test(emailInput.value)
-                if (!emailValid){
-                    event.preventDefault()
-                    emailError.textContent = '이미 사용 중인 이메일입니다.';
-                    signupFlg = false
-                } else {
-                    emailError.textContent = '';
-                }
-
-
-                // 생년월일
-                if (birthdateInput.value.trim() === ''){
-                    event.preventDefault()
-                    birthdateError.textContent = '생년월일을 선택해 주세요.';
-                    signupFlg = false
-                } else {
-                    birthdateError.textContent = '';
-                }
-
-
-                if (groupInput.value.trim() === ''){
-                    event.preventDefault()
-                    groupError.textContent = '소속을 선택해주세요.';
-                    signupFlg = false
-                } else {
-                    groupError.textContent = '';
-                }
-
-                if (signupFlg){
-                    alert('가입 완료')
-                }
-
-
-            });
+        let signupFlg = true;
+        signupForm.addEventListener("submit", function (event) {
+          // 이름 유효성 검사
+          const nameValid = /^[가-힣a-zA-Z]+$/.test(nameInput.value);
+          if (!nameValid) {
+            event.preventDefault();
+            nameErrorError.textContent = "잘못된 입력입니다";
+            signupFlg = false;
+          } else {
+            nameErrorError.textContent = "";
+          }
+          // 아이디 유효성 검사, 중복 확인
+          const idValid = /^[a-zA-Z0-9]{6,12}$/.test(userIdInput.value); // 유효성 검사
+          if (!idValid) {
+            event.preventDefault();
+            userIdError.textContent =
+              "6글자 이상 12글자 미만, 영문과 숫자로 생성 가능 합니다.";
+            signupFlg = false;
+          } else {
+            userIdError.textContent = "";
+            checkuserId(userIdInput.value, event, userIdError, signupFlg); // 중복 검사;
+          }
+          // 비밀번호 확인
+          const isPasswordValid = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{5,}$/.test(
+            passwordInput.value
+          ); // 비밀번호 성립 조건 (5자 이상, 영문과 숫자 포함)
+          if (!isPasswordValid) {
+            event.preventDefault();
+            passwordError.textContent =
+              "비밀번호는 5자 이상이며 영문과 숫자를 포함해야 합니다.";
+            signupFlg = false;
+          } else {
+            passwordError.textContent = "";
+          }
+          // 이메일
+          const emailValid = /^[\w\.-]+@[\w\.-]+\.\w+$/.test(emailInput.value);
+          if (!emailValid) {
+            event.preventDefault();
+            emailError.textContent = "이미 사용 중인 이메일입니다.";
+            signupFlg = false;
+          } else {
+            emailError.textContent = "";
+          }
+          // 생년월일
+          if (birthdateInput.value.trim() === "") {
+            event.preventDefault();
+            birthdateError.textContent = "생년월일을 선택해 주세요.";
+            signupFlg = false;
+          } else {
+            birthdateError.textContent = "";
+          }
+          if (groupInput.value.trim() === "") {
+            event.preventDefault();
+            groupError.textContent = "소속을 선택해주세요.";
+            signupFlg = false;
+          } else {
+            groupError.textContent = "";
+          }
+          if (signupFlg) {
+            alert("가입 완료");
+          }
         });
+      });
     </script>
-    <script>
-    function checkuserId(id,event,userIdError,signupFlg) {
-        const userId = id
-
-        fetch('/checkUserId', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ userId: userId })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.exists) {
-                event.preventDefault();
-                userIdError.textContent = "이 아이디는 이미 사용 중입니다.";
-                signupFlg = false
-            }
-        });
-    }
-    </script>
-</body>
+  </body>
 </html>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const checkDuplicateButton = document.getElementById(
+      "checkDuplicateButton"
+    );
+    checkDuplicateButton.addEventListener("click", function () {
+      const userIdInput = document.getElementById("userId");
+      const userId = userIdInput.value;
+
+      fetch("/checkUserId", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ userId: userId }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result == "same") {
+            userIdError.textContent = "이미 사용 중인 아이디입니다.";
+            userIdInput.value = "";
+            signupFlg = false;
+          } else {
+            userIdError.textContent = "사용 가능한 아이디입니다.";
+          }
+        })
+        .catch((error) => {
+          console.error("서버 요청 오류:", error);
+        });
+    });
+  });
+</script>

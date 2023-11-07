@@ -1,43 +1,135 @@
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Login</title>
-
  <!-- 부트스트랩 CSS 링크 추가 -->
  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+ <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/styles/process.css')}}"
+    />
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div id="title" class="title">
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/process.css')}}"> <!--순우 css 추가-->
-		<!-- <h2> <a class="home" href="/">EdgeCPS</a></h2> -->
+		<h2> <a class="home" href="/">EdgeCPS</a></h2>
 	</div>
-    <div class="imageContainer"></div>
     <div class="container">
-        <h1>Login</h1>
-        <form method="POST" action="/">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" name="username" required>
-                <small id="usernameError" class="text-danger"></small>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" name="password" required>
-                <small id="passwordError" class="text-danger"></small>
-            </div>
-            <button type="submit" class="btn btn-primary" id="confirmBtn">Login</button>
-            <a href="{{ url_for('signup') }}" class="btn btn-primary">Signup</a>
-        </form>
-        {% if login_msg %}
-          <div class="alert alert-danger">{{ login_msg }}</div>
-        {% endif %}
-        <div>
-            <a href="{{ url_for('forgetid') }}">아이디 찾기</a>
-			<a href="{{ url_for('forgetpw') }}">비밀번호 찾기</a>
+      <div class="row">
+        <div class="col-md-6">
+          <img src="./image/login.jpg" alt="Image" class="img-fluid" />
         </div>
+        <div class="col-md-6">
+          <h1
+            style="
+              color: #3390ff;
+              font-family: Roboto;
+              font-size: 36px;
+              font-weight: 800;
+              line-height: 42px;
+              letter-spacing: 0em;
+              text-align: center;
+              padding: 40px;
+            "
+          >
+            Login Account
+          </h1>
+          <form method="POST" action="/">
+            <div class="form-group">
+              <label
+                for="username"
+                style="
+                  color: #848484;
+                  font-family: Roboto;
+                  font-size: 16px;
+                  font-weight: 400;
+                  line-height: 19px;
+                  letter-spacing: 0em;
+                  text-align: left;
+                "
+                >User Name</label
+              >
+              <input
+                type="text"
+                class="form-control"
+                id="username"
+                name="username"
+                required
+                style="height: 40px; background: #f1f1f1; outline: none"
+              />
+              <small id="usernameError" class="text-danger"></small>
+            </div>
+            <div class="form-group">
+              <label
+                for="password"
+                style="
+                  color: #848484;
+                  font-family: Roboto;
+                  font-size: 16px;
+                  font-weight: 400;
+                  line-height: 19px;
+                  letter-spacing: 0em;
+                  text-align: left;
+                "
+                >Password</label
+              >
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                required
+                style="height: 40px; background: #f1f1f1; outline: none"
+              />
+              <small id="passwordError" class="text-danger"></small>
+            </div>
+            <div style="padding-bottom: 40px">
+              <a
+                href="{{ url_for('forgetid') }}"
+                style="float: left; color: #c7c7c7"
+                >Forget Id?</a
+              >
+              <a
+                href="{{ url_for('forgetpw') }}"
+                style="float: right; color: #c7c7c7"
+                >Forget Password?</a
+              ><br />
+            </div>
 
+            <button
+              type="submit"
+              class="btn btn-primary"
+              id="confirmBtn"
+              style="
+                background: #3390ff;
+                width: 550px;
+                height: 45px;
+                padding: 10px, 167px, 10px, 167px;
+                border-radius: 999px;
+                gap: 10px;
+              "
+            >
+              Login</button
+            ><br /><br />
+            {% if login_msg %}
+            <div class="alert alert-danger">{{ login_msg }}</div>
+            {% endif %}
+            <div style="padding-top: 80px; color: #c7c7c7">
+              New User? <a href="{{ url_for('signup') }}">Signup</a>
+            </div>
+          </form>
+        </div>
+<!--        &lt;!&ndash; ... 잘 넘어왔는지 확인 코드 ... &ndash;&gt;-->
+<!--        <p>이름 : {{ name }}!</p>-->
+<!--        <p>아이디 : {{ username }}</p>-->
+<!--        <p>이메일: {{ email }}</p>-->
+<!--        <p>생년월잏: {{ birthdate }}</p>-->
 
-  
+    </div>
 
     <!-- 부트스트랩 JS 링크 -->
     <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
@@ -48,59 +140,47 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-          const confirmBtn = document.getElementById('confirmBtn');
-          const usernameError = document.getElementById('usernameError');
-          const passwordError = document.getElementById('passwordError');
-    
-          confirmBtn.addEventListener('click', function () {
-            const password = document.getElementById('password').value;
-            const username = document.getElementById('username').value;
-    
-            passwordError.textContent = "";
-            usernameError.textContent = "";
-    
-            let hasError = false;
-    
-    
-            if (password === "") {
-              passwordError.textContent = "Email is required.";
-              hasError = true;
-            }
-    
-            if (username === "") {
-              usernameError.textContent = "Username is required.";
-              hasError = true;
-            }
-    
-            // if (!hasError) {
-            //   // 여기에 서버로 정보를 전송하고, 서버에서 응답을 받는 로직을 추가
-            //   $.ajax({
-            //     url: '/check_user', // 서버로 보낼 URL
-            //     method: 'POST',     // 요청 메소드
-            //     data: { password, username }, // 전송할 데이터
-            //     success: function(response) {
-            //       if (response === 'not_found') {
-            //         showError("User not found in the database.");
-            //       } else {
-            //         // 여기에 성공 시 동작을 추가하면 됩니다.
-            //         // 예시: resetPassword(name, email, username);
-            //       }
-            //     },
-            //     error: function() {
-            //       showError("An error occurred while processing the request.");
-            //     }
-            //   });
-            // }
-          });
-    
-          function showError(errorMessage) {
-            const errorDiv = document.createElement("div");
-            errorDiv.classList.add("alert", "alert-danger");
-            errorDiv.textContent = errorMessage;
-            document.querySelector(".container").appendChild(errorDiv);
+      document.addEventListener("DOMContentLoaded", function () {
+        const confirmBtn = document.getElementById("confirmBtn");
+        const usernameError = document.getElementById("usernameError");
+        const passwordError = document.getElementById("passwordError");
+
+        confirmBtn.addEventListener("click", function () {
+          const password = document.getElementById("password").value;
+          const username = document.getElementById("username").value;
+
+          passwordError.textContent = "";
+          usernameError.textContent = "";
+
+          let hasError = false;
+
+          if (password === "") {
+            passwordError.textContent = "Password is required.";
+            hasError = true;
+          }
+          if (username === "") {
+            usernameError.textContent = "ID is required.";
+            hasError = true;
           }
         });
-      </script>
-</body>
+
+        function showError(errorMessage) {
+          const errorDiv = document.createElement("div");
+          errorDiv.classList.add("alert", "alert-danger");
+          errorDiv.textContent = errorMessage;
+          document.querySelector(".container").appendChild(errorDiv);
+        }
+      });
+    </script>
+  </body>
 </html>
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+</style>

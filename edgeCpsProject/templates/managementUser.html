@@ -3,7 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Project List</title>
+    <title>회원 관리</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/styles/managemenetUser.css')}}"
+    />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -12,19 +17,7 @@
       type="text/javascript"
       src="{{ url_for('static', filename='js/userManagement.js')}}"
     ></script>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename='css/styles/managemenetUser.css')}}"
-    />
   </head>
-  <script>
-    let loginUserInfo = "{{ loginUserInfo }}";
-
-    if (loginUserInfo) {
-      localStorage.setItem("loginUserInfo", loginUserInfo);
-    }
-  </script>
   <body>
     <div id="title" class="title">
       <h2><a class="home" href="">EdgeCPS</a></h2>
@@ -59,57 +52,86 @@
       </div>
 
       <div>
-        <h2 class="mt-5">Project List</h2>
+        <h2 class="mt-5">회원 관리</h2>
       </div>
 
       <table class="table table-striped">
         <thead>
-          <tr>
-            <th>ID</th>
-            <th>Project Name</th>
-            <th>작성자</th>
-            <th>수정 날짜</th>
-            <th style="text-align: center">삭 제</th>
-            <th style="text-align: center">열 기</th>
+          <tr style="text-align: center">
+            <th>INDEX</th>
+            <th>아이디</th>
+            <th>아름</th>
+            <th>비밀번호</th>
+            <th>이메일</th>
+            <th>소속</th>
+            <th>관리</th>
           </tr>
         </thead>
         <tbody>
           {% for project in projects %}
-          <tr>
+          <tr style="text-align: center">
             <td>{{ project.id }}</td>
             <td>{{ project.name }}</td>
             <td>{{ project.user }}</td>
-            <td>{{ project.create_date }}</td>
-            <td style="text-align: center">
-              <form
-                method="post"
-                action="{{ url_for('delete_project', project_id=project.id) }}"
+            <td>{{ project.user_pwd }}</td>
+            <td>{{ project.user_email }}</td>
+            <td>{{ project.group_index }}</td>
+            <td>
+              <button
+                style="width: 80px; border-radius: 5px"
+                type="button"
+                onclick="showPopup(this)"
+                data-group="{{ project.group_index }}"
+                data-valid="{{ project.vaild }}"
+                data-user="{{ project.id }}"
               >
-                <button type="submit" class="btn btn-danger btn-sm">
-                  Delete
-                </button>
-              </form>
-            </td>
-            <td style="text-align: center">
-              <form
-                method="post"
-                action="{{ url_for('open_process', project_id=project.id, project_name=project.name,project_user=project.user ) }}"
-              >
-                <button type="submit" class="btn btn-primary btn-sm">
-                  Open Project
-                </button>
-              </form>
+                관리
+              </button>
             </td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
-      <div class="text-right mt-4">
-        <a
-          href="{{ url_for('overview_process', newPj=true)}}"
-          class="btn btn-primary"
-          >Create Project</a
-        >
+      <div id="popupContainer" class="popup-container" style="display: none">
+        <div id="popup" class="popup">
+          <div class="center-content">
+            <div class="row">
+              <div class="col-md-6">
+                <label for="group">소속 관리</label>
+                <select class="form-control" id="group" name="group" required>
+                  <option value="" disabled selected></option>
+                  <option value="111">tmp</option>
+                  <option value="999">admin</option>
+                </select>
+              </div>
+              <div class="col-md-6">
+                <label for="toggleSwitch">활성화 여부</label>
+                <label class="switch">
+                  <input
+                    type="checkbox"
+                    id="toggleSwitch"
+                    onclick="togglePopup()"
+                  />
+                  <span class="slider round"></span>
+                </label>
+              </div>
+            </div>
+            <button
+              type="button"
+              style="margin-top: 100px; float: right"
+              onclick="saveInfo()"
+            >
+              저장
+            </button>
+            <button
+              type="button"
+              style="margin-top: 100px; float: right"
+              onclick="closePopup()"
+            >
+              닫기
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </body>
