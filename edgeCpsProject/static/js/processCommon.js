@@ -178,7 +178,7 @@ document.addEventListener("DOMContentLoaded", function() {
 	// buttonContainer.style.marginTop = "5px";
 	
 
-	buttonContainer.appendChild(createButton("Save All", processSaveClick,'saveButton',"background-color: #3853ff; color: #fff; border-radius: 5px; padding: 4px 10px; font-family: 'Inter Extra Light'; font-style: normal;")); // process-save 버튼
+	buttonContainer.appendChild(createButton("Save All", processSaveClick,'saveButton',"background-color: #3853ff; color: #fff; border-radius: 5px; padding: 2px 8px; font-family: 'Inter Extra Light'; font-style: normal;")); // process-save 버튼
 	// 
 	// buttonContainer.appendChild(createButton("process-load", processLoadClick)); // process-load 버튼
 	 

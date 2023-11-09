@@ -1513,10 +1513,12 @@ var EditDataDialog = function(ui, cell)
 
 			}
 			else if (DiagramClicked.includes('Rectangle')){
-				var DiClassFixProperty = document.createAttribute('Input')
-				DiClassFixProperty.value = ''
-				var DiClassFixProperty2 = document.createAttribute('Output')
-				DiClassFixProperty2.value = ''
+				var DiClassFixProperty = document.createAttribute('arguments.parameters')
+				DiClassFixProperty.value = 'name:""  value:""'
+				var DiClassFixProperty2 = document.createAttribute('arguments.artifacts')
+				DiClassFixProperty2.value = 'name:"" from:""'
+				// var DiClassFixProperty2 = document.createAttribute('Output')
+				// DiClassFixProperty2.value = ''
 				
 				attrs.setNamedItem(DiClassFixProperty)
 				attrs.setNamedItem(DiClassFixProperty2)
@@ -1534,10 +1536,12 @@ var EditDataDialog = function(ui, cell)
 				DiClassFixProperty5.value = ''
 				var DiClassFixProperty6 = document.createAttribute('environment')
 				DiClassFixProperty6.value = ''
-				var DiClassFixProperty7 = document.createAttribute('parameters')
-				DiClassFixProperty7.value = 'name: ""       value: ""'
-				var DiClassFixProperty8 = document.createAttribute('artifacts')
-				DiClassFixProperty8.value = 'name: ""      from: ""'
+				var DiClassFixProperty7 = document.createAttribute('inputs.parameters')
+				DiClassFixProperty7.value = 'name:""  value:""'
+				var DiClassFixProperty8 = document.createAttribute('outputs.parameters')
+				DiClassFixProperty8.value = 'name:""  path:""'
+				// var DiClassFixProperty9 = document.createAttribute('arguments.artifacts.')
+				// DiClassFixProperty9.value = 'name:""  from:""'
 				
 				attrs.setNamedItem(DiClassFixProperty)
 				attrs.setNamedItem(DiClassFixProperty2)
@@ -1547,6 +1551,7 @@ var EditDataDialog = function(ui, cell)
 				attrs.setNamedItem(DiClassFixProperty6)
 				attrs.setNamedItem(DiClassFixProperty7)
 				attrs.setNamedItem(DiClassFixProperty8)
+				// attrs.setNamedItem(DiClassFixProperty9)
 			}
 			else if (DiagramClicked.includes('Script')){
 				var DiClassFixProperty = document.createAttribute('interpreter')

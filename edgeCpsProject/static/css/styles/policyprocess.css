@@ -28,6 +28,7 @@
     font-style: normal;
     font-weight: 800;
     line-height: normal;
+    margin-top: 0.4%;
 }
 .title {
   background: #3853ff;
@@ -100,6 +101,8 @@ a.home {
   height: 90px;
   overflow: hidden; /* 요소들이 부모 컨테이너를 넘어가지 않도록 설정 */
   display: flex;
+  padding: 0rem 0rem!important;
+  background-color: #ececec;
 }
 
 .nav-item-separator {
@@ -112,7 +115,7 @@ a.home {
 .nav-list {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 24px;
     display: flex;
     justify-content: space-between;
     width: 100%;

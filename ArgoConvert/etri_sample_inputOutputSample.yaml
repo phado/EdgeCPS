@@ -7,8 +7,11 @@ spec:
   templates:
   - name: output-parameter
     steps:
+    
     - - name: generate-parameter
         template: whalesay
+
+
     - - name: consume-parameter
         template: print-message
         arguments:
@@ -19,6 +22,9 @@ spec:
       # 병렬실행 추가해봄
       - name: generate-parameter2
         template: whalesay
+
+
+
 
   - name: whalesay
     container:
@@ -39,3 +45,6 @@ spec:
       image: docker/whalesay:latest
       command: [cowsay]
       args: ["{{inputs.parameters.message}}"]
+
+
+      

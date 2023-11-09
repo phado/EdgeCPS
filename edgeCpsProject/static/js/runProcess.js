@@ -35,8 +35,12 @@ function executeFunctionWithFileContent(content,workflowName) {
 // 불러온 다이어그램 클릭 이벤트 함수 
 function subContent1ClickHandler(sender, evt) {
     var cell = evt.getProperty('cell'); // 클릭한 셀
+    var valueString='';
     if (cell != null && cell.style.includes('rounded=1')) { //cell이 null아니고 엣지도 아닌경우 
         var valueString = cell.value.outerHTML;
+        if(valueString==undefined){
+            valueString = cell.value;
+        }
         var regex = /&quot;&gt;(.+?)&lt;/;
 			var matches = [];
 			// var match;

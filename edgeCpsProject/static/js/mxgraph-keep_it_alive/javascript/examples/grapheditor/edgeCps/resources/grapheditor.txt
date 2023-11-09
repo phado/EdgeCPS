@@ -328,4 +328,7 @@ writingDirection=Writing Direction
 zoom=Zoom
 zoomIn=Zoom In
 zoomOut=Zoom Out
+requirementSideBar=Requiremet Palette
+businessSideBar=Activity Palette
+workflowSideBar=Action Palette
 

@@ -557,16 +557,16 @@ Format.prototype.refresh = function(arguments)
 	attributePanel.className = 'attributePanel';
 	attributePanel.style.position = 'fixed';
 	attributePanel.style.width = '210px';
-	attributePanel.style.height = '300px';
 	attributePanel.style.borderRadius = '5px';
 	attributePanel.style.border = '1px solid';
 	attributePanel.style.borderColor = '#9b9b9b';
 	attributePanel.style.marginLeft = '0.8%';
+	// attributePanel.style.height = '200px';
 
 	var showAttribute = document.createElement('div');
 	showAttribute.className = 'showAttribute';
 	showAttribute.style.textAlign = 'center';
-	showAttribute.style.fontWeight = 'bold';
+	// showAttribute.style.fontWeight = 'bold';
 	showAttribute.style.paddingTop = '8px';
 	showAttribute.style.fontSize = '15px';
 	showAttribute.style.display = (mxClient.IS_QUIRKS) ? 'inline' : 'inline-block';
@@ -580,7 +580,19 @@ Format.prototype.refresh = function(arguments)
 	if (process_name=='requirementsProcess'){
 		try{
 			var reqAttribute = selectedCell[0].cells[0].value.attributes[1]['name']+' : '+selectedCell[0].cells[0].value.getAttribute('text');
-			showAttribute.textContent = reqAttribute;
+			// showAttribute.textContent = reqAttribute;
+			var line = reqAttribute;
+			
+				var parts = line.split(':');
+				if (parts.length === 2) {
+					// 왼쪽은 볼드 스타일로, 오른쪽은 일반 스타일로 추가합니다.
+					showAttribute.innerHTML += '<span style="font-weight: bold;">' + parts[0] + ':</span> ' + parts[1] + '<br>';
+				} else {
+					// ':' 문자가 없는 줄은 그대로 추가합니다.
+					showAttribute.innerHTML += line + '<br>';
+				}
+			
+			
 		}
 		catch{}
 	}
@@ -594,7 +606,20 @@ Format.prototype.refresh = function(arguments)
 				}
 				totalAttribute += reqAttribute[i]['name'] + ' : ' + reqAttribute[i]['value']+'<br>';
 			}
-			showAttribute.innerHTML = totalAttribute;
+			// showAttribute.innerHTML = totalAttribute;
+			var lines = totalAttribute.split('<br>');
+			for (var i = 0; i < lines.length; i++) {
+				var line = lines[i];
+				var parts = line.split(':');
+				if (parts.length === 2) {
+					// 왼쪽은 볼드 스타일로, 오른쪽은 일반 스타일로 추가합니다.
+					showAttribute.innerHTML += '<span style="font-weight: bold;">' + parts[0] + ':</span> ' + parts[1] + '<br>';
+				} else {
+					// ':' 문자가 없는 줄은 그대로 추가합니다.
+					showAttribute.innerHTML += line + '<br>';
+				}
+			}
+			
 		}
 		catch {}
 	}
@@ -645,9 +670,17 @@ Format.prototype.refresh = function(arguments)
 		arrangePanel.style.display = 'none';
 		arrangePanel.style.position = 'absolute';
 		
-		if(showAttribute.textContent)
-		var textHeight = showAttribute.clientHeight; // attribete높이 동적으로 저장
-		arrangePanel.style.top = textHeight+25+'px'; // 원하는 위치로 설정
+		// 빈 값일 때 속성 창 최소크기
+		if(showAttribute.textContent==''){
+			var textHeight = showAttribute.clientHeight; // attribete높이 동적으로 저장
+			attributePanel.style.height = '200px';
+			arrangePanel.style.top = textHeight+225+'px'; // 원하는 위치로 설정
+		}else{
+			var textHeight = showAttribute.clientHeight; // attribete높이 동적으로 저장
+			// attributePanel.style.height = textHeight;
+			arrangePanel.style.top = textHeight+25+'px';
+		}
+
 // console.log(textHeight)
 		this.panels.push(new ArrangePanel(this, ui, arrangePanel));
 		

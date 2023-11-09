@@ -330,11 +330,12 @@
 	background-color: #3853ff;
   	border-radius: 5px;
 	height :30px;
-	width: 202px;
+	width: 196px;
 	font-family: 'Inter Extra Light';
 	font-weight: 700;
 	color: #f5f5f5;
 	font-size: 13px;
+	/* margin-left:1px; */
 }
 
 

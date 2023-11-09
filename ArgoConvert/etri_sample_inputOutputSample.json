@@ -5,7 +5,7 @@
     "apiVersion": "argoproj.io/v1alpha1",
     "kind": "Workflow",
     "metadata": {
-      "name": "wokr"
+      "name": "etri1"
     },
     "spec": {
       "entrypoint": "output-parameter",
@@ -13,14 +13,12 @@
         {
           "name": "output-parameter",
           "steps": [
-            // 첫번쨰 스텝
             [
               {
                 "name": "generate-parameter",
                 "template": "whalesay"
               }
             ],
-            // 두번째 스텝
             [
               {
                 "name": "consume-parameter",
@@ -39,10 +37,8 @@
                 "template": "whalesay"
               }
             ]
-
           ]
         },
-        // 템플릿
         {
           "name": "whalesay",
           "container": {
