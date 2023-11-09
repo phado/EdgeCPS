@@ -374,23 +374,23 @@ Format.prototype.refresh = function(arguments)
 	var graph = ui.editor.graph;
 	
 	var div = document.createElement('div');
-	div.style.whiteSpace = 'nowrap';
-	div.style.color = 'rgb(112, 112, 112)';
-	div.style.textAlign = 'left';
-	div.style.cursor = 'default';
+	// div.style.whiteSpace = 'nowrap';
+	// div.style.color = 'rgb(112, 112, 112)';
+	// div.style.textAlign = 'left';
+	// div.style.cursor = 'default';
 	
 	var label = document.createElement('div');
-	label.className = 'geFormatSection';
-	label.style.textAlign = 'center';
-	label.style.fontWeight = 'bold';
-	label.style.paddingTop = '8px';
-	label.style.fontSize = '13px';
-	label.style.borderWidth = '0px 0px 1px 1px';
-	label.style.borderStyle = 'solid';
-	label.style.display = (mxClient.IS_QUIRKS) ? 'inline' : 'inline-block';
-	label.style.height = (mxClient.IS_QUIRKS) ? '34px' : '25px';
-	label.style.overflow = 'hidden';
-	label.style.width = '100%';
+	// label.className = 'geFormatSection';
+	// label.style.textAlign = 'center';
+	// label.style.fontWeight = 'bold';
+	// label.style.paddingTop = '0px';
+	// label.style.fontSize = '13px';
+	// label.style.borderWidth = '0px 0px 1px 1px';
+	// label.style.borderStyle = 'solid';
+	// label.style.display = (mxClient.IS_QUIRKS) ? 'inline' : 'inline-block';
+	// label.style.height = (mxClient.IS_QUIRKS) ? '34px' : '25px';
+	// label.style.overflow = 'hidden';
+	// label.style.width = '100%';
 	this.container.appendChild(div);
 	
 	// Prevents text selection
@@ -465,164 +465,122 @@ Format.prototype.refresh = function(arguments)
 	
 	var idx = 0;
 
-	if (graph.isSelectionEmpty())
-	{
-		mxUtils.write(label, mxResources.get('diagram'));
-		label.style.borderLeftWidth = '0px';
+	// if (graph.isSelectionEmpty())
+	// {
+	// 	// mxUtils.write(label, mxResources.get('diagram'));
+	// 	label.style.borderLeftWidth = '0px';
 
-		div.appendChild(label);
-		var diagramPanel = div.cloneNode(false);
-		this.panels.push(new DiagramFormatPanel(this, ui, diagramPanel));
-		this.container.appendChild(diagramPanel);
+	// 	div.appendChild(label);
+	// 	var diagramPanel = div.cloneNode(false);
+	// 	this.panels.push(new DiagramFormatPanel(this, ui, diagramPanel));
+	// 	this.container.appendChild(diagramPanel);
 		
-		if (Editor.styles != null)
-		{
-			diagramPanel.style.display = 'none';
-			label.style.width = (this.showCloseButton) ? '106px' : '50%';
-			label.style.cursor = 'pointer';
-			label.style.backgroundColor = this.inactiveTabBackgroundColor;
+	// 	if (Editor.styles != null)
+	// 	{
+	// 		diagramPanel.style.display = 'none';
+	// 		label.style.width = (this.showCloseButton) ? '106px' : '50%';
+	// 		label.style.cursor = 'pointer';
+	// 		label.style.backgroundColor = this.inactiveTabBackgroundColor;
 			
-			var label2 = label.cloneNode(false);
-			label2.style.borderLeftWidth = '1px';
-			label2.style.borderRightWidth = '1px';
-			label2.style.backgroundColor = this.inactiveTabBackgroundColor;
+	// 		var label2 = label.cloneNode(false);
+	// 		label2.style.borderLeftWidth = '1px';
+	// 		label2.style.borderRightWidth = '1px';
+	// 		label2.style.backgroundColor = this.inactiveTabBackgroundColor;
 			
-			addClickHandler(label, diagramPanel, idx++);
+	// 		addClickHandler(label, diagramPanel, idx++);
 			
-			var stylePanel = div.cloneNode(false);
-			stylePanel.style.display = 'none';
-			mxUtils.write(label2, mxResources.get('style'));
-			div.appendChild(label2);
-			this.panels.push(new DiagramStylePanel(this, ui, stylePanel));
-			this.container.appendChild(stylePanel);
+	// 		var stylePanel = div.cloneNode(false);
+	// 		stylePanel.style.display = 'none';
+	// 		mxUtils.write(label2, mxResources.get('style'));
+	// 		div.appendChild(label2);
+	// 		this.panels.push(new DiagramStylePanel(this, ui, stylePanel));
+	// 		this.container.appendChild(stylePanel);
 			
-			addClickHandler(label2, stylePanel, idx++);
-		}
+	// 		addClickHandler(label2, stylePanel, idx++);
+	// 	}
 		
-		// Adds button to hide the format panel since
-		// people don't seem to find the toolbar button
-		// and the menu item in the format menu
-		if (this.showCloseButton)
-		{
-			var label2 = label.cloneNode(false);
-			label2.style.borderLeftWidth = '1px';
-			label2.style.borderRightWidth = '1px';
-			label2.style.borderBottomWidth = '1px';
-			label2.style.backgroundColor = this.inactiveTabBackgroundColor;
-			label2.style.position = 'absolute';
-			label2.style.right = '0px';
-			label2.style.top = '0px';
-			label2.style.width = '25px';
+	// 	// Adds button to hide the format panel since
+	// 	// people don't seem to find the toolbar button
+	// 	// and the menu item in the format menu
+	// 	if (this.showCloseButton)
+	// 	{
+	// 		var label2 = label.cloneNode(false);
+	// 		label2.style.borderLeftWidth = '1px';
+	// 		label2.style.borderRightWidth = '1px';
+	// 		label2.style.borderBottomWidth = '1px';
+	// 		label2.style.backgroundColor = this.inactiveTabBackgroundColor;
+	// 		label2.style.position = 'absolute';
+	// 		label2.style.right = '0px';
+	// 		label2.style.top = '0px';
+	// 		label2.style.width = '25px';
 			
-			var img = document.createElement('img');
-			img.setAttribute('border', '0');
-			img.setAttribute('src', Dialog.prototype.closeImage);
-			img.setAttribute('title', mxResources.get('hide'));
-			img.style.position = 'absolute';
-			img.style.display = 'block';
-			img.style.right = '0px';
-			img.style.top = '8px';
-			img.style.cursor = 'pointer';
-			img.style.marginTop = '1px';
-			img.style.marginRight = '6px';
-			img.style.border = '1px solid transparent';
-			img.style.padding = '1px';
-			img.style.opacity = 0.5;
-			label2.appendChild(img)
+	// 		var img = document.createElement('img');
+	// 		img.setAttribute('border', '0');
+	// 		img.setAttribute('src', Dialog.prototype.closeImage);
+	// 		img.setAttribute('title', mxResources.get('hide'));
+	// 		img.style.position = 'absolute';
+	// 		img.style.display = 'block';
+	// 		img.style.right = '0px';
+	// 		img.style.top = '8px';
+	// 		img.style.cursor = 'pointer';
+	// 		img.style.marginTop = '1px';
+	// 		img.style.marginRight = '6px';
+	// 		img.style.border = '1px solid transparent';
+	// 		img.style.padding = '1px';
+	// 		img.style.opacity = 0.5;
+	// 		label2.appendChild(img)
 			
-			mxEvent.addListener(img, 'click', function()
-			{
-				ui.actions.get('formatPanel').funct();
-			});
+	// 		mxEvent.addListener(img, 'click', function()
+	// 		{
+	// 			ui.actions.get('formatPanel').funct();
+	// 		});
 			
-			div.appendChild(label2);
-		}
-	}
-	else if (graph.isEditing())
-	{
-		mxUtils.write(label, mxResources.get('text'));
-		div.appendChild(label);
-		this.panels.push(new TextFormatPanel(this, ui, div));
-	}
-	else
-	{
-		label.style.backgroundColor = this.inactiveTabBackgroundColor;
-		label.style.borderLeftWidth = '1px';
-		label.style.cursor = 'pointer';
-		label.style.width = (containsLabel) ? '50%' : '33.3%';
-		var label2 = label.cloneNode(false);
-		var label3 = label2.cloneNode(false);
+	// 		div.appendChild(label2);
+	// 	}
+	// }
 
-		// Workaround for ignored background in IE
-		label2.style.backgroundColor = this.inactiveTabBackgroundColor;
-		label3.style.backgroundColor = this.inactiveTabBackgroundColor;
-		
-		// Text
-		mxUtils.write(label2, mxResources.get('text'));
-		div.appendChild(label2);
-
-		var textPanel = div.cloneNode(false);
-		textPanel.style.display = 'none';
-		this.panels.push(new TextFormatPanel(this, ui, textPanel));
-		this.container.appendChild(textPanel);
-
-		// Arrange
-		mxUtils.write(label3, mxResources.get('arrange'));
-		div.appendChild(label3);
-
-		var arrangePanel = div.cloneNode(false);
-		arrangePanel.style.display = 'none';
-		this.panels.push(new ArrangePanel(this, ui, arrangePanel));
-		this.container.appendChild(arrangePanel);
-		
-		addClickHandler(label3, arrangePanel, idx++);
-		addClickHandler(label2, textPanel, idx++);
-		
-
-		// Style
-		if (containsLabel)
-		{
-			label.style.borderLeftWidth = '0px';
-			
-		}
-		else
-		{
-			label.style.borderLeftWidth = '0px';
-			mxUtils.write(label, mxResources.get('style'));
-			div.appendChild(label);
-			
-			var stylePanel = div.cloneNode(false);
-			stylePanel.style.display = 'none';
-			this.panels.push(new StyleFormatPanel(this, ui, stylePanel));
-			this.container.appendChild(stylePanel);
-
-			addClickHandler(label, stylePanel, idx++);
-		}
-	}
 	var div = document.createElement('div');
 	div.style.whiteSpace = 'nowrap';
 	div.style.color = 'rgb(112, 112, 113)';
 	div.style.textAlign = 'left';
 	div.style.cursor = 'default';
+	div.className = 'rightSideBar';
+	div.style.marginLeft= '0.8%';
+	// div.style
+
+	
+	var attributeTitle = document.createElement('div');
+	attributeTitle.innerText = 'Information';
+	div.appendChild(attributeTitle);
+
+	var attributePanel = document.createElement('div');
+	attributePanel.className = 'attributePanel';
+	attributePanel.style.position = 'fixed';
+	attributePanel.style.width = '210px';
+	attributePanel.style.height = '300px';
+	attributePanel.style.borderRadius = '5px';
+	attributePanel.style.border = '1px solid';
+	attributePanel.style.borderColor = '#9b9b9b';
+	attributePanel.style.marginLeft = '0.8%';
 
 	var showAttribute = document.createElement('div');
 	showAttribute.className = 'showAttribute';
 	showAttribute.style.textAlign = 'center';
 	showAttribute.style.fontWeight = 'bold';
 	showAttribute.style.paddingTop = '8px';
-	showAttribute.style.fontSize = '23px';
-	// showAttribute.style.borderWidth = '1px 0px 1px 1px';
-	// showAttribute.style.borderStyle = 'solid';
+	showAttribute.style.fontSize = '15px';
 	showAttribute.style.display = (mxClient.IS_QUIRKS) ? 'inline' : 'inline-block';
 	showAttribute.style.height = 'max-content';
 	showAttribute.style.overflow = 'hidden';
 	showAttribute.style.width = '100%';
-	showAttribute.style.fontsize = '15px';
+	showAttribute.style.textAlign = 'left';
+	showAttribute.style.overflow = 'auto';
+	
 	// 순우 각 cell 클릭 했을 때 우측 사이드바에 속성 값 띄우는 기능
 	if (process_name=='requirementsProcess'){
 		try{
 			var reqAttribute = selectedCell[0].cells[0].value.attributes[1]['name']+' : '+selectedCell[0].cells[0].value.getAttribute('text');
-			div.textContent = reqAttribute;
+			showAttribute.textContent = reqAttribute;
 		}
 		catch{}
 	}
@@ -636,13 +594,94 @@ Format.prototype.refresh = function(arguments)
 				}
 				totalAttribute += reqAttribute[i]['name'] + ' : ' + reqAttribute[i]['value']+'<br>';
 			}
-			div.innerHTML = totalAttribute;
+			showAttribute.innerHTML = totalAttribute;
 		}
 		catch {}
 	}
-	div.appendChild(showAttribute)
+
+	attributePanel.appendChild(showAttribute)
+	div.appendChild(attributeTitle);
+	div.appendChild(attributePanel);
+
+	// div.appendChild(showAttribute)
+	
+	// div.appendChild(attributePanel);
 	this.container.appendChild(div);
-};
+
+
+	// if (graph.isEditing())
+	// {
+	// 	mxUtils.write(label, mxResources.get('text'));
+	// 	div.appendChild(label);
+	// 	this.panels.push(new TextFormatPanel(this, ui, div));
+	// }
+	// else
+	// {
+		label.style.backgroundColor = this.inactiveTabBackgroundColor;
+		label.style.borderLeftWidth = '1px';
+		label.style.cursor = 'pointer';
+		label.style.width = (containsLabel) ? '50%' : '33.3%';
+		var label2 = label.cloneNode(false);
+		var label3 = label2.cloneNode(false);
+
+		// Workaround for ignored background in IE
+		label2.style.backgroundColor = this.inactiveTabBackgroundColor;
+		label3.style.backgroundColor = this.inactiveTabBackgroundColor;
+		
+		// Text
+		// mxUtils.write(label2, mxResources.get('text'));
+		// div.appendChild(label2);
+
+		// var textPanel = div.cloneNode(false);
+		// textPanel.style.display = 'none';
+		// this.panels.push(new TextFormatPanel(this, ui, textPanel));
+		// this.container.appendChild(textPanel);
+		// 순우
+		// Arrange
+		// mxUtils.write(label3, mxResources.get('insertAttirbute'));
+		// div.appendChild(label3);
+
+		var arrangePanel = div.cloneNode(false);
+		arrangePanel.style.display = 'none';
+		arrangePanel.style.position = 'absolute';
+		
+		if(showAttribute.textContent)
+		var textHeight = showAttribute.clientHeight; // attribete높이 동적으로 저장
+		arrangePanel.style.top = textHeight+25+'px'; // 원하는 위치로 설정
+// console.log(textHeight)
+		this.panels.push(new ArrangePanel(this, ui, arrangePanel));
+		
+		div.appendChild(label3);
+		div.appendChild(arrangePanel);
+
+		// this.container.appendChild(arrangePanel);
+		
+		addClickHandler(label3, arrangePanel, idx++);
+		// addClickHandler(label2, textPanel, idx++);
+		
+
+		// Style
+		// if (containsLabel)
+		// {
+		// 	label.style.borderLeftWidth = '0px';
+			
+		// }
+		// else
+		// {
+		// 	label.style.borderLeftWidth = '0px';
+		// 	mxUtils.write(label, mxResources.get('style'));
+		// 	div.appendChild(label);
+			
+		// 	var stylePanel = div.cloneNode(false);
+		// 	stylePanel.style.display = 'none';
+		// 	this.panels.push(new StyleFormatPanel(this, ui, stylePanel));
+		// 	this.container.appendChild(stylePanel);
+
+		// 	addClickHandler(label, stylePanel, idx++);
+		// }
+	}
+	
+// };
 
 /**
  * Base class for format panels.
@@ -824,7 +863,8 @@ BaseFormatPanel.prototype.createPanel = function()
 	var div = document.createElement('div');
 	div.className = 'geFormatSection';
 	div.style.padding = '12px 0px 12px 18px';
-	
+	div.style.borderTop = '1px solid #dadce0;';
+	div.borderColor= '#dadce0;';
 	return div;
 };
 
@@ -1938,8 +1978,11 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		}));
 		
 		btn.setAttribute('title', mxResources.get('selectReq'));
+		
 		btn.style.width = '202px';
 		btn.style.marginBottom = '2px';
+		
+  
 		div.appendChild(btn);
 		count++;
 

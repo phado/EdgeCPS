@@ -43,6 +43,41 @@ a.home {
   text-decoration: none;
 }
 
+.user-image{
+  position: fixed;
+  width: 96px;
+  height: 31px;
+  top: 0.9%;
+  left: 92%; 
+ }
+
+.userNameText{
+    position: fixed;
+    /* width: 96px;
+    height: 31px; */
+    top: 1.2%;
+    left: 93.7%; 
+    /* margin-left: 10px;  */
+}
+
+.user-name-background {
+  border: none;
+  /* border-top-left-radius: 50%; 
+  border-bottom-left-radius: 50%;  */
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 4px 20px; 
+  background-color: #fff; 
+  color: #0056be;
+  font-family: "Roboto-Medium", Helvetica;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.userInfo{
+  margin-left:85%
+}
 
 .nav-item-separator {
   display: flex;

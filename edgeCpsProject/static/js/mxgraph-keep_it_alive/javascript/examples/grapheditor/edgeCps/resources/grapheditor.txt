@@ -29,6 +29,7 @@ angle=Angle
 apply=Apply
 arc=Arc
 arrange=Arrange
+insertAttirbute= Attribute
 arrow=Arrow
 arrows=Arrows
 automatic=Automatic

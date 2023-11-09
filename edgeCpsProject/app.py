@@ -34,7 +34,9 @@ mariadb_pool = get_pool_conn()
 def sessionClear():
     session.clear()
 
-def getProjectDict(userId):
+# def getProjectDict(userId):
+
+def getProjectDict():
     # 로컬 디렉토리에 저장 되어있는 목록에서 프로젝트 정보 가져오는 부분.
     # pj_dir = glob.glob('project_file/*')
     # projects = [ ]
@@ -47,13 +49,34 @@ def getProjectDict(userId):
     #     projects.append({'id': idx, 'name': pj_name, 'user': pj_user})
     #     idx += 1
 
-    prjs = get_projet_info2(mariadb_pool,userId)
+    # prjs = get_projet_info2(mariadb_pool,userId)
+    prjs = get_projet_info(mariadb_pool)
     projects = []
 
     for idx in range(len(prjs)):
         projects.append({'id': prjs[idx][0], 'name': prjs[idx][1], 'create_date': prjs[idx][2], 'user': prjs[idx][3]})
     return projects
 
+def getProjectDict2(userId):
+    # 로컬 디렉토리에 저장 되어있는 목록에서 프로젝트 정보 가져오는 부분.
+    # pj_dir = glob.glob('project_file/*')
+    # projects = [ ]
+    # idx = 1
+    # for file_path in pj_dir:
+    #     pj_info = file_path.split('/')[-1]
+    #     pj_user = pj_info.split('@')[-1]
+    #     pj_name_list = pj_info.split('@')[:-1]
+    #     pj_name = '@'.join(pj_name_list)
+    #     projects.append({'id': idx, 'name': pj_name, 'user': pj_user})
+    #     idx += 1
+
+    # prjs = get_projet_info2(mariadb_pool,userId)
+    prjs = get_projet_info2(mariadb_pool,userId)
+    projects = []
+
+    for idx in range(len(prjs)):
+        projects.append({'id': prjs[idx][0], 'name': prjs[idx][1], 'create_date': prjs[idx][2], 'user': prjs[idx][3]})
+    return projects
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -110,7 +133,7 @@ def project_list():
     loginUserInfo = request.args.get('loginUserInfo')
     userId= session['userId']
 
-    projects_info = getProjectDict(userId)
+    projects_info = getProjectDict2(userId)
 
     userInfo = get_user_single_info(userId)
     userIds = userInfo[0][1]
@@ -260,6 +283,7 @@ def open_process(project_id,project_user,project_name):
             session['data'] = data
 
 
+
             # session['str_json'] = str_json
             # session['project_name'] = project_name
             # session['xml_process'] = xml_process
@@ -320,39 +344,36 @@ def overview_process():
     catlist = ['java', 'python']
     active_overview = True
     pass_overview = request.form.get('load_project')
-    
 
+    # userName =session['userName']
     data = request.args.get('data')
     open_project = request.args.get('openProject')
-    # try:
-    #     if pass_overview == 'True':
-    #         project_name = request.args.get('projectName')
 
-    #         return redirect(url_for('requirements_process', project_name=project_name, pass_overview = 'True'))
-    # except:
-    #     pass
+    userId= session['userId'] 
+    user_info = user_get_info(userId)    
+    userIds, userName, userEmail, userGroup, userAdmin = user_info
+    
     if pass_overview =='True':
         project_name = request.form.get('project_name')
-        return redirect(url_for('requirements_process', project_name=project_name))
+        return redirect(url_for('requirements_process', project_name=project_name, userName = userName,userIds =userIds, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
 
     #  불러오기
     if open_project:
         project_name = request.args.get('project_name')
         # pass_overview = request.args.get('pass_overview')
 
-        return render_template('process/overviewProcess.html', active_overview=active_overview, categories=catlist, project_data = data, open_project = 'True', project_name=project_name )
+        return render_template('process/overviewProcess.html', active_overview=active_overview, categories=catlist, project_data = data, open_project = 'True', project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
 
     if request.method == 'POST': # 프로젝트 생성
         project_name = request.form.get('project_name')
         project_description = request.form.get('project_description')
         project_category = request.form.get('project_category')
-        return redirect(url_for('requirements_process', project_name=project_name))
-    
+        return redirect(url_for('requirements_process', project_name=project_name, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
     # create project
     if request.method == 'GET': #최초이동
         new_pj = request.args.get('newPj')
         project_name = request.args.get('projectName')
-        return render_template('process/overviewProcess.html', active_overview=active_overview, categories=catlist, new_pj=new_pj,project_name=project_name)
+        return render_template('process/overviewProcess.html', active_overview=active_overview, categories=catlist, new_pj=new_pj,project_name=project_name, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
 
 
 @app.route('/process/requirementsProcess', methods=['GET', 'POST'])
@@ -361,17 +382,19 @@ def requirements_process():
     # pass_overview = request.args.get('pass_overview')
     # if pass_overview =='True':
     #      return render_template('process/requirementsProcess.html', active_requirements=active_requirements , project_name=project_name)
-
+    userId= session['userId'] 
+    user_info = user_get_info(userId)    
+    userIds, userName, userEmail, userGroup, userAdmin = user_info
 
     if request.method == 'GET':
         project_name = request.args.get('project_name')
         if not project_name:
             project_name = request.args.get('projectName')
             if not project_name:
-                return redirect(url_for('overview_process', newPj=True))
+                return redirect(url_for('overview_process', newPj=True, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
 
 
-    return render_template('process/requirementsProcess.html', active_requirements=active_requirements , project_name=project_name)
+    return render_template('process/requirementsProcess.html', active_requirements=active_requirements , project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
 
     # return render_template('process/requirementsProcess.html', active_requirements=active_requirements)
 
@@ -379,30 +402,48 @@ def requirements_process():
 @app.route('/process/businessProcess', methods=['GET', 'POST'])
 def business_process():
     active_process = True
+    userId= session['userId'] 
+    user_info = user_get_info(userId)    
+    userIds, userName, userEmail, userGroup, userAdmin = user_info
+
     if request.method == 'GET':
         project_name = request.args.get('projectName')
-        return render_template('process/businessProcess.html', active_process=active_process, project_name=project_name)
+        return render_template('process/businessProcess.html', active_process=active_process, project_name=project_name, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
 
 @app.route('/process/workflowProcess', methods=['GET', 'POST'])
 def workflow_process():
     active_workflow = True
+    userId= session['userId'] 
+    user_info = user_get_info(userId)    
+    userIds, userName, userEmail, userGroup, userAdmin = user_info
+
     if request.method == 'GET':
         project_name = request.args.get('projectName')
-        return render_template('process/workflowProcess.html', active_workflow=active_workflow, project_name=project_name)
+        return render_template('process/workflowProcess.html', active_workflow=active_workflow, project_name=project_name, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup
+)
 
 @app.route('/process/policyProcess', methods=['GET', 'POST'])
 def policy_process():
     active_policy = True
+    userId= session['userId'] 
+    user_info = user_get_info(userId)    
+    userIds, userName, userEmail, userGroup, userAdmin = user_info
+
     if request.method == 'GET':
         project_name = request.args.get('projectName')
-        return render_template('process/policyProcess.html', active_policy=active_policy, project_name=project_name)
+        return render_template('process/policyProcess.html', active_policy=active_policy, project_name=project_name, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup
+)
 
 @app.route('/process/runProcess', methods=['GET', 'POST'])
 def run_process():
     active_run = True
+    userId= session['userId'] 
+    user_info = user_get_info(userId)    
+    userIds, userName, userEmail, userGroup, userAdmin = user_info
+
     if request.method == 'GET':
         project_name = request.args.get('projectName')
-        return render_template('process/runProcess.html', active_run=active_run, project_name=project_name)
+        return render_template('process/runProcess.html', active_run=active_run, project_name=project_name, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
 
 # @app.after_request
 # def after_request(response):
@@ -716,3 +757,23 @@ def change_info():
         response = {'error': True ,'result': False }
 
     return jsonify(response)
+
+
+def user_get_info(userId):
+    userInfo = get_user_single_info(userId)
+
+    userIds = userInfo[0][1]
+    userName = userInfo[0][2]
+    userEmail = userInfo[0][4]
+
+    if(userInfo[0][5] == 1):
+        userGroup = "ETRI"
+    elif(userInfo[0][5] == 2):
+        userGroup = "KPST"
+    elif(userInfo[0][5] == 999):
+        userGroup = "공통"
+    else:
+        userGroup = "!!"
+    userAdmin = userInfo[0][7]
+
+    return userIds, userName, userEmail, userGroup, userAdmin

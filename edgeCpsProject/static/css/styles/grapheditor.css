@@ -63,7 +63,10 @@
 	border-top:1px solid #dadce0;
 }
 .geFormatSection {
+	padding-top: 0px!important;
 	border-bottom:1px solid #dadce0;
+	border-color:#dadce0;
+	border-top:1px solid #dadce0;
 	border-color:#dadce0;
 }
 .geDiagramContainer {
@@ -299,10 +302,42 @@
 	background:transparent;
 	border-bottom:none;
 }
+
+/* Font Styles */
+@font-face {
+	font-family: 'Inter Extra Bold';
+	src: url('/static/font/Inter-ExtraBold.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+  }
+  
+  @font-face {
+	font-family: 'Inter Extra Light';
+	src: url('/static/font/Inter-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+  }
+  @font-face {
+	font-family: 'Inter Medium';
+	src: url('/static/font/Inter-Medium.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+  }
+
 .geSidebarContainer button {
 	text-overflow:ellipsis;
 	overflow:hidden;
+	background-color: #3853ff;
+  	border-radius: 5px;
+	height :30px;
+	width: 202px;
+	font-family: 'Inter Extra Light';
+	font-weight: 700;
+	color: #f5f5f5;
+	font-size: 13px;
 }
+
+
 .geToolbar {
 	padding:1px 0px 0px 6px;
 	border-top:1px solid #dadce0;

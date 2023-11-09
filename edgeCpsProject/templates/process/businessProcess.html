@@ -100,6 +100,17 @@
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/businessprocess.css')}}"> <!--순우 css 추가-->
 	<script type="text/javascript" src="{{ url_for('static', filename='js/processCommon.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/businessProcess.js') }}"></script>
+	<script type="text/javascript" src="{{ url_for('static', filename='js/userManagement.js')}}"></script>
+	<link
+	rel="stylesheet"
+	type="text/css"
+	href="{{ url_for('static', filename='css/styles/managemenetUser.css')}}"
+  />
+  <!-- info부트스트랩 -->
+  <!-- <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    /> -->
 
 	<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap">  -->
 	<!--폰트 로드 -->
@@ -163,11 +174,14 @@
 	<div id="title" class="title">
 		<h2> <a class="home" href="http://localhost:5000/project/projectsList">EdgeCPS</a></h2>
 
-		<div>
-			{% if session["userid"] %}
-
-			{% endif %}
+		<div class="userInfo">
+			<div class="user-name" id="user-name">
+			  <button class="user-name-background" id="user-name">
+				{{ userName }}
+			  </button>
+			</div>
 		</div>
+
 	</div>
 </div>
 	<nav class="navbar">
@@ -252,7 +266,23 @@
 		</ul>
 	</nav>
 
-</div>
+
+	<div class="modal" id="userInfoModal">
+		<div class="usermodal-content">
+		  <span class="close" id="closeModal">&times;</span>
+		  <h2>내 정보</h2>
+		  <p>아이디 : {{userIds}}</p>
+		  <p>이름 : {{userName}}</p>
+		  <p>이메일 : {{userEmail}}</p>
+		  <p>소속 : {{userGroup}}</p>
+		  {% if userAdmin == 1 %}
+		  <a class="nav-link" href="{{ url_for('management_user') }}"
+			>회원 관리</a
+		  >
+		  {% endif %}
+		  <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
+		</div>
+	</div>
 
 
 	<!-- 순우 캔버스 위에 있는 다이어그램 목록 가져오기 위한 버튼 생성 및 함수 호출-->

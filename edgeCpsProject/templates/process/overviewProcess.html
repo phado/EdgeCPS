@@ -2,12 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
-    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/grapheditor.css') }}"> -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"> -->
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/overviewprocess.css')}}"> <!--순우 css 추가-->
-
+	<link
+	rel="stylesheet"
+	type="text/css"
+	href="{{ url_for('static', filename='css/styles/managemenetUser.css')}}"
+  />
+  <!-- 모달창을 위한 부트스트랩 -->
+  <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    />
+  <!-- <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/userManagement.js')}}"
+    ></script> -->
 
 </head>
 
@@ -45,7 +54,8 @@
 
         let sessiondata = "{{ session['data'] }}"
 
-
+		let userName = "{{ userName }}"
+		
 
 		function decodeHTMLEntities(str) {
 			// &lt;&lt;와 &gt;&gt;을 임시 문자열로 대체
@@ -105,27 +115,29 @@
 
 
 <body>
-	<!--BOOTSTRAP START 순우-->
-	<!-- <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
-	<!--BOOTSTRAP END-->
+
 	<script type="text/javascript" src="{{ url_for('static', filename='js/overviewProcessJs.js') }}"></script>
 
 	<div>
         <div id="title" class="title">
             <h2> <a class="home" href="http://localhost:5000/project/projectsList">EdgeCPS</a></h2>
 
-            <div>
+			<div class="userInfo">
+				<div class="user-name" id="user-name">
+				  <button class="user-name-background" id="user-name">
+					{{ userName }}
+				  </button>
+				</div>
+			</div>
+
+            <!-- <div>
                 {% if session["userid"] %}
                     <p>ID: {{session["userid"]}}
                         <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
                         <a class="nav-link" href="{{ url_for('logout') }}">내정보</a>
                     </p>
                 {% endif %}
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -241,81 +253,189 @@
 		</div>
 	</div>
 
+	<div class="modal" id="userInfoModal">
+		<div class="usermodal-content">
+		  <span class="close" id="closeModal">&times;</span>
+		  <h2>내 정보</h2>
+		  <p>아이디 : {{userIds}}</p>
+		  <p>이름 : {{userName}}</p>
+		  <p>이메일 : {{userEmail}}</p>
+		  <p>소속 : {{userGroup}}</p>
+		  {% if userAdmin == 1 %}
+		  <a class="nav-link" href="{{ url_for('management_user') }}"
+			>회원 관리</a
+		  >
+		  {% endif %}
+		  <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
+		</div>
+	</div>
+
 </body>
 </html>
 
 <script>
-	window.onload = function() {
+ 
+ window.onload = function() {
+    var newPjValue = "{{ new_pj }}";
+    console.log('newPjValue = ' , newPjValue)
+    if (newPjValue != "True"){
+        // getElementById("project_category").value = projectInfo.category;
+            var overviewData = localStorage.getItem(project_name+'_overviewProcessXML');
+            var modifiedOverviewData = ''
+            for (var i = 0; i < overviewData.length; i++) {
+                var currentChar = overviewData.charAt(i);
 
-		
+                if (currentChar === "'") {
+                    modifiedOverviewData += '"';
+                } else if (currentChar === '"') {
+                    modifiedOverviewData += "'";
+                } else {
+                    modifiedOverviewData += currentChar;
+                }
+            }
+            var jsonOverview = JSON.parse(modifiedOverviewData);
+
+                    
+            document.getElementById("project_name").value = jsonOverview['name'];
+            // var projectInput = document.getElementById("project_name")
+            // projectInput.readOnly = true
+            
+            document.getElementById("project_description").value = jsonOverview['description']
+            document.getElementById("project_category").value = jsonOverview['category'];
+        
+        
+    }
+    // <div class="form-group">
+    // 		<textarea class="form-control" id="create_project" name="create_project" >True</textarea>
+    // 	</div>
+
+    if(openProject == 'True'){
+        var div = document.createElement('div');
+        div.innerHTML = projectData.replace(/&#39;/g, "\"");
+        projectData = div.textContent || div.innerText;
+
+        var div = document.createElement('div');
+        div.innerHTML = project_name.replace(/&#39;/g, "\"");;
+        project_name = div.textContent || div.innerText;
+
+        var div = document.createElement('div');
+        div.innerHTML = xml_process.replace(/&#39;/g, "\"");;
+        xml_process = div.textContent || div.innerText;
+
+        var div = document.createElement('div');
+        div.innerHTML = workflow_xml.replace(/&#39;/g, "\"");;
+        workflow_xml = div.textContent || div.innerText;
+
+        var container = document.getElementById("formtag");
+        var div = document.createElement('div');
+        div.className = "form-group";
+        var textarea = document.createElement('textarea');
+        textarea.className = "form-control";
+        textarea.id = "load_project";
+        textarea.name = "load_project";
+        textarea.textContent = "True";
+        div.appendChild(textarea);
+        container.appendChild(div);
+        textarea.style.display = 'none';
+    }
+
+	function showPopup(button) {
+    const popupContainer = document.getElementById("popupContainer");
+    const popup = document.getElementById("popup");
+    popupContainer.style.display = "block";
+    popup.style.width = "500px"; // 가로 크기 조절
+    popup.style.height = "500px"; // 세로 크기 조절
+
+    const group = button.getAttribute("data-group");
+    const groupSelect = document.getElementById("group");
+    if (group === "111") {
+      // "tmp" 옵션을 선택합니다.
+      groupSelect.value = "111";
+    } else if (group === "999") {
+      // "admin" 옵션을 선택합니다.
+      groupSelect.value = "999";
+    }
+
+    const valid = button.getAttribute("data-valid");
+    if (valid === "1") {
+      toggleSwitch.checked = true;
+    } else {
+      toggleSwitch.checked = false;
+    }
+
+    const user = button.getAttribute("data-user");
+    currentUser = user;
+  }
+
+  // 팝업을 닫는 함수
+  function closePopup() {
+    const popupContainer = document.getElementById("popupContainer");
+    popupContainer.style.display = "none";
+  }
+
+  function togglePopup() {
+    const popupContainer = document.getElementById("popupContainer");
+    const toggleSwitch = document.getElementById("toggleSwitch");
+
+    if (toggleSwitch.checked) {
+    } else {
+    }
+  }
+
+  function saveInfo() {
+    // select 박스의 값을 가져오기
+    const selectedGroup = document.getElementById("group").value;
+
+    // 토글 버튼의 상태 가져오기
+    const toggleSwitch = document.getElementById("toggleSwitch");
+    if (toggleSwitch.checked == 1) {
+      isActive = 1;
+    } else {
+      isActive = 0;
+    }
+    fetch("/changeInfo", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ selectedGroup, isActive, user: currentUser }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        if (data.error) {
+          alert("시스템 에러");
+        } else if (data.result) {
+          alert("정보 변경 완료");
+          window.location.reload();
+        } else if (!data.result) {
+          alert("정보 변경 실패.");
+        }
+      });
+  }
+
+  // 버튼 클릭 시 모달 표시
+  const modalButton = document.getElementById("user-name");
+  const modal = document.getElementById("userInfoModal");
+  const closeModalButton = document.getElementById("closeModal");
+  const logoutButton = document.getElementById("logoutButton");
+
+  modalButton.addEventListener("click", function () {
+    modal.style.display = "block";
+  });
+
+  // 모달 닫기 버튼 클릭 시 모달 숨김
+  closeModalButton.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+
+  // 모달 외부 클릭 시 모달 숨김
+  window.addEventListener("click", function (event) {
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  });
 
 
-		var newPjValue = "{{ new_pj }}";
-		console.log('newPjValue = ' , newPjValue)
-		if (newPjValue != "True"){
-			// getElementById("project_category").value = projectInfo.category;
-				var overviewData = localStorage.getItem(project_name+'_overviewProcessXML');
-				var modifiedOverviewData = ''
-				for (var i = 0; i < overviewData.length; i++) {
-					var currentChar = overviewData.charAt(i);
-
-					if (currentChar === "'") {
-						modifiedOverviewData += '"';
-					} else if (currentChar === '"') {
-						modifiedOverviewData += "'";
-					} else {
-						modifiedOverviewData += currentChar;
-					}
-				}
-				var jsonOverview = JSON.parse(modifiedOverviewData);
-
-						
-				document.getElementById("project_name").value = jsonOverview['name'];
-				// var projectInput = document.getElementById("project_name")
-				// projectInput.readOnly = true
-				
-				document.getElementById("project_description").value = jsonOverview['description']
-				document.getElementById("project_category").value = jsonOverview['category'];
-			
-			
-		}
-		// <div class="form-group">
-		// 		<textarea class="form-control" id="create_project" name="create_project" >True</textarea>
-		// 	</div>
-
-		if(openProject == 'True'){
-			var div = document.createElement('div');
-			div.innerHTML = projectData.replace(/&#39;/g, "\"");
-			projectData = div.textContent || div.innerText;
-
-			var div = document.createElement('div');
-			div.innerHTML = project_name.replace(/&#39;/g, "\"");;
-			project_name = div.textContent || div.innerText;
-
-			var div = document.createElement('div');
-			div.innerHTML = xml_process.replace(/&#39;/g, "\"");;
-			xml_process = div.textContent || div.innerText;
-
-			var div = document.createElement('div');
-			div.innerHTML = workflow_xml.replace(/&#39;/g, "\"");;
-			workflow_xml = div.textContent || div.innerText;
-
-			var container = document.getElementById("formtag");
-			var div = document.createElement('div');
-			div.className = "form-group";
-			var textarea = document.createElement('textarea');
-			textarea.className = "form-control";
-			textarea.id = "load_project";
-			textarea.name = "load_project";
-			textarea.textContent = "True";
-			div.appendChild(textarea);
-			container.appendChild(div);
-			textarea.style.display = 'none';
-
-
-	
-
-		}
-
-	}
-</script>
+}
+</script>	

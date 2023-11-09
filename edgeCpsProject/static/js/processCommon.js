@@ -141,10 +141,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 	// 민수 process 버튼 생성 메뉴 버튼 생성 함수
-	function createButton(text, clickFunc) {
+	function createButton(text, clickFunc, className, style) {
 		var button = document.createElement("button");
 		button.innerHTML = text;
-		button.className = "process-button";
+		button.className = "processButton";
+		// button.className = className;
+
+		// 클래스 이름 추가
+		if (className) {
+			button.classList.add(className);
+		  }
+		
+		// 스타일 추가
+		if (style) {
+		button.style.cssText = style;
+		}
+		
 		button.addEventListener("click", clickFunc); // 버튼 클릭 이벤트 리스너 추가
 		return button;
 	}
@@ -163,7 +175,11 @@ document.addEventListener("DOMContentLoaded", function() {
 	
 	buttonContainer.style.float = "right"; // 오른쪽으로 정렬
 	buttonContainer.style.marginRight = "10px"; // 오른쪽 여백
-	buttonContainer.appendChild(createButton("Save All", processSaveClick)); // process-save 버튼
+	// buttonContainer.style.marginTop = "5px";
+	
+
+	buttonContainer.appendChild(createButton("Save All", processSaveClick,'saveButton',"background-color: #3853ff; color: #fff; border-radius: 5px; padding: 4px 10px; font-family: 'Inter Extra Light'; font-style: normal;")); // process-save 버튼
+	// 
 	// buttonContainer.appendChild(createButton("process-load", processLoadClick)); // process-load 버튼
 	 
 	// 버튼을 추가할 위치의 요소를 선택 (여기서는 "right_sidebar" 클래스를 가진 div)
@@ -377,27 +393,50 @@ function getWorkflowObjList(xml){
 
 	// Business Process에서 Edit data에 값이 추가 된 다음 workflow Process로 넘어와서 select box를 생성할 때 오류 발생해서 밑에 새로 짬
 	var mxCells = xmlDoc.documentElement.getElementsByTagName("object");
-	for (var i = 0; i < mxCells.length; i++){
-		var mxCell = mxCells[i];
-		if (mxCell.getElementsByTagName('mxCell')[0].attributes[0].nodeValue.includes("rounded=1;")){
-			var id = mxCell.getAttribute('id');
-			// var value = mxCell.getAttribute('name');
-			var valueString = mxCell.outerHTML;
-			// var regex = /\[([^\]]+)\]/g;
-			var regex = /&quot;&gt;(.+?)&lt;/;
-			var matches = [];
-			// var match;
-			var match = regex.exec(valueString);
-			var extractedString = match ? match[1] : null;
-			if(extractedString.includes('['||']')){
-				extractedString=extractedString.substring(1,extractedString.length -1);
+	if (mxCells.length != 0){
+		for (var i = 0; i < mxCells.length; i++){
+			var mxCell = mxCells[i];
+			if (mxCell.getElementsByTagName('mxCell')[0].attributes[0].nodeValue.includes("rounded=1;")){
+				var id = mxCell.getAttribute('id');
+				// var value = mxCell.getAttribute('name');
+				var valueString = mxCell.outerHTML;
+				// var regex = /\[([^\]]+)\]/g;
+				var regex = /&quot;&gt;(.+?)&lt;/;
+				var matches = [];
+				// var match;
+				var match = regex.exec(valueString);
+				var extractedString = match ? match[1] : null;
+				if(extractedString.includes('['||']')){
+					extractedString=extractedString.substring(1,extractedString.length -1);
+				}
+				matches.push(extractedString);
+				
+				var value = matches;
+				roundedObjects.push({id : id, value : value});
 			}
-			matches.push(extractedString);
-			
-			var value = matches;
-			roundedObjects.push({id : id, value : value});
+		}
+	}else{
+		for(var i=0 ; i<xmlDoc.documentElement.getElementsByTagName("mxCell").length; i++){
+			try{
+				if(xmlDoc.documentElement.getElementsByTagName("mxCell")[i].attributes.style.textContent.includes('rounded')){
+					var inputString = xmlDoc.documentElement.getElementsByTagName("mxCell")[2].attributes.value.nodeValue;
+					var parser = new DOMParser();
+					var doc = parser.parseFromString(inputString, 'text/html');
+					var divElement = doc.querySelector('div');
+					var value = divElement.textContent;
+					if(value.includes('['||']')){
+						value=value.substring(1,value.length -1);
+					}
+					var id = xmlDoc.documentElement.getElementsByTagName("mxCell")[2].attributes.id.textContent;
+					roundedObjects.push({id : id, value : value});
+				}
+			}
+			catch{
+
+			}
 		}
 	}
+	
 	return roundedObjects
 }
 

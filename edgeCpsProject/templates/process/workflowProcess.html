@@ -40,7 +40,9 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/grapheditor.css') }}">
-
+	<script type="text/javascript" src="{{ url_for('static', filename='js/userManagement.js')}}"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/managemenetUser.css')}}"/>
+	
 
 
 	<script type="text/javascript">
@@ -156,13 +158,12 @@
 	<div id="title" class="title">
 		<h2> <a class="home" href="http://localhost:5000/project/projectsList">EdgeCPS</a></h2>
 
-		<div>
-			{% if session["userid"] %}
-				<p>ID: {{session["userid"]}}
-					<a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
-					<a class="nav-link" href="{{ url_for('logout') }}">내정보</a>
-				</p>
-			{% endif %}
+		<div class="userInfo">
+			<div class="user-name" id="user-name">
+			  <button class="user-name-background" id="user-name">
+				{{ userName }}
+			  </button>
+			</div>
 		</div>
 	</div>
 </div>
@@ -249,24 +250,26 @@
 		</nav>
 	</div>
 
-	
-	<div class="container">
-		<div class="row">
-		  <div class="col-12">
-			<div class="buttons-container"></div>
-		  </div>
+	<div class="modal" id="userInfoModal">
+		<div class="usermodal-content">
+		  <span class="close" id="closeModal">&times;</span>
+		  <h2>내 정보</h2>
+		  <p>아이디 : {{userIds}}</p>
+		  <p>이름 : {{userName}}</p>
+		  <p>이메일 : {{userEmail}}</p>
+		  <p>소속 : {{userGroup}}</p>
+		  {% if userAdmin == 1 %}
+		  <a class="nav-link" href="{{ url_for('management_user') }}"
+			>회원 관리</a
+		  >
+		  {% endif %}
+		  <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
 		</div>
-	  </div>
+	</div>	
+
 
 	<script src="../../static/js/mxgraph-keep_it_alive/javascript/examples/grapheditor/edgeCps/open.js"></script>
 	<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-	<script>
-		// var container = document.querySelector('.geDiagramContainer.geDiagramBackdrop');
-		// var graph = new mxGraph(container);
-		// var encoder = new mxCodec();
-		// var node = encoder.encode(graph.getModel());
-		// var xml = mxUtils.getXml(node);
-		// console.log(xml);
-	</script>
+
 </body>
 </html>

@@ -45,6 +45,44 @@ a.home {
   text-decoration: none;
 }
 
+.user-image{
+  position: fixed;
+  width: 96px;
+  height: 31px;
+  top: 0.9%;
+  left: 92%; 
+ }
+
+.userNameText{
+    position: fixed;
+    /* width: 96px;
+    height: 31px; */
+    top: 1.2%;
+    left: 93.7%; 
+    /* margin-left: 10px;  */
+}
+
+.user-name-background {
+  border: none;
+  /* border-top-left-radius: 50%; 
+  border-bottom-left-radius: 50%;  */
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 4px 20px; 
+  background-color: #fff; 
+  color: #0056be;
+  font-family: "Roboto-Medium", Helvetica;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.userInfo{
+  margin-left:85%
+}
+
+
+
 
 .nav-item-separator {
   display: flex;
@@ -67,6 +105,7 @@ a.home {
   height: 90px;
   overflow: hidden; /* 요소들이 부모 컨테이너를 넘어가지 않도록 설정 */
   display: flex;
+  padding: 0rem 0rem!important;
 }
 
 .nav-item-separator {
@@ -79,7 +118,7 @@ a.home {
 .nav-list {
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: 24px;
     display: flex;
     justify-content: space-between;
     width: 100%;
@@ -261,7 +300,7 @@ a.home {
 .createProject h2{
   position: fixed;
   top: 18%;
-  left: 4.5%;
+  left: 20.5%;
   font-family: "Inter-ExtraBold", Helvetica;
   font-weight: 800;
   color: #353535;
@@ -366,8 +405,8 @@ a.home {
   background-color: #3853ff;
   border-radius: 5px;
 
-  top: 84%;
-  left: 91%;
+  top: 87%;
+  left: 86%;
   font-family: "Inter-Medium", Helvetica;
   font-weight: 500;
   color: #ffffff;
