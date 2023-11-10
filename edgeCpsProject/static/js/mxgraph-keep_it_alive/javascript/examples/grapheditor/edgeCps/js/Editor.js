@@ -2395,6 +2395,7 @@ var canvas_list = ''; //순우 roundedrectangle 저장할 변수
 	
 						// Required for the browser to render the background page in correct order
 						firstChild.style.position = 'absolute';
+						// firstChild.style.left = '1000px';
 						graph.container.insertBefore(this.backgroundPageShape.node, firstChild);
 						this.backgroundPageShape.redraw();
 						
@@ -2510,6 +2511,7 @@ var canvas_list = ''; //순우 roundedrectangle 저장할 변수
 			graph.container.className = 'geDiagramContainer geDiagramBackdrop';
 			canvas.style.backgroundImage = 'none';
 			canvas.style.backgroundColor = '';
+			// graph.style.width = '100%';
 		}
 		else
 		{

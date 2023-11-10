@@ -4566,15 +4566,31 @@ EditorUi.prototype.nodeSelectorDialog = function(value, btnLabel, fn)
 /**
  * Hides the current menu.
  */
+// 순우 다이어로그 창 크기 조절 
 EditorUi.prototype.showDataDialog = function(cell)
 {
 	if (cell != null)
 	{
 		var dlg = new EditDataDialog(this, cell);
+		try{
+			// console.log(createDiagramSape);
+			if(cell.value.includes('Container')){
+				this.showDialog(dlg.container, 780, 320, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+			}else if(cell.value.includes('requirement')){
+				this.showDialog(dlg.container, 780, 217, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+			}else if(cell.style.includes('rounded=0')){
+				this.showDialog(dlg.container, 780, 227, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+			}else if(cell.style.includes('rounded=1')){
+				this.showDialog(dlg.container, 780, 217, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+			}else{
+				this.showDialog(dlg.container, 780, 427, true, false, null, false);
+			}
+		}catch(e){
+			console.log(e);
+			this.showDialog(dlg.container, 780, 427, true, false, null, false);
+		}
 		
-		// console.log(createDiagramSape);
-		this.showDialog(dlg.container, 480, 420, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
-
+		// this.showDialog(dlg.container, 780, 227, true, false, null, false);
 		// requirements process edit data에 select box 추가 하는 함수
 		function reqSelectBox(cellValue){
 			foundCellValue = cellValue
