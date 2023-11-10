@@ -7,28 +7,28 @@
 
 /* Font Styles */
 @font-face {
-  font-family: 'Inter Extra Bold';
-  src: url('/static/font/Inter-ExtraBold.ttf') format('truetype');
+  font-family: "Inter Extra Bold";
+  src: url("/static/font/Inter-ExtraBold.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Inter Extra Light';
-  src: url('/static/font/Inter-Regular.ttf') format('truetype');
+  font-family: "Inter Extra Light";
+  src: url("/static/font/Inter-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 /* EdgeCPS */
 .title h2 {
-    color: #ffffff;
-    font-size: 25px;
-    font-family: 'Inter Extra Bold';
-    margin-left: 20px;
-    font-style: normal;
-    font-weight: 800;
-    line-height: normal;
-    margin-top: 0.4%;
+  color: #ffffff;
+  font-size: 25px;
+  font-family: "Inter Extra Bold";
+  margin-left: 20px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+  margin-top: 0.4%;
 }
 .title {
   background: #3853ff;
@@ -44,21 +44,21 @@ a.home {
   text-decoration: none;
 }
 
-.user-image{
+.user-image {
   position: fixed;
   width: 96px;
   height: 31px;
   top: 0.9%;
-  left: 92%; 
- }
+  left: 92%;
+}
 
-.userNameText{
-    position: fixed;
-    /* width: 96px;
+.userNameText {
+  position: fixed;
+  /* width: 96px;
     height: 31px; */
-    top: 1.2%;
-    left: 93.7%; 
-    /* margin-left: 10px;  */
+  top: 1.2%;
+  left: 93.7%;
+  /* margin-left: 10px;  */
 }
 
 .user-name-background {
@@ -67,8 +67,8 @@ a.home {
   border-bottom-left-radius: 50%;  */
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  padding: 4px 20px; 
-  background-color: #fff; 
+  padding: 4px 20px;
+  background-color: #fff;
   color: #0056be;
   font-family: "Roboto-Medium", Helvetica;
   font-weight: 500;
@@ -76,33 +76,27 @@ a.home {
   transition: all 0.3s;
 }
 
-.userInfo{
-  margin-left:85%
-}
-
-
 .nav-item-separator {
   display: flex;
   align-items: center;
-  
 }
 
 .nav-item-separator .dot {
-    width: 10px;
-    height: 10px;
-    /* background: #0075FF; */
-    background: #ffffff;
-    margin: 0 5px; /* 원하는 간격으로 조정합니다. */
-    border-radius: 50%;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
-  }
-  
-.navbar{
+  width: 10px;
+  height: 10px;
+  /* background: #0075FF; */
+  background: #ffffff;
+  margin: 0 5px; /* 원하는 간격으로 조정합니다. */
+  border-radius: 50%;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.navbar {
   width: 100%;
   height: 90px;
   overflow: hidden; /* 요소들이 부모 컨테이너를 넘어가지 않도록 설정 */
   display: flex;
-  padding: 0rem 0rem!important;
+  padding: 0rem 0rem !important;
   background-color: #ececec;
 }
 
@@ -114,19 +108,18 @@ a.home {
 }
 
 .nav-list {
-    list-style: none;
-    margin: 0;
-    padding: 24px;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    box-sizing: border-box;
-    align-items: center;
-    border-bottom: 2px solid #d9d9d9;
-  }
-  
+  margin-top: -15px;
+  list-style: none;
+  margin: 0;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  align-items: center;
+  border-bottom: 2px solid #d9d9d9;
+}
 
-  
 /* 기본 버튼 스타일 */
 .nav-button {
   display: flex;
@@ -135,7 +128,7 @@ a.home {
   width: 185px; /* 고정된 너비로 설정 */
   height: 40px; /* 고정된 높이로 설정 */
   border-radius: 10px;
-  background: #F8F9FA;
+  background: #f8f9fa;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.3s;
   overflow: hidden; /* 버튼 내용이 오버플로우되지 않도록 설정 */
@@ -145,9 +138,9 @@ a.home {
 
 /* 기본 버튼 텍스트 스타일 */
 .button-text {
-  color: #A4A4A4;
+  color: #a4a4a4;
   font-size: 15px;
-  font-family: 'Inter Extra Light';
+  font-family: "Inter Extra Light";
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -156,14 +149,16 @@ a.home {
   left: 105px; /* 아이콘과 텍스트 사이의 간격을 조절 */
   /* transform: translateY(-50%); */
   transform: translateX(-50%);
-  max-width: calc(100% - 40px); /* 버튼 내용의 최대 너비를 설정 (아이콘과 간격 고려) */
+  max-width: calc(
+    100% - 40px
+  ); /* 버튼 내용의 최대 너비를 설정 (아이콘과 간격 고려) */
   white-space: nowrap; /* 긴 텍스트가 줄 바꿈되지 않도록 설정 */
   overflow: hidden;
   text-overflow: ellipsis; /* 내용이 오버플로우될 때 말줄임(...) 표시 */
 }
 
 /* 아이콘 스타일 */
-.button-icon{
+.button-icon {
   margin-right: 10px; /* 아이콘 사이의 간격 설정 */
   position: absolute;
   left: 14px;
@@ -171,39 +166,34 @@ a.home {
   transform: translateY(-50%);
   width: 14px;
   height: 19px;
-  fill: #A4A4A4;
+  fill: #a4a4a4;
 }
 
-
-.nav-button:hover{
-  background: #F8F9FA; /* 호버 상태 배경 색상 */
+.nav-button:hover {
+  background: #f8f9fa; /* 호버 상태 배경 색상 */
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4); /* 호버 상태 그림자 효과 */
 }
-.nav-button:hover .button-icon{
+.nav-button:hover .button-icon {
   /* 호버 상태 아이콘 스타일 */
   fill: #3853ff;
 }
-.nav-button:hover .button-text{
-  color: #3853ff
+.nav-button:hover .button-text {
+  color: #3853ff;
 }
-
 
 .nav-button:active {
   background: #3853ff; /* 클릭한 상태 배경 색상 */
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); /* 클릭한 상태 그림자 효과 */
 }
-.nav-button:active .button-icon{
+.nav-button:active .button-icon {
   /* 액티브 상태 아이콘 스타일 */
   fill: #ffffff;
 }
-.nav-button:active .button-text{
+.nav-button:active .button-text {
   color: #ffffff;
 }
 
-
-
 /*------------------------workflow_process_page--------------------------------------------------*/
-
 
 .nav-button-workflow_process_page {
   background: #3853ff;
@@ -222,26 +212,27 @@ a.home {
   margin-right: 2%;
 }
 
-
 .nav-button-workflow_process_page .button-text-workflow_process_page {
-    color: #ffffff;
-    font-size: 15px;
-    font-family: 'Inter Extra Light';
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    position: absolute;
-    top: 27%;
-    left: 105px;
-    transform: translateX(-50%);
-    max-width: calc(100% - 40px); /* 버튼 내용의 최대 너비를 설정 (아이콘과 간격 고려) */
-    white-space: nowrap; /* 긴 텍스트가 줄 바꿈되지 않도록 설정 */
-    overflow: hidden;
-    text-overflow: ellipsis; /* 내용이 오버플로우될 때 말줄임(...) 표시 */
+  color: #ffffff;
+  font-size: 15px;
+  font-family: "Inter Extra Light";
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: absolute;
+  top: 27%;
+  left: 105px;
+  transform: translateX(-50%);
+  max-width: calc(
+    100% - 40px
+  ); /* 버튼 내용의 최대 너비를 설정 (아이콘과 간격 고려) */
+  white-space: nowrap; /* 긴 텍스트가 줄 바꿈되지 않도록 설정 */
+  overflow: hidden;
+  text-overflow: ellipsis; /* 내용이 오버플로우될 때 말줄임(...) 표시 */
 }
 
 .nav-button-workflow_process_page .button-icon-workflow_process_page {
-  fill:#ffffff;
+  fill: #ffffff;
   margin-right: 10px;
   position: absolute;
   left: 14px;
@@ -253,20 +244,18 @@ a.home {
 }
 
 /* overview 페이지 활성화 상태에서 호버 상태 그림자 효과 */
-.nav-button-workflow_process_page:hover{
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4); 
+.nav-button-workflow_process_page:hover {
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 }
 
 /* overview 페이지 활성화 상태에서 클릭 했을 때 효과*/
 .nav-button-workflow_process_page:active {
-  background: #ffffff; 
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); 
+  background: #ffffff;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
 }
-.nav-button-workflow_process_page:active .button-icon-workflow_process_page{
-  fill: #0075FF;
+.nav-button-workflow_process_page:active .button-icon-workflow_process_page {
+  fill: #0075ff;
 }
-.nav-button-workflow_process_page:active .button-text-workflow_process_page{
-  color: #0075FF;
+.nav-button-workflow_process_page:active .button-text-workflow_process_page {
+  color: #0075ff;
 }
-
-

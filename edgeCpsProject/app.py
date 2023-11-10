@@ -135,12 +135,9 @@ def project_list():
 
     projects_info = getProjectDict2(userId)
 
-    userInfo = get_user_single_info(userId)
-    userIds = userInfo[0][1]
-    userName = userInfo[0][2]
-    userEmail = userInfo[0][4]
-    userGroup = userInfo[0][5]
-    userAdmin = userInfo[0][7]
+    userId= session['userId'] 
+    user_info = user_get_info(userId)    
+    userIds, userName, userEmail, userGroup, userAdmin = user_info
 
     # todo 프로젝트 리스트 정보 조회하는 기능 필요
     return render_template('projectList.html', projects=projects_info, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup, loginUserInfo=loginUserInfo)
@@ -716,7 +713,7 @@ def getUserDict():
     projects = []
 
     for idx in range(len(prjs)):
-        projects.append({'id': prjs[idx][0], 'name': prjs[idx][1], 'user': prjs[idx][2], 'user_pwd': prjs[idx][3], 'user_email': prjs[idx][4], 'group_index': prjs[idx][5], 'vaild': prjs[idx][6], 'admin': prjs[idx][7]})
+        projects.append({'id': prjs[idx][0], 'name': prjs[idx][1], 'user': prjs[idx][2], 'user_pwd': prjs[idx][3], 'user_email': prjs[idx][4], 'group_index': prjs[idx][5], 'vaild': prjs[idx][6], 'admin': prjs[idx][7], 'group_name': prjs[idx][8]})
     return projects
 
 def getSingleUserDict():
@@ -730,16 +727,11 @@ def getSingleUserDict():
 @app.route('/project/managementUser', methods=['GET', 'POST'])
 def management_user():
     loginUserInfo = request.args.get('loginUserInfo')
-
     projects_info = getUserDict()
 
-    userId= session['userId']
-    userInfo = get_user_single_info(userId)
-    userIds = userInfo[0][1]
-    userName = userInfo[0][2]
-    userEmail = userInfo[0][4]
-    userGroup = userInfo[0][5]
-    userAdmin = userInfo[0][7]
+    userId= session['userId'] 
+    user_info = user_get_info(userId)    
+    userIds, userName, userEmail, userGroup, userAdmin = user_info
     # todo 프로젝트 리스트 정보 조회하는 기능 필요
     return render_template('managementUser.html', projects=projects_info, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup,loginUserInfo=loginUserInfo)
 

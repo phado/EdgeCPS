@@ -215,7 +215,7 @@ def get_user_info():
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor(buffered=True)
 
-        sql = f"SELECT * FROM TB_USER"
+        sql = f"SELECT TB_USER.*, TB_GROUP.GROUP_NAME FROM TB_USER INNER JOIN TB_GROUP ON TB_USER.GROUP_IDX = TB_GROUP.GROUP_IDX;"
         cursor.execute(sql)
         db_data = cursor.fetchall()
 
