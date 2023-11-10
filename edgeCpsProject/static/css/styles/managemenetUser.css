@@ -128,7 +128,7 @@ input:checked + .slider:before {
 
 .usermodal-content {
   background-color: #fff;
-  margin: 4% 75%;
+  margin: 1.8% 75%;
   padding: 20px;
   border: 1px solid #888;
   width: 25%;

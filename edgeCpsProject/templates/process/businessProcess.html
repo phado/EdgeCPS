@@ -289,6 +289,62 @@
 		</div>
 	</div>
 
+	<div id="saveModal" class="saveModal">
+		<div class="saveModal-content">
+		  <span class="saveClose">&times;</span>
+  
+		  <div class="container">
+			<!-- <h2 class="mt-5">Create Project</h2> -->
+			<form method="post" action="" , id="formtag">
+			  <div class="form-group">
+				<label class="project_name" for="project_name"
+				  >Project Name</label
+				>
+				<input
+				  type="text"
+				  class="form-control"
+				  id="project_name"
+				  name="project_name"
+				  required
+				/>
+			  </div>
+			  <div class="form-group">
+				<label class="project_description" for="project_description"
+				  >Project Description</label
+				>
+				<textarea
+				  class="form-control"
+				  id="project_description"
+				  name="project_description"
+				  required
+				></textarea>
+			  </div>
+			  <div class="form-group">
+				<label class="project_category" for="project_category"
+				  >Project Category</label
+				>
+				<select
+				  class="form-control"
+				  id="project_category"
+				  name="project_category"
+				  required
+				>
+				  {% for category in categories %}
+				  <option value="{{ category }}">{{ category }}</option>
+				  {% endfor %}
+				</select>
+			  </div>
+			  <button
+				type="submit"
+				class="btn btn-primary"
+				onclick="savePorjectInfo()"
+			  >
+				OK
+			  </button>
+			</form>
+		  </div>
+		</div>
+	  </div>
 
 	<!-- 순우 캔버스 위에 있는 다이어그램 목록 가져오기 위한 버튼 생성 및 함수 호출-->
 	<!-- <div><button id="myButton">Get Requirement list</button></div>  -->
@@ -319,7 +375,8 @@
 
 </body>
 </html>
-<script>window.onload = function () {
+<script>
+window.onload = function () {
 	// "관리" 버튼을 클릭했을 때 팝업을 표시하는 함수
 	let currentUser = null;
 	function showPopup(button) {
@@ -420,3 +477,34 @@
 	});
   };
   </script>
+
+  <style>
+	.saveModal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.7);
+}
+
+.saveModal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+}
+
+.saveClose {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 30px;
+  font-weight: bold;
+  color: #aaa;
+  cursor: pointer;
+}
+  </style>
