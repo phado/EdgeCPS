@@ -2,7 +2,6 @@
 <html>
   <head>
     <title>Login</title>
- <!-- 부트스트랩 CSS 링크 추가 -->
  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
  <link
       rel="stylesheet"
@@ -18,7 +17,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-6">
-          <img src="./image/login.jpg" alt="Image" class="img-fluid" />
+          <img src="{{url_for('static', filename = '/image/login.svg')}}" alt="Image" class="img-fluid" />
         </div>
         <div class="col-md-6">
           <h1
@@ -120,16 +119,7 @@
             </div>
           </form>
         </div>
-<!--        &lt;!&ndash; ... 잘 넘어왔는지 확인 코드 ... &ndash;&gt;-->
-<!--        <p>이름 : {{ name }}!</p>-->
-<!--        <p>아이디 : {{ username }}</p>-->
-<!--        <p>이메일: {{ email }}</p>-->
-<!--        <p>생년월잏: {{ birthdate }}</p>-->
-
     </div>
-
-    <!-- 부트스트랩 JS 링크 -->
-    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script> -->
 
     <!-- 부트스트랩 JS 및 jQuery 링크 추가 -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

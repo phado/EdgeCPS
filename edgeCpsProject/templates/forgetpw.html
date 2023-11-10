@@ -5,32 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Find Password</title>
     <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename='css/styles/managemenetUser.css')}}"
-    />
-    <link
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <!-- 비밀번호 찾기 페이지 스타일 효정 -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/styles/forgetpw.css')}}"
+    />
+    <!-- 비밀번호 찾기 페이지 자바스크립트 효정 -->
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/forgetpw.js')}}"
+    ></script>
   </head>
   <body>
     <div>
       <div id="title" class="title">
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="{{ url_for('static', filename='css/styles/process.css')}}"
-        />
-        <!--순우 css 추가-->
-        <h2><a class="home" href="/">EdgeCPS</a></h2>
+        <h2><a class="home" href="/" style="color: white;">EdgeCPS</a></h2>
       </div>
     </div>
     <div class="container mt-5">
-      <h1 class="mb-4">비밀 번호 찾기</h1>
+      <h1 class="mb-3">비밀번호 찾기</h1>
+      <div>회원정보에 등록된 이름과 이메일, 아이디를 입력해주세요.</div>
       <form id="resetForm">
         <div class="form-group">
-          <label for="name">Name:</label>
+          <label for="name" style="padding-top: 29px">Name</label>
           <input
             type="text"
             class="form-control"
@@ -41,7 +42,7 @@
           <small id="nameError" class="text-danger"></small>
         </div>
         <div class="form-group">
-          <label for="email">Email:</label>
+          <label for="email">Email</label>
           <input
             type="email"
             class="form-control"
@@ -52,7 +53,7 @@
           <small id="emailError" class="text-danger"></small>
         </div>
         <div class="form-group">
-          <label for="userId">ID:</label>
+          <label for="userId">ID</label>
           <input
             type="text"
             class="form-control"
@@ -62,10 +63,10 @@
           />
           <small id="userIdError" class="text-danger"></small>
         </div>
-        <button type="button" class="btn btn-primary" id="confirmBtn">
+        <button type="button" class="btn btn-primary" id="changepwBtn">
           비밀번호 찾기
         </button>
-        <a class="btn btn-secondary" href="/">돌아가기</a>
+        <a class="btn btn-secondary" href="/" id="cancelButton">Cancel</a>
       </form>
 
       <div id="overlay" class="hidden"></div>
@@ -76,18 +77,14 @@
         <button id="closeButton">닫기</button>
       </div>
 
-    <!-- 부트스트랩 JS 및 jQuery 링크 추가 -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        const confirmBtn = document.getElementById("confirmBtn");
+        const changepwBtn = document.getElementById("changepwBtn");
         const nameError = document.getElementById("nameError");
         const emailError = document.getElementById("emailError");
         const userIdError = document.getElementById("userIdError");
 
-        confirmBtn.addEventListener("click", function () {
+        changepwBtn.addEventListener("click", function () {
           const name = document.getElementById("name").value;
           const email = document.getElementById("email").value;
           const userId = document.getElementById("userId").value;
@@ -242,4 +239,53 @@
   cursor: pointer;
 }
 
+</style>
+<style>
+    input[type="text"],
+  input[type="email"],
+  select {
+    height: 40px;
+    width: 387px;
+  }
+  .container,
+  .container-sm {
+    max-width: 400px;
+  }
+  #changepwBtn {
+    margin-top: 15px;
+    width: 387px;
+    height: 45px;
+    top: 765px;
+    padding: 10px, 167px, 10px, 167px;
+    border-radius: 999px;
+    gap: 10px;
+    background: #3390ff;
+  }
+  #cancelButton {
+    margin-top: 5px;
+    width: 387px;
+    height: 45px;
+    top: 765px;
+    padding: 10px, 167px, 10px, 167px;
+    border-radius: 999px;
+    gap: 10px;
+  }
+  .title h2 {
+    margin-top: 10px;
+    margin-left: 30px;
+    font-family: Inter;
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 48px;
+    letter-spacing: 0em;
+    text-align: left;
+
+  }
+  .title {
+    background: #3853ff;
+    display: flex;
+    align-items: center;
+    height: 80px;
+    padding: 0 20px;
+  }
 </style>

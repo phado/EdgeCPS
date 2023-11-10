@@ -1,0 +1,176 @@
+.user-name-background {
+  height: 30px;
+  border: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  padding: 4px 20px;
+  background-color: #fff;
+  color: #0056be;
+  font-family: "Inter Medium", Helvetica;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.title h2 {
+  margin-top: 10px;
+  margin-left: 30px;
+  font-family: Inter;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 48px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.title {
+  background: #3853ff;
+  display: flex;
+  align-items: center;
+  height: 80px;
+  padding: 0 20px;
+}
+.userInfo {
+  margin-left: 90%;
+}
+#userInfoModal h2 {
+  text-decoration: none;
+  margin: 0;
+  color: #3391ff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  font-family: "Inter Extra Bold";
+  margin-left: 30px;
+  font-style: normal;
+  line-height: normal;
+  font-family: Inter;
+
+  font-size: 25px;
+  font-weight: 800;
+  line-height: 48px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+.center-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.popup-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* 배경 어두워지게 함 */
+  z-index: 999; /* 팝업보다 위에 나타나도록 함 */
+}
+
+.popup {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  height: 500px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+}
+
+/* 스위치 스타일링 */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #4caf50;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #4caf50;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* 원 슬라이더 스타일링 */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+.modal {
+  display: none;
+  position: absolute; /* 위치 변경 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.usermodal-content {
+  background-color: #fff;
+  margin: 2.9% 75%;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 25%;
+  height: 38%;
+  text-align: center;
+}
+
+.close {
+  float: right;
+  cursor: pointer;
+  font-size: 24px;
+}
+
+#logoutButton {
+  margin-top: 10px;
+  background-color: #f44336;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+}
