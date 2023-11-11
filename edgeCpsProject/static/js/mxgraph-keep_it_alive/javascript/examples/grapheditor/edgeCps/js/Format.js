@@ -584,13 +584,15 @@ Format.prototype.refresh = function(arguments)
 			// showAttribute.textContent = reqAttribute;
 			var attributeKey = selectedCell[0].cells[0].value.attributes[1]['name']
 			var attributeKeyContainer = document.createElement('div');
+			attributeKeyContainer.style.marginLeft = '1px';
+			attributeKeyContainer.style.marginRight = '1px';
 			attributeKeyContainer.innerHTML = '<strong>'+attributeKey+'</strong>';
 
 			var attributeValue = selectedCell[0].cells[0].value.getAttribute('text');
 			var attributeValueContainer = document.createElement('div');
 			attributeValueContainer.style.border = '1px solid #000'; 
-			attributeValueContainer.style.marginLeft = '2px';
-			attributeValueContainer.style.marginRight = '2px';
+			attributeValueContainer.style.marginLeft = '3px';
+			attributeValueContainer.style.marginRight = '3px';
 			attributeValueContainer.innerHTML = attributeValue;
 			attributeValueContainer.style.whiteSpace = 'pre-wrap';
 			attributeValueContainer.style.overflowWrap = 'break-word'
@@ -637,14 +639,16 @@ Format.prototype.refresh = function(arguments)
 				}
 				var attributeKey = reqAttribute[i]['name'];
 				var attributeKeyContainer = document.createElement('div');
+				attributeKeyContainer.style.marginLeft = '1px';
+				attributeKeyContainer.style.marginRight = '1px';
 				attributeKeyContainer.innerHTML = '<strong>'+attributeKey+'</strong>';
 				// attributeKeyContainer.style=bold;
 
 				var attributeValue = reqAttribute[i]['value'];
 				var attributeValueContainer = document.createElement('div');
 				attributeValueContainer.style.border = '1px solid #000'; 
-				attributeValueContainer.style.marginLeft = '2px';
-				attributeValueContainer.style.marginRight = '2px';
+				attributeValueContainer.style.marginLeft = '3px';
+				attributeValueContainer.style.marginRight = '3px';
 				attributeValueContainer.style.whiteSpace = 'pre-wrap';
 				attributeValueContainer.style.overflowWrap = 'break-word'
 
