@@ -43,6 +43,8 @@
 }
 .geBackgroundPage {
   	box-shadow:0px 0px 2px 1px #d1d1d1;
+	left:78%!important;
+	width:100%!important;
 }
 .geSidebarContainer a, .geMenubarContainer a, .geToolbar a {
 	color:#000000;
@@ -64,6 +66,7 @@
 }
 .geFormatSection {
 	padding-top: 0px!important;
+	padding-bottom: 17px!important;
 	border-bottom:1px solid #dadce0;
 	border-color:#dadce0;
 	border-top:1px solid #dadce0;

@@ -1515,10 +1515,10 @@ var EditDataDialog = function(ui, cell)
 			else if (DiagramClicked.includes('Rectangle')){
 				var DiClassFixProperty = document.createAttribute('arguments.parameters')
 				DiClassFixProperty.value = `name:""  
-											value:"{{workflow.outputs.parameters.parameters-}}"`
+value:"{{workflow.outputs.parameters.parameters-}}"`
 				var DiClassFixProperty2 = document.createAttribute('arguments.artifacts')
 				DiClassFixProperty2.value = `name:"" 
-											 from:"{{workflow.outputs.parameters.artifacts-}}"`
+from:"{{workflow.outputs.parameters.artifacts-}}"`
 				// var DiClassFixProperty2 = document.createAttribute('Output')
 				// DiClassFixProperty2.value = ''
 				
@@ -1539,14 +1539,19 @@ var EditDataDialog = function(ui, cell)
 				var DiClassFixProperty6 = document.createAttribute('environment')
 				DiClassFixProperty6.value = ''
 				var DiClassFixProperty7 = document.createAttribute('inputs.parameters')
-				DiClassFixProperty7.value = 'name : ""    value : ""'
+				DiClassFixProperty7.value = `name : ""    
+value : ""`
 				// DiClassFixProperty7.value = 'value : ""'
 				var DiClassFixProperty8 = document.createAttribute('outputs.parameters')
-				DiClassFixProperty8.value = 'name : ""    value : ""    valueFrom.path : ""'
+				DiClassFixProperty8.value = `name : ""    
+value : ""    
+valueFrom.path : ""`
 				var DiClassFixProperty9 = document.createAttribute('inputs.artifacts')
-				DiClassFixProperty9.value = 'name : ""    path : ""'
+				DiClassFixProperty9.value = `name : ""    
+path : ""`
 				var DiClassFixProperty10 = document.createAttribute('outputs.artifacts')
-				DiClassFixProperty10.value = 'name : ""    path : ""'
+				DiClassFixProperty10.value = `name : ""    
+path : ""`
 
 				attrs.setNamedItem(DiClassFixProperty1)
 				attrs.setNamedItem(DiClassFixProperty2)

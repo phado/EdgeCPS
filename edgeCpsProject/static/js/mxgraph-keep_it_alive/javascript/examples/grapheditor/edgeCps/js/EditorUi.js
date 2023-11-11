@@ -4577,7 +4577,7 @@ EditorUi.prototype.showDataDialog = function(cell)
 			if(cell.value.includes('Container')){
 				this.showDialog(dlg.container, 780, 320, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
 			}else if(cell.value.includes('requirement')){
-				this.showDialog(dlg.container, 780, 217, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+				this.showDialog(dlg.container, 780, 158, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
 			}else if(cell.style.includes('rounded=0')){
 				this.showDialog(dlg.container, 780, 227, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
 			}else if(cell.style.includes('rounded=1')){

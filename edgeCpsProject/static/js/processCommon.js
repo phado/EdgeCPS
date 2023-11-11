@@ -192,7 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
     newButton.style.padding = "2px 8px";
     newButton.style.fontFamily = "'Inter Extra Light'";
     newButton.style.fontStyle = "normal";
-    newButton.style.margin-top =  "-2px";
+    newButton.style.marginTop =  "-2px";
 
     var buttonContainer = document.getElementById("buttonContainer");
 
