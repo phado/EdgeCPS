@@ -1,0 +1,59 @@
+form {
+  color: #848484;
+}
+
+label {
+  color: #848484;
+}
+
+.text-danger {
+  color: #848484;
+}
+input[type="text"],
+input[type="password"],
+input[type="date"],
+input[type="email"],
+select {
+  height: 40px;
+  width: 387px;
+}
+#signupButton {
+  margin-top: 15px;
+  width: 387px;
+  height: 45px;
+  top: 765px;
+  padding: 10px, 167px, 10px, 167px;
+  border-radius: 999px;
+  gap: 10px;
+  background: #3390ff;
+}
+#cancelButton {
+  margin-top: 5px;
+  width: 387px;
+  height: 45px;
+  top: 765px;
+  padding: 10px, 167px, 10px, 167px;
+  border-radius: 999px;
+  gap: 10px;
+}
+.container,
+.container-sm {
+  max-width: 400px;
+}
+.title h2 {
+  margin-top: 10px;
+  margin-left: 30px;
+  font-family: Inter;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 48px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+.title {
+  background: #3853ff;
+  display: flex;
+  align-items: center;
+  height: 80px;
+  padding: 0 20px;
+}

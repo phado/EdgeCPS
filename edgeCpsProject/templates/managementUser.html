@@ -99,10 +99,9 @@
               <div class="col-md-6">
                 <label for="group">소속 관리</label>
                 <select class="form-control" id="group" name="group" required>
-                  <option value="" disabled selected></option>
-                  <option value="1">ETRI</option>
-                  <option value="2">KPST</option>
-                  <option value="999">common</option>
+                  {% for group in groups %}
+                  <option value="{{ group.idx }}">{{ group.name }}</option>
+                  {% endfor %}
                 </select>
               </div>
               <div class="col-md-6">
@@ -115,6 +114,12 @@
                   />
                   <span class="slider round"></span>
                 </label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <button type="button" onclick="addGroup()">소속 추가</button>
+                <button type="button" onclick="deleteGroup()">소속 삭제</button>
               </div>
             </div>
             <button
@@ -235,16 +240,62 @@
     modal.style.display = "none";
   });
 
-  // 로그아웃 버튼 클릭 시 로그아웃 처리 (예: 페이지 리로드)
-  logoutButton.addEventListener("click", function () {
-    // 로그아웃 처리를 여기에 추가
-    // 예: window.location.href = '/logout';  // 로그아웃 URL로 리다이렉트
-  });
-
   // 모달 외부 클릭 시 모달 숨김
   window.addEventListener("click", function (event) {
     if (event.target === modal) {
       modal.style.display = "none";
     }
   });
+
+  function addGroup() {
+    var groupName = prompt("새 그룹을 입력하세요:");
+    if (groupName) {
+      fetch("/add_group", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "group_name=" + encodeURIComponent(groupName),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result === "success") {
+            var selectElement = document.getElementById("group");
+            var newOption = document.createElement("option");
+            newOption.value = "new";
+            newOption.text = groupName;
+            selectElement.add(newOption);
+          } else {
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+  }
+
+  function deleteGroup() {
+    var selectElement = document.getElementById("group");
+    var selectedOption = selectElement.options[selectElement.selectedIndex];
+    var textContent = selectedOption.innerText;
+    fetch("/delete_group", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: "group_name=" + encodeURIComponent(textContent),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.result === "success") {
+          console.log("그룹을 성공적으로 삭제했습니다.");
+          selectElement.remove(selectElement.selectedIndex);
+        } else {
+          alert("그룹 삭제에 실패했습니다.");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
 </script>

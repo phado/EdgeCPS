@@ -197,6 +197,7 @@ def load_project(project_index, mariadb_pool):
         print(str(e))
         logging.error(traceback.format_exc())   
 
+
 def get_user_info():
     dotenv_file = dotenv.find_dotenv()
     dotenv.load_dotenv(dotenv_file)
@@ -259,3 +260,215 @@ def get_user_single_info(userId):
         cursor.close()
         connection.close()
 
+
+def get_category():
+    dotenv_file = dotenv.find_dotenv()
+    dotenv.load_dotenv(dotenv_file)
+
+    try:
+        config = {
+        'user': os.environ['root']
+        , 'password':  os.environ['pw']
+        , 'host': os.environ['ip']
+        , 'port': os.environ['port']
+        , 'database': 'EdgeCPS'
+                }
+        
+        mariadb_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **config)
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor(buffered=True)
+
+        sql = f"SELECT name FROM TB_CATE;"
+        cursor.execute(sql)
+        db_data = cursor.fetchall()
+
+        return db_data
+        
+    except Exception as e:
+        print(str(e))
+        logging.error(traceback.format_exc())
+    finally:
+        cursor.close()
+        connection.close()
+
+
+def create_category(category):
+    dotenv_file = dotenv.find_dotenv()
+    dotenv.load_dotenv(dotenv_file)
+
+    try:
+        config = {
+            'user': os.environ['root'],
+            'password': os.environ['pw'],
+            'host': os.environ['ip'],
+            'port': os.environ['port'],
+            'database': 'EdgeCPS',
+        }
+
+        mariadb_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **config)
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor(buffered=True)
+
+        sql = f"INSERT INTO TB_CATE (id, name) VALUES (DEFAULT, '{category}');"
+
+        cursor.execute(sql)
+        connection.commit()
+        
+        # 영향을 받은 행의 수를 확인
+        affected_rows = cursor.rowcount
+
+        return affected_rows
+
+    except Exception as e:
+        print(str(e))
+        logging.error(traceback.format_exc())
+    finally:
+        cursor.close()
+        connection.close()
+
+def del_category(category):
+    dotenv_file = dotenv.find_dotenv()
+    dotenv.load_dotenv(dotenv_file)
+
+    try:
+        config = {
+            'user': os.environ['root'],
+            'password': os.environ['pw'],
+            'host': os.environ['ip'],
+            'port': os.environ['port'],
+            'database': 'EdgeCPS',
+        }
+
+        mariadb_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **config)
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor(buffered=True)
+
+        # SQL 쿼리를 파라미터화하여 SQL 인젝션을 방지
+        sql = "DELETE FROM TB_CATE WHERE name = %s"
+        cursor.execute(sql, (category,))
+
+        connection.commit()
+        
+        # 영향을 받은 행의 수를 확인
+        affected_rows = cursor.rowcount
+
+        return affected_rows
+
+    except mysql.connector.Error as e:
+        print(f"MySQL Error: {e}")
+        logging.error("MySQL Error: %s", e)
+    except Exception as e:
+        print(f"Error: {e}")
+        logging.error("Error: %s", e)
+    finally:
+        cursor.close()
+        connection.close()
+
+def get_group_info(mariadb_pool):
+    dotenv_file = dotenv.find_dotenv()
+    dotenv.load_dotenv(dotenv_file)
+
+    try:
+        config = {
+        'user': os.environ['root']
+        , 'password':  os.environ['pw']
+        , 'host': os.environ['ip']
+        , 'port': os.environ['port']
+        , 'database': 'EdgeCPS'
+                }
+        
+        mariadb_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **config)
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor(buffered=True)
+
+        sql = f"SELECT * FROM TB_GROUP;"
+        cursor.execute(sql)
+        db_data = cursor.fetchall()
+
+        return db_data
+        
+    except Exception as e:
+        print(str(e))
+        logging.error(traceback.format_exc())
+    finally:
+        cursor.close()
+        connection.close()
+
+def add_grp(group):
+    code = "code"
+    dotenv_file = dotenv.find_dotenv()
+    dotenv.load_dotenv(dotenv_file)
+
+    try:
+        config = {
+            'user': os.environ['root'],
+            'password': os.environ['pw'],
+            'host': os.environ['ip'],
+            'port': os.environ['port'],
+            'database': 'EdgeCPS',
+        }
+
+        mariadb_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **config)
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor(buffered=True)
+
+        sql = f"INSERT INTO TB_GROUP (GROUP_IDX, GROUP_NAME,GROUP_CODE) VALUES (DEFAULT, '{group}','{code}');"
+
+        cursor.execute(sql)
+        connection.commit()
+        
+        # 영향을 받은 행의 수를 확인
+        affected_rows = cursor.rowcount
+
+        return affected_rows
+
+    except Exception as e:
+        print(str(e))
+        logging.error(traceback.format_exc())
+    finally:
+        cursor.close()
+        connection.close()
+
+def del_grp(group):
+    dotenv_file = dotenv.find_dotenv()
+    dotenv.load_dotenv(dotenv_file)
+
+    try:
+        config = {
+            'user': os.environ['root'],
+            'password': os.environ['pw'],
+            'host': os.environ['ip'],
+            'port': os.environ['port'],
+            'database': 'EdgeCPS',
+        }
+
+        mariadb_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool", pool_size=5, **config)
+
+        connection = mariadb_pool.get_connection()
+        cursor = connection.cursor(buffered=True)
+
+        # SQL 쿼리를 파라미터화하여 SQL 인젝션을 방지
+        sql = "DELETE FROM TB_GROUP WHERE GROUP_NAME = %s"
+        cursor.execute(sql, (group,))
+
+        connection.commit()
+        
+        # 영향을 받은 행의 수를 확인
+        affected_rows = cursor.rowcount
+
+        return affected_rows
+
+    except mysql.connector.Error as e:
+        print(f"MySQL Error: {e}")
+        logging.error("MySQL Error: %s", e)
+    except Exception as e:
+        print(f"Error: {e}")
+        logging.error("Error: %s", e)
+    finally:
+        cursor.close()
+        connection.close()
