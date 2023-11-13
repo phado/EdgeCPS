@@ -378,34 +378,65 @@
 <script>
   window.onload = function () {
     var newPjValue = "{{ new_pj }}";
-    console.log("newPjValue = ", newPjValue);
-    if (newPjValue != "True") {
-      // getElementById("project_category").value = projectInfo.category;
-      var overviewData = localStorage.getItem(
-        project_name + "_overviewProcessXML"
-      );
-      var modifiedOverviewData = "";
-      for (var i = 0; i < overviewData.length; i++) {
-        var currentChar = overviewData.charAt(i);
+// <<<<<<< HEAD
+    console.log('newPjValue = ' , newPjValue)
+    if (newPjValue != "True"){
+        // getElementById("project_category").value = projectInfo.category;
+            var overviewData = localStorage.getItem(project_name+'_overviewProcessXML');
+            var modifiedOverviewData = ''
+            for (var i = 0; i < overviewData.length; i++) {
+                var currentChar = overviewData.charAt(i);
 
-        if (currentChar === "'") {
-          modifiedOverviewData += '"';
-        } else if (currentChar === '"') {
-          modifiedOverviewData += "'";
-        } else {
-          modifiedOverviewData += currentChar;
-        }
-      }
-      var jsonOverview = JSON.parse(modifiedOverviewData);
+                if (currentChar === "'") {
+                    modifiedOverviewData += '"';
+                } else if (currentChar === '"') {
+                    modifiedOverviewData += "'";
+                } else {
+                    modifiedOverviewData += currentChar;
+                }
+            }
+			if(typeof(modifiedOverviewData))
+            var jsonOverview = JSON.parse(modifiedOverviewData);
 
-      document.getElementById("project_name").value = jsonOverview["name"];
-      // var projectInput = document.getElementById("project_name")
-      // projectInput.readOnly = true
+                    
+            document.getElementById("project_name").value = jsonOverview['name'];
+            // var projectInput = document.getElementById("project_name")
+            // projectInput.readOnly = true
+            
+            document.getElementById("project_description").value = jsonOverview['description']
+            document.getElementById("project_category").value = jsonOverview['category'];
+        
+        
+// =======
+//     console.log("newPjValue = ", newPjValue);
+//     if (newPjValue != "True") {
+//       // getElementById("project_category").value = projectInfo.category;
+//       var overviewData = localStorage.getItem(
+//         project_name + "_overviewProcessXML"
+//       );
+//       var modifiedOverviewData = "";
+//       for (var i = 0; i < overviewData.length; i++) {
+//         var currentChar = overviewData.charAt(i);
 
-      document.getElementById("project_description").value =
-        jsonOverview["description"];
-      document.getElementById("project_category").value =
-        jsonOverview["category"];
+//         if (currentChar === "'") {
+//           modifiedOverviewData += '"';
+//         } else if (currentChar === '"') {
+//           modifiedOverviewData += "'";
+//         } else {
+//           modifiedOverviewData += currentChar;
+//         }
+//       }
+//       var jsonOverview = JSON.parse(modifiedOverviewData);
+
+//       document.getElementById("project_name").value = jsonOverview["name"];
+//       // var projectInput = document.getElementById("project_name")
+//       // projectInput.readOnly = true
+
+//       document.getElementById("project_description").value =
+//         jsonOverview["description"];
+//       document.getElementById("project_category").value =
+//         jsonOverview["category"];
+// >>>>>>> b5e0593007fa48a3cb959d653285f10ee07ae075
     }
     // <div class="form-group">
     // 		<textarea class="form-control" id="create_project" name="create_project" >True</textarea>

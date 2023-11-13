@@ -216,19 +216,6 @@ Actions.prototype.init = function()
 		}
 	}, null, null, 'Alt+Shift+V');
 
-	// function clearGraphContaine() // 순우 캔버스 초기화 시도중..
-	// {	
-	// 	graph = this.graph
-	// 	// graph.escape();
-		
-	// 	var select = graph.deleteCells(graph.getDeletableCells(graph.getSelectionCells()), false);
-		
-	// 	if (select != null)
-	// 	{
-	// 		graph.setSelectionCells(select);
-	// 	}
-	// };
-	// clearGraphContaine()
 
 	function deleteCells(includeEdges)
 	{
@@ -251,7 +238,6 @@ Actions.prototype.init = function()
 			graph.setSelectionCells(select);
 		}
 	};
-	// this.clearGraphContainer(); // 순우 초기화 시도중 ..
 	this.addAction('delete', function(evt)
 	{
 		// deleteCells(evt != null && mxEvent.isControlDown(evt));

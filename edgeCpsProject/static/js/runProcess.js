@@ -440,9 +440,9 @@ function getDeployInfo(actionKeys,actionStatus){
 
     return xmlData
 }
-
+/*
 <script>
-  window.onload = function () {
+    { window.onload = function () {
     // "관리" 버튼을 클릭했을 때 팝업을 표시하는 함수
     let currentUser = null;
     function showPopup(button) {
@@ -547,5 +547,5 @@ function getDeployInfo(actionKeys,actionStatus){
         modal.style.display = "none";
       }
     });
-  };
-</script>
+  }; }
+</script>*/

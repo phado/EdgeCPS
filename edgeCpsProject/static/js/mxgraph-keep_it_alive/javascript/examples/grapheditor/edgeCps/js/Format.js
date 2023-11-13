@@ -568,7 +568,8 @@ Format.prototype.refresh = function(arguments)
 	showAttribute.style.textAlign = 'center';
 	// showAttribute.style.fontWeight = 'bold';
 	showAttribute.style.paddingTop = '8px';
-	showAttribute.style.fontSize = '15px';
+	showAttribute.style.paddingBottom = '8px';
+	showAttribute.style.fontSize = '13px';
 	showAttribute.style.display = (mxClient.IS_QUIRKS) ? 'inline' : 'inline-block';
 	showAttribute.style.height = 'max-content';
 	showAttribute.style.overflow = 'hidden';
@@ -579,18 +580,50 @@ Format.prototype.refresh = function(arguments)
 	// 순우 각 cell 클릭 했을 때 우측 사이드바에 속성 값 띄우는 기능
 	if (process_name=='requirementsProcess'){
 		try{
-			var reqAttribute = selectedCell[0].cells[0].value.attributes[1]['name']+' : '+selectedCell[0].cells[0].value.getAttribute('text');
+			// var reqAttribute = selectedCell[0].cells[0].value.attributes[1]['name']+' : '+selectedCell[0].cells[0].value.getAttribute('text');
 			// showAttribute.textContent = reqAttribute;
-			var line = reqAttribute;
+			var attributeKey = selectedCell[0].cells[0].value.attributes[1]['name']
+			var attributeKeyContainer = document.createElement('div');
+			attributeKeyContainer.style.marginLeft = '1px';
+			attributeKeyContainer.style.marginRight = '1px';
+			attributeKeyContainer.innerHTML = '<strong>'+attributeKey+'</strong>';
+
+			var attributeValue = selectedCell[0].cells[0].value.getAttribute('text');
+			var attributeValueContainer = document.createElement('div');
+			attributeValueContainer.style.border = '1px solid #000'; 
+			attributeValueContainer.style.marginLeft = '3px';
+			attributeValueContainer.style.marginRight = '3px';
+			attributeValueContainer.innerHTML = attributeValue;
+			attributeValueContainer.style.whiteSpace = 'pre-wrap';
+			attributeValueContainer.style.overflowWrap = 'break-word'
+
+			showAttribute.appendChild(attributeValueContainer);
+			var textHeight = attributeValueContainer.clientHeight;
+			// document.body.removeChild(attributeValueContainer);
+
+			// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
+			var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
+			if (textHeight > maxWidth) {
+				attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
+				attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
+			}
+
+			var empty = document.createElement('div');
+			empty.style.marginBottom = '10px';
+			showAttribute.appendChild(attributeKeyContainer);
+			showAttribute.appendChild(attributeValueContainer);
+			showAttribute.appendChild(empty);
+
+			// var line = reqAttribute;
 			
-				var parts = line.split(':');
-				if (parts.length === 2) {
-					// 왼쪽은 볼드 스타일로, 오른쪽은 일반 스타일로 추가합니다.
-					showAttribute.innerHTML += '<span style="font-weight: bold;">' + parts[0] + ':</span> ' + parts[1] + '<br>';
-				} else {
-					// ':' 문자가 없는 줄은 그대로 추가합니다.
-					showAttribute.innerHTML += line + '<br>';
-				}
+			// 	var parts = line.split(':');
+			// 	if (parts.length === 2) {
+			// 		// 왼쪽은 볼드 스타일로, 오른쪽은 일반 스타일로 추가합니다.
+			// 		showAttribute.innerHTML += '<span style="font-weight: bold;">' + parts[0] + ':</span> ' + parts[1] + '<br>';
+			// 	} else {
+			// 		// ':' 문자가 없는 줄은 그대로 추가합니다.
+			// 		showAttribute.innerHTML += line + '<br>';
+			// 	}
 			
 			
 		}
@@ -604,21 +637,70 @@ Format.prototype.refresh = function(arguments)
 				if(reqAttribute[i]['value']==''){
 					continue;
 				}
-				totalAttribute += reqAttribute[i]['name'] + ' : ' + reqAttribute[i]['value']+'<br>';
+				var attributeKey = reqAttribute[i]['name'];
+				var attributeKeyContainer = document.createElement('div');
+				attributeKeyContainer.style.marginLeft = '1px';
+				attributeKeyContainer.style.marginRight = '1px';
+				attributeKeyContainer.innerHTML = '<strong>'+attributeKey+'</strong>';
+				// attributeKeyContainer.style=bold;
+
+				var attributeValue = reqAttribute[i]['value'];
+				var attributeValueContainer = document.createElement('div');
+				attributeValueContainer.style.border = '1px solid #000'; 
+				attributeValueContainer.style.marginLeft = '3px';
+				attributeValueContainer.style.marginRight = '3px';
+				attributeValueContainer.style.whiteSpace = 'pre-wrap';
+				attributeValueContainer.style.overflowWrap = 'break-word'
+
+				attributeValueContainer.innerHTML = attributeValue;
+
+				showAttribute.appendChild(attributeValueContainer);
+				var textHeight = attributeValueContainer.clientHeight;
+				// document.body.removeChild(attributeValueContainer);
+
+				// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
+				var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
+				if (textHeight > maxWidth) {
+					attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
+					attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
+				}
+
+				var empty = document.createElement('div');
+				empty.style.marginBottom = '10px';
+				showAttribute.appendChild(attributeKeyContainer);
+				showAttribute.appendChild(attributeValueContainer);
+				showAttribute.appendChild(empty);
+
+
+
+				
+				// var regex = /(\w+)\s*:\s*"([^"]*)"/g;
+				// var matches = attributeValue.matchAll(regex);
+
+				// // 추출된 결과를 객체에 저장
+				// var keyValuePairs = {};
+				// for (const match of matches) {
+				// var key = match[1];
+				// var value = match[2];
+				// keyValuePairs[key] = value;
+				// }
+
+				// attributeValueContainer.innerHTML = keyValuePairs;
 			}
 			// showAttribute.innerHTML = totalAttribute;
-			var lines = totalAttribute.split('<br>');
-			for (var i = 0; i < lines.length; i++) {
-				var line = lines[i];
-				var parts = line.split(':');
-				if (parts.length === 2) {
-					// 왼쪽은 볼드 스타일로, 오른쪽은 일반 스타일로 추가합니다.
-					showAttribute.innerHTML += '<span style="font-weight: bold;">' + parts[0] + ':</span> ' + parts[1] + '<br>';
-				} else {
-					// ':' 문자가 없는 줄은 그대로 추가합니다.
-					showAttribute.innerHTML += line + '<br>';
-				}
-			}
+
+			// var lines = totalAttribute.split('<br>');
+			// for (var i = 0; i < lines.length; i++) {
+			// 	var line = lines[i];
+			// 	var parts = line.split(':');
+			// 	if (parts.length === 2) {
+			// 		// 왼쪽은 볼드 스타일로, 오른쪽은 일반 스타일로 추가합니다.
+			// 		showAttribute.innerHTML += '<span style="font-weight: bold;">' + parts[0] + ':</span> ' + parts[1] + '<br>';
+			// 	} else {
+			// 		// ':' 문자가 없는 줄은 그대로 추가합니다.
+			// 		showAttribute.innerHTML += line + '<br>';
+			// 	}
+			// }
 			
 		}
 		catch {}
@@ -672,13 +754,13 @@ Format.prototype.refresh = function(arguments)
 		
 		// 빈 값일 때 속성 창 최소크기
 		if(showAttribute.textContent==''){
-			var textHeight = showAttribute.clientHeight; // attribete높이 동적으로 저장
+			var textHeight = showAttribute.clientHeight; // 순우 attribete높이 동적으로 저장
 			attributePanel.style.height = '200px';
 			arrangePanel.style.top = textHeight+225+'px'; // 원하는 위치로 설정
 		}else{
 			var textHeight = showAttribute.clientHeight; // attribete높이 동적으로 저장
 			// attributePanel.style.height = textHeight;
-			arrangePanel.style.top = textHeight+25+'px';
+			arrangePanel.style.top = textHeight+45+'px';
 		}
 
 // console.log(textHeight)
