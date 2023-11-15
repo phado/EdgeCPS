@@ -1,0 +1,146 @@
+{
+    "namespace": "argo",
+    "serverDryRun": false,
+    "workflow": {
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "workflow",
+        "metadata": {
+            "name": "global"
+        },
+        "spec": {
+            "entrypoint": "generate-globals",
+            "templates": [
+                {
+                    "name": "generate-globals",
+                    "steps": [
+                        [
+                            {
+                                "name": "global-output-from-path",
+                                "template": "global-output-from-path"
+                            }
+                        ],
+                        [
+                            {
+                                "name": "consume-path-parameters",
+                                "template": "consume-path-parameters",
+                                "arguments": {
+                                    "parameters": [
+                                        {
+                                            "name": "param",
+                                            "value": "{{workflow.outputs.parameters.parameters-output-path}}"
+                                        }
+                                    ]
+                                }
+                            },
+                            {
+                                "name": "consume-path-artifacts",
+                                "template": "consume-path-artifacts",
+                                "arguments": {
+                                    "artifacts": [
+                                        {
+                                            "name": "hello-art",
+                                            "from": "{{workflow.outputs.artifacts.artifacts-output-path}}"
+                                        }
+                                    ]
+                                }
+                            }
+                        ],
+                        [
+                            {
+                                "name": "global-output-from-value",
+                                "template": "global-output-from-value"
+                            }
+                        ]
+                    ]
+                },
+                {
+                    "name": "global-output-from-path",
+                    "container": {
+                        "image": "alpine:3.7",
+                        "command": [
+                            "sh",
+                            "-c"
+                        ],
+                        "args": [
+                            "sleep 1; echo -n hello world > /tmp/hello_world.txt"
+                        ]
+                    },
+                    "outputs": {
+                        "parameters": [
+                            {
+                                "name": "parameters-output-path",
+                                "valueFrom": {
+                                    "path": "/tmp/hello_world.txt"
+                                },
+                                "globalName": "parameters-output-path"
+                            }
+                        ],
+                        "artifacts": [
+                            {
+                                "name": "artifacts-output-path",
+                                "path": "/tmp/hello_world.txt",
+                                "globalName": "artifacts-output-path"
+                            }
+                        ]
+                    }
+                },
+                {
+                    "name": "consume-path-parameters",
+                    "inputs": {
+                        "parameters": [
+                            {
+                                "name": "param"
+                            }
+                        ]
+                    },
+                    "container": {
+                        "image": "alpine:3.7",
+                        "command": [
+                            "sh",
+                            "-c"
+                        ],
+                        "args": [
+                            "echo {{inputs.parameters.param}}"
+                        ]
+                    }
+                },
+                {
+                    "name": "consume-path-artifacts",
+                    "inputs": {
+                        "artifacts": [
+                            {
+                                "name": "hello-art",
+                                "path": "/art"
+                            }
+                        ]
+                    },
+                    "container": {
+                        "image": "alpine:3.7",
+                        "command": [
+                            "sh",
+                            "-c"
+                        ],
+                        "args": [
+                            "cat /art"
+                        ]
+                    }
+                },
+                {
+                    "name": "global-output-from-value",
+                    "container": {
+                        "image": "alpine:3.7"
+                    },
+                    "outputs": {
+                        "parameters": [
+                            {
+                                "name": "parameters-output-value",
+                                "value": "this is static value parameter output",
+                                "globalName": "parameters-output-value"
+                            }
+                        ]
+                    }
+                }
+            ]
+        }
+    }
+}
