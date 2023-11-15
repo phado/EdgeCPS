@@ -21,7 +21,7 @@ function subContent1ClickHandler(sender, evt) {
     var cell = evt.getProperty('cell'); 
 
     if(processName == 'requirementsProcess'){
-        var cellText = cell.value.attributes[1].nodeValue;
+        var cellText = cell.value.attributes[3].nodeValue;
         var cellId = cell.id;
         subContent2(cellText,cellId,cell);
     }
@@ -56,14 +56,14 @@ function subContent2(cellName,cellId,cell){
     
 
     if(processName == 'requirementsProcess'){
-        var cellNodeName = cell.value.attributes[1].nodeName;
+        var cellNodeName = cell.value.attributes[3].nodeName;
         requirementAttributes.textContent = cellNodeName+' : '+cellName;
         container.appendChild(requirementAttributes);
 
     }
     else if(processName == 'businessProcess'){
         
-        for(i=1 ; i<cellName.length ; i++){
+        for(i=2 ; i<cellName.length ; i++){
             var cellNodeName = cell.value.attributes[i];
             var requirementAttribute = document.createElement('div');
             requirementAttribute.textContent = cellNodeName.nodeName+' : '+cellNodeName.nodeValue;

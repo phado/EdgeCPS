@@ -41,10 +41,11 @@
 .geSidebarContainer .geTitle {
 	cursor:default !important;
 }
+/* 순우 다이어그램 캔버스 크기 조절 부분 */
 .geBackgroundPage {
   	box-shadow:0px 0px 2px 1px #d1d1d1;
 	left:78%!important;
-	width:100%!important;
+	width:1000%!important;
 }
 .geSidebarContainer a, .geMenubarContainer a, .geToolbar a {
 	color:#000000;
@@ -402,7 +403,7 @@ div.mxWindow .geButton {
 .geSidebar {
 	border-bottom:1px solid #e5e5e5;
 	padding:6px;
-	padding-left:10px;
+	padding-left:3px;
 	_padding:2px;
 	_padding-left:6px;
 	padding-bottom:6px;
@@ -435,7 +436,7 @@ div.mxWindow .geButton {
 	padding:6px;
 	margin:6px;
 	color:#a0a0a0;
-	fontSize:13px;
+	font-size:13px;
 }
 .geTitle img {
 	opacity:0.5;

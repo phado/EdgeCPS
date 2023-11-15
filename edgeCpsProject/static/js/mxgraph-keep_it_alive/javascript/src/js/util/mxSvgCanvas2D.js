@@ -716,7 +716,7 @@ function getLastIndexOfShape(shapeName){ //민수 마지막숫자를 가져와�
 			 // LATER: Update existing DOM for performance
  
 			 // 다이어그램 이름이 비어있다면 생성
-			 if (createDiagramSape != ''){
+			 if (createDiagramSape != ""){
 				 // if (this.root.getAttribute("name") != "diagram"){
  
 				 // 최초 생성이라면 
@@ -733,8 +733,13 @@ function getLastIndexOfShape(shapeName){ //민수 마지막숫자를 가져와�
 				 }
 				 
 			 }
-			 
-			 this.root.appendChild(node); // 민수 끝! 여기에서 다이그램 그린다. 노드에 요소를 추가만 하면된다
+			
+			// var graph = forceApply[0];
+			// var value = forceApply[1];
+			// var cell = graph.getSelectionCell() || graph.getModel().getRoot();
+			// graph.getModel().setValue(cell, value);
+			// ui.showDataDialog(cell);
+			this.root.appendChild(node); // 민수 끝! 여기에서 다이그램 그린다. 노드에 요소를 추가만 하면된다
 		 }
 		 
 		 this.node = null;

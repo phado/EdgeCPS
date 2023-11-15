@@ -3803,7 +3803,7 @@ EditorUi.prototype.createDivs = function()
 
 	this.toolbarContainer.style.left = '0px';
 	this.toolbarContainer.style.right = '0px';
-	this.sidebarContainer.style.left = '0px';
+	this.sidebarContainer.style.left = '7px';
 	this.formatContainer.style.right = '0px';
 	this.formatContainer.style.zIndex = '1';
 	this.diagramContainer.style.right = ((this.format != null) ? this.formatWidth : 0) + 'px';
@@ -4573,18 +4573,59 @@ EditorUi.prototype.showDataDialog = function(cell)
 	{
 		var dlg = new EditDataDialog(this, cell);
 		try{
-			// console.log(createDiagramSape);
-			if(cell.value.includes('Container')){
-				this.showDialog(dlg.container, 780, 320, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
-			}else if(cell.value.includes('requirement')){
+
+			if(cell.value.className.includes('Rounded Rectangle')){
+				this.showDialog(dlg.container, 780, 270, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+			}else if(cell.value.className.includes('Class')){
 				this.showDialog(dlg.container, 780, 158, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
-			}else if(cell.style.includes('rounded=0')){
+			}else if(cell.value.className.includes('Rectangle')){
 				this.showDialog(dlg.container, 780, 227, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
-			}else if(cell.style.includes('rounded=1')){
-				this.showDialog(dlg.container, 780, 217, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+			}else if(cell.value.className.includes('Container')){
+				this.showDialog(dlg.container, 780, 417, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
 			}else{
 				this.showDialog(dlg.container, 780, 427, true, false, null, false);
 			}
+			// let showDialogCalled = false;
+			// try {
+			// 	if (cell.value.includes('Container')) {
+			// 		this.showDialog(dlg.container, 780, 320, true, false, null, false);
+			// 		showDialogCalled = true;
+			// 	}
+			// } catch (e) {
+			// 	console.log(e);
+			// }
+			
+			// try {
+			// 	if (cell.value.attributes[0].value.includes('requirement')) {
+			// 		this.showDialog(dlg.container, 780, 158, true, false, null, false);
+			// 		showDialogCalled = true;
+			// 	}
+			// } catch (e) {
+			// 	console.log(e);
+			// }
+			
+			// try {
+			// 	if (cell.style.includes('rounded=0')) {
+			// 		this.showDialog(dlg.container, 780, 227, true, false, null, false);
+			// 		showDialogCalled = true;
+			// 	}
+			// } catch (e) {
+			// 	console.log(e);
+			// }
+			
+			// try {
+			// 	//activity일 경우
+			// 	if (cell.value.attributes[1].name.includes('description')) {
+			// 		this.showDialog(dlg.container, 780, 217, true, false, null, false);
+			// 		showDialogCalled = true;
+			// 	}
+			// } catch (e) {
+			// 	console.log(e);
+			// }
+			// if (!showDialogCalled) {
+			// 	this.showDialog(dlg.container, 780, 427, true, false, null, false);
+			// }
+			
 		}catch(e){
 			console.log(e);
 			this.showDialog(dlg.container, 780, 427, true, false, null, false);

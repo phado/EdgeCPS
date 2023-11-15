@@ -261,3 +261,19 @@ a.home {
 }
 
 /*  */
+
+
+    /* Webkit 스크롤바 */
+    ::-webkit-scrollbar {
+      width: 7px; /* 스크롤바의 너비 */
+      height: 7px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background-color: #D9D9D9; /* 스크롤바 색상 */
+      border-radius: 6px; /* 스크롤바 모서리 둥글게 */
+    }
+    
+    ::-webkit-scrollbar-track {
+      background-color: #ffffff; /* 스크롤바 트랙 색상 */
+    }

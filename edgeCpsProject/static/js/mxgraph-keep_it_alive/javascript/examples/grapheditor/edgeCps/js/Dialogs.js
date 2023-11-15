@@ -1355,6 +1355,7 @@ var EditDataDialog = function(ui, cell)
 	var graph = ui.editor.graph;
 	
 	var value = graph.getModel().getValue(cell);
+	value.removeAttribute('xmlns');
 	
 	// Converts the value to an XML node
 	if (!mxUtils.isNode(value))
@@ -1808,6 +1809,7 @@ path : ""`
 			
 			// Updates the value of the cell (undoable)
 			graph.getModel().setValue(cell, value);
+			value.removeAttribute('xmlns');
 			getObjectPropertyValue(value,cell.id,cell.mxObjectId) // 민수 property 값을 바인딩 하는 곳
 
 		}
