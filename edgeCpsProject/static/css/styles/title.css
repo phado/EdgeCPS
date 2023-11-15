@@ -5,16 +5,23 @@
   border-bottom-right-radius: 0;
   padding: 4px 20px;
   background-color: #fff;
-  color: #0056be;
+  color: #557ba9;
   font-family: "Inter Medium", Helvetica;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s;
 }
+.home:hover {
+  color: #fff;
+  text-decoration: none;
+}
 
+.home:active {
+  color: #fff;
+  text-decoration: none;
+}
 .title h2 {
   margin-top: 10px;
-  margin-left: 30px;
   font-family: Inter;
   font-size: 40px;
   font-weight: 800;
@@ -23,11 +30,11 @@
   text-align: left;
 }
 .title {
-  background: #3853ff;
+  background: #557ba9;
   display: flex;
   align-items: center;
   height: 80px;
-  padding: 0 20px;
+  padding: 0 100px;
 }
 .userInfo {
   margin-left: 90%;
@@ -35,7 +42,7 @@
 #userInfoModal h2 {
   text-decoration: none;
   margin: 0;
-  color: #3391ff;
+  color: #557ba9;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
   font-family: "Inter Extra Bold";
   margin-left: 30px;
@@ -156,7 +163,7 @@ input:checked + .slider:before {
   padding: 20px;
   border: 1px solid #888;
   width: 25%;
-  height: 38%;
+  height: 25%;
   text-align: center;
 }
 
@@ -173,4 +180,7 @@ input:checked + .slider:before {
   padding: 10px 20px;
   border: none;
   cursor: pointer;
+}
+.home {
+  color: white;
 }

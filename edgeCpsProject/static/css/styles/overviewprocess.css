@@ -19,28 +19,9 @@
   font-weight: normal;
   font-style: normal;
 }
-/* EdgeCPS */
-.title h2 {
-  color: #ffffff;
-  font-size: 25px;
-  font-family: "Inter Extra Bold";
-  margin-left: 20px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: normal;
-  margin-top: 0.4%;
-}
-.title {
-  background: #3853ff;
-  display: flex;
-  /* justify-content: space-between; */
-  align-items: center;
-  height: 50px;
-  padding: 0 20px;
-}
 
 a.home {
-  color: inherit;
+  color: white;
   text-decoration: none;
 }
 
@@ -54,26 +35,8 @@ a.home {
 
 .userNameText {
   position: fixed;
-  /* width: 96px;
-    height: 31px; */
   top: 1.2%;
   left: 93.7%;
-  /* margin-left: 10px;  */
-}
-
-.user-name-background {
-  border: none;
-  /* border-top-left-radius: 50%; 
-  border-bottom-left-radius: 50%;  */
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  padding: 4px 20px;
-  background-color: #fff;
-  color: #0056be;
-  font-family: "Roboto-Medium", Helvetica;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s;
 }
 
 .nav-item-separator {
@@ -84,9 +47,8 @@ a.home {
 .nav-item-separator .dot {
   width: 10px;
   height: 10px;
-  /* background: #0075FF; */
   background: #ffffff;
-  margin: 0 5px; /* 원하는 간격으로 조정합니다. */
+  margin: 0 5px;
   border-radius: 50%;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
 }
@@ -94,7 +56,7 @@ a.home {
 .navbar {
   width: 100%;
   height: 90px;
-  overflow: hidden; /* 요소들이 부모 컨테이너를 넘어가지 않도록 설정 */
+  overflow: hidden;
   display: flex;
   padding: 0rem 0rem !important;
   background-color: #ececec;
@@ -104,7 +66,6 @@ a.home {
   position: relative;
   display: flex;
   align-items: center;
-  /* margin: 0 50px; */
 }
 
 .nav-list {
@@ -120,23 +81,21 @@ a.home {
   border-bottom: 2px solid #d9d9d9;
 }
 
-/* 기본 버튼 스타일 */
 .nav-button {
   display: flex;
   align-items: center;
   position: relative;
-  width: 185px; /* 고정된 너비로 설정 */
-  height: 40px; /* 고정된 높이로 설정 */
+  width: 185px;
+  height: 40px;
   border-radius: 10px;
   background: #f8f9fa;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.3s;
-  overflow: hidden; /* 버튼 내용이 오버플로우되지 않도록 설정 */
+  overflow: hidden;
   margin-right: 2%;
   margin-left: 2%;
 }
 
-/* 기본 버튼 텍스트 스타일 */
 .button-text {
   color: #a4a4a4;
   font-size: 15px;
@@ -146,20 +105,16 @@ a.home {
   line-height: normal;
   position: absolute;
   top: 27%;
-  left: 105px; /* 아이콘과 텍스트 사이의 간격을 조절 */
-  /* transform: translateY(-50%); */
+  left: 105px;
   transform: translateX(-50%);
-  max-width: calc(
-    100% - 40px
-  ); /* 버튼 내용의 최대 너비를 설정 (아이콘과 간격 고려) */
-  white-space: nowrap; /* 긴 텍스트가 줄 바꿈되지 않도록 설정 */
+  max-width: calc(100% - 40px);
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* 내용이 오버플로우될 때 말줄임(...) 표시 */
+  text-overflow: ellipsis;
 }
 
-/* 아이콘 스타일 */
 .button-icon {
-  margin-right: 10px; /* 아이콘 사이의 간격 설정 */
+  margin-right: 10px;
   position: absolute;
   left: 14px;
   top: 45%;
@@ -170,23 +125,21 @@ a.home {
 }
 
 .nav-button:hover {
-  background: #f8f9fa; /* 호버 상태 배경 색상 */
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4); /* 호버 상태 그림자 효과 */
+  background: #f8f9fa;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 }
 .nav-button:hover .button-icon {
-  /* 호버 상태 아이콘 스타일 */
-  fill: #3853ff;
+  fill: #6097d9;
 }
 .nav-button:hover .button-text {
-  color: #3853ff;
+  color: #6097d9;
 }
 
 .nav-button:active {
-  background: #3853ff; /* 클릭한 상태 배경 색상 */
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); /* 클릭한 상태 그림자 효과 */
+  background: #6097d9;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
 }
 .nav-button:active .button-icon {
-  /* 액티브 상태 아이콘 스타일 */
   fill: #ffffff;
 }
 .nav-button:active .button-text {
@@ -196,18 +149,18 @@ a.home {
 /*------------------------overview--------------------------------------------------*/
 
 .nav-button-Overview_page {
-  background: #3853ff;
+  background: #6097d9;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   position: relative;
   width: 185px;
   height: 40px;
-  max-width: 100%; /* 버튼의 최대 너비를 부모 요소에 맞게 설정 */
+  max-width: 100%;
   border-radius: 10px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.3s;
-  overflow: hidden; /* 버튼 내용이 오버플로우되지 않도록 설정 */
+  overflow: hidden;
   margin-left: 2%;
   margin-right: 2%;
 }
@@ -223,12 +176,10 @@ a.home {
   top: 27%;
   left: 105px;
   transform: translateX(-50%);
-  max-width: calc(
-    100% - 40px
-  ); /* 버튼 내용의 최대 너비를 설정 (아이콘과 간격 고려) */
-  white-space: nowrap; /* 긴 텍스트가 줄 바꿈되지 않도록 설정 */
+  max-width: calc(100% - 40px);
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* 내용이 오버플로우될 때 말줄임(...) 표시 */
+  text-overflow: ellipsis;
 }
 
 .nav-button-Overview_page .button-icon-Overview_page {
@@ -243,15 +194,12 @@ a.home {
   left: 10px;
 }
 
-/* overview 페이지 활성화 상태에서 호버 상태 그림자 효과 */
 .nav-button-Overview_page:hover {
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
 }
 
-/* overview 페이지 활성화 상태에서 클릭 했을 때 효과*/
 .nav-button-Overview_page:active {
   background: #ffffff;
-  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
 }
 .nav-button-Overview_page:active .button-icon-Overview_page {
   fill: #0075ff;
@@ -264,9 +212,9 @@ a.home {
   position: fixed;
   width: 91%;
   height: 67%;
-  top: 58%; /* 화면 세로 중앙에 정렬 */
-  left: 50%; /* 화면 가로 중앙에 정렬 */
-  transform: translate(-50%, -50%); /* 요소를 수평 및 수직 중앙으로 이동 */
+  top: 58%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: #f9f9f9;
   border-radius: 5px;
   box-shadow: 4px 4px 6px #00000040;
@@ -296,7 +244,7 @@ a.home {
 }
 
 .form-group {
-  margin-bottom: 20px; /* 각 form-group 사이의 간격을 조절합니다. */
+  margin-bottom: 20px;
 }
 
 .project_name {
@@ -387,7 +335,7 @@ a.home {
   position: fixed;
   width: 120px;
   height: 40px;
-  background-color: #3853ff;
+  background-color: #6097d9;
   border-radius: 5px;
 
   top: 87%;
@@ -399,4 +347,7 @@ a.home {
   letter-spacing: 0;
   line-height: normal;
   white-space: nowrap;
+}
+.btn.btn-primary:hover {
+  background-color: #2e5686;
 }
