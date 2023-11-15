@@ -1351,6 +1351,11 @@ ExportDialog.saveLocalFile = function(editorUi, data, filename, format)
 var EditDataDialog = function(ui, cell)
 {
 	var div = document.createElement('div');
+	var editDataTitle = document.createElement('div');
+	editDataTitle.textContent = 'EditData';
+	editDataTitle.style.cssText='color: #353535;font-family: Inter;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
+	div.appendChild(editDataTitle);
+	div.style.cssText = 'height:70px;border-radius: 5px 5px 0px 0px;background: #E8F3FF;'
 
 	var graph = ui.editor.graph;
 	
@@ -1383,8 +1388,14 @@ var EditDataDialog = function(ui, cell)
 	}
 	
 	// Creates the dialog contents
-	var form = new mxForm('properties');
-	form.table.style.width = '100%';
+	// var form = new mxForm('properties');
+	// form.table.style.width = '100%';
+	var form = document.createElement('div');
+	form.style.width = '100%';
+	form.style.padding = '2%';
+
+	
+	
 
 	// var diagram_shape = cell.BaseFormatPanel.scope[0]
 	// console.log(diagram_shape)
@@ -1452,25 +1463,48 @@ var EditDataDialog = function(ui, cell)
 		wrapper.appendChild(removeAttr);
 		parent.appendChild(wrapper);
 	};
+
+	var addTextArea = function(name, value) {
+		var label = document.createElement('div');
+		label.textContent = name;
+		label.style.cssText = 'color: #353535;font-family: Inter;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal;'
+		form.appendChild(label);
 	
-	var addTextArea = function(index, name, value)
-	{
-		names[index] = name;
-		texts[index] = form.addTextarea(names[count] + ':', value, 2);
-		texts[index].style.width = '100%';
-		
-		if (value.indexOf('\n') > 0)
-		{
-			texts[index].setAttribute('rows', '2');
+		var textarea = document.createElement('textarea');
+		textarea.value = value;
+		// textarea.style.width = '100%';
+		textarea.style.cssText ='color: #353535;font-family: Inter;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal; width:100%;border-radius: 5px;border: 1px solid #9B9B9B;'
+	
+		if (value.indexOf('\n') > 0) {
+			textarea.setAttribute('rows', '5');
 		}
-		
-		addRemoveButton(texts[index], name);
-		
-		if (meta[name] != null && meta[name].editable == false)
-		{
-			texts[index].setAttribute('disabled', 'disabled');
+	
+		form.appendChild(textarea);
+	
+		addRemoveButton(textarea, name);
+	
+		if (meta[name] != null && meta[name].editable == false) {
+			textarea.setAttribute('disabled', 'disabled');
 		}
 	};
+	// var addTextArea = function(index, name, value)
+	// {
+	// 	names[index] = name;
+	// 	texts[index] = form.addTextarea(names[count] + ':', value, 2);
+	// 	texts[index].style.width = '100%';
+		
+	// 	if (value.indexOf('\n') > 0) //개행문자가 포함되어있다면 얼마나 늘릴지
+	// 	{
+	// 		texts[index].setAttribute('rows', '5');//순우 editdata 입력칸 높이 5로 늘리는 부분 
+	// 	}
+		
+	// 	addRemoveButton(texts[index], name);
+		
+	// 	if (meta[name] != null && meta[name].editable == false)
+	// 	{
+	// 		texts[index].setAttribute('disabled', 'disabled');
+	// 	}
+	// };
 	
 	var temp = [];
 	var isLayer = graph.getModel().getParent(cell) == graph.getModel().getRoot();
@@ -1615,53 +1649,53 @@ path : ""`
 
 
 	console.log(attrs)
-	for (var i = 0; i < attrs.length; i++) // 순우 다이어그램 노드에 property 값을 하나하나 추가하는 부분
-	{
-		if ((isLayer || attrs[i].nodeName != 'label') && attrs[i].nodeName != 'placeholders')
-		{
-			temp.push({name: attrs[i].nodeName, value: attrs[i].nodeValue});
+	// for (var i = 0; i < attrs.length; i++) // 순우 다이어그램 노드에 property 값을 하나하나 추가하는 부분
+	// {
+	// 	if ((isLayer || attrs[i].nodeName != 'label') && attrs[i].nodeName != 'placeholders')
+	// 	{
+	// 		temp.push({name: attrs[i].nodeName, value: attrs[i].nodeValue});
+	// 	}
+	// }
+	for (var i = 0; i < attrs.length; i++) {
+		if ((isLayer || attrs[i].nodeName != 'label') && attrs[i].nodeName != 'placeholders') {
+			temp.push({ name: attrs[i].nodeName, value: attrs[i].nodeValue });
 		}
 	}
-	
-	// Sorts by name
-	// temp.sort(function(a, b)
-	// {
-	//     if (a.name < b.name)
-	//     {
-	//     	return -1;
-	//     }
-	//     else if (a.name > b.name)
-	//     {
-	//     	return 1;
-	//     }
-	//     else
-	//     {
-	//     	return 0;
-	//     }
-	// });
 
-	if (id != null)
-	{	
-		var text = document.createElement('div');
-		text.style.width = '100%';
-		text.style.fontSize = '11px';
-		text.style.textAlign = 'center';
-		mxUtils.write(text, id);
+	// if (id != null)
+	// {	
+	// 	var text = document.createElement('div');
+	// 	text.style.width = '100%';
+	// 	text.style.fontSize = '11px';
+	// 	text.style.textAlign = 'center';
+	// 	mxUtils.write(text, id);
 		
-		// form.addField('EdgeCps Name' + ':', 'EdgeCps Porperty');
-		form.addField(mxResources.get('id') + ':', text);
-		console.log('민수 아이디 입력')
-	}
+	// 	// form.addField('EdgeCps Name' + ':', 'EdgeCps Porperty');
+	// 	// form.addField('ID', 'd');
+	// 	// form.addField( text, false)
+	// 	form.addField(mxResources.get('id') , text);
+	// 	console.log('민수 아이디 입력')
+	// }
 	
-	for (var i = 0; i < temp.length; i++)
-	{
-		addTextArea(count, temp[i].name, temp[i].value);
-		count++;
+	// for (var i = 0; i < temp.length; i++)
+	// {
+	// 	addTextArea(count, temp[i].name, temp[i].value);
+	// 	count++;
+	// }
+	for (var i = 0; i < temp.length; i++) {
+		addTextArea(temp[i].name, temp[i].value);
 	}
 	
 	var top = document.createElement('div');
-	top.style.cssText = 'position:absolute;left:30px;right:30px;overflow-y:auto;top:30px;bottom:80px;';
-	top.appendChild(form.table);
+	top.style.cssText = 'position:absolute;left:30px;right:30px;overflow-y:auto;top:40px;bottom:80px;';
+	// 순우 editdata css반영
+	top.className = 'editDataDialog';
+	top.style.borderRadius = '10px';
+	top.style.border = '1px solid #9B9B9B';
+	top.style.top = '20%';
+
+	// top.appendChild(form.table);
+	top.appendChild(form);
 
 	var newProp = document.createElement('div');
 	newProp.style.boxSizing = 'border-box';
@@ -1682,77 +1716,6 @@ path : ""`
 	top.appendChild(newProp);
 	div.appendChild(top);
 	
-	// var addBtn = mxUtils.button(mxResources.get('addProperty'), function()
-	// {
-	// 	var name = nameInput.value;
-
-	// 	// Avoid ':' in attribute names which seems to be valid in Chrome
-	// 	if (name.length > 0 && name != 'label' && name != 'placeholders' && name.indexOf(':') < 0)
-	// 	{
-	// 		try
-	// 		{
-	// 			var idx = mxUtils.indexOf(names, name);
-				
-	// 			if (idx >= 0 && texts[idx] != null)
-	// 			{
-	// 				texts[idx].focus();
-	// 			}
-	// 			else
-	// 			{
-	// 				// Checks if the name is valid
-	// 				var clone = value.cloneNode(false);
-	// 				clone.setAttribute(name, '');
-					
-	// 				if (idx >= 0)
-	// 				{
-	// 					names.splice(idx, 1);
-	// 					texts.splice(idx, 1);
-	// 				}
-
-	// 				names.push(name);
-	// 				var text = form.addTextarea(name + ':', '', 2);
-	// 				text.style.width = '100%';
-	// 				texts.push(text);
-	// 				addRemoveButton(text, name);
-
-	// 				text.focus();
-	// 			}
-
-	// 			addBtn.setAttribute('disabled', 'disabled');
-	// 			nameInput.value = '';
-	// 		}
-	// 		catch (e)
-	// 		{
-	// 			mxUtils.alert(e);
-	// 		}
-	// 	}
-	// 	else
-	// 	{
-	// 		mxUtils.alert(mxResources.get('invalidName'));
-	// 	}
-	// });
-	
-	// this.init = function()
-	// {
-	// 	if (texts.length > 0)
-	// 	{
-	// 		texts[0].focus();
-	// 	}
-	// 	else
-	// 	{
-	// 		nameInput.focus();
-	// 	}
-	// };
-	
-	// addBtn.setAttribute('title', mxResources.get('addProperty'));
-	// addBtn.setAttribute('disabled', 'disabled');
-	// addBtn.style.textOverflow = 'ellipsis';
-	// addBtn.style.position = 'absolute';
-	// addBtn.style.overflow = 'hidden';
-	// addBtn.style.width = '144px';
-	// addBtn.style.right = '0px';
-	// addBtn.className = 'geBtn';
-	// newProp.appendChild(addBtn);
 
 	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
 	{
@@ -1897,8 +1860,9 @@ path : ""`
 	
 	if (ui.editor.cancelFirst)
 	{
-		buttons.appendChild(cancelBtn);
 		buttons.appendChild(applyBtn);
+		buttons.appendChild(cancelBtn);
+		
 	}
 	else
 	{

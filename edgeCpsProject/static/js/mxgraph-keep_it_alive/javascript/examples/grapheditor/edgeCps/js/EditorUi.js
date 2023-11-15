@@ -4575,15 +4575,15 @@ EditorUi.prototype.showDataDialog = function(cell)
 		try{
 
 			if(cell.value.className.includes('Rounded Rectangle')){
-				this.showDialog(dlg.container, 780, 270, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+				this.showDialog(dlg.container, 780, 500, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
 			}else if(cell.value.className.includes('Class')){
-				this.showDialog(dlg.container, 780, 158, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+				this.showDialog(dlg.container, 780, 422, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
 			}else if(cell.value.className.includes('Rectangle')){
-				this.showDialog(dlg.container, 780, 227, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+				this.showDialog(dlg.container, 780, 377, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
 			}else if(cell.value.className.includes('Container')){
-				this.showDialog(dlg.container, 780, 417, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+				this.showDialog(dlg.container, 780, 567, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
 			}else{
-				this.showDialog(dlg.container, 780, 427, true, false, null, false);
+				this.showDialog(dlg.container, 780, 577, true, false, null, false);
 			}
 			// let showDialogCalled = false;
 			// try {
