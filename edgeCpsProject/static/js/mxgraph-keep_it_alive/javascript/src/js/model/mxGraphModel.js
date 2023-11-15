@@ -1877,6 +1877,7 @@ mxGraphModel.prototype.execute = function(change)
 	// New global executed event
 	this.fireEvent(new mxEventObject(mxEvent.EXECUTED, 'change', change));
 	this.endUpdate();
+	
 };
 
 /**

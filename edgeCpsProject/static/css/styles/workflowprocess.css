@@ -225,3 +225,37 @@ a.home {
 .nav-button-workflow_process_page:active .button-text-workflow_process_page {
   color: #0075ff;
 }
+
+
+.selectWorkflow select option {
+  font-family: 'Inter Extra Light';
+  font-style: normal;
+  font-weight: 400;
+  border-radius:5px;
+	border:1px solid #c0c0c0;
+  margin:2.5%;
+  text-align: center;
+  background-color: #3853ff;
+  color:#ffffff;
+}
+.selectWorkflow select option.selected {
+  background-color: #ff5733; /* 선택된 옵션의 배경색 변경 */
+  color: #000000; /* 선택된 옵션의 텍스트색 변경 */
+}
+
+
+
+    /* Webkit 스크롤바 */
+    ::-webkit-scrollbar {
+      width: 7px; /* 스크롤바의 너비 */
+      height: 7px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background-color: #D9D9D9; /* 스크롤바 색상 */
+      border-radius: 6px; /* 스크롤바 모서리 둥글게 */
+    }
+    
+    ::-webkit-scrollbar-track {
+      background-color: #ffffff; /* 스크롤바 트랙 색상 */
+    }

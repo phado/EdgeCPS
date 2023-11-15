@@ -551,6 +551,8 @@ Format.prototype.refresh = function(arguments)
 	
 	var attributeTitle = document.createElement('div');
 	attributeTitle.innerText = 'Information';
+	attributeTitle.style.textAlign ='center'; 
+
 	div.appendChild(attributeTitle);
 
 	var attributePanel = document.createElement('div');
@@ -582,7 +584,7 @@ Format.prototype.refresh = function(arguments)
 		try{
 			// var reqAttribute = selectedCell[0].cells[0].value.attributes[1]['name']+' : '+selectedCell[0].cells[0].value.getAttribute('text');
 			// showAttribute.textContent = reqAttribute;
-			var attributeKey = selectedCell[0].cells[0].value.attributes[1]['name']
+			var attributeKey = selectedCell[0].cells[0].value.attributes[2]['nodeName']
 			var attributeKeyContainer = document.createElement('div');
 			attributeKeyContainer.style.marginLeft = '1px';
 			attributeKeyContainer.style.marginRight = '1px';

@@ -3940,8 +3940,14 @@ Sidebar.prototype.itemClicked = function(cells, ds, evt, elt) // 클릭할때 �
 	{
 		var pt = (mxEvent.isAltDown(evt)) ? graph.getFreeInsertPoint() : // 민수 해당 함수에서 요소를 생성한다.
 			graph.getCenterInsertPoint(graph.getBoundingBoxFromGeometry(cells, true));
+
+		
 		ds.drop(graph, evt, null, pt.x, pt.y, true);
+		
+		
 	}
+	// 순우 forceApply
+	// forceApply(graph,  cells[0], cells[0].value,elt.className);
 };
 
 /**
@@ -3991,6 +3997,7 @@ Sidebar.prototype.addClickHandler = function(elt, ds, cells)
 			{
 				console.log('sidebar_item_clicked_ 민수')
 				createDiagramClicked = true;
+				forceApply(graph,  cells[0], cells[0].value,elt.className); // 순우 다이어그램 force apply
 				sb.itemClicked(cells, ds, evt, elt);
 				createDiagramClicked = false;
 			}

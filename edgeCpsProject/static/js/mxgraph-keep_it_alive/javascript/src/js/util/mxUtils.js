@@ -240,9 +240,11 @@ var mxUtils =
 						}
 						else if (!arguments[0].currentTarget.classList[0]){
 							// DiagramClicked = arguments[0].currentTarget.parentElement.firstChild.classList[0]
-							DiagramClicked = arguments[0].currentTarget.previousElementSibling.classList[0]
-							console.log( '선택 다이어그램 :  '+ DiagramClicked)
+								DiagramClicked = arguments[0].currentTarget.previousElementSibling.classList[0]
+								console.log( '선택 다이어그램 :  '+ DiagramClicked)
+							
 						}
+						
 					}		
 				}	
 			

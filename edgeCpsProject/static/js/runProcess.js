@@ -33,7 +33,7 @@ function executeFunctionWithFileContent(content,workflowName) {
 }
 
 // 불러온 다이어그램 클릭 이벤트 함수 
-function subContent1ClickHandler(sender, evt) {
+function businessProcessViewClickHandler(sender, evt) {
     var cell = evt.getProperty('cell'); // 클릭한 셀
     var valueString='';
     if (cell != null && cell.style.includes('rounded=1')) { //cell이 null아니고 엣지도 아닌경우 
@@ -54,45 +54,25 @@ function subContent1ClickHandler(sender, evt) {
 			var cellName = matches;
         var cellId = cell.id
         localStorage.setItem(projectName+'_current_workflowName', cellName)
-        subContent2(cellName,cellId,cell)
+        workflowProcessView(cellName,cellId,cell)
     }
 }
 
 // sub-content1
-function subContent1(projectName){
+function businessProcessView(projectName){
     var xmlData = localStorage.getItem(projectName+'_businessProcessXml')
-    var container = document.getElementById('graphContainer');
+    var container = document.getElementById('businessProcessViewContainer');
     var graph = new Graph(container);
     var doc = mxUtils.parseXml(xmlData);
     var codec = new mxCodec(doc);
     codec.decode(doc.documentElement, graph.getModel());
-    graph.addListener(mxEvent.CLICK, subContent1ClickHandler);
+    graph.addListener(mxEvent.CLICK, businessProcessViewClickHandler);
     graph.refresh();
 }
-
-function subContent2ClickHandler(sender, evt) {
-     clearInterval(intervalLogContainer2)
-    var cell = evt.getProperty('cell'); // 클릭한 셀
-    if (cell != null && cell.style.includes('rounded=1')) { //cell이 null아니고 엣지도 아닌경우 
-        const inputString = cell.value;
-        var regex = /><div style="font-weight: bold">([^<]+)<\/div>/;
-        var match = inputString.match(regex);
-        if (match ==null){
-            regex = /<br>(.*?)<\/div>/;
-            match = inputString.match(regex);
-        }
-        var actionName = match[1]   
-        if(actionName.includes('['||']')){
-            actionName = actionName.substring(1,actionName.length -1);
-        } 
-        var actionId = cell.id
-        logContainer2(actionStatusFlag=true,actionName,actionId)
-    }
-}
-
+var intervalLogDeploymentView = '';
 // sub-content2
-function subContent2(cellName,cellId,cell){
-    var containerElement = document.getElementById("graphContainer2");
+function workflowProcessView(cellName,cellId,cell){
+    var containerElement = document.getElementById("workflowProcessView");
     var svgElements = containerElement.querySelectorAll("svg");
     var divElements = containerElement.querySelectorAll("div");
     // 선택한 각 SVG 요소를 순회하면서 삭제
@@ -106,17 +86,39 @@ function subContent2(cellName,cellId,cell){
     });
 
     var xmlData = localStorage.getItem(projectName+'_'+cellId+'#'+cellName)
-    var container = document.getElementById('graphContainer2');
+    var container = document.getElementById('workflowProcessView');
     var graph = new Graph(container);
     var doc = mxUtils.parseXml(xmlData);
     var codec = new mxCodec(doc);
-    graph.addListener(mxEvent.CLICK, subContent2ClickHandler);
+    // graph.addListener(mxEvent.CLICK, workflowProcessViewHandler);
     codec.decode(doc.documentElement, graph.getModel());
     graph.refresh();
 
     // Activity 클릭 했을 때 Activity 상태 출력
-    intervalLogContainer2 = setInterval(() => logContainer2(false), 1000);
+    intervalLogDeploymentView = setInterval(() => deploymentView(false), 1000);
 }
+
+
+// function workflowProcessViewHandler(sender, evt) {
+//      clearInterval(intervalLogContainer2)
+//     var cell = evt.getProperty('cell'); // 클릭한 셀
+//     if (cell != null && cell.style.includes('rounded=1')) { //cell이 null아니고 엣지도 아닌경우 
+//         const inputString = cell.value;
+//         var regex = /><div style="font-weight: bold">([^<]+)<\/div>/;
+//         var match = inputString.match(regex);
+//         if (match ==null){
+//             regex = /<br>(.*?)<\/div>/;
+//             match = inputString.match(regex);
+//         }
+//         var actionName = match[1]   
+//         if(actionName.includes('['||']')){
+//             actionName = actionName.substring(1,actionName.length -1);
+//         } 
+//         var actionId = cell.id
+//         logContainer2(actionStatusFlag=true,actionName,actionId)
+//     }
+// }
+
 
 // log-container1
 function logContainer(){
@@ -149,8 +151,8 @@ function logContainer(){
     };
 } 
 
-function logContainer2(actionStatusFlag,actionName,actionId) {
-    try {
+function deploymentView(actionStatusFlag,actionName,actionId) {
+    // try {
         workflowName = localStorage.getItem(projectName+'_current_workflowName')
 
         const url = `http://127.0.0.1:5000/status?workflow_name=${encodeURIComponent(workflowName)}`;
@@ -176,7 +178,7 @@ function logContainer2(actionStatusFlag,actionName,actionId) {
             
 
 
-            var containerElement = document.getElementById('logContainer2');
+            var containerElement = document.getElementById('deploymentView');
             var svgElements = containerElement.querySelectorAll("svg");
             var divElements = containerElement.querySelectorAll("div");
             // 선택한 각 SVG 요소를 순회하면서 삭제
@@ -190,7 +192,7 @@ function logContainer2(actionStatusFlag,actionName,actionId) {
             });
 
             var xmlData = deployInfo;
-            var container = document.getElementById('logContainer2');
+            var container = document.getElementById('deploymentView');
             var graph = new Graph(container);
             var doc = mxUtils.parseXml(xmlData);
             var codec = new mxCodec(doc);
@@ -198,17 +200,8 @@ function logContainer2(actionStatusFlag,actionName,actionId) {
             codec.decode(doc.documentElement, graph.getModel());
             graph.refresh();
 
-
-
-
-            // while (logContainer2.firstChild) { // initialize
-            //     logContainer2.removeChild(logContainer2.firstChild);
-            // }
-            // logContainer2.appendChild(logEntry);
-            // // logContainer2.scrollTop = logContainer2.scrollHeight;
-            // // await saveLogContainer();
             if(statusJsonData.metadata.labels["workflows.argoproj.io/completed"]=='true'){
-                clearInterval(intervalLogContainer2)
+                clearInterval(intervalLogDeploymentView)
                 logContainer()
                 
             }
@@ -217,9 +210,9 @@ function logContainer2(actionStatusFlag,actionName,actionId) {
             console.error("Error:", error);
         });
         
-    }catch{
+    // }catch{
 
-    }
+    // }
 }
 // async function logContainer2(actionStatusFlag,actionName,actionId) {
 //     try {

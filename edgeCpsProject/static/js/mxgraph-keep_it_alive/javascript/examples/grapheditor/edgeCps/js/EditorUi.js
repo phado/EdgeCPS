@@ -3997,7 +3997,7 @@ EditorUi.prototype.createDivs = function () {
 
   this.toolbarContainer.style.left = "0px";
   this.toolbarContainer.style.right = "0px";
-  this.sidebarContainer.style.left = "0px";
+  this.sidebarContainer.style.left = "7px";
   this.formatContainer.style.right = "0px";
   this.formatContainer.style.zIndex = "1";
   this.diagramContainer.style.right =

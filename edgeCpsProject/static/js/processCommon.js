@@ -520,17 +520,6 @@ function getWorkflowObjList(xml) {
 
   var roundedObjects = [];
 
-  // var mxCells = xmlDoc.getElementsByTagName("mxCell");
-  // for (var i = 0; i < mxCells.length; i++) {
-  //   var mxCell = mxCells[i];
-  //   var style = mxCell.getAttribute("style");
-  //   if (style && style.includes("rounded=1;")) {
-  // 	var id = mxCell.getAttribute("id");
-  // 	var value = mxCell.getAttribute("value");
-  // 	roundedObjects.push({ id: id, value: value });
-  //   }
-  // }
-
   // Business Process에서 Edit data에 값이 추가 된 다음 workflow Process로 넘어와서 select box를 생성할 때 오류 발생해서 밑에 새로 짬
   var mxCells = xmlDoc.documentElement.getElementsByTagName("object");
   if (mxCells.length != 0) {
@@ -539,7 +528,7 @@ function getWorkflowObjList(xml) {
       if (
         mxCell
           .getElementsByTagName("mxCell")[0]
-          .attributes[0].nodeValue.includes("rounded=1;")
+          .attributes[1].nodeValue.includes("rounded=1;")
       ) {
         var id = mxCell.getAttribute("id");
         // var value = mxCell.getAttribute('name');
@@ -608,6 +597,7 @@ function createWorkflowSelectBox(activityCatList) {
   selectBox.multiple = true; // Enable multiple selection
   selectBox.className = "workflow-select-box";
   selectBox.style.width = "200px";
+  selectBox.style="width: 200px;"
 
   // workflow 페이지를 최초로 열어 로컬스토리지에 nowWorkflow 값이 없는 경우 넣어줌.
   if (localStorage.getItem(projectName + "_nowWorkflow") == "") {
@@ -617,7 +607,7 @@ function createWorkflowSelectBox(activityCatList) {
     ); // 샐렉트 박스 첫번째 값
   }
   let nowWorkflow = localStorage.getItem(projectName + "_nowWorkflow");
-
+  
   for (var i = 0; i < data.length; i++) {
     var option = document.createElement("option");
     option.value = data[i].id;
@@ -631,6 +621,25 @@ function createWorkflowSelectBox(activityCatList) {
 
     if (nowWorkflow === projectName + "_" + data[i].id + "#" + data[i].value) {
       option.selected = true; // 일치하는 경우 선택됨으로 표시
+      option.classList.add('selected');
+      // try{
+      //   var selectElement = document.querySelector('.selectWorkflow select');
+      //   var previouslySelected = selectElement.querySelector('option.selected');
+
+      //   if (previouslySelected) {
+      //     previouslySelected.classList.remove('selected');
+
+      //           // 새로 선택된 옵션에 클래스 추가
+      //   var selectedOption = selectElement.options[selectElement.selectedIndex];
+      //   selectedOption.classList.add('selected');
+      //   }
+      // }catch{
+
+      // }
+     
+      
+
+
     }
   }
 
@@ -868,77 +877,149 @@ function captureAndDownloadImage(workflowName) {
 // 	}
 // 	return extractedValues
 // }
+function FAcreateXmlDocument() {
+  if (document.implementation && document.implementation.createDocument) {
+    return document.implementation.createDocument(null, null, null);
+  } else if (window.ActiveXObject) {
+    return new ActiveXObject('Microsoft.XMLDOM');
+  } else {
+    throw 'Cannot create an XML document';
+  }
+}
 
-function saveAsProject() {
-  console.log("다른 이름으로 저장");
-  // 	updateLocalStorage(flowDict, processGraphxml)
-  // ////////////////yaml생성에 필요한 데이터들////////////////////////
-  // 	var workflowXMLValue = [];
-  // 	let get_localstorage_xml_list = ['overviewProcessXML','requirementsProcessXml','businessProcessXml',];
-  // 	var stringWorkflowList = localStorage.getItem(projectName+'_workflowXML');
-  // 	var workflowList = JSON.parse(stringWorkflowList);
-  // 	try{
-  // 		for (var i = 0 ; i< workflowList.length ; i++){
-  // 			// get_localstorage_xml_list.push(workflowList[i]);
-  // 			// get_localstorage_xml_list.push(workflowList[i]+'_requirement');
-  // 			// get_localstorage_xml_list.push(workflowList[i]+'_nodeSelector');
-  // 			for (var j = 0; j < localStorage.length; j++){
-  // 				const key = localStorage.key(j);
-  // 				if(key.includes(projectName+'_'+workflowList[i])){
-  // 					workflowXMLValue.push(key);
-  // 				}
-  // 			}
-  // 			// get_localstorage_xml_list.push(workflowList[i]+'_flowDict');
-  // 		}
-  // 	}
-  // 	catch{
-  // 	}
-  // 	console.log(get_localstorage_xml_list)
-  // /////////////////////////////////////////
-  // 	let data = {};
-  // 	let processData = {};
-  // 	let workflowData = {};
-  // 	// 프로세스 저장
-  // 	for (var i = 0; i < get_localstorage_xml_list.length; i++) {
-  // 		var key = get_localstorage_xml_list[i];
-  // 		var value = localStorage.getItem(projectName + '_' + key);
-  // 		if(!value){
-  // 			value = ''
-  // 		}
-  // 		processData[key] = value;
-  // 	}
-  // 	//워크플로우 저장
-  // 	// var workflowXMLValue = localStorage.getItem(projectName + '_workflowXML');
-  // 	// workflowXMLValue = JSON.parse(workflowXMLValue);
-  // 	if (workflowXMLValue) {
-  // 		for (var i = 0; i < workflowXMLValue.length; i++) {
-  // 			var key = workflowXMLValue[i];
-  // 			var value = localStorage.getItem( key);
-  // 			workflowData[key] = value;
-  // 		}
-  // 	}
-  // 	data['projectName'] = projectName;
-  // 	var projectNamejsonData = data;
-  // 	var processDatajsonData = processData;
-  // 	var workflowDatajsonData = workflowData;
-  // 	var dataToSend = {
-  // 		  projectNamejsonData: projectNamejsonData,
-  // 		  processDatajsonData: processDatajsonData,
-  // 		  workflowDatajsonData: workflowDatajsonData
-  // 		};
-  // 	// Flask의 saveProject 함수 호출
-  // 	fetch('/saveProject', {
-  // 		method: 'POST',
-  // 		headers: {
-  // 			'Content-Type': 'application/json'
-  // 		},
-  // 		body: JSON.stringify(dataToSend)
-  // 	})
-  // 		.then(response => response.json())
-  // 		.then(data => {
-  // 			alert(data); // 서버에서 반환된 데이터 출력
-  // 		})
-  // 		.catch(error => {
-  // 			console.error('Error:', error);
-  // 		});
+
+function forceApply(graph, cell, value, className){
+  // function forceApply(cellValue){
+    // var FAclassName = cellValue.getAttribute('class'); 
+  var FAcell = cell;
+  var FAgraph = graph;
+  var FAvalue = value;
+  var FAclassName = className
+
+
+  // Converts the value to an XML node
+  if (!mxUtils.isNode(FAvalue))
+  {
+    var doc = FAcreateXmlDocument();
+    var obj = doc.createElement('object');
+    obj.setAttribute('label', FAvalue || '');
+    FAvalue = obj;
+  }
+
+
+
+
+
+  if(FAclassName.includes('Rounded Rectangle')){
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(FAvalue, 'text/html');
+    if(typeof(FAvalue)=='object'){
+      // const object = xmlDoc.querySelector('object');
+      const labelValue = FAvalue.getAttribute('label');
+      const objectElement = document.createElement('object');
+      objectElement.setAttribute('label', labelValue);
+      objectElement.setAttribute('class',FAclassName);
+      objectElement.setAttribute('description', 'd');
+      objectElement.setAttribute('input_information', 'ddd');
+      objectElement.setAttribute('output_information', 'dd');
+      // FAcell.value = objectElement
+      FAgraph.getModel().setValue(FAcell, objectElement);
+      FAgraph.getModel().setValue(FAcell, objectElement);
+
+    }else{
+      const divElement = xmlDoc.querySelector('div');
+        
+      const content = divElement.textContent;
+
+      const objectElement = document.createElement('object');
+      objectElement.setAttribute('label', content);
+      objectElement.setAttribute('class',FAclassName);
+      objectElement.setAttribute('description', 'd');
+      objectElement.setAttribute('input_information', 'ddds');
+      objectElement.setAttribute('output_information', 'dd');
+      FAgraph.getModel().setValue(FAcell, objectElement);
+    }
+   
+  }else if(FAclassName.includes('Class')){
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(FAvalue, 'text/html');
+    // if(typeof(FAvalue)=='object'){
+      const labelValue = FAvalue.getAttribute('label');
+      const objectElement = document.createElement('object');
+      objectElement.setAttribute('label', labelValue|| '');
+      objectElement.setAttribute('class',FAclassName|| '');
+      objectElement.setAttribute('text', 'd');
+      FAcell.value = labelValue;
+      FAgraph.getModel().setValue(FAcell, objectElement|| '');
+      
+
+    // }else{
+
+    //   // const divElement = xmlDoc.querySelector('div');
+        
+    //   // const content = divElement.textContent;
+
+    //   const objectElement = document.createElement('object');
+    //   objectElement.setAttribute('label', FAcell.value);
+    //   objectElement.setAttribute('class',FAclassName);
+    //   objectElement.setAttribute('text', 'd');
+    //   FAgraph.getModel().setValue(FAcell, objectElement);
+    // }
+   
+  }else if(FAclassName.includes('Action Container')){
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(FAvalue, 'text/html');
+    if(typeof(FAvalue)=='object'){
+      // const object = xmlDoc.querySelector('object');
+      const labelValue = FAvalue.getAttribute('label');
+      const objectElement = document.createElement('object');
+      objectElement.removeAttribute('xmlns');
+      objectElement.setAttribute('label', labelValue);
+      objectElement.setAttribute('class',FAclassName);
+      objectElement.setAttribute('image', '');
+      objectElement.setAttribute('command', '[]');
+      objectElement.setAttribute('args', '[""]');
+      objectElement.setAttribute('resource', '');
+      objectElement.setAttribute('volumeMount', '');
+      objectElement.setAttribute('environment', '');
+      objectElement.setAttribute('inputs.parameters', `name : ""    
+value : ""`);
+      objectElement.setAttribute('inputs.artifacts', `name : ""    
+value : ""    
+valueFrom.path : ""`);
+      objectElement.setAttribute('outputs.artifact', `name : ""    
+path : ""`);
+      objectElement.setAttribute('output_information', `name : ""    
+path : ""`);
+      
+      FAgraph.getModel().setValue(FAcell, objectElement);
+    }else{
+      const divElement = xmlDoc.querySelector('div');
+        
+      const content = divElement.innerHTML;
+
+      const objectElement = document.createElement('object');
+      objectElement.setAttribute('label', content);
+      objectElement.setAttribute('class',FAclassName);
+      objectElement.setAttribute('image', '');
+      objectElement.setAttribute('command', '[]');
+      objectElement.setAttribute('args', '[""]');
+      objectElement.setAttribute('resource', '');
+      objectElement.setAttribute('volumeMount', '');
+      objectElement.setAttribute('environment', '');
+      objectElement.setAttribute('inputs.parameters', `name : ""    
+value : ""`);
+      objectElement.setAttribute('inputs.artifacts', `name : ""    
+value : ""    
+valueFrom.path : ""`);
+      objectElement.setAttribute('outputs.artifact', `name : ""    
+path : ""`);
+      objectElement.setAttribute('output_information', `name : ""    
+path : ""`);
+      FAcell.value = objectElement;
+      FAgraph.getModel().setValue(FAcell, objectElement);
+    }
+  
+  }
+  FAcell.value.namespaceURI =''
 }
