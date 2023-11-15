@@ -1355,6 +1355,7 @@ var EditDataDialog = function(ui, cell)
 	var graph = ui.editor.graph;
 	
 	var value = graph.getModel().getValue(cell);
+	value.removeAttribute('xmlns');
 	
 	// Converts the value to an XML node
 	if (!mxUtils.isNode(value))
@@ -1514,9 +1515,11 @@ var EditDataDialog = function(ui, cell)
 			}
 			else if (DiagramClicked.includes('Rectangle')){
 				var DiClassFixProperty = document.createAttribute('arguments.parameters')
-				DiClassFixProperty.value = 'name:""  value:""'
+				DiClassFixProperty.value = `name:""  
+value:"{{workflow.outputs.parameters.parameters-}}"`
 				var DiClassFixProperty2 = document.createAttribute('arguments.artifacts')
-				DiClassFixProperty2.value = 'name:"" from:""'
+				DiClassFixProperty2.value = `name:"" 
+from:"{{workflow.outputs.parameters.artifacts-}}"`
 				// var DiClassFixProperty2 = document.createAttribute('Output')
 				// DiClassFixProperty2.value = ''
 				
@@ -1524,12 +1527,12 @@ var EditDataDialog = function(ui, cell)
 				attrs.setNamedItem(DiClassFixProperty2)
 			}
 			else if (DiagramClicked.includes('Container')){
-				var DiClassFixProperty = document.createAttribute('image')
-				DiClassFixProperty.value = ''
+				var DiClassFixProperty1 = document.createAttribute('image')
+				DiClassFixProperty1.value = ''
 				var DiClassFixProperty2 = document.createAttribute('command')
-				DiClassFixProperty2.value = ''
+				DiClassFixProperty2.value = '[]'
 				var DiClassFixProperty3 = document.createAttribute('args')
-				DiClassFixProperty3.value = ''
+				DiClassFixProperty3.value = '[""]'
 				var DiClassFixProperty4 = document.createAttribute('resource')
 				DiClassFixProperty4.value = ''
 				var DiClassFixProperty5 = document.createAttribute('volumeMount')
@@ -1537,21 +1540,35 @@ var EditDataDialog = function(ui, cell)
 				var DiClassFixProperty6 = document.createAttribute('environment')
 				DiClassFixProperty6.value = ''
 				var DiClassFixProperty7 = document.createAttribute('inputs.parameters')
-				DiClassFixProperty7.value = 'name:""  value:""'
+				DiClassFixProperty7.value = `name : ""    
+value : ""`
+				// DiClassFixProperty7.value = 'value : ""'
 				var DiClassFixProperty8 = document.createAttribute('outputs.parameters')
-				DiClassFixProperty8.value = 'name:""  path:""'
-				// var DiClassFixProperty9 = document.createAttribute('arguments.artifacts.')
-				// DiClassFixProperty9.value = 'name:""  from:""'
-				
-				attrs.setNamedItem(DiClassFixProperty)
+				DiClassFixProperty8.value = `name : ""    
+value : ""    
+valueFrom.path : ""`
+				var DiClassFixProperty9 = document.createAttribute('inputs.artifacts')
+				DiClassFixProperty9.value = `name : ""    
+path : ""`
+				var DiClassFixProperty10 = document.createAttribute('outputs.artifacts')
+				DiClassFixProperty10.value = `name : ""    
+path : ""`
+
+				attrs.setNamedItem(DiClassFixProperty1)
 				attrs.setNamedItem(DiClassFixProperty2)
 				attrs.setNamedItem(DiClassFixProperty3)
-				attrs.setNamedItem(DiClassFixProperty4)
-				attrs.setNamedItem(DiClassFixProperty5)
-				attrs.setNamedItem(DiClassFixProperty6)
+				// attrs.setNamedItem(DiClassFixProperty4)
+				// attrs.setNamedItem(DiClassFixProperty5)
+				// attrs.setNamedItem(DiClassFixProperty6)
 				attrs.setNamedItem(DiClassFixProperty7)
+				
 				attrs.setNamedItem(DiClassFixProperty8)
-				// attrs.setNamedItem(DiClassFixProperty9)
+				attrs.setNamedItem(DiClassFixProperty9)
+				attrs.setNamedItem(DiClassFixProperty10)
+				// for (var i =1 ; i<11; i++){
+				// 	var a = 'DiClassFixProperty'+String(i)
+				// 	attrs.setNamedItem(a)
+				// }
 			}
 			else if (DiagramClicked.includes('Script')){
 				var DiClassFixProperty = document.createAttribute('interpreter')
@@ -1607,21 +1624,21 @@ var EditDataDialog = function(ui, cell)
 	}
 	
 	// Sorts by name
-	temp.sort(function(a, b)
-	{
-	    if (a.name < b.name)
-	    {
-	    	return -1;
-	    }
-	    else if (a.name > b.name)
-	    {
-	    	return 1;
-	    }
-	    else
-	    {
-	    	return 0;
-	    }
-	});
+	// temp.sort(function(a, b)
+	// {
+	//     if (a.name < b.name)
+	//     {
+	//     	return -1;
+	//     }
+	//     else if (a.name > b.name)
+	//     {
+	//     	return 1;
+	//     }
+	//     else
+	//     {
+	//     	return 0;
+	//     }
+	// });
 
 	if (id != null)
 	{	
@@ -1654,88 +1671,88 @@ var EditDataDialog = function(ui, cell)
 	newProp.style.width = '100%';
 	
 	var nameInput = document.createElement('input');
-	nameInput.setAttribute('placeholder', mxResources.get('enterPropertyName'));
-	nameInput.setAttribute('type', 'text');
-	nameInput.setAttribute('size', (mxClient.IS_IE || mxClient.IS_IE11) ? '36' : '40');
-	nameInput.style.boxSizing = 'border-box';
-	nameInput.style.marginLeft = '2px';
-	nameInput.style.width = '100%';
+	// nameInput.setAttribute('placeholder', mxResources.get('enterPropertyName'));
+	// nameInput.setAttribute('type', 'text');
+	// nameInput.setAttribute('size', (mxClient.IS_IE || mxClient.IS_IE11) ? '36' : '40');
+	// nameInput.style.boxSizing = 'border-box';
+	// nameInput.style.marginLeft = '2px';
+	// nameInput.style.width = '100%';
 	
-	newProp.appendChild(nameInput);
+	// newProp.appendChild(nameInput);
 	top.appendChild(newProp);
 	div.appendChild(top);
 	
-	var addBtn = mxUtils.button(mxResources.get('addProperty'), function()
-	{
-		var name = nameInput.value;
+	// var addBtn = mxUtils.button(mxResources.get('addProperty'), function()
+	// {
+	// 	var name = nameInput.value;
 
-		// Avoid ':' in attribute names which seems to be valid in Chrome
-		if (name.length > 0 && name != 'label' && name != 'placeholders' && name.indexOf(':') < 0)
-		{
-			try
-			{
-				var idx = mxUtils.indexOf(names, name);
+	// 	// Avoid ':' in attribute names which seems to be valid in Chrome
+	// 	if (name.length > 0 && name != 'label' && name != 'placeholders' && name.indexOf(':') < 0)
+	// 	{
+	// 		try
+	// 		{
+	// 			var idx = mxUtils.indexOf(names, name);
 				
-				if (idx >= 0 && texts[idx] != null)
-				{
-					texts[idx].focus();
-				}
-				else
-				{
-					// Checks if the name is valid
-					var clone = value.cloneNode(false);
-					clone.setAttribute(name, '');
+	// 			if (idx >= 0 && texts[idx] != null)
+	// 			{
+	// 				texts[idx].focus();
+	// 			}
+	// 			else
+	// 			{
+	// 				// Checks if the name is valid
+	// 				var clone = value.cloneNode(false);
+	// 				clone.setAttribute(name, '');
 					
-					if (idx >= 0)
-					{
-						names.splice(idx, 1);
-						texts.splice(idx, 1);
-					}
+	// 				if (idx >= 0)
+	// 				{
+	// 					names.splice(idx, 1);
+	// 					texts.splice(idx, 1);
+	// 				}
 
-					names.push(name);
-					var text = form.addTextarea(name + ':', '', 2);
-					text.style.width = '100%';
-					texts.push(text);
-					addRemoveButton(text, name);
+	// 				names.push(name);
+	// 				var text = form.addTextarea(name + ':', '', 2);
+	// 				text.style.width = '100%';
+	// 				texts.push(text);
+	// 				addRemoveButton(text, name);
 
-					text.focus();
-				}
+	// 				text.focus();
+	// 			}
 
-				addBtn.setAttribute('disabled', 'disabled');
-				nameInput.value = '';
-			}
-			catch (e)
-			{
-				mxUtils.alert(e);
-			}
-		}
-		else
-		{
-			mxUtils.alert(mxResources.get('invalidName'));
-		}
-	});
+	// 			addBtn.setAttribute('disabled', 'disabled');
+	// 			nameInput.value = '';
+	// 		}
+	// 		catch (e)
+	// 		{
+	// 			mxUtils.alert(e);
+	// 		}
+	// 	}
+	// 	else
+	// 	{
+	// 		mxUtils.alert(mxResources.get('invalidName'));
+	// 	}
+	// });
 	
-	this.init = function()
-	{
-		if (texts.length > 0)
-		{
-			texts[0].focus();
-		}
-		else
-		{
-			nameInput.focus();
-		}
-	};
+	// this.init = function()
+	// {
+	// 	if (texts.length > 0)
+	// 	{
+	// 		texts[0].focus();
+	// 	}
+	// 	else
+	// 	{
+	// 		nameInput.focus();
+	// 	}
+	// };
 	
-	addBtn.setAttribute('title', mxResources.get('addProperty'));
-	addBtn.setAttribute('disabled', 'disabled');
-	addBtn.style.textOverflow = 'ellipsis';
-	addBtn.style.position = 'absolute';
-	addBtn.style.overflow = 'hidden';
-	addBtn.style.width = '144px';
-	addBtn.style.right = '0px';
-	addBtn.className = 'geBtn';
-	newProp.appendChild(addBtn);
+	// addBtn.setAttribute('title', mxResources.get('addProperty'));
+	// addBtn.setAttribute('disabled', 'disabled');
+	// addBtn.style.textOverflow = 'ellipsis';
+	// addBtn.style.position = 'absolute';
+	// addBtn.style.overflow = 'hidden';
+	// addBtn.style.width = '144px';
+	// addBtn.style.right = '0px';
+	// addBtn.className = 'geBtn';
+	// newProp.appendChild(addBtn);
 
 	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
 	{
@@ -1792,6 +1809,7 @@ var EditDataDialog = function(ui, cell)
 			
 			// Updates the value of the cell (undoable)
 			graph.getModel().setValue(cell, value);
+			value.removeAttribute('xmlns');
 			getObjectPropertyValue(value,cell.id,cell.mxObjectId) // 민수 property 값을 바인딩 하는 곳
 
 		}

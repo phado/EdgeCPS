@@ -998,7 +998,7 @@ mxGraphView.prototype.validateCellState = function(cell, recurse)
 			}
 		}
 	}
-	
+
 	return state;
 };
 

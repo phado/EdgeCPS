@@ -33,7 +33,7 @@ function executeFunctionWithFileContent(content,workflowName) {
 }
 
 // 불러온 다이어그램 클릭 이벤트 함수 
-function subContent1ClickHandler(sender, evt) {
+function businessProcessViewClickHandler(sender, evt) {
     var cell = evt.getProperty('cell'); // 클릭한 셀
     var valueString='';
     if (cell != null && cell.style.includes('rounded=1')) { //cell이 null아니고 엣지도 아닌경우 
@@ -54,45 +54,25 @@ function subContent1ClickHandler(sender, evt) {
 			var cellName = matches;
         var cellId = cell.id
         localStorage.setItem(projectName+'_current_workflowName', cellName)
-        subContent2(cellName,cellId,cell)
+        workflowProcessView(cellName,cellId,cell)
     }
 }
 
 // sub-content1
-function subContent1(projectName){
+function businessProcessView(projectName){
     var xmlData = localStorage.getItem(projectName+'_businessProcessXml')
-    var container = document.getElementById('graphContainer');
+    var container = document.getElementById('businessProcessViewContainer');
     var graph = new Graph(container);
     var doc = mxUtils.parseXml(xmlData);
     var codec = new mxCodec(doc);
     codec.decode(doc.documentElement, graph.getModel());
-    graph.addListener(mxEvent.CLICK, subContent1ClickHandler);
+    graph.addListener(mxEvent.CLICK, businessProcessViewClickHandler);
     graph.refresh();
 }
-
-function subContent2ClickHandler(sender, evt) {
-     clearInterval(intervalLogContainer2)
-    var cell = evt.getProperty('cell'); // 클릭한 셀
-    if (cell != null && cell.style.includes('rounded=1')) { //cell이 null아니고 엣지도 아닌경우 
-        const inputString = cell.value;
-        var regex = /><div style="font-weight: bold">([^<]+)<\/div>/;
-        var match = inputString.match(regex);
-        if (match ==null){
-            regex = /<br>(.*?)<\/div>/;
-            match = inputString.match(regex);
-        }
-        var actionName = match[1]   
-        if(actionName.includes('['||']')){
-            actionName = actionName.substring(1,actionName.length -1);
-        } 
-        var actionId = cell.id
-        logContainer2(actionStatusFlag=true,actionName,actionId)
-    }
-}
-
+var intervalLogDeploymentView = '';
 // sub-content2
-function subContent2(cellName,cellId,cell){
-    var containerElement = document.getElementById("graphContainer2");
+function workflowProcessView(cellName,cellId,cell){
+    var containerElement = document.getElementById("workflowProcessView");
     var svgElements = containerElement.querySelectorAll("svg");
     var divElements = containerElement.querySelectorAll("div");
     // 선택한 각 SVG 요소를 순회하면서 삭제
@@ -106,17 +86,39 @@ function subContent2(cellName,cellId,cell){
     });
 
     var xmlData = localStorage.getItem(projectName+'_'+cellId+'#'+cellName)
-    var container = document.getElementById('graphContainer2');
+    var container = document.getElementById('workflowProcessView');
     var graph = new Graph(container);
     var doc = mxUtils.parseXml(xmlData);
     var codec = new mxCodec(doc);
-    graph.addListener(mxEvent.CLICK, subContent2ClickHandler);
+    // graph.addListener(mxEvent.CLICK, workflowProcessViewHandler);
     codec.decode(doc.documentElement, graph.getModel());
     graph.refresh();
 
     // Activity 클릭 했을 때 Activity 상태 출력
-    intervalLogContainer2 = setInterval(() => logContainer2(false), 1000);
+    intervalLogDeploymentView = setInterval(() => deploymentView(false), 1000);
 }
+
+
+// function workflowProcessViewHandler(sender, evt) {
+//      clearInterval(intervalLogContainer2)
+//     var cell = evt.getProperty('cell'); // 클릭한 셀
+//     if (cell != null && cell.style.includes('rounded=1')) { //cell이 null아니고 엣지도 아닌경우 
+//         const inputString = cell.value;
+//         var regex = /><div style="font-weight: bold">([^<]+)<\/div>/;
+//         var match = inputString.match(regex);
+//         if (match ==null){
+//             regex = /<br>(.*?)<\/div>/;
+//             match = inputString.match(regex);
+//         }
+//         var actionName = match[1]   
+//         if(actionName.includes('['||']')){
+//             actionName = actionName.substring(1,actionName.length -1);
+//         } 
+//         var actionId = cell.id
+//         logContainer2(actionStatusFlag=true,actionName,actionId)
+//     }
+// }
+
 
 // log-container1
 function logContainer(){
@@ -149,8 +151,8 @@ function logContainer(){
     };
 } 
 
-function logContainer2(actionStatusFlag,actionName,actionId) {
-    try {
+function deploymentView(actionStatusFlag,actionName,actionId) {
+    // try {
         workflowName = localStorage.getItem(projectName+'_current_workflowName')
 
         const url = `http://127.0.0.1:5000/status?workflow_name=${encodeURIComponent(workflowName)}`;
@@ -176,7 +178,7 @@ function logContainer2(actionStatusFlag,actionName,actionId) {
             
 
 
-            var containerElement = document.getElementById('logContainer2');
+            var containerElement = document.getElementById('deploymentView');
             var svgElements = containerElement.querySelectorAll("svg");
             var divElements = containerElement.querySelectorAll("div");
             // 선택한 각 SVG 요소를 순회하면서 삭제
@@ -190,7 +192,7 @@ function logContainer2(actionStatusFlag,actionName,actionId) {
             });
 
             var xmlData = deployInfo;
-            var container = document.getElementById('logContainer2');
+            var container = document.getElementById('deploymentView');
             var graph = new Graph(container);
             var doc = mxUtils.parseXml(xmlData);
             var codec = new mxCodec(doc);
@@ -198,17 +200,8 @@ function logContainer2(actionStatusFlag,actionName,actionId) {
             codec.decode(doc.documentElement, graph.getModel());
             graph.refresh();
 
-
-
-
-            // while (logContainer2.firstChild) { // initialize
-            //     logContainer2.removeChild(logContainer2.firstChild);
-            // }
-            // logContainer2.appendChild(logEntry);
-            // // logContainer2.scrollTop = logContainer2.scrollHeight;
-            // // await saveLogContainer();
             if(statusJsonData.metadata.labels["workflows.argoproj.io/completed"]=='true'){
-                clearInterval(intervalLogContainer2)
+                clearInterval(intervalLogDeploymentView)
                 logContainer()
                 
             }
@@ -217,9 +210,9 @@ function logContainer2(actionStatusFlag,actionName,actionId) {
             console.error("Error:", error);
         });
         
-    }catch{
+    // }catch{
 
-    }
+    // }
 }
 // async function logContainer2(actionStatusFlag,actionName,actionId) {
 //     try {
@@ -440,3 +433,112 @@ function getDeployInfo(actionKeys,actionStatus){
 
     return xmlData
 }
+/*
+<script>
+    { window.onload = function () {
+    // "관리" 버튼을 클릭했을 때 팝업을 표시하는 함수
+    let currentUser = null;
+    function showPopup(button) {
+      const popupContainer = document.getElementById("popupContainer");
+      const popup = document.getElementById("popup");
+      popupContainer.style.display = "block";
+      popup.style.width = "500px"; // 가로 크기 조절
+      popup.style.height = "500px"; // 세로 크기 조절
+
+      const group = button.getAttribute("data-group");
+      const groupSelect = document.getElementById("group");
+      if (group === "111") {
+        // "tmp" 옵션을 선택합니다.
+        groupSelect.value = "111";
+      } else if (group === "999") {
+        // "admin" 옵션을 선택합니다.
+        groupSelect.value = "999";
+      }
+
+      const valid = button.getAttribute("data-valid");
+      if (valid === "1") {
+        toggleSwitch.checked = true;
+      } else {
+        toggleSwitch.checked = false;
+      }
+
+      const user = button.getAttribute("data-user");
+      currentUser = user;
+    }
+
+    // 팝업을 닫는 함수
+    function closePopup() {
+      const popupContainer = document.getElementById("popupContainer");
+      popupContainer.style.display = "none";
+    }
+
+    function togglePopup() {
+      const popupContainer = document.getElementById("popupContainer");
+      const toggleSwitch = document.getElementById("toggleSwitch");
+
+      if (toggleSwitch.checked) {
+      } else {
+      }
+    }
+
+    function saveInfo() {
+      // select 박스의 값을 가져오기
+      const selectedGroup = document.getElementById("group").value;
+
+      // 토글 버튼의 상태 가져오기
+      const toggleSwitch = document.getElementById("toggleSwitch");
+      if (toggleSwitch.checked == 1) {
+        isActive = 1;
+      } else {
+        isActive = 0;
+      }
+      fetch("/changeInfo", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ selectedGroup, isActive, user: currentUser }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data);
+          if (data.error) {
+            alert("시스템 에러");
+          } else if (data.result) {
+            alert("정보 변경 완료");
+            window.location.reload();
+          } else if (!data.result) {
+            alert("정보 변경 실패.");
+          }
+        });
+    }
+
+    // 버튼 클릭 시 모달 표시
+    const modalButton = document.getElementById("user-name");
+    const modal = document.getElementById("userInfoModal");
+    const closeModalButton = document.getElementById("closeModal");
+    const logoutButton = document.getElementById("logoutButton");
+
+    modalButton.addEventListener("click", function () {
+      modal.style.display = "block";
+    });
+
+    // 모달 닫기 버튼 클릭 시 모달 숨김
+    closeModalButton.addEventListener("click", function () {
+      modal.style.display = "none";
+    });
+
+    // 로그아웃 버튼 클릭 시 로그아웃 처리 (예: 페이지 리로드)
+    logoutButton.addEventListener("click", function () {
+      // 로그아웃 처리를 여기에 추가
+      // 예: window.location.href = '/logout';  // 로그아웃 URL로 리다이렉트
+    });
+
+    // 모달 외부 클릭 시 모달 숨김
+    window.addEventListener("click", function (event) {
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  }; }
+</script>*/

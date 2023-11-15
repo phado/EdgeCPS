@@ -1,0 +1,29 @@
+input[type="text"],
+input[type="email"],
+select {
+  height: 40px;
+  width: 387px;
+}
+.container,
+.container-sm {
+  max-width: 400px;
+}
+#confirmBtn {
+  margin-top: 15px;
+  width: 387px;
+  height: 45px;
+  top: 765px;
+  padding: 10px, 167px, 10px, 167px;
+  border-radius: 999px;
+  gap: 10px;
+  background: #6097d9;
+}
+#cancelButton {
+  margin-top: 5px;
+  width: 387px;
+  height: 45px;
+  top: 765px;
+  padding: 10px, 167px, 10px, 167px;
+  border-radius: 999px;
+  gap: 10px;
+}

@@ -2395,6 +2395,7 @@ var canvas_list = ''; //순우 roundedrectangle 저장할 변수
 	
 						// Required for the browser to render the background page in correct order
 						firstChild.style.position = 'absolute';
+						// firstChild.style.left = '1000px';
 						graph.container.insertBefore(this.backgroundPageShape.node, firstChild);
 						this.backgroundPageShape.redraw();
 						
@@ -2451,7 +2452,7 @@ var canvas_list = ''; //순우 roundedrectangle 저장할 변수
 			this.validateBackgroundStyles();
 		}
 	};
-
+	//순우 다이어그램 그리드 캔버스 조절하는 위치 같은데 위치 계산 방식 모르겠음
 	// Updates the CSS of the background to draw the grid
 	mxGraphView.prototype.validateBackgroundStyles = function()
 	{
@@ -2510,11 +2511,12 @@ var canvas_list = ''; //순우 roundedrectangle 저장할 변수
 			graph.container.className = 'geDiagramContainer geDiagramBackdrop';
 			canvas.style.backgroundImage = 'none';
 			canvas.style.backgroundColor = '';
+			// graph.style.width = '100%';
 		}
 		else
 		{
 			graph.container.className = 'geDiagramContainer';
-			canvas.style.backgroundPosition = position;
+			// canvas.style.backgroundPosition = position;
 			canvas.style.backgroundColor = color;
 			canvas.style.backgroundImage = image;
 		}

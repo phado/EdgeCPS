@@ -4,28 +4,38 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Find ID</title>
-    <!-- 부트스트랩 CSS 링크 추가 -->
     <link
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <!-- 아이디 찾기 페이지 스타일 효정 -->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/styles/forgetid.css')}}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='css/styles/title.css')}}"
+    />
+    <!-- 아이디 찾기 페이지 자바스크립트 효정 -->
+    <script
+      type="text/javascript"
+      src="{{ url_for('static', filename='js/forgetid.js')}}"
+    ></script>
   </head>
   <body>
     <div id="title" class="title">
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href="{{ url_for('static', filename='css/styles/process.css')}}"
-      />
-      <!--순우 css 추가-->
-      <h2><a class="home" href="/">EdgeCPS</a></h2>
+      <h2><a class="home" href="/" style="color: white">EdgeCPS</a></h2>
     </div>
 
     <div class="container mt-5">
-      <h1 class="mb-4">아이디 찾기</h1>
+      <h1 class="mb-3">아이디 찾기</h1>
+      <div>회원정보에 등록된 이름과 이메일을 입력해주세요.</div>
       <form id="infoForm">
         <div class="form-group">
-          <label for="name">Name:</label>
+          <label for="name" style="padding-top: 29px">Name</label>
           <input
             type="text"
             class="form-control"
@@ -49,66 +59,62 @@
         <button type="button" class="btn btn-primary" id="confirmBtn">
           Confirm
         </button>
-        <a class="btn btn-secondary" href="/">Cancel</a>
+        <a class="btn btn-secondary" href="/" id="cancelButton">Cancel</a>
       </form>
       <div id="errorContainer" class="mt-4"></div>
     </div>
-
-    <!-- 부트스트랩 JS 및 jQuery 링크 추가 -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        const confirmBtn = document.getElementById("confirmBtn");
-        const errorContainer = document.getElementById("errorContainer");
-
-        confirmBtn.addEventListener("click", function () {
-          const name = document.getElementById("name").value;
-          const email = document.getElementById("email").value;
-
-          nameError.textContent = "";
-          emailError.textContent = "";
-
-          if (name === "") {
-            nameError.textContent = "Name is required.";
-            hasError = true;
-          }
-
-          if (email === "") {
-            emailError.textContent = "Email is required.";
-            hasError = true;
-          } else {
-            fetch("/findUserId", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({ name, email }),
-            })
-              .then((response) => response.json())
-              .then((data) => {
-                if (data.error) {
-                  alert("아이디 찾기 오류가 발생 했습니다");
-                  location.replace("/");
-                } else if (data.exists) {
-                  alert("찾으시는 아이디는 " + data.userId + "입니다.");
-                  location.replace("/");
-                } else if (!data.exists) {
-                  alert("정보가 존재하지 않습니다.");
-                }
-              });
-          }
-        });
-
-        function showError(errorMessage) {
-          const errorDiv = document.createElement("div");
-          errorDiv.classList.add("alert", "alert-danger");
-          errorDiv.textContent = errorMessage;
-          errorContainer.innerHTML = ""; // 기존 에러 메시지 초기화
-          errorContainer.appendChild(errorDiv);
-        }
-      });
-    </script>
   </body>
 </html>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const confirmBtn = document.getElementById("confirmBtn");
+    const errorContainer = document.getElementById("errorContainer");
+
+    //아이디 찾을 시 이름과 이메일 입력이 저장된 내용과 일치 할 경우 아이디를 알려주는 기능 효정
+    confirmBtn.addEventListener("click", function () {
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+
+      nameError.textContent = "";
+      emailError.textContent = "";
+
+      if (name === "") {
+        nameError.textContent = "Name is required.";
+        hasError = true;
+      }
+
+      if (email === "") {
+        emailError.textContent = "Email is required.";
+        hasError = true;
+      } else {
+        fetch("/findUserId", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name, email }),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.error) {
+              alert("아이디 찾기 오류가 발생 했습니다");
+              location.replace("/");
+            } else if (data.exists) {
+              alert("찾으시는 아이디는 " + data.userId + "입니다.");
+              location.replace("/");
+            } else if (!data.exists) {
+              alert("정보가 존재하지 않습니다.");
+            }
+          });
+      }
+    });
+
+    function showError(errorMessage) {
+      const errorDiv = document.createElement("div");
+      errorDiv.classList.add("alert", "alert-danger");
+      errorDiv.textContent = errorMessage;
+      errorContainer.innerHTML = ""; // 기존 에러 메시지 초기화
+      errorContainer.appendChild(errorDiv);
+    }
+  });
+</script>

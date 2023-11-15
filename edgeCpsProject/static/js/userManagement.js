@@ -1,4 +1,4 @@
-window.onload = function(){
+window.onload = function () {
   // "관리" 버튼을 클릭했을 때 팝업을 표시하는 함수
   let currentUser = null;
   function showPopup(button) {
@@ -91,17 +91,10 @@ window.onload = function(){
     modal.style.display = "none";
   });
 
-  // 로그아웃 버튼 클릭 시 로그아웃 처리 (예: 페이지 리로드)
-  logoutButton.addEventListener("click", function () {
-    // 로그아웃 처리를 여기에 추가
-    // 예: window.location.href = '/logout';  // 로그아웃 URL로 리다이렉트
-  });
-
   // 모달 외부 클릭 시 모달 숨김
   window.addEventListener("click", function (event) {
     if (event.target === modal) {
       modal.style.display = "none";
     }
   });
-}
-
+};

@@ -113,13 +113,12 @@
 	<link
 	rel="stylesheet"
 	type="text/css"
-	href="{{ url_for('static', filename='css/styles/managemenetUser.css')}}"
+	href="{{ url_for('static', filename='css/styles/title.css')}}"
   />
 	
 	<!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@800&display=swap"> -->
 	<script type="text/javascript" src="{{ url_for('static', filename='js/processCommon.js') }}"></script>
 	<script type="text/javascript" src="{{ url_for('static', filename='js/runProcess.js') }}"></script>
-	<script type="text/javascript" src="{{ url_for('static', filename='js/userManagement.js')}}"></script>
 
 	
 
@@ -239,16 +238,16 @@
 					<input type="file" class="form-control" id="fileInput">
 				</div>
 				<div class="col-md-12 mb-2">
-					<button class="btn btn-primary btn-block" id="submitButton">Submit</button>
+					<button class="btn btn-primary btn-block" id="submitButton" style = 'background-color: #3853ff;'>Submit</button>
 				</div>
 				<div class="col-md-12 mb-2">
-					<button class="btn btn-primary btn-block" id="deleteButton">Delete</button>
+					<button class="btn btn-primary btn-block" id="deleteButton" style = 'background-color: #3853ff;;'>Delete</button>
 				</div>
 				<div class="col-md-12 mb-2">
-					<button class="btn btn-primary btn-block" id="restartButton">Restart</button>
+					<button class="btn btn-primary btn-block" id="restartButton" style = 'background-color: #3853ff;;'>Restart</button>
 				</div>
 				<div class="col-md-12 mb-2">
-					<button class="btn btn-primary btn-block" id="exportButton">Export yaml</button>
+					<button class="btn btn-primary btn-block" id="exportButton" style = 'background-color: #3853ff;;'>Export yaml</button>
 				</div>
 			</div>
 		</div>
@@ -260,36 +259,49 @@
 		</script>
 	</div>
 
+
+
+
+
+
+
+
+	
   	<div class="main-content">
-    	<div id = 'graphContainer' class="sub-content1">
-			<h3>Requirements view</h3>
-			<!-- <p>This is sub content area 1.</p> -->
-			<div id="buttonContainer"></div>
-			<script>
-				subContent1(projectName)
-			</script>
+    	<div id = 'businessProcessView' class="businessProcessView">
+			<h4>BusinessProcess view</h4>
+			<div id = businessProcessViewContainer class="businessProcessViewContainer">
+				<script>
+					businessProcessView(projectName)
+				</script>
+			</div>
     	</div>
 
-    	<div id = 'graphContainer2' class="sub-content">
-			<h3>Workflow view</h3>
-			<!-- <p>This is sub content area 2.</p> -->
+    	<div id = 'workflowProcessView' class="workflowProcessView">
+			<h4>Workflow view</h4>
     	</div>
 
-   		<div id ='logContainer2' class="sub-content">
-			<h3>Deployment view</h3>
-			<!-- <p>This is sub content area 3.</p> -->
-			<!-- <div class="logContainer2">
-			</div> -->
+   		<div id ='deploymentView' class="deploymentView">
+			<h4>Deployment view</h4>
 		</div>
   	</div>
 	<div>
-		<div class="footer">
+		<!-- <div class="footer">
 			<h4>Result log</h4>
-		</div>
+		</div> -->
 		<div class="logContainer"></div>
-	</div>
+	<!-- </div> -->
 	
 	
+
+
+
+
+
+
+
+
+
 	<div class="modal" id="userInfoModal">
 		<div class="usermodal-content">
 		  <span class="close" id="closeModal">&times;</span>
@@ -309,3 +321,105 @@
   	
 </body>
 </html>
+<script>
+	window.onload = function () {
+	  // "관리" 버튼을 클릭했을 때 팝업을 표시하는 함수
+	  let currentUser = null;
+	  function showPopup(button) {
+		const popupContainer = document.getElementById("popupContainer");
+		const popup = document.getElementById("popup");
+		popupContainer.style.display = "block";
+		popup.style.width = "500px"; // 가로 크기 조절
+		popup.style.height = "500px"; // 세로 크기 조절
+  
+		const group = button.getAttribute("data-group");
+		const groupSelect = document.getElementById("group");
+		if (group === "111") {
+		  // "tmp" 옵션을 선택합니다.
+		  groupSelect.value = "111";
+		} else if (group === "999") {
+		  // "admin" 옵션을 선택합니다.
+		  groupSelect.value = "999";
+		}
+  
+		const valid = button.getAttribute("data-valid");
+		if (valid === "1") {
+		  toggleSwitch.checked = true;
+		} else {
+		  toggleSwitch.checked = false;
+		}
+  
+		const user = button.getAttribute("data-user");
+		currentUser = user;
+	  }
+  
+	  // 팝업을 닫는 함수
+	  function closePopup() {
+		const popupContainer = document.getElementById("popupContainer");
+		popupContainer.style.display = "none";
+	  }
+  
+	  function togglePopup() {
+		const popupContainer = document.getElementById("popupContainer");
+		const toggleSwitch = document.getElementById("toggleSwitch");
+  
+		if (toggleSwitch.checked) {
+		} else {
+		}
+	  }
+  
+	  function saveInfo() {
+		// select 박스의 값을 가져오기
+		const selectedGroup = document.getElementById("group").value;
+  
+		// 토글 버튼의 상태 가져오기
+		const toggleSwitch = document.getElementById("toggleSwitch");
+		if (toggleSwitch.checked == 1) {
+		  isActive = 1;
+		} else {
+		  isActive = 0;
+		}
+		fetch("/changeInfo", {
+		  method: "POST",
+		  headers: {
+			"Content-Type": "application/json",
+		  },
+		  body: JSON.stringify({ selectedGroup, isActive, user: currentUser }),
+		})
+		  .then((response) => response.json())
+		  .then((data) => {
+			console.log(data);
+			if (data.error) {
+			  alert("시스템 에러");
+			} else if (data.result) {
+			  alert("정보 변경 완료");
+			  window.location.reload();
+			} else if (!data.result) {
+			  alert("정보 변경 실패.");
+			}
+		  });
+	  }
+  
+	  // 버튼 클릭 시 모달 표시
+	  const modalButton = document.getElementById("user-name");
+	  const modal = document.getElementById("userInfoModal");
+	  const closeModalButton = document.getElementById("closeModal");
+	  const logoutButton = document.getElementById("logoutButton");
+  
+	  modalButton.addEventListener("click", function () {
+		modal.style.display = "block";
+	  });
+  
+	  // 모달 닫기 버튼 클릭 시 모달 숨김
+	  closeModalButton.addEventListener("click", function () {
+		modal.style.display = "none";
+	  });
+  
+	  // 모달 외부 클릭 시 모달 숨김
+	  window.addEventListener("click", function (event) {
+		if (event.target === modal) {
+		  modal.style.display = "none";
+		}
+	  });
+	};
+  </script>

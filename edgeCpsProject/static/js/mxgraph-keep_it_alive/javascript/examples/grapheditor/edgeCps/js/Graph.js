@@ -9174,52 +9174,7 @@ if (typeof mxVertexHandler != 'undefined')
 			// var cellsToRemove = graph.getModel().getChildVertices(a);
 			// graph.getModel().remove(a);
 		};
-		Graph.prototype.clearGraphContainer=function() {
-			var container = document.getElementsByClassName('geDiagramContainer')[0];
-			
-			
-		// 	// 순우 초기화 방법1 - 이건 html 통째로 원본 상태로 바꿔볼라고 해본건데 다이어그램을 그려도 안보입니다
-			container.innerHTML = '<div style="position: absolute; border-width: 1px; overflow: hidden; left: 473px; top: 731px; width: 849px; height: 1099px; border-color: rgb(255, 255, 255); border-style: solid; background-color: rgb(255, 255, 255); background-image: url(&quot;data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAwIDEwIEwgNDAgMTAgTSAxMCAwIEwgMTAgNDAgTSAwIDIwIEwgNDAgMjAgTSAyMCAwIEwgMjAgNDAgTSAwIDMwIEwgNDAgMzAgTSAzMCAwIEwgMzAgNDAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI2QwZDBkMCIgb3BhY2l0eT0iMC4yIiBzdHJva2Utd2lkdGg9IjEiLz48cGF0aCBkPSJNIDQwIDAgTCAwIDAgMCA0MCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjZDBkMGQwIiBzdHJva2Utd2lkdGg9IjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=&quot;); background-position: -1px -1px;" class="geBackgroundPage"></div><svg style="left: 0px; top: 0px; width: 100%; height: 100%; display: block; min-width: 1796px; min-height: 2562px; position: absolute; background-image: none;"><g><g></g><g></g><g></g><g></g></g></svg>'
-			
-		// 	// 순우 초기화 방법2 - 이건 내장 함수 removeCells()를 사용해서 다 지워보려고 했는데 edgecount인가 거기서 계속 오류 나고 있습니다
-		// 	// var graph = new mxGraph(container);
-		// 	// var cell = graph.getModel().cells;
-		// 	// var cells = Object.keys(cell).map(function(key){
-		// 	// 	return cell[key]
-		// 	// });
-		// 	// mxGraph.prototype.removeCells(cells,true)
-			
-		// 	var graph = editor.graph;
-		// 	// var model = graph.getModel();
-		// 	// var root = model.getRoot();
-		// 	// var childCount = model.getChildCount(root);
-		// 	// var cells = [];
-
-		// 	// for (var i = 0; i < childCount; i++) {
-		// 	// 	var child = model.getChildAt(root, i);
-		// 	// 	cells.push(child);
-		// 	// }
-		// 	// var array = Object.values(model.cells);
-		// 	// var cellss = Object.keys(cells).map(function(key){
-		// 	// 	return cells[key]
-		// 	// });
-		// 	mxGraph.prototype.removeCells(graph.getDeletableCells(graph.getSelectionCells()),false)
-		// };
-		// Graph.prototype.initializeGraph=function() {
-			// 컨테이너 초기화
-			// var container = document.getElementsByClassName('geDiagramContainer')[0];
-			// container.id = 'graphContainer';
-			// Graph.prototype.clearGraphContainer();
-		  
-			// 그래프 초기화
-			// var container = document.getElementById(container);
-			// var graph = new mxGraph(container);
-		  
-			// // 그래프 설정 등 추가 초기화 작업 수행
-		  
-			// return graph;
-		  };
-		
+	
 		/**
 		 * 
 		 */
