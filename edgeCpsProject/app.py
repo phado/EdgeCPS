@@ -3,7 +3,7 @@ import os
 import shutil
 import html
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session, make_response
-from db_conn import get_pool_conn, add_table, get_projet_info,get_projet_info2, load_project, get_user_info, get_user_single_info
+from db_conn import get_pool_conn, add_table, get_projet_info,get_projet_info2, load_project, get_user_info, get_user_single_info, get_category, create_category, del_category,get_group_info,add_grp,del_grp
 import requests
 import urllib3
 import db_query
@@ -58,25 +58,20 @@ def getProjectDict():
     return projects
 
 def getProjectDict2(userId):
-    # 로컬 디렉토리에 저장 되어있는 목록에서 프로젝트 정보 가져오는 부분.
-    # pj_dir = glob.glob('project_file/*')
-    # projects = [ ]
-    # idx = 1
-    # for file_path in pj_dir:
-    #     pj_info = file_path.split('/')[-1]
-    #     pj_user = pj_info.split('@')[-1]
-    #     pj_name_list = pj_info.split('@')[:-1]
-    #     pj_name = '@'.join(pj_name_list)
-    #     projects.append({'id': idx, 'name': pj_name, 'user': pj_user})
-    #     idx += 1
-
-    # prjs = get_projet_info2(mariadb_pool,userId)
     prjs = get_projet_info2(mariadb_pool,userId)
     projects = []
 
     for idx in range(len(prjs)):
         projects.append({'id': prjs[idx][0], 'name': prjs[idx][1], 'create_date': prjs[idx][2], 'user': prjs[idx][3]})
     return projects
+
+def getGroupDict():
+    prjs = get_group_info(mariadb_pool)
+    groups = []
+
+    for idx in range(len(prjs)):
+        groups.append({'idx': prjs[idx][0], 'name': prjs[idx][1], 'code': prjs[idx][2]})
+    return groups
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -338,7 +333,8 @@ def previous():
 
 @app.route('/process/overviewProcess', methods=['GET', 'POST'])
 def overview_process():
-    catlist = ['java', 'python']
+    catlist = get_category()
+    # catlist = ['java', 'python']
     active_overview = True
     pass_overview = request.form.get('load_project')
 
@@ -383,15 +379,17 @@ def requirements_process():
     user_info = user_get_info(userId)    
     userIds, userName, userEmail, userGroup, userAdmin = user_info
 
+    catlist = ['java', 'python']
+
     if request.method == 'GET':
         project_name = request.args.get('project_name')
         if not project_name:
             project_name = request.args.get('projectName')
             if not project_name:
-                return redirect(url_for('overview_process', newPj=True, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
+                return redirect(url_for('overview_process',category = catlist, newPj=True, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
 
 
-    return render_template('process/requirementsProcess.html', active_requirements=active_requirements , project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
+    return render_template('process/requirementsProcess.html',categories=catlist, active_requirements=active_requirements , project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
 
     # return render_template('process/requirementsProcess.html', active_requirements=active_requirements)
 
@@ -733,7 +731,9 @@ def management_user():
     user_info = user_get_info(userId)    
     userIds, userName, userEmail, userGroup, userAdmin = user_info
     # todo 프로젝트 리스트 정보 조회하는 기능 필요
-    return render_template('managementUser.html', projects=projects_info, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup,loginUserInfo=loginUserInfo)
+
+    groups_info = getGroupDict()
+    return render_template('managementUser.html', projects=projects_info,groups = groups_info ,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup,loginUserInfo=loginUserInfo)
 
 
 @app.route('/changeInfo', methods=['POST'])
@@ -769,3 +769,43 @@ def user_get_info(userId):
     userAdmin = userInfo[0][7]
 
     return userIds, userName, userEmail, userGroup, userAdmin
+
+@app.route('/add_category', methods=['POST'])
+def add_category():
+    category_name = request.form['category_name']
+
+    # 저장 로직 호출
+    category = create_category(category_name)
+
+    return jsonify({'result': 'success'})
+
+
+@app.route('/delete_category', methods=['POST'])
+def delete_category():
+    category_name = request.form['category_name']
+
+    # 삭제 로직 호출
+    category = del_category(category_name)
+
+    return jsonify({'result': 'success'})
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
+@app.route('/add_group', methods=['POST'])
+def add_group():
+    group_name = request.form['group_name']
+
+    # 저장 로직 호출
+    group = add_grp(group_name)
+
+    return jsonify({'result': 'success'})
+
+@app.route('/delete_group', methods=['POST'])
+def delete_group():
+    group_name = request.form['group_name']
+
+    # 삭제 로직 호출
+    group = del_grp(group_name)
+
+    return jsonify({'result': 'success'})

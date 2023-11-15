@@ -538,12 +538,6 @@
       modal.style.display = "none";
     });
 
-    // 로그아웃 버튼 클릭 시 로그아웃 처리 (예: 페이지 리로드)
-    logoutButton.addEventListener("click", function () {
-      // 로그아웃 처리를 여기에 추가
-      // 예: window.location.href = '/logout';  // 로그아웃 URL로 리다이렉트
-    });
-
     // 모달 외부 클릭 시 모달 숨김
     window.addEventListener("click", function (event) {
       if (event.target === modal) {
@@ -563,7 +557,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New messagedffd</h5>
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
         <button
           type="button"
           class="btn-close"
@@ -571,26 +565,202 @@
           aria-label="Close"
         ></button>
       </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label"
-              >Recipient:</label
-            >
-            <input type="text" class="form-control" id="recipient-name" />
-          </div>
-          <div class="mb-3">
-            <label for="message-text" class="col-form-label">Message:</label>
-            <textarea class="form-control" id="message-text"></textarea>
-          </div>
-        </form>
+      <form method="post" action="" , id="formtag">
+        <div class="modal-body">
+            <div class="form-group">
+              <label class="project_name" for="project_name">Project Name</label>
+              <input
+                type="text"
+                class="form-control"
+                id="project_name"
+                name="project_name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label class="project_description" for="project_description"
+                >Project Description</label
+              >
+              <textarea
+                class="form-control"
+                id="project_description"
+                name="project_description"
+                required
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label class="project_category" for="project_category"
+                >Project Category</label
+              >
+              <select
+                class="form-control"
+                id="project_category"
+                name="project_category"
+                required
+              >
+                {% for category in categories %}
+                <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+              </select>
+            </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" onclick="savePorjectInfo()">
+            OK
+        </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close
-        </button>
-        <button type="button" class="btn btn-primary">Send message</button>
-      </div>
-    </div>
+      </form>
   </div>
 </div>
+
+<script>
+  function savePorjectInfo() {
+  var projectName = document.getElementById("project_name").value;
+  var projectDescription = document.getElementById("project_description").value;
+  var projectCategory = document.getElementById("project_category").value;
+
+  // localStorage.setItem(projectName+'_current_processDict', 'overviewProcess'); //현재 작업중인 프로세스 dict저장
+
+  var projectInfo = {
+    name: projectName,
+    description: projectDescription,
+    category: projectCategory,
+  };
+
+  // var projectNameToFind = projectName;
+  // var foundProjectInfo = findProjectByName(projectNameToFind);
+
+  // if (foundProjectInfo) {
+  //   var confirmSave = confirm(
+  //     "같은 이름의 프로젝트가 이미 존재합니다. 계속 진행하시겠습니까?"
+  //   );
+
+  //   if (!confirmSave) {
+  //     // 사용자가 취소를 누른 경우 함수 종료
+  //     return;
+  //   }
+  // } else {
+  //   console.log("프로젝트를 찾을 수 없습니다.");
+  // }
+
+  // localStorage.setItem(
+  //   projectName + "_overviewProcessXML",
+  //   JSON.stringify(projectInfo)
+  // );
+
+  updateLocalStorage(flowDict, processGraphxml);
+  ////////////////yaml생성에 필요한 데이터들////////////////////////
+  var workflowXMLValue = [];
+  let get_localstorage_xml_list = [
+    "overviewProcessXML",
+    "requirementsProcessXml",
+    "businessProcessXml",
+  ];
+  var stringWorkflowList = localStorage.getItem(projectName + "_workflowXML");
+  var workflowList = JSON.parse(stringWorkflowList);
+  try {
+    for (var i = 0; i < workflowList.length; i++) {
+      // get_localstorage_xml_list.push(workflowList[i]);
+      // get_localstorage_xml_list.push(workflowList[i]+'_requirement');
+      // get_localstorage_xml_list.push(workflowList[i]+'_nodeSelector');
+      for (var j = 0; j < localStorage.length; j++) {
+        const key = localStorage.key(j);
+        if (key.includes(projectName + "_" + workflowList[i])) {
+          workflowXMLValue.push(key);
+        }
+      }
+      // get_localstorage_xml_list.push(workflowList[i]+'_flowDict');
+    }
+  } catch {}
+  console.log(get_localstorage_xml_list);
+  /////////////////////////////////////////
+  let data = {};
+  let processData = {};
+  let workflowData = {};
+
+  // 프로세스 저장
+  for (var i = 0; i < get_localstorage_xml_list.length; i++) {
+    var key = get_localstorage_xml_list[i];
+    var value = localStorage.getItem(projectName + "_" + key);
+    if (!value) {
+      value = "";
+    }
+    processData[key] = value;
+  }
+
+  //워크플로우 저장
+  // var workflowXMLValue = localStorage.getItem(projectName + '_workflowXML');
+  // workflowXMLValue = JSON.parse(workflowXMLValue);
+
+  if (workflowXMLValue) {
+    for (var i = 0; i < workflowXMLValue.length; i++) {
+      var key = workflowXMLValue[i];
+      var value = localStorage.getItem(key);
+      workflowData[key] = value;
+    }
+  }
+  data["projectName"] = projectName;
+
+  var projectNamejsonData = data;
+  var processDatajsonData = processData;
+  var workflowDatajsonData = workflowData;
+
+  var dataToSend = {
+    projectNamejsonData: projectNamejsonData,
+    processDatajsonData: processDatajsonData,
+    workflowDatajsonData: workflowDatajsonData,
+  };
+  // Flask의 saveProject 함수 호출
+  fetch("/saveProject", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(dataToSend),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      alert(data); // 서버에서 반환된 데이터 출력
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+function findProjectByName(projectName) {
+  // 모든 로컬 스토리지 아이템 가져오기
+  for (var i = 0; i < localStorage.length; i++) {
+    var key = localStorage.key(i);
+
+    // 프로젝트 이름이 포함된 아이템을 찾음
+    if (key && key.includes("_overviewProcessXML")) {
+      var storedProjectInfo = localStorage.getItem(key);
+
+      // JSON 문자열을 JavaScript 객체로 변환
+      var projectInfo = JSON.parse(storedProjectInfo);
+
+      // 프로젝트 이름 비교
+      if (projectInfo && projectInfo.name === projectName) {
+        return projectInfo;
+      }
+    }
+  }
+
+  // 찾지 못한 경우 null 반환
+  return null;
+}
+
+
+
+function updateLocalStorage(flowDict, strXml) {
+  localStorage.setItem(
+    projectName +
+      "_" +
+      localStorage.getItem(projectName + "_current_processXml"),
+    strXml
+  ); // xml 저장
+
+  // 프로세스간 이동 중 다이어그램 간 링크 연결 없이 이동 할 경우 빈 딕셔너리flowDict가 들어가는 오류 있어서 조건문 추가
+  // if(JSON.stringify(flowDict) != '{}'){
+  // 	localStorage.setItem(projectName+'_'+localStorage.getItem(projectName+'_current_processDict')+'_flowDict',JSON.stringify(flowDict)) // dict 저장
+  // }
+}
+</script>
