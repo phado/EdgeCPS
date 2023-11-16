@@ -4871,9 +4871,7 @@ EditorUi.prototype.showDataDialog = function(cell)
         var parentElement = document.getElementById("editData");
         parentElement.appendChild(selectBox);
 
-        var reqId = document.querySelector(
-          "body > div.geDialog.right_sidebar > div > div:nth-child(1) > table > tbody > tr:nth-child(1) > td:nth-child(2) > div"
-        ).textContent;
+        var reqId = cell.id
         try {
           var selectedReqKind = localStorage.getItem(
             projectName + "_" + reqId + "#requirementKind"
