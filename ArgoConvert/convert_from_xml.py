@@ -19,7 +19,7 @@ def insert_type_dict(key_id, param):
 
 
 
-xml_file_path = '/home/minsoo/Documents/argotest/global.xml'  # XML 파일 경로
+xml_file_path = '/Users/jangminsu/PycharmProjects/EdgeCPS/ArgoConvert/argotest/global.xml'  # XML 파일 경로
 tree = ET.parse(xml_file_path)  # XML 파일 파싱
 root = tree.getroot()  # XML 트리의 루트 요소 획득
 
@@ -31,7 +31,7 @@ json_base_template = {}
 start_point = ''
 # 종료
 end_point = ''
-# 화살표
+# 화살표 출발지점_목표 지점
 arrow_dict = {}
 #병렬 실행
 parallel_dict = {}
@@ -52,12 +52,13 @@ parameter_box = {}
 for cell in root.iter('mxCell'):
     attributes = cell.attrib
     try:
+
         if 'shape=startState;' in attributes['style']:
             start_point = attributes
         if 'shape=endState;' in attributes['style']:
             end_point = attributes
         if 'edgeStyle=orthogonalEdgeStyle;' in attributes['style']:
-            arrow_dict[attributes['source']] = attributes
+            arrow_dict[attributes['source']+'_'+attributes['target']] = attributes
         if 'html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000' in attributes['style']:
             parallel_dict[attributes['id']] = attributes
 
@@ -70,7 +71,7 @@ for cell in root.iter('object'):
     try:
         if 'Container' in attributes['label']:
             container_dict[attributes['id']] = attributes
-        if'input' in attributes or 'output' in attributes:
+        if'arguments.parameters' in attributes or 'arguments.artifacts' in attributes:
             parameter_box[attributes['id']] = attributes
 
     except:
@@ -113,21 +114,47 @@ print('argo 제이슨 기본 완료')
 print('컨테이터 템플릿 생성')
 
 for k,v in container_dict.items():
-    json_template = {
-        "name": re.search(r'\[(.*?)\]', v['label'])[1],
-        "inputs": {
-            "parameters": [
-                {
-                    "name": v['parameters'].split(' ')[1].replace('"', '')
-                }
-            ]
-        },
+
+        name = {"name": re.search(r'\[(.*?)\]', v['label'])[1]}
+        if 'inputs.parameters' in v:
+            inputs_parameters = {
+
+                "parameters": [
+                    {
+                        "name": v['parameters'].split(' ')[1].replace('"', '')
+                    }
+                ]
+
+            }
+        if 'inputs.artifacts' in v:
+            inputs_artifacts = {
+
+                "parameters": [
+                    {
+                        "name": v['parameters'].split(' ')[1].replace('"', '')
+                    }
+                ]
+
+            }
+
+
+
+
         "container": {
             "image": v['link'],
             "command": [v['command']],
             "args":["{{inputs.parameters."+v['args']+"}}"]
         }
-    }
+
+    if 'outputs.parameters' in v or 'outputs.parameters' in v:
+    json_template = { }
+
+
+
+
+
+
+
     json_containers_dict[json_template['name']] = json_template
 
 print('컨테이터 템플릿 완료')
