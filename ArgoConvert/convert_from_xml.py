@@ -139,12 +139,12 @@ for k,v in container_dict.items():
 
 
 
-
-        "container": {
-            "image": v['link'],
-            "command": [v['command']],
-            "args":["{{inputs.parameters."+v['args']+"}}"]
-        }
+        #todo 여기 해야함
+        # "container": {
+        #     "image": v['link'],
+        #     "command": [v['command']],
+        #     "args":["{{inputs.parameters."+v['args']+"}}"]
+        # }
 
     if 'outputs.parameters' in v or 'outputs.parameters' in v:
     json_template = { }
