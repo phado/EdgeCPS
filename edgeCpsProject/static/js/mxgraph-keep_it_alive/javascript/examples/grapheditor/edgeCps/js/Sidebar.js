@@ -196,8 +196,8 @@ if (urlParams['sidebar-entries'] != 'large')
 		Sidebar.prototype.thumbHeight = 72;
 	}
 	else{
-		Sidebar.prototype.thumbWidth = 132;
-		Sidebar.prototype.thumbHeight = 52;
+		Sidebar.prototype.thumbWidth = 142;
+		Sidebar.prototype.thumbHeight = 62;
 	}
 }
 
@@ -1176,22 +1176,22 @@ Sidebar.prototype.addGeneralPaletteBusinessProcess = function(expand)
 	 	// this.createEdgeTemplateEntry('endArrow=classic;startArrow=classic;html=1;', 50, 50, '', 'Bidirectional Connector', null, lineTags + 'bidirectional'),
 	 	this.createEdgeTemplateEntry('endArrow=classic;html=1;', 50, 50, '', 'Directional Connector', null, lineTags + 'directional directed'),
 
-	 	this.addEntry(lineTags + 'edge title', mxUtils.bind(this, function()
-		{
-			var edge = new mxCell('', new mxGeometry(0, 0, 0, 0), 'endArrow=classic;html=1;');
-			edge.geometry.setTerminalPoint(new mxPoint(0, 0), true);
-			edge.geometry.setTerminalPoint(new mxPoint(100, 0), false);
-			edge.geometry.relative = true;
-			edge.edge = true;
+	 	// this.addEntry(lineTags + 'edge title', mxUtils.bind(this, function()
+		// {
+		// 	var edge = new mxCell('', new mxGeometry(0, 0, 0, 0), 'endArrow=classic;html=1;');
+		// 	edge.geometry.setTerminalPoint(new mxPoint(0, 0), true);
+		// 	edge.geometry.setTerminalPoint(new mxPoint(100, 0), false);
+		// 	edge.geometry.relative = true;
+		// 	edge.edge = true;
 			
-	    	var cell0 = new mxCell('&lt;&lt;satisfy&gt;&gt;', new mxGeometry(0, 0, 0, 0), 'edgeLabel;resizable=0;html=1;align=center;verticalAlign=middle;');
-	    	cell0.geometry.relative = true;
-	    	cell0.setConnectable(false);
-	    	cell0.vertex = true;
-	    	edge.insert(cell0);
+	    // 	var cell0 = new mxCell('&lt;&lt;satisfy&gt;&gt;', new mxGeometry(0, 0, 0, 0), 'edgeLabel;resizable=0;html=1;align=center;verticalAlign=middle;');
+	    // 	cell0.geometry.relative = true;
+	    // 	cell0.setConnectable(false);
+	    // 	cell0.vertex = true;
+	    // 	edge.insert(cell0);
 			
-			return this.createEdgeTemplateFromCells([edge], 100, 0, 'Connector with Label satisfy');
-		})),
+		// 	return this.createEdgeTemplateFromCells([edge], 100, 0, 'Connector with Label satisfy');
+		// })),
 	];
 	
 	this.addPaletteFunctions('general', mxResources.get('businessSideBar'), (expand != null) ? expand : true, fns);
@@ -1253,33 +1253,33 @@ Sidebar.prototype.addGeneralPaletteWorkflow = function(expand)
 			null,
 			'rounded rect rectangle box'
 		  ),
-		  this.createVertexTemplateEntry(
-			'rounded=1;whiteSpace=wrap;html=1;',
-			120, 60,
-			'<div style="font-weight:bold;">&lt;&lt;Resource&gt;&gt;<br>[name]</div>',
-			'Action Resource',
-			null,
-			null,
-			'rounded rect rectangle box'
-		  ),
-		  this.createVertexTemplateEntry(
-			'rounded=1;whiteSpace=wrap;html=1;',
-			120, 60,
-			'<div style="font-weight:bold;">&lt;&lt;Sensor&gt;&gt;<br>[name]</div>',
-			'Action Sensor',
-			null,
-			null,
-			'rounded rect rectangle box'
-		  ),
-		  this.createVertexTemplateEntry(
-			'rounded=1;whiteSpace=wrap;html=1;',
-			120, 60,
-			'<div style="font-weight:bold;">&lt;&lt;Suspend&gt;&gt;<br>[name]</div>',
-			'Action Suspend',
-			null,
-			null,
-			'rounded rect rectangle box'
-		  ),
+		//   this.createVertexTemplateEntry(
+		// 	'rounded=1;whiteSpace=wrap;html=1;',
+		// 	120, 60,
+		// 	'<div style="font-weight:bold;">&lt;&lt;Resource&gt;&gt;<br>[name]</div>',
+		// 	'Action Resource',
+		// 	null,
+		// 	null,
+		// 	'rounded rect rectangle box'
+		//   ),
+		//   this.createVertexTemplateEntry(
+		// 	'rounded=1;whiteSpace=wrap;html=1;',
+		// 	120, 60,
+		// 	'<div style="font-weight:bold;">&lt;&lt;Sensor&gt;&gt;<br>[name]</div>',
+		// 	'Action Sensor',
+		// 	null,
+		// 	null,
+		// 	'rounded rect rectangle box'
+		//   ),
+		//   this.createVertexTemplateEntry(
+		// 	'rounded=1;whiteSpace=wrap;html=1;',
+		// 	120, 60,
+		// 	'<div style="font-weight:bold;">&lt;&lt;Suspend&gt;&gt;<br>[name]</div>',
+		// 	'Action Suspend',
+		// 	null,
+		// 	null,
+		// 	'rounded rect rectangle box'
+		//   ),
 		//   this.createVertexTemplateEntry(
 		// 	'rounded=1;whiteSpace=wrap;html=1;',
 		// 	120, 60,

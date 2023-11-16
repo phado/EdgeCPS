@@ -584,7 +584,7 @@ Format.prototype.refresh = function(arguments)
 		try{
 			// var reqAttribute = selectedCell[0].cells[0].value.attributes[1]['name']+' : '+selectedCell[0].cells[0].value.getAttribute('text');
 			// showAttribute.textContent = reqAttribute;
-			var attributeKey = selectedCell[0].cells[0].value.attributes[2]['nodeName']
+			var attributeKey = selectedCell[0].cells[0].value.attributes[3]['nodeName']
 			var attributeKeyContainer = document.createElement('div');
 			attributeKeyContainer.style.marginLeft = '1px';
 			attributeKeyContainer.style.marginRight = '1px';
@@ -631,7 +631,7 @@ Format.prototype.refresh = function(arguments)
 		}
 		catch{}
 	}
-	else if (process_name == 'businessProcess' || process_name =='workflowProcess'){
+	else if (process_name == 'businessProcess' || process_name =='workflowProcess'|| process_name =='policyProcess'){
 		var totalAttribute = '';
 		try {
 			var reqAttribute = selectedCell[0].cells[0].value.attributes;

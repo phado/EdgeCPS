@@ -1890,6 +1890,7 @@ var EditDataDialog = function(ui, cell)
 	var graph = ui.editor.graph;
 	
 	var value = graph.getModel().getValue(cell);
+	value.removeAttribute('xmlns');
 	
 	// Converts the value to an XML node
 	if (!mxUtils.isNode(value))

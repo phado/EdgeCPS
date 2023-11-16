@@ -377,7 +377,7 @@ def overview_process():
         project_name = request.form.get('project_name')
         project_description = request.form.get('project_description')
         project_category = request.form.get('project_category')
-        return redirect(url_for('requirements_process', project_name=project_name, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
+        return redirect(url_for('requirements_process', project_name=project_name, project_description=project_description,project_category=project_category,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
     # create project
     if request.method == 'GET': #최초이동
         new_pj = request.args.get('newPj')

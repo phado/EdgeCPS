@@ -919,9 +919,9 @@ function forceApply(graph, cell, value, className){
       const objectElement = document.createElement('object');
       objectElement.setAttribute('label', labelValue);
       objectElement.setAttribute('class',FAclassName);
-      objectElement.setAttribute('description', 'd');
-      objectElement.setAttribute('input_information', 'ddd');
-      objectElement.setAttribute('output_information', 'dd');
+      objectElement.setAttribute('description', '');
+      objectElement.setAttribute('input_information', '');
+      objectElement.setAttribute('output_information', '');
       // FAcell.value = objectElement
       FAgraph.getModel().setValue(FAcell, objectElement);
       FAgraph.getModel().setValue(FAcell, objectElement);
@@ -934,9 +934,9 @@ function forceApply(graph, cell, value, className){
       const objectElement = document.createElement('object');
       objectElement.setAttribute('label', content);
       objectElement.setAttribute('class',FAclassName);
-      objectElement.setAttribute('description', 'd');
-      objectElement.setAttribute('input_information', 'ddds');
-      objectElement.setAttribute('output_information', 'dd');
+      objectElement.setAttribute('description', '');
+      objectElement.setAttribute('input_information', '');
+      objectElement.setAttribute('output_information', '');
       FAgraph.getModel().setValue(FAcell, objectElement);
     }
    
@@ -948,7 +948,7 @@ function forceApply(graph, cell, value, className){
       const objectElement = document.createElement('object');
       objectElement.setAttribute('label', labelValue|| '');
       objectElement.setAttribute('class',FAclassName|| '');
-      objectElement.setAttribute('text', 'd');
+      objectElement.setAttribute('text', '');
       FAcell.value = labelValue;
       FAgraph.getModel().setValue(FAcell, objectElement|| '');
       

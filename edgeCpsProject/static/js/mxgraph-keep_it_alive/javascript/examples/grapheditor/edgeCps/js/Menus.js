@@ -30,7 +30,8 @@ Menus.prototype.defaultFontSize = '12';
 /**
  * Sets the default font size.
  */
-Menus.prototype.defaultMenuItems = ['file', 'edit', 'view', 'arrange'];
+Menus.prototype.defaultMenuItems = ['file', 'edit', 'view', 'arrange'];//순우 메뉴바 요소 삭제
+// Menus.prototype.defaultMenuItems = ['file', 'edit', 'view', 'arrange', 'extras', 'help', 'minsoo'];
 
 /**
  * Adds the label menu items to the given menu and parent.
