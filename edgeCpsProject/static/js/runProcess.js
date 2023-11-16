@@ -124,7 +124,7 @@ function workflowProcessView(cellName,cellId,cell){
 function logContainer(){
     //워크플로우 전체 로그 출력 순우
     workflowName = localStorage.getItem(projectName+'_current_workflowName')
-    const url = 'http://127.0.0.1:5000/log?workflow_name='+encodeURIComponent(workflowName);
+    const url = 'http://127.0.0.1:4999/log?workflow_name='+encodeURIComponent(workflowName);
 
     fetch(url)
         .then(response => response.text())  // 응답의 텍스트 데이터를 받아옴
@@ -155,7 +155,7 @@ function deploymentView(actionStatusFlag,actionName,actionId) {
     // try {
         workflowName = localStorage.getItem(projectName+'_current_workflowName')
 
-        const url = `http://127.0.0.1:5000/status?workflow_name=${encodeURIComponent(workflowName)}`;
+        const url = `http://127.0.0.1:4999/status?workflow_name=${encodeURIComponent(workflowName)}`;
 
         fetch(url)
         .then(response => response.text())  // 응답의 텍스트 데이터를 받아옴
@@ -218,7 +218,7 @@ function deploymentView(actionStatusFlag,actionName,actionId) {
 //     try {
 //         workflowName = localStorage.getItem(projectName+'_current_workflowName')
 
-//         const url = `http://127.0.0.1:5000/status?workflow_name=${encodeURIComponent(workflowName)}`;
+//         const url = `http://127.0.0.1:4999/status?workflow_name=${encodeURIComponent(workflowName)}`;
 
 //         const response = await fetch(url);
 

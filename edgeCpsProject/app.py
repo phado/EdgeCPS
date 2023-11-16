@@ -11,7 +11,7 @@ from flask_cors import CORS
 import subprocess
 import json
 import urllib
-import cairosvg
+# import cairosvg
 import base64
 import urllib.parse
 import mysql.connector.pooling

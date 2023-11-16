@@ -49,8 +49,8 @@ button {
 /* 순우 다이어그램 캔버스 크기 조절 부분 */
 .geBackgroundPage {
   box-shadow: 0px 0px 2px 1px #d1d1d1;
-  left: 78% !important;
-  width: 100% !important;
+  /* left: 78% !important; */
+  /* width: 100% !important; */
 }
 .geSidebarContainer a,
 .geMenubarContainer a,
