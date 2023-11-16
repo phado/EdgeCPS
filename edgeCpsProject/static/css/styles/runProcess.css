@@ -271,17 +271,17 @@ html {
   padding: 0;
   overflow: hidden;
 }
-.sidebar {
+/* .sidebar {
   background-color: #ffffff;
   height: 65%;
   width: 10%;
   position: fixed;
   top: 17%;
   right: 0;
-}
+} */
 
 .main-content {
-  width: 90%;
+  width: 100%;
   float: left;
   height: 65%;
   position: fixed;
