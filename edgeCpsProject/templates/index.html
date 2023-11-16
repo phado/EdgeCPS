@@ -16,13 +16,52 @@
 
     <div class="container">
       <div class="row">
-        <div class="col-md-6">
-          <img src="{{url_for('static', filename = '/image/login.svg')}}" alt="Image" class="img-fluid" />
+        <div class="col-md-6" style="position: relative;">
+          <img src="{{url_for('static', filename='/image/login.svg')}}" alt="Image" class="img-fluid" />
+          <div style="
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+          ">
+            <p style="
+              color: white;
+              font-family: Roboto;
+              font-size: 24px;
+              font-weight: 400;
+              line-height: 30px;
+              letter-spacing: 0.05em;
+              text-align: left;
+              margin: 0;
+            ">Nice to meet you again</p>
+              <p style="
+              color: white;
+              font-family: Roboto;
+              font-size: 45px;
+              font-weight: 500;
+              line-height: 59px;
+              letter-spacing: 0.00em;
+              margin: 0;
+              margin-top: 5px;
+            ">Welcome Back!</p>
+              <img src="{{url_for('static', filename='/image/a.svg')}}" alt="Image" class="img-fluid" />
+              <p style="
+              color: white;
+              font-family: Inter;
+              font-size: 24px;
+              font-weight: 600;
+              line-height: 28px;
+              letter-spacing: 0em;
+              text-align: center;
+              margin-top: 16px;
+            ">EdgeCPS</p>
+          </div>
         </div>
         <div class="col-md-6">
           <h1
             style="
-              color: #3390ff;
+              color: #6097D9;
               font-family: Roboto;
               font-size: 36px;
               font-weight: 800;
@@ -101,7 +140,7 @@
               class="btn btn-primary"
               id="confirmBtn"
               style="
-                background: #3390ff;
+                background: #6097D9;
                 width: 550px;
                 height: 45px;
                 padding: 10px, 167px, 10px, 167px;
@@ -115,7 +154,8 @@
             <div class="alert alert-danger">{{ login_msg }}</div>
             {% endif %}
             <div style="padding-top: 80px; color: #c7c7c7">
-              New User? <a href="{{ url_for('signup') }}">Signup</a>
+              New User? <a href="{{ url_for('signup') }}" style="color:#3853FF;
+              ;">Signup</a>
             </div>
           </form>
         </div>

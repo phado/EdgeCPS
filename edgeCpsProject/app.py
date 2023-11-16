@@ -15,6 +15,8 @@ import cairosvg
 import base64
 import urllib.parse
 import mysql.connector.pooling
+from flask_paginate import Pagination
+
 
 from kubernetes import client, config
 from kubernetes.stream import stream
@@ -134,8 +136,22 @@ def project_list():
     user_info = user_get_info(userId)    
     userIds, userName, userEmail, userGroup, userAdmin = user_info
 
+    page = request.args.get('page', type=int, default=1)
+    per_page = 5  # 페이지당 항목 수를 설정합니다.
+    offset = (page - 1) * per_page
+    total = len(projects_info)
+
+    pagination_projects = projects_info[offset: offset + per_page]
+
+    pagination = Pagination(
+        page=page,
+        total=total,
+        per_page=per_page,
+        css_framework='bootstrap4',  # 사용하는 CSS 프레임워크에 맞게 조정
+    )
+
     # todo 프로젝트 리스트 정보 조회하는 기능 필요
-    return render_template('projectList.html', projects=projects_info, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup, loginUserInfo=loginUserInfo)
+    return render_template('projectList.html',  projects=pagination_projects, pagination=pagination, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup, loginUserInfo=loginUserInfo)
 
 
 

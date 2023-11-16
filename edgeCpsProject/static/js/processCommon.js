@@ -186,13 +186,15 @@ document.addEventListener("DOMContentLoaded", function () {
     newButton.textContent = buttonName;
 
     // 스타일 속성 변경
-    newButton.style.backgroundColor = "#3853ff";
+    newButton.style.backgroundColor = "#2E5686";
     newButton.style.color = "#fff";
     newButton.style.borderRadius = "5px";
     newButton.style.padding = "2px 8px";
     newButton.style.fontFamily = "'Inter Extra Light'";
     newButton.style.fontStyle = "normal";
     newButton.style.marginTop = "-2px";
+    newButton.style.fontSize = "15px";
+    newButton.style.height = "30px";
 
     var buttonContainer = document.getElementById("buttonContainer");
 
@@ -239,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function () {
       "Save All",
       processSaveClick,
       "saveButton",
-      "background-color: #3853ff; color: #fff; border-radius: 5px; padding: 2px 8px; font-family: 'Inter Extra Light'; font-style: normal;"
+      "font-size:15px; background-color: #2E5686; color: #fff; border-radius: 5px; padding: 2px 8px; font-family: 'Inter Extra Light'; font-style: normal;"
     )
   ); // process-save 버튼
   // buttonContainer.appendChild(

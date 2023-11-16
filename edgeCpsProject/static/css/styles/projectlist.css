@@ -41,18 +41,34 @@ a.home {
   /* margin-left: 10px;  */
 }
 
+.page-link {
+  position: relative;
+  display: block;
+  padding: 0.5rem 0.75rem;
+  margin-left: -1px;
+  line-height: 1.25;
+  color: #2e5686;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+}
+.page-item.active .page-link {
+  z-index: 1;
+  color: #fff;
+  background-color: #2e5686;
+  border-color: #2e5686;
+}
 
-    /* Webkit 스크롤바 */
-    ::-webkit-scrollbar {
-      width: 7px; /* 스크롤바의 너비 */
-      height: 7px;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-      background-color: #D9D9D9; /* 스크롤바 색상 */
-      border-radius: 6px; /* 스크롤바 모서리 둥글게 */
-    }
-    
-    ::-webkit-scrollbar-track {
-      background-color: #ffffff; /* 스크롤바 트랙 색상 */
-    }
+/* Webkit 스크롤바 */
+::-webkit-scrollbar {
+  width: 7px; /* 스크롤바의 너비 */
+  height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #d9d9d9; /* 스크롤바 색상 */
+  border-radius: 6px; /* 스크롤바 모서리 둥글게 */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #ffffff; /* 스크롤바 트랙 색상 */
+}

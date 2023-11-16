@@ -19,28 +19,9 @@
   font-weight: normal;
   font-style: normal;
 }
-/* EdgeCPS */
-.title h2 {
-  color: #ffffff;
-  font-size: 25px;
-  font-family: "Inter Extra Bold";
-  margin-left: 20px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: normal;
-  margin-top: 0.4%;
-}
-.title {
-  background: #3853ff;
-  display: flex;
-  /* justify-content: space-between; */
-  align-items: center;
-  height: 50px;
-  padding: 0 20px;
-}
 
 a.home {
-  color: inherit;
+  color: white;
   text-decoration: none;
 }
 
@@ -59,21 +40,6 @@ a.home {
   top: 1.2%;
   left: 93.7%;
   /* margin-left: 10px;  */
-}
-
-.user-name-background {
-  border: none;
-  /* border-top-left-radius: 50%; 
-  border-bottom-left-radius: 50%;  */
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  padding: 4px 20px;
-  background-color: #fff;
-  color: #0056be;
-  font-family: "Roboto-Medium", Helvetica;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s;
 }
 
 .nav-item-separator {
@@ -175,14 +141,14 @@ a.home {
 }
 .nav-button:hover .button-icon {
   /* 호버 상태 아이콘 스타일 */
-  fill: #3853ff;
+  fill: #6097d9;
 }
 .nav-button:hover .button-text {
-  color: #3853ff;
+  color: #6097d9;
 }
 
 .nav-button:active {
-  background: #3853ff; /* 클릭한 상태 배경 색상 */
+  background: #6097d9; /* 클릭한 상태 배경 색상 */
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); /* 클릭한 상태 그림자 효과 */
 }
 .nav-button:active .button-icon {
@@ -196,7 +162,7 @@ a.home {
 /*------------------------workflow_process_page--------------------------------------------------*/
 
 .nav-button-workflow_process_page {
-  background: #3853ff;
+  background: #6097d9;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -269,12 +235,12 @@ a.home {
 	border:1px solid #c0c0c0;
   margin:2.5%;
   text-align: center;
-  background-color: #3853ff;
+  background-color: #557ba9;
   color:#ffffff;
 }
 .selectWorkflow select option.selected {
-  background-color: #ff5733; /* 선택된 옵션의 배경색 변경 */
-  color: #000000; /* 선택된 옵션의 텍스트색 변경 */
+  background-color: #2e5686; /* 선택된 옵션의 배경색 변경 */
+  color: #ffffff; /* 선택된 옵션의 텍스트색 변경 */
 }
 
 

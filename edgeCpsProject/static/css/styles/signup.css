@@ -25,7 +25,7 @@ select {
   padding: 10px, 167px, 10px, 167px;
   border-radius: 999px;
   gap: 10px;
-  background: #3390ff;
+  background: #557ba9;
 }
 #cancelButton {
   margin-top: 5px;
@@ -39,21 +39,4 @@ select {
 .container,
 .container-sm {
   max-width: 400px;
-}
-.title h2 {
-  margin-top: 10px;
-  margin-left: 30px;
-  font-family: Inter;
-  font-size: 40px;
-  font-weight: 800;
-  line-height: 48px;
-  letter-spacing: 0em;
-  text-align: left;
-}
-.title {
-  background: #3853ff;
-  display: flex;
-  align-items: center;
-  height: 80px;
-  padding: 0 20px;
 }

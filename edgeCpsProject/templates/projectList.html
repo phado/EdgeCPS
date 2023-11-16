@@ -43,10 +43,15 @@
         ></div>
       </div>
 
-      <div>
-        <h2 class="mt-5">Project List</h2>
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="mt-5" style="padding-bottom: 20px">Project List</h2>
+        <a
+          href="{{ url_for('overview_process', newPj=true)}}"
+          class="btn btn-primary"
+          style="margin-top: 60px; background-color: #2e5686"
+          >Create Project</a
+        >
       </div>
-
       <table class="table table-striped">
         <thead>
           <tr>
@@ -70,8 +75,15 @@
                 method="post"
                 action="{{ url_for('delete_project', project_id=project.id) }}"
               >
-                <button type="submit" class="btn btn-danger btn-sm">
-                  Delete
+                <button
+                  type="submit"
+                  style="border: none; outline: none; background: none"
+                >
+                  <img
+                    src="{{url_for('static', filename='/image/delete.svg')}}"
+                    alt="Image"
+                    class="img-fluid"
+                  />
                 </button>
               </form>
             </td>
@@ -80,8 +92,12 @@
                 method="post"
                 action="{{ url_for('open_process', project_id=project.id, project_name=project.name,project_user=project.user ) }}"
               >
-                <button type="submit" class="btn btn-primary btn-sm">
-                  Open Project
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-sm"
+                  style="background-color: #2d3a8a"
+                >
+                  Open
                 </button>
               </form>
             </td>
@@ -89,12 +105,17 @@
           {% endfor %}
         </tbody>
       </table>
-      <div class="text-right mt-4">
-        <a
-          href="{{ url_for('overview_process', newPj=true)}}"
-          class="btn btn-primary"
-          >Create Project</a
-        >
+      <div
+        style="
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          margin-bottom: 80px;
+        "
+        class="d-flex justify-content-center mt-4"
+      >
+        {{ pagination.links }}
       </div>
     </div>
 
@@ -115,6 +136,55 @@
       </div>
     </div>
   </body>
+
+  <!-- 사이드 테이블
+  <aside class="side-bar">
+    <section class="side-bar__icon-box">
+      <section class="side-bar__icon-1">
+        <div></div>
+        <div></div>
+        <div></div>
+      </section>
+    </section>
+    <ul>
+      <li>
+        <a href="#"> menu1</a>
+        <ul>
+          <li><a href="#">text1</a></li>
+          <li><a href="#">text2</a></li>
+          <li><a href="#">text3</a></li>
+          <li><a href="#">text4</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">menu2</a>
+        <ul>
+          <li><a href="#">text1</a></li>
+          <li><a href="#">text2</a></li>
+          <li><a href="#">text3</a></li>
+          <li><a href="#">text4</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">menu3</a>
+        <ul>
+          <li><a href="#">text1</a></li>
+          <li><a href="#">text2</a></li>
+          <li><a href="#">text3</a></li>
+          <li><a href="#">text4</a></li>
+        </ul>
+      </li>
+      <li>
+        <a href="#">menu4</a>
+        <ul>
+          <li><a href="#">text1</a></li>
+          <li><a href="#">text2</a></li>
+          <li><a href="#">text3</a></li>
+          <li><a href="#">text4</a></li>
+        </ul>
+      </li>
+    </ul>
+  </aside> -->
 </html>
 <script>
   window.onload = function () {
@@ -218,3 +288,56 @@
     });
   };
 </script>
+
+<!-- 사이드 테이블 생성 -->
+<!-- <style>
+  body,
+  ul,
+  li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .side-bar > ul ul {
+    display: none;
+  }
+  :root {
+    --side-bar-width: 200px;
+    --side-bar-height: 90vh;
+  }
+  .side-bar {
+    position: fixed;
+    background-color: lightgrey;
+    width: var(--side-bar-width);
+    min-height: 100vh;
+    margin-top: calc((-7.5vh - var(--side-bar-height)) / 2);
+  }
+  .side-bar ul > li > a {
+    display: block;
+    color: white;
+    font-size: 1.4rem;
+    font-weight: bold;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+  }
+  .side-bar > ul > li {
+    position: relative;
+  }
+  .side-bar ul > li:hover > a {
+    background-color: #555;
+    border-bottom: 1px solid #999;
+  }
+  .side-bar > ul > li:hover > ul {
+    display: block;
+    position: absolute;
+    background-color: #888;
+    top: 0;
+    left: 100%;
+    width: 100%;
+  }
+</style> -->

@@ -14,6 +14,11 @@
       type="text/css"
       href="{{ url_for('static', filename='css/styles/forgetpw.css')}}"
     />
+    <link
+    rel="stylesheet"
+    type="text/css"
+    href="{{ url_for('static', filename='css/styles/title.css')}}"
+  />
     <!-- 비밀번호 찾기 페이지 자바스크립트 효정 -->
     <script
       type="text/javascript"
@@ -205,87 +210,3 @@
     </script>
   </body>
 </html>
-<style>
-.hidden {
-  display: none;
-}
-
-#overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  z-index: 1;
-}
-
-#popup {
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: #fff;
-  padding: 20px;
-  z-index: 2;
-}
-
-#closeButton {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  cursor: pointer;
-}
-
-</style>
-<style>
-    input[type="text"],
-  input[type="email"],
-  select {
-    height: 40px;
-    width: 387px;
-  }
-  .container,
-  .container-sm {
-    max-width: 400px;
-  }
-  #changepwBtn {
-    margin-top: 15px;
-    width: 387px;
-    height: 45px;
-    top: 765px;
-    padding: 10px, 167px, 10px, 167px;
-    border-radius: 999px;
-    gap: 10px;
-    background: #3390ff;
-  }
-  #cancelButton {
-    margin-top: 5px;
-    width: 387px;
-    height: 45px;
-    top: 765px;
-    padding: 10px, 167px, 10px, 167px;
-    border-radius: 999px;
-    gap: 10px;
-  }
-  .title h2 {
-    margin-top: 10px;
-    margin-left: 30px;
-    font-family: Inter;
-    font-size: 40px;
-    font-weight: 800;
-    line-height: 48px;
-    letter-spacing: 0em;
-    text-align: left;
-
-  }
-  .title {
-    background: #3853ff;
-    display: flex;
-    align-items: center;
-    height: 80px;
-    padding: 0 20px;
-  }
-</style>
