@@ -3897,7 +3897,8 @@ EditorUi.prototype.refresh = function (sizeDidChange) {
   this.diagramContainer.style.left = contLeft + diagContOffset.x + "px";
   this.diagramContainer.style.top = tmp + diagContOffset.y + 140 + "px"; // 순우 가운데 다이어그램 그리는 곳 130px 만큼 내림
   this.footerContainer.style.height = this.footerHeight + "px";
-  this.hsplit.style.top = this.sidebarContainer.style.top;
+  // this.hsplit.style.top = this.sidebarContainer.style.top;
+  // this.hsplit.style.top = 10%;
   this.hsplit.style.bottom = this.footerHeight + off + "px";
   this.hsplit.style.left = effHsplitPosition + "px";
   this.footerContainer.style.display = this.footerHeight == 0 ? "none" : "";
