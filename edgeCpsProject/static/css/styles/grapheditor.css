@@ -30,7 +30,6 @@ button {
 }
 .geEditor select {
   border-width: 1px;
-  margin-left:10px;
 }
 .geEditor div.mxTooltip {
   background: whiteSmoke;

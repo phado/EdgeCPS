@@ -4007,7 +4007,7 @@ EditorUi.prototype.createDivs = function () {
   this.footerContainer.style.bottom = "0px";
   this.footerContainer.style.zIndex = mxPopupMenu.prototype.zIndex - 2;
   // 순우 좌측 사이드바에 있는 스크롤바 삭제
-  // this.hsplit.style.width = this.splitSize + 'px';
+  this.hsplit.style.width = this.splitSize + 'px';
   this.sidebarFooterContainer = this.createSidebarFooterContainer();
 
   if (this.sidebarFooterContainer) {
@@ -5491,7 +5491,7 @@ EditorUi.prototype.destroy = function () {
       this.diagramContainer,
       this.footerContainer,
       this.chromelessToolbar,
-      this.hsplit,
+      // this.hsplit,
       this.sidebarFooterContainer,
       this.layersDialog,
     ];
@@ -5504,7 +5504,7 @@ EditorUi.prototype.destroy = function () {
       this.diagramContainer,
       this.footerContainer,
       this.chromelessToolbar,
-      this.hsplit,
+      // this.hsplit,
       this.sidebarFooterContainer,
       this.layersDialog,
     ];
