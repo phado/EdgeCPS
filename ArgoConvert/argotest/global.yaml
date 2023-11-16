@@ -1,0 +1,99 @@
+apiVersion: argoproj.io/v1alpha1
+kind: workflow
+metadata:
+  name: arguments-artifacts
+spec:
+  entrypoint: generate-globals
+
+  templates:
+  - name: generate-globals
+    steps:
+        # parameter, artifact 각각 두개의 아웃풋을 path로 경로를 지정해서 내보내는 경우 
+    - - name: global-output-from-path
+        template: global-output-from-path
+
+        # global 아웃풋으로 이전 step에서 생성된 두개의(parameter, artifact) 아웃풋 중
+        # parameter 아웃풋의 경로를 인풋으로 받는 경우
+    - - name: consume-path-parameters
+        template: consume-path-parameters
+        arguments:
+          parameters:
+          - name: param
+            value: "{{workflow.outputs.parameters.parameters-output-path}}"
+      - name: consume-path-artifacts
+        template: consume-path-artifacts
+        arguments:
+          artifacts:
+          - name: hello-art
+            from: "{{workflow.outputs.artifacts.artifacts-output-path}}"
+      
+    - - name: global-output-from-value
+        template: global-output-from-value
+
+    # - - name: consume-value-parameters
+    #     template: consume-value-parameters
+    #     arguments:
+    #       parameters:
+    #       - name: param
+    #         value: "{{workflow.outputs.parameters.parameters-output-value}}"
+
+
+########################################################################
+
+    # parameter, artifact 각각 두개의 아웃풋을 path로 경로를 지정해서 내보내는 경우 
+  - name: global-output-from-path
+    container:
+      image: alpine:3.7
+      command: [sh, -c]
+      args: ["sleep 1; echo -n hello world > /tmp/hello_world.txt"]
+    outputs:
+      parameters:
+      - name: parameters-output-path
+        # 파리미터 아웃풋으로 내보낼 파일의 경로를 여기서 지정
+        valueFrom:
+          path: /tmp/hello_world.txt
+        globalName: parameters-output-path
+      artifacts:
+      - name: artifacts-output-path
+       # 아티팩트 아웃풋으로 내보낼 파일의 경로를 여기서 지정
+        path: /tmp/hello_world.txt
+        globalName: artifacts-output-path
+    
+    # global 아웃풋 중에서 parameter를 인풋으로 받는 경우
+  - name: consume-path-parameters
+    inputs:
+      parameters:
+        - name: param
+    container:
+      image: alpine:3.7
+      command: [sh, -c]
+      args: ["echo {{inputs.parameters.param}}"]
+
+  - name: consume-path-artifacts
+    inputs:
+      artifacts:
+        - name: hello-art
+          path: /art
+    container:
+      image: alpine:3.7
+      command: [sh, -c]
+      args: ["cat /art"]
+ 
+  - name: global-output-from-value
+    container:
+      image: alpine:3.7
+    outputs:
+      parameters:
+      - name: parameters-output-value
+        value: "this is static value parameter output"
+        globalName: parameters-output-value
+
+  # - name: consume-value-parameters
+  #   inputs:
+  #     parameters:
+  #     - name: param
+  #   script:
+  #     image: alpine:3.7
+  #     command: [sh, -c]
+  #     source: |
+  #       echo '{{inputs.parameters.param}}'
