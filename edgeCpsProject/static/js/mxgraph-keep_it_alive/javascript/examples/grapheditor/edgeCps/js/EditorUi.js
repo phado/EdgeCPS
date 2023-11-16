@@ -3897,7 +3897,8 @@ EditorUi.prototype.refresh = function (sizeDidChange) {
   this.diagramContainer.style.left = contLeft + diagContOffset.x + "px";
   this.diagramContainer.style.top = tmp + diagContOffset.y + 140 + "px"; // 순우 가운데 다이어그램 그리는 곳 130px 만큼 내림
   this.footerContainer.style.height = this.footerHeight + "px";
-  this.hsplit.style.top = this.sidebarContainer.style.top;
+  // this.hsplit.style.top = this.sidebarContainer.style.top;
+  // this.hsplit.style.top = 10%;
   this.hsplit.style.bottom = this.footerHeight + off + "px";
   this.hsplit.style.left = effHsplitPosition + "px";
   this.footerContainer.style.display = this.footerHeight == 0 ? "none" : "";
@@ -4007,7 +4008,7 @@ EditorUi.prototype.createDivs = function () {
   this.footerContainer.style.bottom = "0px";
   this.footerContainer.style.zIndex = mxPopupMenu.prototype.zIndex - 2;
   // 순우 좌측 사이드바에 있는 스크롤바 삭제
-  // this.hsplit.style.width = this.splitSize + 'px';
+  this.hsplit.style.width = this.splitSize + 'px';
   this.sidebarFooterContainer = this.createSidebarFooterContainer();
 
   if (this.sidebarFooterContainer) {
@@ -4809,35 +4810,38 @@ EditorUi.prototype.nodeSelectorDialog = function (value, btnLabel, fn) {
 /**
  * Hides the current menu.
  */
-// 순우 다이어로그 창 크기 조절
-EditorUi.prototype.showDataDialog = function (cell) {
-  if (cell != null) {
-    var dlg = new EditDataDialog(this, cell);
-    try {
-      // console.log(createDiagramSape);
-      if (cell.value.includes("Container")) {
-        this.showDialog(dlg.container, 780, 320, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
-      } else if (cell.value.includes("requirement")) {
-        this.showDialog(dlg.container, 780, 158, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
-      } else if (cell.style.includes("rounded=0")) {
-        this.showDialog(dlg.container, 780, 227, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
-      } else if (cell.style.includes("rounded=1")) {
-        this.showDialog(dlg.container, 780, 217, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
-      } else {
-        this.showDialog(dlg.container, 780, 427, true, false, null, false);
-      }
-    } catch (e) {
-      console.log(e);
-      this.showDialog(dlg.container, 780, 427, true, false, null, false);
-    }
+// 순우 다이어로그 창 크기 조절 
+EditorUi.prototype.showDataDialog = function(cell)
+{
+	if (cell != null)
+	{
+		var dlg = new EditDataDialog(this, cell);
+		try{
 
-    // this.showDialog(dlg.container, 780, 227, true, false, null, false);
-    // requirements process edit data에 select box 추가 하는 함수
-    function reqSelectBox(cellValue) {
-      foundCellValue = cellValue;
-      if (foundCellValue.includes("non functional")) {
-        var selectBox = document.createElement("select");
-        selectBox.id = "reqSelectBox";
+			if(cell.value.className.includes('Rounded Rectangle')){
+				this.showDialog(dlg.container, 780, 530, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+			}else if(cell.value.className.includes('Class')){
+				this.showDialog(dlg.container, 780, 428, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+			}else if(cell.value.className.includes('Rectangle')){
+				this.showDialog(dlg.container, 780, 327, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+			}else if(cell.value.className.includes('Container')){
+				this.showDialog(dlg.container, 780, 517, true, false, null, false); // property 여기에 작성된 정보가 저장 된다. 민수
+			}else{
+				this.showDialog(dlg.container, 780, 527, true, false, null, false);
+			}
+			
+		}catch(e){
+			console.log(e);
+			this.showDialog(dlg.container, 780, 427, true, false, null, false);
+		}
+		
+		// this.showDialog(dlg.container, 780, 227, true, false, null, false);
+		// requirements process edit data에 select box 추가 하는 함수
+		function reqSelectBox(cellValue){
+			foundCellValue = cellValue
+			if (foundCellValue.includes('non functional')){
+					var selectBox = document.createElement('select');
+					selectBox.id = 'reqSelectBox';
 
         var option1 = document.createElement("option");
         option1.text = "Performance";
@@ -5488,7 +5492,7 @@ EditorUi.prototype.destroy = function () {
       this.diagramContainer,
       this.footerContainer,
       this.chromelessToolbar,
-      this.hsplit,
+      // this.hsplit,
       this.sidebarFooterContainer,
       this.layersDialog,
     ];
@@ -5501,7 +5505,7 @@ EditorUi.prototype.destroy = function () {
       this.diagramContainer,
       this.footerContainer,
       this.chromelessToolbar,
-      this.hsplit,
+      // this.hsplit,
       this.sidebarFooterContainer,
       this.layersDialog,
     ];
