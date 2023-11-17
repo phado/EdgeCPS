@@ -636,7 +636,12 @@ Format.prototype.refresh = function(arguments)
 	else if (process_name == 'businessProcess' || process_name =='workflowProcess'|| process_name =='policyProcess'){
 		var totalAttribute = '';
 		try {
-			var reqAttribute = selectedCell[0].cells[0].value.attributes;
+			
+			if(selectedCell[0].cells[0].value==undefined){
+				var reqAttribute = selectedCell[0].cells[2].value.attributes;
+			}else{
+				var reqAttribute = selectedCell[0].cells[0].value.attributes;
+			}
 			for(i=1 ; i<reqAttribute.length; i++){
 				if(reqAttribute[i]['value']==''){
 					continue;
