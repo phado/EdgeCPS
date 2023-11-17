@@ -641,6 +641,9 @@ Format.prototype.refresh = function(arguments)
 				if(reqAttribute[i]['value']==''){
 					continue;
 				}
+				if(reqAttribute[i].nodeName=='label'){
+					continue;
+				}
 				var attributeKey = reqAttribute[i]['name'];
 				var attributeKeyContainer = document.createElement('div');
 				attributeKeyContainer.style.marginLeft = '1px';

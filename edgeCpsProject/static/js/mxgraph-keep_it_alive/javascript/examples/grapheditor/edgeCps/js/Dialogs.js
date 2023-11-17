@@ -1922,7 +1922,7 @@ var EditDataDialog = function(ui, cell)
 	var div = document.createElement('div');
 	var editDataTitle = document.createElement('div');
 	editDataTitle.textContent = 'EditData';
-	editDataTitle.style.cssText='color: #353535;font-family: Inter;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
+	editDataTitle.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
 	div.appendChild(editDataTitle);
 	div.style.cssText = 'height:70px;border-radius: 5px 5px 0px 0px;background: #E8F3FF;'
 
@@ -2093,13 +2093,13 @@ var EditDataDialog = function(ui, cell)
 	var addTextArea = function(name, value) {
 		var label = document.createElement('div');
 		label.textContent = name;
-		label.style.cssText = 'color: #353535;font-family: Inter;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal;'
+		label.style.cssText = 'color: #353535;font-family: Inter Extra Bold;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal;'
 		form.appendChild(label);
 	
 		var textarea = document.createElement('textarea');
 		textarea.value = value;
 		// textarea.style.width = '100%';
-		textarea.style.cssText ='color: #353535;font-family: Inter;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal; width:100%;border-radius: 5px;border: 1px solid #9B9B9B;'
+		textarea.style.cssText ='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal; width:100%;border-radius: 5px;border: 1px solid #9B9B9B;'
 	
 		if (value.indexOf('\n') > 0) {
 			textarea.setAttribute('rows', '5');
@@ -2249,7 +2249,7 @@ var EditDataDialog = function(ui, cell)
 			for (var i = 0; i < form.querySelectorAll('textarea').length; i++)
 			{
 				const name = form.querySelectorAll('textarea')[i].value;
-				const text = form.getElementsByTagName('div')[i+1].textContent;
+				const text = form.getElementsByTagName('div')[i*2].textContent;
 
 				if (text == null)
 				{
