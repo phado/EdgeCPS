@@ -52,7 +52,14 @@ Format.prototype.init = function()
 	this.update = mxUtils.bind(this, function(sender, evt) //민수 우측 사이드바 클릭시 evt안에 id와 mxobjectId가 고유한것같은데 확인 필요
 	{
 		this.clearSelectionState();
-		this.refresh(arguments);
+		try{
+			var id = arguments[1].properties.changes[0].cell.id;
+			this.refresh(arguments,id);
+		}
+		catch{
+			this.refresh(arguments);
+		}
+		
 	});
 	
 	graph.getSelectionModel().addListener(mxEvent.CHANGE, this.update);
@@ -360,7 +367,7 @@ Format.prototype.clear = function()
  * Adds the label menu items to the given menu and parent.
  */
 // 순우 우측 판넬 
-Format.prototype.refresh = function(arguments)
+Format.prototype.refresh = function(arguments,id)
 {
 	var selectedCell = arguments
 	// Performance tweak: No refresh needed if not visible
@@ -580,7 +587,7 @@ Format.prototype.refresh = function(arguments)
 	showAttribute.style.overflow = 'auto';
 	
 	// 순우 각 cell 클릭 했을 때 우측 사이드바에 속성 값 띄우는 기능
-	if (process_name=='requirementsProcess'){
+	if (process_name=='requirementsProcesss'){
 		try{
 			// var reqAttribute = selectedCell[0].cells[0].value.attributes[1]['name']+' : '+selectedCell[0].cells[0].value.getAttribute('text');
 			// showAttribute.textContent = reqAttribute;
@@ -633,14 +640,31 @@ Format.prototype.refresh = function(arguments)
 		}
 		catch{}
 	}
-	else if (process_name == 'businessProcess' || process_name =='workflowProcess'|| process_name =='policyProcess'){
+	else if (process_name == 'businessProcess' || process_name =='workflowProcess'|| process_name =='policyProcess'||process_name=='requirementsProcess'){
 		var totalAttribute = '';
+		var id =id;
 		try {
 			
-			if(selectedCell[0].cells[0].value==undefined){
-				var reqAttribute = selectedCell[0].cells[2].value.attributes;
-			}else{
+			if(selectedCell[0].cells[0].value){
 				var reqAttribute = selectedCell[0].cells[0].value.attributes;
+				
+			}else{
+				var keys = Object.keys(selectedCell[0].cells);
+				for (var key of Object.values(keys)) {
+					
+					try{
+						if(selectedCell[0].cells[key].id==id){
+							var reqAttribute = selectedCell[0].cells[key].value.attributes;
+						}
+					}catch(e){
+						console.log(e);
+					}
+					
+				}
+				// var lastKey = keys[keys.length - 1];
+
+				
+				// var reqAttribute = selectedCell[0].cells[2].value.attributes;
 			}
 			for(i=1 ; i<reqAttribute.length; i++){
 				if(reqAttribute[i]['value']==''){
