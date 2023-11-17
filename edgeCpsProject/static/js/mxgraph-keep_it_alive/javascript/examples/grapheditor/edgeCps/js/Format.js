@@ -592,7 +592,7 @@ Format.prototype.refresh = function(arguments)
 
 			var attributeValue = selectedCell[0].cells[0].value.getAttribute('text');
 			var attributeValueContainer = document.createElement('div');
-			attributeValueContainer.style.border = '1px solid #D6D6D6'; 
+			attributeValueContainer.style.borderBottom = '1px solid #D6D6D6'; 
 			attributeValueContainer.style.marginLeft = '3px';
 			attributeValueContainer.style.marginRight = '3px';
 			attributeValueContainer.innerHTML = attributeValue;
