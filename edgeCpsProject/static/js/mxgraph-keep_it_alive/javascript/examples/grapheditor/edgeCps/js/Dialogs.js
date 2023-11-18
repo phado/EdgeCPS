@@ -2457,16 +2457,24 @@ var ReqDialog = function(editorUi, ui, cell) {
 	}
 
 	var reqList = extractReq();
+	// var div = document.createElement('div');
+	
+	// div.style = 'flex';
+	// mxUtils.write(div, mxResources.get('selectReq'));
 	var div = document.createElement('div');
-	div.style = 'flex';
-	mxUtils.write(div, mxResources.get('selectReq'));
+	var reqTitle = document.createElement('div');
+	reqTitle.textContent = 'Select Requirement';
+	reqTitle.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
+	div.appendChild(reqTitle);
+	div.style.cssText = 'height:70px;border-radius: 5px 5px 0px 0px;background: #E8F3FF;'
+
 	
 	var inner = document.createElement('div');
 	inner.className = 'geTitle';
 	inner.style = 'flex';
 
 	if (!mxClient.IS_VML) {
-	  inner.style.paddingRight = '20px';
+	  inner.style.padding = '20px';
 	}
 
 	var leftContainer = document.createElement("div");
@@ -2475,11 +2483,14 @@ var ReqDialog = function(editorUi, ui, cell) {
 
 	var leftListLabel = document.createElement("div");
 	leftListLabel.textContent = "Requirement pool";
-	leftListLabel.style.fontWeight = "bold";
+	leftListLabel.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal;    margin-bottom: 3%;'
+
 
 	var leftList = document.createElement("select");
 	leftList.id = "leftList";
 	leftList.multiple = true;
+	leftList.style.cssText='border-radius: 5px;border: 1px solid #9B9B9B;'
+	
 
 	var rightContainer = document.createElement("div");
 	rightContainer.style.display = "flex";
@@ -2487,16 +2498,19 @@ var ReqDialog = function(editorUi, ui, cell) {
 
 	var rightListLabel = document.createElement("div");
 	rightListLabel.textContent = "Target requirement";
-	rightListLabel.style.fontWeight = "bold";
+	rightListLabel.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal;margin-bottom: 3%;'
+
 
 	var rightList = document.createElement("select");
 	rightList.id = "rightList";
 	rightList.multiple = true;
+	rightList.style.cssText='border-radius: 5px;border: 1px solid #9B9B9B;'
+	
 
 	var listContainer = document.createElement('div');
 	listContainer.style.display = 'flex';
-	listContainer.appendChild(leftContainer);
-	listContainer.appendChild(rightContainer);
+	listContainer.style.marginBottom = '3%';
+
 
 	leftList.style.width = "300px"; 
 	rightList.style.width = "300px"; 
@@ -2507,11 +2521,16 @@ var ReqDialog = function(editorUi, ui, cell) {
 
 	var moveButton = document.createElement("button");
 	moveButton.id = "moveButton";
-	moveButton.textContent = "Move Selected";
+	moveButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"; style="margin-bottom:100%;"><circle cx="20" cy="20" r="20" fill="#2E5686"/><path d="M28 18.2679C29.3333 19.0377 29.3333 20.9623 28 21.7321L17.5 27.7942C16.1667 28.564 14.5 27.6018 14.5 26.0622L14.5 13.9378C14.5 12.3982 16.1667 11.436 17.5 12.2058L28 18.2679Z" fill="white"/ ></svg>'
+	moveButton.style.display = 'contents';
+
+	// moveButton.textContent = "Move Selected";
 
 	var moveBackButton = document.createElement("button");
 	moveBackButton.id = "moveBackButton";
-	moveBackButton.textContent = "Move Back Selected";
+	// moveBackButton.textContent = "Move Back Selected";
+	moveBackButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="20" transform="matrix(-1 0 0 1 40 0)" fill="#2E5686"/><path d="M12 18.2679C10.6667 19.0377 10.6667 20.9623 12 21.7321L22.5 27.7942C23.8333 28.564 25.5 27.6018 25.5 26.0622L25.5 13.9378C25.5 12.3982 23.8333 11.436 22.5 12.2058L12 18.2679Z" fill="white"/></svg>'
+	moveBackButton.style.display = 'contents';
 
 	var leftListOptions = reqList;
 
@@ -2525,6 +2544,8 @@ var ReqDialog = function(editorUi, ui, cell) {
 				var newOption = document.createElement("option");
 				newOption.value = selectedOption.value;
 				newOption.text = selectedOption.text;
+				newOption.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+
 				leftList.appendChild(newOption);
 			}
 		});
@@ -2543,6 +2564,8 @@ var ReqDialog = function(editorUi, ui, cell) {
 				var newOption = document.createElement("option");
 				newOption.value = selectedOption.value; 
 				newOption.text = selectedOption.text;
+				newOption.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+
 				rightList.appendChild(newOption);
 			}
 		});
@@ -2560,12 +2583,16 @@ var ReqDialog = function(editorUi, ui, cell) {
 					var option = document.createElement("option");
 					option.value = index; 
 					option.text = optionText;
+					option.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+					
 					rightList.appendChild(option)
 				}
 				else{
 					var option = document.createElement("option");
 					option.value = index; 
 					option.text = optionText;
+					option.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+
 					leftList.appendChild(option);
 				}
 			});
@@ -2574,6 +2601,8 @@ var ReqDialog = function(editorUi, ui, cell) {
 				var option = document.createElement("option");
 				option.value = index; 
 				option.text = optionText;
+				option.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+
 				leftList.appendChild(option);
 			});
 		}
@@ -2586,12 +2615,16 @@ var ReqDialog = function(editorUi, ui, cell) {
 					var option = document.createElement("option");
 					option.value = index; 
 					option.text = optionText;
+					option.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+
 					rightList.appendChild(option)
 				}
 				else{
 					var option = document.createElement("option");
 					option.value = index; 
 					option.text = optionText;
+					option.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+
 					leftList.appendChild(option);
 				}
 			});
@@ -2600,6 +2633,8 @@ var ReqDialog = function(editorUi, ui, cell) {
 				var option = document.createElement("option");
 				option.value = index; 
 				option.text = optionText;
+				option.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+
 				leftList.appendChild(option);
 			});
 		}
@@ -2627,20 +2662,30 @@ var ReqDialog = function(editorUi, ui, cell) {
 	editorUi.hideDialog();
 	mxEvent.release(cancelButton);
 	});
+	cancelButton.className = 'geBtn';
 
 	var buttonsContainer = document.createElement("div");
 	buttonsContainer.style.display = "flex";
+	buttonsContainer.style.flexDirection = "column";  // 세로로 배치하도록 설정
+	buttonsContainer.style.padding="2%";
+	buttonsContainer.style.marginTop="15%";
+	
+
+	buttonsContainer.appendChild(moveButton);
+	buttonsContainer.appendChild(moveBackButton);
+
 	leftContainer.appendChild(leftListLabel); 
 	leftContainer.appendChild(leftList); 
 	rightContainer.appendChild(rightListLabel); 
 	rightContainer.appendChild(rightList);
 
+	listContainer.appendChild(leftContainer);
+	listContainer.appendChild(buttonsContainer);
+	listContainer.appendChild(rightContainer);
 	inner.appendChild(listContainer);
 
-	buttonsContainer.appendChild(moveButton);
-	buttonsContainer.appendChild(moveBackButton);
-
-	inner.appendChild(buttonsContainer);
+	
+	// inner.appendChild(buttonsContainer);
 
 	inner.appendChild(applyBtn);
 	inner.appendChild(cancelButton);
@@ -2855,7 +2900,13 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 var LinkDialog = function(editorUi, initialValue, btnLabel, fn)
 {
 	var div = document.createElement('div');
-	mxUtils.write(div, mxResources.get('editLink') + ':');
+	// mxUtils.write(div, mxResources.get('editLink') + ':');
+	var reqTitle = document.createElement('div');
+	reqTitle.textContent = 'Edit Docker Image';
+	reqTitle.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
+	div.appendChild(reqTitle);
+	div.style.cssText = 'height:70px;border-radius: 5px 5px 0px 0px;background: #E8F3FF;'
+
 	
 	var inner = document.createElement('div');
 	inner.className = 'geTitle dockerHubLink'; // 민수 도커허브
