@@ -57,7 +57,16 @@ function subContent2(cellName,cellId,cell){
 
     if(processName == 'requirementsProcess'){
         var cellNodeName = cell.value.attributes[3].nodeName;
-        requirementAttributes.textContent = cellNodeName+' : '+cellName;
+        var requirementName = document.createElement('div');
+        var requirementAttribute = document.createElement('div');
+        
+        requirementName.textContent = cellName;
+        requirementName.style.cssText = 'color: #222;font-family: Inter;font-size: 20px;font-style: normal;font-weight: 600;line-height: normal;'
+        requirementAttribute.textContent = cellNodeName;
+        requirementAttribute.style.cssText = 'color: #5A5A5A;font-family: Inter;font-size: 18px;font-style: normal;font-weight: 500;line-height: normal; border-bottom:1px solid rgb(214, 214, 214); margin-bottom:6%'
+
+        requirementAttributes.appendChild(requirementName);
+        requirementAttributes.appendChild(requirementAttribute);
         container.appendChild(requirementAttributes);
 
     }
@@ -65,10 +74,18 @@ function subContent2(cellName,cellId,cell){
         
         for(i=2 ; i<cellName.length ; i++){
             var cellNodeName = cell.value.attributes[i];
+            var requirementName = document.createElement('div');
             var requirementAttribute = document.createElement('div');
-            requirementAttribute.textContent = cellNodeName.nodeName+' : '+cellNodeName.nodeValue;
-            requirementAttributes.appendChild(requirementAttribute)
-            container.appendChild(requirementAttribute);
+
+            requirementName.textContent = cellNodeName.nodeName;
+            requirementName.style.cssText = 'color: #222;font-family: Inter;font-size: 20px;font-style: normal;font-weight: 600;line-height: normal;'
+
+            requirementAttribute.textContent = cellNodeName.nodeValue;
+            requirementAttribute.style.cssText = 'color: #5A5A5A;font-family: Inter;font-size: 18px;font-style: normal;font-weight: 500;line-height: normal; border-bottom:1px solid rgb(214, 214, 214); margin-bottom:6%'
+    
+            requirementAttributes.appendChild(requirementName);
+            requirementAttributes.appendChild(requirementAttribute);
+            container.appendChild(requirementAttributes);
         }
         
     }
