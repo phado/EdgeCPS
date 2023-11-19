@@ -179,14 +179,14 @@ a.home {
 }
 .nav-button:hover .button-icon {
   /* 호버 상태 아이콘 스타일 */
-  fill: #3853ff;
+  fill: #6097d9;
 }
 .nav-button:hover .button-text {
-  color: #3853ff;
+  color: #6097d9;
 }
 
 .nav-button:active {
-  background: #3853ff; /* 클릭한 상태 배경 색상 */
+  background: #6097d9; /* 클릭한 상태 배경 색상 */
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25); /* 클릭한 상태 그림자 효과 */
 }
 .nav-button:active .button-icon {
@@ -200,7 +200,7 @@ a.home {
 /*------------------------run_process_page--------------------------------------------------*/
 
 .nav-button-run_process_page {
-  background: #3853ff;
+  background: #6097d9;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -283,18 +283,18 @@ html {
 .main-content {
   width: 100%;
   float: left;
-  height: 65%;
+  height: 60%;
   position: fixed;
-  top: 16%;
+  top: 18%;
   margin-left: 0.5%;
   margin-right: 0.5%;
   /* overflow: auto; */
 }
 
 .workflowProcessView {
-  width: 32.16%;
+  width: 32%;
   float: left;
-  height: 97%;
+  height: 87%;
   background-color: #f0f0f0;
   border: 1px solid #ddd;
   padding: 10px;
@@ -302,16 +302,16 @@ html {
   margin: 0.5%;
   border-radius: 5px;
 }
-.workflowProcessView h4 {
+#workflowTitle h4 {
   font-family: Inter;
   font-style: normal;
   font-weight: 700;
 }
 
 .businessProcessView {
-  width: 32.16%;
+  width: 32%;
   float: left;
-  height: 97%;
+  height: 87%;
   background-color: #f0f0f0;
   border: 1px solid #ddd;
   padding: 10px;
@@ -319,29 +319,18 @@ html {
   margin: 0.5%;
   border-radius: 5px;
 }
-.businessProcessView h4 {
+
+
+#businessTitle h4 {
   font-family: Inter;
   font-style: normal;
   font-weight: 700;
 }
-/* 
-  .businessProcessViewContainer{
-    overflow: auto;
-  } */
+
 .deploymentView {
-  /* background-color: #ffffff;
-  color: #000000;
-  font-family: monospace;
-  font-size: 14px;
-  padding: 10px;
-  position: fixed; 
-  top: 21%;
-  width: 560px;
-  bottom:227px;
-  overflow: auto; */
-  width: 32.16%;
+  width: 32%;
   float: left;
-  height: 97%;
+  height: 87%;
   background-color: #f0f0f0;
   border: 1px solid #ddd;
   padding: 10px;
@@ -349,7 +338,7 @@ html {
   margin: 0.5%;
   border-radius: 5px;
 }
-.deploymentView h4 {
+#deploymentTitle h4 {
   font-family: Inter;
   font-style: normal;
   font-weight: 700;
@@ -372,15 +361,15 @@ html {
 }
 
 .footer {
-  height: 3%;
-  width: 98%;
-  background-color: #343a40;
-  color: white;
+  height: 22%;
+  color: rgb(0, 0, 0);
   text-align: center;
   position: fixed; /* position을 fixed로 변경합니다. */
   bottom: 0;
-  left: 1;
-  border-radius: 5px;
+  margin-left:1%;
+  font-family: Inter Extra bold;
+  font-style: normal;
+  font-weight: 700;
   /* overflow: auto; */
 }
 

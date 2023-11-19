@@ -61,7 +61,7 @@ function businessProcessViewClickHandler(sender, evt) {
 // sub-content1
 function businessProcessView(projectName){
     var xmlData = localStorage.getItem(projectName+'_businessProcessXml')
-    var container = document.getElementById('businessProcessViewContainer');
+    var container = document.getElementById('businessProcessView');
     var graph = new Graph(container);
     var doc = mxUtils.parseXml(xmlData);
     var codec = new mxCodec(doc);
@@ -124,7 +124,7 @@ function workflowProcessView(cellName,cellId,cell){
 function logContainer(){
     //워크플로우 전체 로그 출력 순우
     workflowName = localStorage.getItem(projectName+'_current_workflowName')
-    const url = 'http://127.0.0.1:4999/log?workflow_name='+encodeURIComponent(workflowName);
+    const url = 'http://127.0.0.1:5000/log?workflow_name='+encodeURIComponent(workflowName);
 
     fetch(url)
         .then(response => response.text())  // 응답의 텍스트 데이터를 받아옴
@@ -155,7 +155,7 @@ function deploymentView(actionStatusFlag,actionName,actionId) {
     // try {
         workflowName = localStorage.getItem(projectName+'_current_workflowName')
 
-        const url = `http://127.0.0.1:4999/status?workflow_name=${encodeURIComponent(workflowName)}`;
+        const url = `http://127.0.0.1:5000/status?workflow_name=${encodeURIComponent(workflowName)}`;
 
         fetch(url)
         .then(response => response.text())  // 응답의 텍스트 데이터를 받아옴
@@ -218,7 +218,7 @@ function deploymentView(actionStatusFlag,actionName,actionId) {
 //     try {
 //         workflowName = localStorage.getItem(projectName+'_current_workflowName')
 
-//         const url = `http://127.0.0.1:4999/status?workflow_name=${encodeURIComponent(workflowName)}`;
+//         const url = `http://127.0.0.1:5000/status?workflow_name=${encodeURIComponent(workflowName)}`;
 
 //         const response = await fetch(url);
 
@@ -394,14 +394,14 @@ function getDeployInfo(actionKeys,actionStatus){
             last_diagram_id = i+2;
             uniqueKeysId[uniqueKeys[i]] = i + 2
 
-            var cellCode = `<mxCell id="GmCxI74Y2WdGR4Kf1rmPedge-${i +100 }" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=50;entryDy=0;entryPerimeter=0;" parent="1" source="GmCxI74Y2WdGR4Kf1rmP-1" target="GmCxI74Y2WdGR4Kf1rmP-${i + 1+1}" edge="1"><mxGeometry relative="1" as="geometry" /></mxCell>`
+            var cellCode = `<mxCell id="GmCxI74Y2WdGR4Kf1rmPedge-${i +100 }" value="&amp;lt;&amp;lt;govern&amp;gt;&amp;gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=50;entryDy=0;entryPerimeter=0;" parent="1" source="GmCxI74Y2WdGR4Kf1rmP-1" target="GmCxI74Y2WdGR4Kf1rmP-${i + 1+1}" edge="1"><mxGeometry relative="1" as="geometry" /><mxGeometry relative="1" as="geometry"><mxPoint x="${(i) *85-75}" y="50" as="offset"/></mxGeometry></mxCell>`
             if(i==0){
-                cellCode = `<mxCell id="GmCxI74Y2WdGR4Kf1rmPedge-${i +100 }" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="GmCxI74Y2WdGR4Kf1rmP-1" target="GmCxI74Y2WdGR4Kf1rmP-${i + 1+1}" edge="1"> <mxGeometry relative="1" as="geometry" /> </mxCell>`
+                cellCode = `<mxCell id="GmCxI74Y2WdGR4Kf1rmPedge-${i +100 }" value="&amp;lt;&amp;lt;govern&amp;gt;&amp;gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="GmCxI74Y2WdGR4Kf1rmP-1" target="GmCxI74Y2WdGR4Kf1rmP-${i + 1+1}" edge="1"> <mxGeometry relative="1" as="geometry" /> </mxCell>`
             }
             mxCells.push(cellCode);
         }
     }
-
+    var previousTargetNode = '';
     // action추가
     for(var i=0; i<deployInfo.length; i++){
         var targetNode = deployInfo[i][0];
@@ -415,8 +415,17 @@ function getDeployInfo(actionKeys,actionStatus){
         var cellCode = `<mxCell id="GmCxI74Y2WdGR4Kf1rmP-${last_diagram_id+i+1}" value="${deployInfo[i][1]}" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1"> <mxGeometry x="${targetNodeLocationX}" y="${nodeLocationY[deployInfo[i][0]]}" width="120" height="60" as="geometry" /> </mxCell>`
         nodeLocationY[deployInfo[i][0]] = nodeLocationY[deployInfo[i][0]] + 110;
         mxCells.push(cellCode);
-
-        var cellCode = `<mxCell id="s7v0z9aipiOLFaHwzPqtActionEdge-${last_diagram_id+i+1}" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=30;entryPerimeter=0;" edge="1" parent="1" source="GmCxI74Y2WdGR4Kf1rmP-${last_diagram_id+i+1}" target="GmCxI74Y2WdGR4Kf1rmP-${uniqueKeysId[deployInfo[i][0]]}"> <mxGeometry relative="1" as="geometry"> <Array as="points"> <mxPoint x="${nodeLocationX[deployInfo[i][0]]-20}" y="${edgeLocationY[deployInfo[i][0]]}" /> <mxPoint x="${nodeLocationX[deployInfo[i][0]]-20}" y="270" /> </Array> </mxGeometry> </mxCell>`
+        // 첫연결 엣지일 경우 화살표에 deployed 추가 
+        if(i==0){
+          var cellCode = `<mxCell id="s7v0z9aipiOLFaHwzPqtActionEdge-${last_diagram_id+i+1}" value="&amp;lt;&amp;lt;deployed&amp;gt;&amp;gt;" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=30;entryPerimeter=0;" edge="1" parent="1" source="GmCxI74Y2WdGR4Kf1rmP-${last_diagram_id+i+1}" target="GmCxI74Y2WdGR4Kf1rmP-${uniqueKeysId[deployInfo[i][0]]}"> <mxGeometry relative="1" as="geometry"> <Array as="points"> <mxPoint x="${nodeLocationX[deployInfo[i][0]]-20}" y="${edgeLocationY[deployInfo[i][0]]}" /> <mxPoint x="${nodeLocationX[deployInfo[i][0]]-20}" y="270" /> </Array> </mxGeometry> </mxCell>`
+        }
+        // 첫번째 연결 엣지가 이나고, 액션의 타겟노드가 변경 될 경우 deployed 추가
+        else if(previousTargetNode !=targetNode){
+          var cellCode = `<mxCell id="s7v0z9aipiOLFaHwzPqtActionEdge-${last_diagram_id+i+1}" value="&amp;lt;&amp;lt;deployed&amp;gt;&amp;gt;" style="edgeStyle=orthogonalEdgeStyle;endArrow=open;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=30;entryPerimeter=0;" edge="1" parent="1" source="GmCxI74Y2WdGR4Kf1rmP-${last_diagram_id+i+1}" target="GmCxI74Y2WdGR4Kf1rmP-${uniqueKeysId[deployInfo[i][0]]}"> <mxGeometry relative="1" as="geometry"> <Array as="points"> <mxPoint x="${nodeLocationX[deployInfo[i][0]]-20}" y="${edgeLocationY[deployInfo[i][0]]}" /> <mxPoint x="${nodeLocationX[deployInfo[i][0]]-20}" y="270" /> </Array> </mxGeometry> </mxCell>`
+        }else{
+          var cellCode = `<mxCell id="s7v0z9aipiOLFaHwzPqtActionEdge-${last_diagram_id+i+1}"  style="edgeStyle=orthogonalEdgeStyle;endArrow=open;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=0;entryDy=30;entryPerimeter=0;" edge="1" parent="1" source="GmCxI74Y2WdGR4Kf1rmP-${last_diagram_id+i+1}" target="GmCxI74Y2WdGR4Kf1rmP-${uniqueKeysId[deployInfo[i][0]]}"> <mxGeometry relative="1" as="geometry"> <Array as="points"> <mxPoint x="${nodeLocationX[deployInfo[i][0]]-20}" y="${edgeLocationY[deployInfo[i][0]]}" /> <mxPoint x="${nodeLocationX[deployInfo[i][0]]-20}" y="270" /> </Array> </mxGeometry> </mxCell>`
+        }
+        previousTargetNode = targetNode;
         mxCells.push(cellCode);
         edgeLocationY[deployInfo[i][0]] = edgeLocationY[deployInfo[i][0]]+110
     }
