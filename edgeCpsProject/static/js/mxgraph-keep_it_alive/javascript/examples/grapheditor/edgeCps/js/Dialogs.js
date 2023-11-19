@@ -40,6 +40,7 @@ function searchDockerImage(){
         selectBox.className = 'docker-select-box';
 		selectBox.style.width = '400px';
 		selectBox.style.height = '200px'
+		selectBox.style.borderRadius = '10px';
 		
         data.images.forEach(function(image) {
             var option = document.createElement('option');
@@ -2702,15 +2703,21 @@ var ReqDialog = function(editorUi, ui, cell) {
 
 // 순우 node selector 다이어로그
 var nodeSelectorDialog = function(editorUi, ui, cell) {
-	// Dialog UI
 	var div = document.createElement('div');
-	var host_names =[]
-	mxUtils.write(div, mxResources.get('nodeSelector'));
+	// mxUtils.write(div, mxResources.get('editLink') + ':');
+	var reqTitle = document.createElement('div');
+	reqTitle.textContent = 'Node Selector';
+	reqTitle.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
+	div.appendChild(reqTitle);
+	div.style.cssText = 'height:70px;border-radius: 5px 5px 0px 0px;background: #E8F3FF;'
+
 	var innerInputContainer = document.createElement('div');
+	innerInputContainer.style.paddingLeft='8%';
 
 	var innerInput1Title = document.createElement('div');
 	innerInput1Title.textContent = 'Select label key';
 	innerInput1Title.style.marginTop = '20px'; // 필요한 경우 상단 여백 추가
+	innerInput1Title.style.cssText = 'color: #353535;font-family: Inter;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal; margin-top:20px;'
 
 	var innerInput1 = document.createElement('div');
 	innerInput1.className = 'geTitle';
@@ -2719,10 +2726,12 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	innerInput1.style.whiteSpace = 'nowrap';
 	innerInput1.style.textOverflow = 'clip';
 	innerInput1.style.cursor = 'default';
+	innerInput1.style.cssText = 'color: #353535;font-family: Inter;font-size: 15px;font-style: normal;font-weight: 500;line-height: normal;'
 	
 	var innerInput2Title = document.createElement('div');
 	innerInput2Title.textContent = 'Select label value';
 	innerInput2Title.style.marginTop = '10px';
+	innerInput2Title.style.cssText = 'color: #353535;font-family: Inter;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal; margin-top:20px;'
 
 	var innerInput2 = document.createElement('div');
 	innerInput2.className = 'geTitle';
@@ -2731,6 +2740,7 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	innerInput2.style.whiteSpace = 'nowrap';
 	innerInput2.style.textOverflow = 'clip';
 	innerInput2.style.cursor = 'default';
+	innerInput2.style.cssText = 'color: #353535;font-family: Inter;font-size: 15px;font-style: normal;font-weight: 500;line-height: normal;'
 	
 	innerInputContainer.appendChild(innerInput1Title);
 	innerInputContainer.appendChild(innerInput1);
@@ -2856,6 +2866,8 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	// div.appendChild(innerInput2);
 	
 	var innerButtons = document.createElement('div');
+	innerButtons.style.marginLeft = '7%';
+	innerButtons.style.marginTop = '3%';
 
 	// 저장버튼
 	var applyBtn = mxUtils.button(mxResources.get('apply'), function(ui)
@@ -2876,10 +2888,10 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	editorUi.hideDialog();
 	mxEvent.release(cancelButton);
 	});
-
+	cancelButton.className = 'geBtn';
 	// Append buttons to the inner div
-	innerButtons.appendChild(cancelButton);
 	innerButtons.appendChild(applyBtn);
+	innerButtons.appendChild(cancelButton);
 
 	div.appendChild(innerButtons);
 
@@ -2918,7 +2930,7 @@ var LinkDialog = function(editorUi, initialValue, btnLabel, fn)
 	
 	if (!mxClient.IS_VML)
 	{
-		inner.style.paddingRight = '20px';
+		inner.style.padding = '3%';
 	}
 	
 	var linkInput = document.createElement('input');
@@ -2992,9 +3004,13 @@ var LinkDialog = function(editorUi, initialValue, btnLabel, fn)
 
 	var newDiv = document.createElement('div');
 	newDiv.className = 'new-container'; // 클래스 이름 설정
+	newDiv.style.paddingLeft = '3%';
 	// 검색 결과
 	var newDiv2 = document.createElement('div');
 	newDiv2.className = 'dockerSearchResult'; // 클래스 이름 설정
+	newDiv2.style.paddingLeft = '3%';
+	newDiv2.style.paddingTop = '1%';
+	
 
 	inner.appendChild(linkInput);
 	inner.appendChild(cross);
@@ -3024,6 +3040,7 @@ var LinkDialog = function(editorUi, initialValue, btnLabel, fn)
 	var btns = document.createElement('div');
 	btns.style.marginTop = '18px';
 	btns.style.textAlign = 'right';
+	btns.style.paddingRight = '3%';
 
 	mxEvent.addListener(linkInput, 'keypress', function(e)
 	{

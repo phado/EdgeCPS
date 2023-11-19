@@ -233,13 +233,13 @@ a.home {
 	border:1px solid #c0c0c0;
   margin:2.5%;
   text-align: center;
-  background-color: #3853ff;
+  background-color: #557ba9;
   color:#ffffff;
 }
 
 .selectWorkflow select option.selected {
-  background-color: #ff5733; /* 선택된 옵션의 배경색 변경 */
-  color: #000000; /* 선택된 옵션의 텍스트색 변경 */
+  background-color: #2e5686; /* 선택된 옵션의 배경색 변경 */
+  color: #ffffff; /* 선택된 옵션의 텍스트색 변경 */
 }
 
     /* Webkit 스크롤바 */
