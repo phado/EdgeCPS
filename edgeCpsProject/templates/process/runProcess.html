@@ -241,27 +241,33 @@
 
 	
   	<div class="main-content">
+		<div style="display: flex; justify-content: space-between; width: 98%; padding-left: 1%;" >
+			<div id="businessTitle" style="width: 32.16%"><h4>BusinessProcess view</h4></div>
+			<div id="workflowTitle" style="width: 32.16%"><h4>Workflow view</h4></div>
+			<div id="deploymentTitle" style="width: 32.16%"><h4>Deployment view</h4></div>
+		</div>
+
     	<div id = 'businessProcessView' class="businessProcessView">
-			<h4>BusinessProcess view</h4>
-			<div id = businessProcessViewContainer class="businessProcessViewContainer">
+			
+			<!-- <div id = businessProcessViewContainer class="businessProcessViewContainer"> -->
 				<script>
 					businessProcessView(projectName)
 				</script>
-			</div>
+			<!-- </div> -->
     	</div>
-
+		<!-- <div id = workflowTitle><h4>Workflow view</h4></div> -->
     	<div id = 'workflowProcessView' class="workflowProcessView">
-			<h4>Workflow view</h4>
+			
     	</div>
-
+		<!-- <div id = deploymentTitle><h4>Deployment view</h4></div> -->
    		<div id ='deploymentView' class="deploymentView">
-			<h4>Deployment view</h4>
+			
 		</div>
   	</div>
-	<div>
-		<!-- <div class="footer">
+	<!-- <div> -->
+		<div class="footer">
 			<h4>Result log</h4>
-		</div> -->
+		</div>
 		<div class="logContainer"></div>
 	<!-- </div> -->
 	

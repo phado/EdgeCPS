@@ -61,7 +61,7 @@ function businessProcessViewClickHandler(sender, evt) {
 // sub-content1
 function businessProcessView(projectName){
     var xmlData = localStorage.getItem(projectName+'_businessProcessXml')
-    var container = document.getElementById('businessProcessViewContainer');
+    var container = document.getElementById('businessProcessView');
     var graph = new Graph(container);
     var doc = mxUtils.parseXml(xmlData);
     var codec = new mxCodec(doc);
