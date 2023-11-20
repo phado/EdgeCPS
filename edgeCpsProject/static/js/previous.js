@@ -60,13 +60,14 @@ function subContent2(cellName,cellId,cell){
         var requirementName = document.createElement('div');
         var requirementAttribute = document.createElement('div');
         
-        requirementName.textContent = cellName;
-        requirementName.style.cssText = 'color: #222;font-family: Inter;font-size: 20px;font-style: normal;font-weight: 600;line-height: normal;'
-        requirementAttribute.textContent = cellNodeName;
+        requirementAttribute.textContent = cellName;
         requirementAttribute.style.cssText = 'color: #5A5A5A;font-family: Inter;font-size: 18px;font-style: normal;font-weight: 500;line-height: normal; border-bottom:1px solid rgb(214, 214, 214); margin-bottom:6%'
-
+        requirementName.textContent = cellNodeName;
+        requirementName.style.cssText = 'color: #222;font-family: Inter;font-size: 20px;font-style: normal;font-weight: 600;line-height: normal;'
+        
         requirementAttributes.appendChild(requirementName);
         requirementAttributes.appendChild(requirementAttribute);
+ 
         container.appendChild(requirementAttributes);
 
     }
