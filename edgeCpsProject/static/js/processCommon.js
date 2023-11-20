@@ -376,6 +376,8 @@ function getLatestXml(flowDict, strXml) {
         "_" +
         localStorage.getItem(projectName + "_current_processXml")
     );
+  }else if(process_name == 'businessProcess'){// activity 이름에 대한 업데이트 체크 
+
   }
 
   // 프로세스간 이동 중 다이어그램 간 링크 연결 없이 이동 할 경우 빈 딕셔너리flowDict가 들어가는 오류 있어서 조건문 추가
@@ -651,6 +653,46 @@ function createWorkflowSelectBox(activityCatList) {
   // 전부 완료 되면 로컬 스토리지에 저장
   var workflowXMLList = JSON.stringify(workflowXML);
   localStorage.setItem(projectName + "_workflowXML", workflowXMLList);
+
+  // activity 이름이 변경 된 경우 업데이트
+  for( var i =0 ; i<workflowXML.length; i++){
+    var activityFullName = workflowXML[i];
+    var idMatch = activityFullName.match(/^(\d+)#/);
+    var newActivityId = idMatch ? idMatch[1] : null;
+
+    var nameMatch = activityFullName.match(/#(.*)/);
+    var newActivityName = nameMatch[1];
+
+    var allKeys = Object.keys(localStorage);
+
+    for(var j=0; j<allKeys.length; j++){
+      
+      var nameMatch = allKeys[j].match(/#(.*?)(_|$)/);
+      var oldActivityName = nameMatch ? nameMatch[1] : allKeys[j];
+
+      if(allKeys[j].includes(projectName +'_'+ newActivityId)){
+        if(oldActivityName!=newActivityName){
+
+          var currentLS = localStorage.getItem(allKeys[j]);
+          if(allKeys[j].includes('xml_requirement')){
+            var activityNameMatch = allKeys[j].match(/#(.*?)_/);
+            var activityName = activityNameMatch ? activityNameMatch[1] : allKeys[j];
+            const workflowReqText = allKeys[j].substring(allKeys[j].indexOf(activityName + '_') + activityName.length + 1);
+
+            localStorage.setItem(projectName+'_'+newActivityId+'#'+newActivityName+'_'+workflowReqText,currentLS);
+          }else if(allKeys[j].includes('requirement')){
+            localStorage.setItem(projectName+'_'+newActivityId+'#'+newActivityName+'_requirement',currentLS);
+          }else if(allKeys[j].includes('nodeSelector')){
+            localStorage.setItem(projectName+'_'+newActivityId+'#'+newActivityName+'_nodeSelector',currentLS);
+          }else{
+            localStorage.setItem(projectName+'_'+newActivityId+'#'+newActivityName,currentLS);
+          }
+          localStorage.removeItem(allKeys[j]);
+        }
+      }
+    }
+  }
+
 
   selectBox.addEventListener("click", function (event) {
     if (event.target.tagName === "OPTION") {
