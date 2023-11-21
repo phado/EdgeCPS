@@ -18,9 +18,6 @@ function getObjectPropertyValue(input,id, mxObjId) {
 	}
 	}
 	objValueDict[id +'_'+ mxObjId] = desiredAttributes
-	// console.log(desiredAttributes); // 민수 edit property값 출력
-	// console.log(objValueDict)
-	// return desiredAttributes
 }
 
 
@@ -40,9 +37,7 @@ function getLastIndexOfShape(shapeName){ //민수 마지막숫자를 가져와�
 		if (lastIndex == 0 || lastIndex < number ){
 			lastIndex = number
 		}
-
 	}
-
 	return lastIndex +1;
 };
 

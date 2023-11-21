@@ -1375,7 +1375,7 @@ EditorUi.prototype.showShapePicker = function (
       div.style.backgroundColor = graph.background;
     }
 
-    graph.container.appendChild(div);
+    // graph.container.appendChild(div); // 순우  더블클릭 메뉴 지움
 
     var addCell = mxUtils.bind(this, function (cell) {
       // Wrapper needed to catch events
@@ -1384,7 +1384,7 @@ EditorUi.prototype.showShapePicker = function (
       node.style.cssText =
         "position:relative;display:inline-block;position:relative;" +
         "width:30px;height:30px;cursor:pointer;overflow:hidden;padding:3px 0 0 3px;";
-      div.appendChild(node);
+      // div.appendChild(node); // 순우 더블클릭 메뉴 지움
 
       if (style != null) {
         this.sidebar.graph.pasteStyle(style, [cell]);

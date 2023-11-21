@@ -69,8 +69,8 @@ function uploadXML() {
 /**
  * 모든 프로세스를 모아서 프로젝트 저장
  */
-function saveAllProject() {
-  updateLocalStorage(flowDict, processGraphxml);
+function saveAllProject(saveAsProjectName) {
+  updateLocalStorage(processGraphxml);
   ////////////////yaml생성에 필요한 데이터들////////////////////////
   var workflowXMLValue = [];
   let get_localstorage_xml_list = [
@@ -78,20 +78,17 @@ function saveAllProject() {
     "requirementsProcessXml",
     "businessProcessXml",
   ];
-  var stringWorkflowList = localStorage.getItem(projectName + "_workflowXML");
-  var workflowList = JSON.parse(stringWorkflowList);
+  if(saveAsProjectName==undefined){
+    var stringWorkflowList = localStorage.getItem(projectName + "_workflowXML");
+    var workflowList = JSON.parse(stringWorkflowList);
   try {
     for (var i = 0; i < workflowList.length; i++) {
-      // get_localstorage_xml_list.push(workflowList[i]);
-      // get_localstorage_xml_list.push(workflowList[i]+'_requirement');
-      // get_localstorage_xml_list.push(workflowList[i]+'_nodeSelector');
       for (var j = 0; j < localStorage.length; j++) {
         const key = localStorage.key(j);
         if (key.includes(projectName + "_" + workflowList[i])) {
           workflowXMLValue.push(key);
         }
       }
-      // get_localstorage_xml_list.push(workflowList[i]+'_flowDict');
     }
   } catch {}
   console.log(get_localstorage_xml_list);
@@ -111,9 +108,6 @@ function saveAllProject() {
   }
 
   //워크플로우 저장
-  // var workflowXMLValue = localStorage.getItem(projectName + '_workflowXML');
-  // workflowXMLValue = JSON.parse(workflowXMLValue);
-
   if (workflowXMLValue) {
     for (var i = 0; i < workflowXMLValue.length; i++) {
       var key = workflowXMLValue[i];
@@ -132,6 +126,60 @@ function saveAllProject() {
     processDatajsonData: processDatajsonData,
     workflowDatajsonData: workflowDatajsonData,
   };
+  }
+  //save as인 경우
+  else{
+    var stringWorkflowList = localStorage.getItem(saveAsProjectName + "_workflowXML");
+    var workflowList = JSON.parse(stringWorkflowList);
+  try {
+    for (var i = 0; i < workflowList.length; i++) {
+      for (var j = 0; j < localStorage.length; j++) {
+        const key = localStorage.key(j);
+        if (key.includes(saveAsProjectName + "_" + workflowList[i])) {
+          workflowXMLValue.push(key);
+        }
+      }
+    }
+  } catch {}
+  console.log(get_localstorage_xml_list);
+  /////////////////////////////////////////
+  let data = {};
+  let processData = {};
+  let workflowData = {};
+
+  // 프로세스 저장
+  for (var i = 0; i < get_localstorage_xml_list.length; i++) {
+    var key = get_localstorage_xml_list[i];
+    var value = localStorage.getItem(saveAsProjectName + "_" + key);
+    if (!value) {
+      value = "";
+    }
+    processData[key] = value;
+  }
+
+  //워크플로우 저장
+  if (workflowXMLValue) {
+    for (var i = 0; i < workflowXMLValue.length; i++) {
+      var key = workflowXMLValue[i];
+      var value = localStorage.getItem(key);
+      workflowData[key] = value;
+    }
+  }
+  data["projectName"] = saveAsProjectName;
+
+  var projectNamejsonData = data;
+  var processDatajsonData = processData;
+  var workflowDatajsonData = workflowData;
+
+  var dataToSend = {
+    projectNamejsonData: projectNamejsonData,
+    processDatajsonData: processDatajsonData,
+    workflowDatajsonData: workflowDatajsonData,
+    saveAsProject : 'True',
+    currentProcess :process_name
+  };
+  }
+  
   // Flask의 saveProject 함수 호출
   fetch("/saveProject", {
     method: "POST",
@@ -142,7 +190,9 @@ function saveAllProject() {
   })
     .then((response) => response.json())
     .then((data) => {
+      window.location.href
       alert(data); // 서버에서 반환된 데이터 출력
+
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -236,14 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
   buttonContainer.style.marginRight = "10px"; // 오른쪽 여백
   // buttonContainer.style.marginTop = "5px";
 
-  buttonContainer.appendChild(
-    createButton(
-      "Save All",
-      processSaveClick,
-      "saveButton",
-      "font-size:15px; background-color: #2E5686; color: #fff; border-radius: 5px; padding: 2px 8px; font-family: 'Inter Extra Light'; font-style: normal;"
-    )
-  ); // process-save 버튼
+  buttonContainer.appendChild(createButton("Save All",processSaveClick,"saveButton","font-size:15px; background-color: #2E5686; color: #fff; border-radius: 5px; padding: 2px 8px; font-family: 'Inter Extra Light'; font-style: normal;")); // process-save 버튼
   // buttonContainer.appendChild(
   //   createButton(
   //     "Save As",
@@ -254,10 +297,10 @@ document.addEventListener("DOMContentLoaded", function () {
   // ); // process-save 버튼
   buttonContainer.appendChild(createSaveAsButton("Save As")); // process-save-as 버튼
 
-  function openSaveModal() {
-    var saveModal = document.getElementById("saveModal");
-    saveModal.style.display = "block";
-  }
+  // function openSaveModal() {
+  //   var saveModal = document.getElementById("saveModal");
+  //   saveModal.style.display = "block";
+  // }
   //
   // buttonContainer.appendChild(createButton("process-load", processLoadClick)); // process-load 버튼
 
@@ -324,29 +367,17 @@ document.addEventListener("DOMContentLoaded", function () {
         createWorkflowSelectBox(workflowSelectList);
         // createTypeSelectbox();
         uploadXML();
-      } else if (nowPorcess == "runProcess") {
-        workflowSelectList = getWorkflowObjList(
-          localStorage.getItem(projectName + "_" + processXml[2])
-        ); // run process 일때 Activity 개수 만큼 select box 생성
+      } else if (nowPorcess == "runProcess") { workflowSelectList = getWorkflowObjList( localStorage.getItem(projectName + "_" + processXml[2])); // run process 일때 Activity 개수 만큼 select box 생성
         // runCreateWorkflowSelectBox(workflowSelectList) // 샐랙트박스 없애고 다이어그램 띄울거라 없앰
         insertResult();
       } else if (nowPorcess == "policyProcess") {
-        workflowSelectList = getWorkflowObjList(
-          localStorage.getItem(projectName + "_" + processXml[2])
-        ); // policy process 일때 Activity 개수 만큼 select box 생성
+        workflowSelectList = getWorkflowObjList(localStorage.getItem(projectName + "_" + processXml[2])); // policy process 일때 Activity 개수 만큼 select box 생성
         createWorkflowSelectBox(workflowSelectList);
         uploadXML();
       } else {
         // 기존 프로세스 값을 불러오냐 오지 않냐
-        let storedXml = localStorage.getItem(
-          projectName + "_" + processXml[current_process]
-        );
-        if (
-          !storedXml ||
-          storedXml == "" ||
-          storedXml ==
-            '<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/></root></mxGraphModel>'
-        ) {
+        let storedXml = localStorage.getItem(projectName + "_" + processXml[current_process]);
+        if (!storedXml || storedXml == "" || storedXml =='<mxGraphModel><root><mxCell id="0"/><mxCell id="1" parent="0"/></root></mxGraphModel>') {
           console.log("no xml value");
         } else {
           uploadXML();
@@ -357,9 +388,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 /**
- * 페이지 이동시 xml, flowdict 저장 하는 함수
+ * 페이지 이동시 xml 저장 하는 함수
  */
-function getLatestXml(flowDict, strXml) {
+function getLatestXml(strXml) {
   localStorage.setItem(
     projectName +
       "_" +
@@ -376,32 +407,15 @@ function getLatestXml(flowDict, strXml) {
         "_" +
         localStorage.getItem(projectName + "_current_processXml")
     );
-  }else if(process_name == 'businessProcess'){// activity 이름에 대한 업데이트 체크 
-
   }
-
-  // 프로세스간 이동 중 다이어그램 간 링크 연결 없이 이동 할 경우 빈 딕셔너리flowDict가 들어가는 오류 있어서 조건문 추가
-  // if(JSON.stringify(flowDict) != '{}'){
-  // 	localStorage.setItem(projectName+'_'+localStorage.getItem(projectName+'_current_processDict')+'_flowDict',JSON.stringify(flowDict)) // dict 저장
-  // }
 }
 
-function getRunData(flowDict, strXml) {
-  localStorage.setItem(
-    localStorage.getItem(projectName + "_nowWorkflow") + "_resultLog",
-    runData
-  );
-  // localStorage.setItem(projectName+'_current_workflowName',workflowName) // 현재 submit한 workflow 저장
-  localStorage.setItem(
-    projectName +
-      "_" +
-      localStorage.getItem(projectName + "_current_processXml"),
-    strXml
-  ); // result 저장
-  // localStorage.setItem(projectName+'_'+localStorage.getItem(projectName+'_current_processDict')+'_flowDict',JSON.stringify(flowDict)) // dict 저장
+function getRunData(strXml) {
+  localStorage.setItem(localStorage.getItem(projectName + "_nowWorkflow") + "_resultLog", runData);
+  localStorage.setItem(projectName + "_" + localStorage.getItem(projectName + "_current_processXml"), strXml); 
 }
 
-function getWorkflowData(flowDict, processGraphxml) {
+function getWorkflowData(processGraphxml) {
   localStorage.setItem(
     localStorage.getItem(projectName + "_nowWorkflow"),
     processGraphxml
@@ -413,25 +427,11 @@ function getWorkflowData(flowDict, processGraphxml) {
     //policy일 경우에는 이미지 저장 따로 안함
     captureAndDownloadImage(localStorage.getItem(projectName + "_nowWorkflow"));
   }
-  // 프로세스간 이동 중 다이어그램 간 링크 연결 없이 이동 할 경우 빈 딕셔너리flowDict가 들어가는 오류 있어서 조건문 추가
-  // if(JSON.stringify(flowDict) != '{}'){
-  // 	localStorage.setItem(localStorage.getItem(projectName+'_nowWorkflow')+'_flowDict',JSON.stringify(flowDict)) // dict 저장
-  // }
 }
 
 // saveAll 버튼 눌렀을 때 로컬 스토리지 업데이트 후 db에 저장하기 위한 함수
-function updateLocalStorage(flowDict, strXml) {
-  localStorage.setItem(
-    projectName +
-      "_" +
-      localStorage.getItem(projectName + "_current_processXml"),
-    strXml
-  ); // xml 저장
-
-  // 프로세스간 이동 중 다이어그램 간 링크 연결 없이 이동 할 경우 빈 딕셔너리flowDict가 들어가는 오류 있어서 조건문 추가
-  // if(JSON.stringify(flowDict) != '{}'){
-  // 	localStorage.setItem(projectName+'_'+localStorage.getItem(projectName+'_current_processDict')+'_flowDict',JSON.stringify(flowDict)) // dict 저장
-  // }
+function updateLocalStorage(strXml) {
+  localStorage.setItem(projectName + "_" + localStorage.getItem(projectName + "_current_processXml"),strXml); // xml 저장
 }
 
 /**
@@ -503,16 +503,7 @@ function getObjectPropertyValue(input, id, mxObjId) {
  *  id , mxobj 로 받을 수 있는지 확인
  *  화살표가 가르키는 곳?
  */
-function getWorkflowElement(input, start, end) {
-  flowDict[input] = [start, end];
-  // console.log(input, start, end)
-}
 
-function getDeleteWorkflowElement(input, start, end) {
-  var key = input;
-  delete flowDict.key;
-  // console.log(input, start, end)
-}
 
 function getWorkflowObjList(xml) {
   var xmlString = xml;
@@ -624,24 +615,6 @@ function createWorkflowSelectBox(activityCatList) {
     if (nowWorkflow === projectName + "_" + data[i].id + "#" + data[i].value) {
       option.selected = true; // 일치하는 경우 선택됨으로 표시
       option.classList.add('selected');
-      // try{
-      //   var selectElement = document.querySelector('.selectWorkflow select');
-      //   var previouslySelected = selectElement.querySelector('option.selected');
-
-      //   if (previouslySelected) {
-      //     previouslySelected.classList.remove('selected');
-
-      //           // 새로 선택된 옵션에 클래스 추가
-      //   var selectedOption = selectElement.options[selectElement.selectedIndex];
-      //   selectedOption.classList.add('selected');
-      //   }
-      // }catch{
-
-      // }
-     
-      
-
-
     }
   }
 
@@ -704,12 +677,9 @@ function createWorkflowSelectBox(activityCatList) {
       var selectedKey = event.target.dataset.key;
       var selectedValue = event.target.dataset.value;
 
-      getWorkflowData(flowDict, processGraphxml);
+      getWorkflowData(processGraphxml);
 
-      localStorage.setItem(
-        projectName + "_nowWorkflow",
-        projectName + "_" + selectedKey + "#" + selectedValue
-      ); // 클릭한 worklfow로 nowWorklfow 업데이트
+      localStorage.setItem(projectName + "_nowWorkflow", projectName + "_" + selectedKey + "#" + selectedValue); // 클릭한 worklfow로 nowWorklfow 업데이트
 
       location.reload(true);
 
@@ -717,143 +687,6 @@ function createWorkflowSelectBox(activityCatList) {
     }
   });
 }
-
-// function createWorkflowSelectBox(activityCatList){
-// 	let workflowXML = []
-//     let data = activityCatList;
-//     var selectBox = document.createElement("select");
-// 	// selectBox.multiple = true;
-// 	// selectBox.size = '6';
-//     selectBox.className = "workflow-select-box";
-
-//     // 처음에 선택된 항목 없음을 나타내는 옵션 추가
-//     // var defaultOption = document.createElement("option"); // 사용자가 실수로 항목 없음 상태에서 다이어그램을 그릴 수도 있어서 주석처리 해야하나
-//     // defaultOption.disabled = true;
-//     // defaultOption.selected = true;
-//     // defaultOption.text = "Select an option";
-//     // selectBox.appendChild(defaultOption);
-
-// 	// workflow 페이지를 최초로 열어 로컬스토리지에 nowWorkflow 값이 없는 경우 넣어줌.
-// 	if(localStorage.getItem(projectName+'_nowWorkflow')==""){
-// 		localStorage.setItem(projectName+'_nowWorkflow' ,projectName+'_'+activityCatList[0].id + '#' + activityCatList[0].value); // 샐렉트 박스 첫번째 값
-// 	}
-
-// 	let nowWorkflow = localStorage.getItem(projectName+'_nowWorkflow');
-//     for (var i = 0; i < data.length; i++) {
-//         var option = document.createElement("option");
-//         option.value = data[i].id;
-//         option.text = data[i].value;
-
-//         // 선택한 옵션의 key와 value를 data-* 속성으로 저장
-//         option.dataset.key = data[i].id;
-//         option.dataset.value = data[i].value;
-// 		workflowXML.push(data[i].id + '#' + data[i].value) // 로컬 스토리지
-//         selectBox.appendChild(option);
-
-// 		if (nowWorkflow === projectName+'_'+data[i].id + '#' + data[i].value) {
-//             option.selected = true; // 일치하는 경우 선택됨으로 표시
-// 			// option.style =
-
-//         }
-//     }
-
-// 	// 순우 워크플로우 선택하는 셀렉트 박스 생성 위치 지정
-//     // var geMenubar = document.querySelector(".geToolbarContainer");
-// 	var geMenubar = document.getElementsByClassName("selectWorkflow");
-// 	// var geMenubar = document.querySelector("body > div:nth-child(11) > div:nth-child(4) > div");
-//     // geMenubar[0].style.display = "flex";
-//     // geMenubar[0].style.justifyContent = "flex-end";
-//     geMenubar[0].appendChild(selectBox);
-
-// 	// 전부 완료 되면 로컬 스토리지에 저장
-// 	var workflowXMLList = JSON.stringify(workflowXML);
-// 	localStorage.setItem(projectName+'_workflowXML',workflowXMLList);
-
-//     selectBox.addEventListener("change", function() {
-
-// 		localStorage.setItem(localStorage.getItem(projectName+'_nowWorkflow') , processGraphxml); // 현재 작업 중이던 워크 플로우 xml 저장
-//         var selectedOption = selectBox.options[selectBox.selectedIndex];
-//         var selectedKey = selectedOption.dataset.key;
-//         var selectedValue = selectedOption.dataset.value;
-
-// 		// // 모든 옵션의 배경색 초기화 (선택되지 않은 옵션은 원래 색상으로 돌아갑니다)
-// 		// for (var i = 0; i < selectBox.options.length; i++) {
-// 		// 	selectBox.options[i].style.backgroundColor = "";
-// 		//   }
-
-// 		//   // 선택한 옵션에 배경색 적용
-// 		//   selectedOption.style.backgroundColor = "yellow"; // 원하는 배경색으로 변경
-
-// 		// 셀렉트 박스로 화면 이동 시 flowDict가 저장되지 않는 오류 있어서 추가
-// 		getWorkflowData(flowDict, processGraphxml)
-
-// 		localStorage.setItem(projectName+'_nowWorkflow' ,projectName+'_'+selectedKey + '#' + selectedValue); // 클릭한 worklfow로 nowWorklfow 업데이트
-
-// 		location.reload(true);
-
-//         getNewWorkflow(selectedKey, selectedValue);
-//     });
-// };
-
-// function runCreateWorkflowSelectBox(activityCatList){
-// 	let workflowXML = []
-//     let data = activityCatList;
-//     var selectBox = document.createElement("select");
-//     selectBox.className = "workflow-select-box";
-
-//     // 처음에 선택된 항목 없음을 나타내는 옵션 추가
-//     var defaultOption = document.createElement("option");
-//     defaultOption.disabled = true;
-//     defaultOption.selected = true;
-//     defaultOption.text = "Select an option";
-//     selectBox.appendChild(defaultOption);
-
-// 	let nowWorkflow = localStorage.getItem(projectName+'_nowWorkflow');
-//     for (var i = 0; i < data.length; i++) {
-//         var option = document.createElement("option");
-//         option.value = data[i].id;
-//         option.text = data[i].value;
-
-//         // 선택한 옵션의 key와 value를 data-* 속성으로 저장
-//         option.dataset.key = data[i].id;
-//         option.dataset.value = data[i].value;
-// 		workflowXML.push(data[i].id + '#' + data[i].value) // 로컬 스토리지
-//         selectBox.appendChild(option);
-
-// 		if (nowWorkflow === projectName+'_'+data[i].id + '#' + data[i].value) {
-//             option.selected = true; // 일치하는 경우 선택됨으로 표시
-
-//         }
-//     }
-
-//     var geMenubar = document.getElementsByClassName("sub-content1")[0];
-//     // geMenubar.style.display = "flex";
-//     // geMenubar.style.justifyContent = "flex-end";
-//     geMenubar.appendChild(selectBox);
-
-// 	// 전부 완료 되면 로컬 스토리지에 저장
-// 	var workflowXMLList = JSON.stringify(workflowXML);
-// 	localStorage.setItem(projectName+'_workflowXML',workflowXMLList);
-
-// 	var workflowName = localStorage.getItem(projectName+'_nowWorkflow');
-// 	const parts = workflowName.split('#');
-// 	workflowName = parts[1];
-// 	localStorage.setItem(projectName+'_current_workflowName', workflowName)
-
-//     selectBox.addEventListener("change", function() {
-// var runData = saveRunData()
-// localStorage.setItem(localStorage.getItem(projectName+'_nowWorkflow')+'_resultLog' , runData); // log 출력
-//         var selectedOption = selectBox.options[selectBox.selectedIndex];
-//         var selectedKey = selectedOption.dataset.key;
-//         var selectedValue = selectedOption.dataset.value;
-// 		localStorage.setItem(projectName+'_nowWorkflow' ,projectName+'_'+selectedKey + '#' + selectedValue); // 현재 작업중이던 워크플로우
-
-// 		location.reload(true);
-
-//         getNewWorkflow(selectedKey, selectedValue);
-//     });
-
-// };
 
 function insertResult() {
   var data = localStorage.getItem(
@@ -895,30 +728,7 @@ function captureAndDownloadImage(workflowName) {
   ExportDialog.exportFile(tempEditorUi, workflowName, "png", null, 1, 0, 100);
 }
 
-// function extractReq(){
-// 	var xmlString =window.localStorage.getItem(projectName+'_requirementsProcessXml');
 
-// 	var parser = new DOMParser();
-// 	var xmlDoc = parser.parseFromString(xmlString, 'text/xml');
-
-// 	var xpathResult = xmlDoc.evaluate("//object/@label", xmlDoc, null, XPathResult.ANY_TYPE, null);
-// 	var extractedValues = [];
-// 	var node = xpathResult.iterateNext();
-
-// 	while (node) {
-// 	var match = node.value.match(/<<functional requirement>>\n(.*)/);
-
-// 	if (match && match[1]) {
-// 		if(match[1].includes('['||']')){
-// 			match[1] = match[1].substring(1,match[1].length -1);
-// 		}
-// 		extractedValues.push(match[1]);
-// 	}
-
-// 	node = xpathResult.iterateNext();
-// 	}
-// 	return extractedValues
-// }
 function FAcreateXmlDocument() {
   if (document.implementation && document.implementation.createDocument) {
     return document.implementation.createDocument(null, null, null);
@@ -929,7 +739,6 @@ function FAcreateXmlDocument() {
   }
 }
 
-
 function forceApply(graph, cell, value, className){
   // function forceApply(cellValue){
     // var FAclassName = cellValue.getAttribute('class'); 
@@ -937,7 +746,6 @@ function forceApply(graph, cell, value, className){
   var FAgraph = graph;
   var FAvalue = value;
   var FAclassName = className
-
 
   // Converts the value to an XML node
   if (!mxUtils.isNode(FAvalue))
@@ -947,10 +755,6 @@ function forceApply(graph, cell, value, className){
     obj.setAttribute('label', FAvalue || '');
     FAvalue = obj;
   }
-
-
-
-
 
   if(FAclassName.includes('Rounded Rectangle')){
     const parser = new DOMParser();
@@ -993,20 +797,6 @@ function forceApply(graph, cell, value, className){
       objectElement.setAttribute('text', '');
       FAcell.value = labelValue;
       FAgraph.getModel().setValue(FAcell, objectElement|| '');
-      
-
-    // }else{
-
-    //   // const divElement = xmlDoc.querySelector('div');
-        
-    //   // const content = divElement.textContent;
-
-    //   const objectElement = document.createElement('object');
-    //   objectElement.setAttribute('label', FAcell.value);
-    //   objectElement.setAttribute('class',FAclassName);
-    //   objectElement.setAttribute('text', 'd');
-    //   FAgraph.getModel().setValue(FAcell, objectElement);
-    // }
    
   }else if(FAclassName.includes('Action Container')){
     const parser = new DOMParser();
@@ -1061,7 +851,71 @@ path : ""`);
       FAcell.value = objectElement;
       FAgraph.getModel().setValue(FAcell, objectElement);
     }
-  
   }
   FAcell.value.namespaceURI =''
 }
+
+async function is_name_exists(projectName) {
+  const url = `http://127.0.0.1:5000/exists?project_name=${encodeURIComponent(projectName)}`;
+  try {
+    const response = await fetch(url);  // await를 추가하여 비동기 처리
+    const data = await response.text(); // await를 추가하여 비동기 처리
+
+    console.log(data);
+
+    return data === 'true' ? 'true' : 'false';
+  } catch (error) {
+    console.error("Error:", error);
+    throw error;
+  }
+}
+async function saveAsProject(oldProjectName) {
+  var projectName = document.getElementById("project_name").value;
+  var projectDescription = document.getElementById("project_description").value;
+  var projectCategory = document.getElementById("project_category").value;
+
+  var newOverview = {
+    "name": projectName,
+    "description": projectDescription,
+    "category": projectCategory
+  };
+
+  var newProjectName = projectName;
+  var oldProjectName = oldProjectName;
+
+  try {
+    const result = await is_name_exists(newProjectName); // await 추가
+
+    if (result === 'true') {
+      const allKeys = Object.keys(localStorage);
+      const filteredKeys = allKeys.filter(key => key.includes(oldProjectName));
+
+      for (let i = 0; i < filteredKeys.length; i++) {
+        const oldKey = filteredKeys[i]
+        if(oldKey.includes('overview')){
+          localStorage.setItem(newProjectName+'_overviewProcessXML', JSON.stringify(newOverview));
+          localStorage.removeItem(oldKey);
+          continue;
+        }
+        const oldValue = localStorage.getItem(oldKey);
+        if(oldValue == ""){
+          continue;
+        }
+        const regex = /[^_]+/;
+        const match = oldKey.match(regex);
+
+        if (match) {
+          const beforeUnderscore = match[0];
+          const newKey = oldKey.replace(beforeUnderscore, newProjectName);
+
+          localStorage.setItem(newKey, oldValue);
+          localStorage.removeItem(oldKey);
+        }
+      }
+      saveAllProject(newProjectName);
+    }
+  } catch (error) {
+    console.error('에러 발생:', error);
+  }
+}
+

@@ -4608,50 +4608,6 @@ mxGraph.prototype.createVertex = function(parent, id, value,
  * style - Optional string that defines the cell style.
  */
 
-// 순우 화살표(edge) 생성 함수
-// parent:부모노드, id:edge id, value: edge 값, source: 시작점, target:끝점
-// 화살표 생성되고 도착지 노드에 화살표 갖다 붙이고 마우스 떼면 그때 호출됨
-// mxGraph.prototype.insertEdge = function(parent, id, value, source, target, style)
-// {
-// 	var edge = this.createEdge(parent, id, value, source, target, style);
-
-// 	var sourceNode=this.getModel().getTerminal(edge, true);
-// 	var targetNode=this.getModel().getTerminal(edge, false);
-
-// 	var sourceClassName = sourceNode.getValue();
-// 	var targetClassNabe = targetNode.getValue();
-
-// 	console.log(sourceClassName);	// 화살표 시작점 출력
-// 	console.log(targetClassNabe);	// 화살표 끝점 출력
-	
-	
-	
-// 	return this.addEdge(edge, parent, source, target);
-// };
-
-mxGraph.prototype.insertEdge = function(parent, id, value, source, target, style) {
-	var edge = this.createEdge(parent, id, value, source, target, style);
-
-	console.log("Source 노드 클래스 id:", source.id);
-	console.log("Target 노드 클래스 id:", target.id);
-	
-	var insertedEdge = this.addEdge(edge, parent, source, target);
-	// 순우 flowDict 추가
-	if(source.style.includes('startState')){
-		// 0000 is start state point
-		getWorkflowElement('0000',source.id, target.id)
-	}
-	else if(target.style.includes('endState')){
-		// 9999 is end state point
-		getWorkflowElement('9999',source.id, target.id)
-	}
-	getWorkflowElement(edge.id,source.id, target.id)
-	// flowDict[edge.id] = [source.id, target.id];
-	return insertedEdge;
-  };
-  
-
-
 /**
  * Function: createEdge
  * 

@@ -2090,45 +2090,6 @@ mxConnectionHandler.prototype.insertEdge = function(parent, id, value, source, t
 	}
 };
 
-
-
-
-// mxConnectionHandler.prototype.insertEdge = function(parent, id, value, source, target, style)
-// {
-//     var isCreation = this.factoryMethod != null; // 엣지 생성 여부 확인
-
-//     var edge = isCreation
-//         ? this.createEdge(value, source, target, style)
-//         : this.graph.insertEdge(parent, id, value, source, target, style);
-
-//     if (!isCreation) {
-//         // 기존 엣지의 삭제 이벤트 핸들러 등록
-//         var graph = this.graph;
-//         var previousRemoveCells = graph.removeListener;
-//         graph.removeListener = function(evt, handler) {
-//             if (evt == mxEvent.REMOVE_CELLS ) {
-//                 var newHandler = function(sender, args) {
-//                     // 엣지 삭제 여부 확인
-//                     var cells = args.getProperty('cells');
-//                     for (var i = 0; i < cells.length; i++) {
-//                         if (cells[i] == edge) {
-//                             handler.apply(this, arguments); // 삭제 이벤트 핸들러 실행
-
-// 							getDeleteWorkflowElement(edge.id)
-//                             return;
-//                         }
-//                     }
-//                 };
-//                 previousRemoveCells.call(this, mxEvent.REMOVE_CELLS, newHandler);
-//             } else {
-//                 previousRemoveCells.apply(this, arguments);
-//             }
-//         };
-//     }
-
-//     return edge;
-// };
-
 /**
  * Function: createTargetVertex
  * 

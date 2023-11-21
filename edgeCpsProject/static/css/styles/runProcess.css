@@ -20,65 +20,7 @@
   font-style: normal;
 }
 /* EdgeCPS */
-.title h2 {
-  color: #ffffff;
-  font-size: 25px;
-  font-family: "Inter Extra Bold";
-  margin-left: 20px;
-  font-style: normal;
-  font-weight: 800;
-  line-height: normal;
-  margin-top: 0.3%;
-}
-.title {
-  background: #3853ff;
-  display: flex;
-  /* justify-content: space-between; */
-  align-items: center;
-  height: 50px;
-  padding: 0 20px;
-}
 
-a.home {
-  color: inherit;
-  text-decoration: none;
-}
-
-.user-image {
-  position: fixed;
-  width: 96px;
-  height: 31px;
-  top: 0.9%;
-  left: 92%;
-}
-
-.userNameText {
-  position: fixed;
-  /* width: 96px;
-    height: 31px; */
-  top: 1.2%;
-  left: 93.7%;
-  /* margin-left: 10px;  */
-}
-
-.user-name-background {
-  border: none;
-  /* border-top-left-radius: 50%; 
-  border-bottom-left-radius: 50%;  */
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  padding: 4px 20px;
-  background-color: #fff;
-  color: #0056be;
-  font-family: "Roboto-Medium", Helvetica;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.userInfo {
-  margin-left: 85%;
-}
 
 .nav-item-separator {
   display: flex;
@@ -288,6 +230,7 @@ html {
   top: 18%;
   margin-left: 0.5%;
   margin-right: 0.5%;
+  font-family: monospace;
   /* overflow: auto; */
 }
 
@@ -303,7 +246,7 @@ html {
   border-radius: 5px;
 }
 #workflowTitle h4 {
-  font-family: Inter;
+  font-family: Inter Extra Bold;
   font-style: normal;
   font-weight: 700;
 }
@@ -322,7 +265,7 @@ html {
 
 
 #businessTitle h4 {
-  font-family: Inter;
+  font-family: Inter Extra Bold;
   font-style: normal;
   font-weight: 700;
 }
@@ -339,7 +282,7 @@ html {
   border-radius: 5px;
 }
 #deploymentTitle h4 {
-  font-family: Inter;
+  font-family: Inter Extra Bold;
   font-style: normal;
   font-weight: 700;
 }

@@ -116,7 +116,7 @@ def get_step_arguments(param_str):
             result_dict[key] = value
     return result_dict
 
-xml_file_path = '/Users/jangminsu/PycharmProjects/EdgeCPS/ArgoConvert/argotest/global.xml'  # XML 파일 경로
+xml_file_path = '/home/kpst/Desktop/EdgeCPS/Edgecps/ArgoConvert/argotest/global.xml'  # XML 파일 경로
 tree = ET.parse(xml_file_path)  # XML 파일 파싱
 root = tree.getroot()  # XML 트리의 루트 요소 획득
 
@@ -443,3 +443,4 @@ finally:
     json_str = json.dumps(json_base_template)
 
 print('done')
+print(json_str)

@@ -2143,7 +2143,6 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		}
 		// 순우 onclick
 		btn.onclick = function(){
-			console.log(flowDict)
 			console.log(objValueDict)
 		};
 		
@@ -2301,7 +2300,6 @@ ArrangePanel.prototype.businessProcessFormat = function(div)
 		}
 		// 순우 onclick
 		btn.onclick = function(){
-			console.log(flowDict)
 			console.log(objValueDict)
 		};
 	}
@@ -2436,7 +2434,6 @@ ArrangePanel.prototype.requirementProcessFormat = function(div)
 		}
 		// 순우 onclick
 		btn.onclick = function(){
-			console.log(flowDict)
 			console.log(objValueDict)
 		};
 	}
@@ -2599,7 +2596,6 @@ ArrangePanel.prototype.workflowProcessformat = function(div)
 		}
 		// 순우 onclick
 		btn.onclick = function(){
-			console.log(flowDict)
 			console.log(objValueDict)
 		};
 	}

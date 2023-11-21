@@ -3,10 +3,10 @@ import os
 import shutil
 import html
 from flask import Flask, render_template, request, redirect, url_for, jsonify, session, make_response
-from db_conn import get_pool_conn, add_table, get_projet_info,get_projet_info2, load_project, get_user_info, get_user_single_info, get_category, create_category, del_category,get_group_info,add_grp,del_grp
+from db_conn import get_pool_conn
 import requests
 import urllib3
-import db_query
+from db_query import add_table_save_prj, get_projet_info,get_projet_info2, load_project, get_user_info, get_user_single_info, get_category, create_category, del_category,get_group_info,add_grp,del_grp, delete_project_from_db,check_userId,db_login,find_pwd,change_pwd,cheack_id,change_Info,sign_up,is_name_exists
 from flask_cors import CORS
 import subprocess
 import json
@@ -99,7 +99,7 @@ def index():
         password = request.form["password"]
         # userid = 'aaa'
         # # password = 'aaa'
-        login = db_query.login(mariadb_pool, id = userid, pwd = password )
+        login = db_login(mariadb_pool, id = userid, pwd = password )
         # login = {}
         # login['login'] = True
 
@@ -158,7 +158,7 @@ def project_list():
 @app.route('/projects/delete/<int:project_id>', methods=['POST'])
 def delete_project(project_id): # todo 프로젝트 삭제 기능
     # projects = getProjectDict()
-    db_query.delete_project(mariadb_pool, project_id)
+    delete_project_from_db(mariadb_pool, project_id)
 
     # # todo 회원의 소속 확인, 회원의 프로젝트인지 확인 필요
     # for project in projects:
@@ -190,7 +190,7 @@ def signup():
             email = request.form.get('email')
             birthdate = request.form.get('birthdate')
             group = request.form.get('group')
-            db_query.sign_up(mariadb_pool, name = name,userId = userId,password = password,email = email,birthdate = birthdate,group =group)
+            sign_up(mariadb_pool, name = name,userId = userId,password = password,email = email,birthdate = birthdate,group =group)
         except:
             return render_template('index.html')
         #todo 여기서 데이터를 처리하거나 저장하는 로직을 추가하세요
@@ -215,28 +215,22 @@ def save_project():
         data = request.json
         proj_name =data['projectNamejsonData']['projectName']
 
-        # 로컬에 파일로 저장할 때 썼던 코드
-        # pj_root_pth = 'project_file'
-        # if os.path.exists(pj_root_pth):
-        #     pj_pth = os.path.join(pj_root_pth ,proj_name +'@'+session['userid'])
-        #     try:
-        #         os.makedirs(pj_pth)
-        #     except:
-        #         pass
-        # else:
-        #     response = {"status": "Downlaod error", "message": 'Project path dose not exist'}
-        #     return jsonify(response), 500
-
-
-        # full_pth = os.path.join(pj_pth,proj_name+'.json')
-
-        # with open(full_pth, 'w', encoding='utf-8') as file:
-        #     json.dump(data, file)
-
         # db에 저장하는 함수
-        add_table(mariadb_pool, proj_name,data,session['userId'])
+        add_table_save_prj(mariadb_pool, proj_name,data,session['userId'])
 
-        response = {"status": "success", "message": "Project data saved successfully."}
+        response = {"status": "success", "message": "Project data saved successfully.", "urlFor": data['currentProcess']+'?projectName='+ data['projectNamejsonData']['projectName'] }
+        # if data['saveAsProject'] == 'True':
+        #     project_name = data['projectNamejsonData']['projectName']
+        #     userId= session['userId'] 
+        #     user_info = user_get_info(userId)    
+        #     userIds, userName, userEmail, userGroup, userAdmin = user_info
+        #     catlist = get_category(mariadb_pool)
+
+        #     # return render_template('process/'+ data['currentProcess'] +'.html',categories=catlist,  project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
+        #     return redirect('https://www.naver.com')
+        #     # return redirect(url_for('project_list',categories=catlist, project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
+        
+        # else:
         return jsonify(response), 200
     except Exception as e:
         response = {"status": "error", "message": str(e)}
@@ -253,51 +247,23 @@ def open_process(project_id,project_user,project_name):
     # overview process
     active_overview = True
 
-    # todo 프로젝트 열기 -> 무조건 첫번째는 overview 혹은 Requirement
-
     projects = getProjectDict()
 
     # # todo 회원의 소속 확인, 회원의 프로젝트인지 확인 필요
     for project in projects:
         if project['id'] == project_id and project['name'] == project_name and project['user'] == project_user:
-            # 로컬 파일에서 불러오는 경우
-            # root_pth = 'project_file'
-            # pj_pth = os.path.join(root_pth,  project_name+ '@' +project_user )
-            # file_name = project_name+'.json'
 
-            # with open(os.path.join(pj_pth,file_name), 'r') as json_file:
-            #     data = json.load(json_file)
-            #     str_json = json.dumps(data)
-            #     project_name = data['projectNamejsonData']['projectName']
-            #     pj_pth = os.path.join(root_pth,  project_name+ '@' +project_user )
-            #     xml_process= data['processDatajsonData']
-            #     workflow_xml = data['workflowDatajsonData']
-            #     print(data)
-            #     print(str_json)
-            #     print(project_name)
-            #     print(xml_process)
-            #     print(workflow_xml)
-            #     session['data'] = data
-            #     session['str_json'] = str_json
-            #     session['project_name'] = project_name
-            #     session['xml_process'] = xml_process
-            #     session['workflow_xml'] = workflow_xml
-
-            # db에서 불러오는 경우
-            
             data = load_project(project_id, mariadb_pool)
             # data = data.replace('[[', '').replace(']]', '')
             # session['data'] = json.dumps(data)
-            session['data'] = data
-
-
+            # session['data'] = data
 
             # session['str_json'] = str_json
             # session['project_name'] = project_name
             # session['xml_process'] = xml_process
             # session['workflow_xml'] = workflow_xml
 
-            return redirect(url_for('overview_process', active_overview=active_overview, data = data, project_name = project_name, openProject=True))
+            return redirect(url_for('overview_process', active_overview=active_overview, data = data, projectName = project_name, openProject=True))
             # return redirect(url_for('overview_process', active_overview=active_overview, project_data = data , project_name=project_name))
 
     return redirect(url_for('project_list'))
@@ -346,56 +312,62 @@ def previous():
     process_name = request.args.get("ProcessName")
     return render_template("previous.html", project_name = project_name, process_name = process_name)
 
-
 @app.route('/process/overviewProcess', methods=['GET', 'POST'])
 def overview_process():
-    catlist = get_category()
+    catlist = get_category(mariadb_pool)
     # catlist = ['java', 'python']
-    active_overview = True
-    pass_overview = request.form.get('load_project')
+    # active_overview = True
+    pass_overview = request.form.get('pass_overview')
 
     # userName =session['userName']
     data = request.args.get('data')
-    open_project = request.args.get('openProject')
+    open_project = request.args.get('openProject')# 현재 불러오기 중인 프로젝트인지 확인
+    opened_project = request.args.get('openedProject')# 이미 한번 불러온 프로젝트인지 확인
 
     userId= session['userId'] 
     user_info = user_get_info(userId)    
     userIds, userName, userEmail, userGroup, userAdmin = user_info
     
-    if pass_overview =='True':
-        project_name = request.form.get('project_name')
-        return redirect(url_for('requirements_process', project_name=project_name, userName = userName,userIds =userIds, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
-
+    # if pass_overview =='True':
+    #     project_name = request.form.get('project_name')
+    #     return redirect(url_for('requirements_process', project_name=project_name, userName = userName,userIds =userIds, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
+    if opened_project =='True':
+        project_name = request.args.get('projectName')
+        return render_template('process/overviewProcess.html',categories=catlist, opened_project=True, project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
+    
     #  불러오기
-    if open_project:
-        project_name = request.args.get('project_name')
+    if open_project=='True':
+        project_name = request.args.get('projectName')
         # pass_overview = request.args.get('pass_overview')
+        return render_template('process/overviewProcess.html', categories=catlist, project_data = data, open_project = 'True', project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
 
-        return render_template('process/overviewProcess.html', active_overview=active_overview, categories=catlist, project_data = data, open_project = 'True', project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
-
-    if request.method == 'POST': # 프로젝트 생성
-        project_name = request.form.get('project_name')
-        project_description = request.form.get('project_description')
-        project_category = request.form.get('project_category')
-        return redirect(url_for('requirements_process', project_name=project_name, project_description=project_description,project_category=project_category,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
+    # if request.method == 'POST': # 프로젝트 불러오기?
+    #     project_name = request.form.get('project_name')
+    #     project_description = request.form.get('project_description')
+    #     project_category = request.form.get('project_category')
+    #     return redirect(url_for('requirements_process',categories=catlist, project_name=project_name, project_description=project_description,project_category=project_category,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
     # create project
-    if request.method == 'GET': #최초이동
+    if request.method == 'GET': #최초 생성 
+        # session.clear()
         new_pj = request.args.get('newPj')
         project_name = request.args.get('projectName')
-        return render_template('process/overviewProcess.html', active_overview=active_overview, categories=catlist, new_pj=new_pj,project_name=project_name, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
+        
+        return render_template('process/overviewProcess.html', categories=catlist, new_pj=new_pj, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
+        
 
 
 @app.route('/process/requirementsProcess', methods=['GET', 'POST'])
 def requirements_process():
-    active_requirements = True
+    # active_requirements = True
     # pass_overview = request.args.get('pass_overview')
     # if pass_overview =='True':
     #      return render_template('process/requirementsProcess.html', active_requirements=active_requirements , project_name=project_name)
+    project_name = request.form.get('project_name')
     userId= session['userId'] 
     user_info = user_get_info(userId)    
     userIds, userName, userEmail, userGroup, userAdmin = user_info
-
-    catlist = ['java', 'python']
+    project_name
+    catlist = get_category(mariadb_pool)
 
     if request.method == 'GET':
         project_name = request.args.get('project_name')
@@ -405,7 +377,7 @@ def requirements_process():
                 return redirect(url_for('overview_process',category = catlist, newPj=True, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
 
 
-    return render_template('process/requirementsProcess.html',categories=catlist, active_requirements=active_requirements , project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
+    return render_template('process/requirementsProcess.html',categories=catlist,  project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
 
     # return render_template('process/requirementsProcess.html', active_requirements=active_requirements)
 
@@ -416,10 +388,11 @@ def business_process():
     userId= session['userId'] 
     user_info = user_get_info(userId)    
     userIds, userName, userEmail, userGroup, userAdmin = user_info
+    catlist = get_category(mariadb_pool)
 
     if request.method == 'GET':
         project_name = request.args.get('projectName')
-        return render_template('process/businessProcess.html', active_process=active_process, project_name=project_name, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
+        return render_template('process/businessProcess.html', categories=catlist, active_process=active_process, project_name=project_name, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
 
 @app.route('/process/workflowProcess', methods=['GET', 'POST'])
 def workflow_process():
@@ -427,10 +400,11 @@ def workflow_process():
     userId= session['userId'] 
     user_info = user_get_info(userId)    
     userIds, userName, userEmail, userGroup, userAdmin = user_info
+    catlist = get_category(mariadb_pool)
 
     if request.method == 'GET':
         project_name = request.args.get('projectName')
-        return render_template('process/workflowProcess.html', active_workflow=active_workflow, project_name=project_name, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup
+        return render_template('process/workflowProcess.html', active_workflow=active_workflow, project_name=project_name, userIds =userIds, categories=catlist,userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup
 )
 
 @app.route('/process/policyProcess', methods=['GET', 'POST'])
@@ -439,10 +413,11 @@ def policy_process():
     userId= session['userId'] 
     user_info = user_get_info(userId)    
     userIds, userName, userEmail, userGroup, userAdmin = user_info
+    catlist = get_category(mariadb_pool)
 
     if request.method == 'GET':
         project_name = request.args.get('projectName')
-        return render_template('process/policyProcess.html', active_policy=active_policy, project_name=project_name, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup
+        return render_template('process/policyProcess.html', categories=catlist, active_policy=active_policy, project_name=project_name, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup
 )
 
 @app.route('/process/runProcess', methods=['GET', 'POST'])
@@ -456,42 +431,9 @@ def run_process():
         project_name = request.args.get('projectName')
         return render_template('process/runProcess.html', active_run=active_run, project_name=project_name, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
 
-# @app.after_request
-# def after_request(response):
-#     response.headers.add('Access-Control-Allow-Origin', '*')
-#     response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-#     response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-#     return response
 
+# node selector
 @app.route('/get_label',methods = ['GET','POST'])
-# def get_label():
-#     nodes_list = []
-#     node_label_list = []
-
-#     if request.method == 'GET':
-#         config.load_kube_config()
-#         v1 = client.CoreV1Api()
-#         nodes = v1.list_node()
-
-#         try:
-#             # print("Node List:")
-#             for node in nodes.items:
-#                 nodes_list.append(node.metadata.name)
-
-#         except client.exceptions.ApiException as e:
-#             print(f"Error: {e}")
-
-#         try:
-#             for node_name in nodes_list:
-#                 node_info = v1.read_node(node_name)
-#                 node_label_list = {
-#                   node_name: node_info.metadata.labels['kubernetes.io/hostname']
-#                 }
-
-#         except client.exceptions.ApiException as e:
-#             print(f"Error: {e}")
-#     node_label_list = {'sadf':'aaa','asdfaf':'bbb','asdfdsfa':'ccc'}
-#     return jsonify(node_label_list)
 def get_label():
     label_dict = {}
 
@@ -509,16 +451,8 @@ def get_label():
         except client.exceptions.ApiException as e:
             print(f"Error: {e}")
 
-        # try:
-        #     for node_name in nodes_list:
-        #         node_info = v1.read_node(node_name)
-        #         node_label_list = {
-        #           node_name: node_info.metadata.labels['kubernetes.io/hostname']
-        #         }
-
-        # except client.exceptions.ApiException as e:
-        #     print(f"Error: {e}")
-    label_dict = {'etri-1': {'beta.kubernetes.io/arch': 'amd64', 'beta.kubernetes.io/os': 'linux', 'kubernetes.io/arch': 'amd64', 'kubernetes.io/hostip': '192.168.0.181', 'kubernetes.io/hostname': 'etri-1', 'kubernetes.io/os': 'linux', 'node-role.kubernetes.io/control-plane': '', 'node-role.kubernetes.io/master': '', 'node.kubernetes.io/exclude-from-external-load-balancers': ''}, 'etri-3': {'beta.kubernetes.io/arch': 'amd64', 'beta.kubernetes.io/os': 'linux', 'kubernetes.io/arch': 'amd64', 'kubernetes.io/hostip': '192.168.0.189', 'kubernetes.io/hostname': 'etri-3', 'kubernetes.io/os': 'linux'}}
+        
+    # label_dict = {'etri-1': {'beta.kubernetes.io/arch': 'amd64', 'beta.kubernetes.io/os': 'linux', 'kubernetes.io/arch': 'amd64', 'kubernetes.io/hostip': '192.168.0.181', 'kubernetes.io/hostname': 'etri-1', 'kubernetes.io/os': 'linux', 'node-role.kubernetes.io/control-plane': '', 'node-role.kubernetes.io/master': '', 'node.kubernetes.io/exclude-from-external-load-balancers': ''}, 'etri-3': {'beta.kubernetes.io/arch': 'amd64', 'beta.kubernetes.io/os': 'linux', 'kubernetes.io/arch': 'amd64', 'kubernetes.io/hostip': '192.168.0.189', 'kubernetes.io/hostname': 'etri-3', 'kubernetes.io/os': 'linux'}}
     return jsonify(label_dict)
 
 #############""" 아르고 """#########
@@ -567,22 +501,22 @@ def search_local_images():
     return image_list
 
 # activity_dic
-# @app.route('/submit', methods=['POST'])
-# def submit_workflow():
-#     try:
-#         workflow_json = request.get_json()
-#         print(workflow_json)
-#         headers = {
-#             "Content-Type": "application/json"
-#         }
-#         response = requests.post(f"{ARGO_SERVER_URL}/api/v1/workflows/{NAMESPACE}", headers=headers, json=workflow_json, verify=False)
-#         if response.status_code == 200:
-#             return "Workflow submitted successfully", 200
-#         else:
-#             return "Workflow submission failed", 500
-#     except Exception as e:
-#         error_message = str(e)
-#         return f"Error: {error_message}", 500
+@app.route('/submit', methods=['POST'])
+def submit_workflow():
+    try:
+        workflow_json = request.get_json()
+        print(workflow_json)
+        headers = {
+            "Content-Type": "application/json"
+        }
+        response = requests.post(f"{ARGO_SERVER_URL}/api/v1/workflows/{NAMESPACE}", headers=headers, json=workflow_json, verify=False)
+        if response.status_code == 200:
+            return "Workflow submitted successfully", 200
+        else:
+            return "Workflow submission failed", 500
+    except Exception as e:
+        error_message = str(e)
+        return f"Error: {error_message}", 500
 
 # @app.route('/stop', methods=['PUT'])
 # def stop_workflow():
@@ -673,7 +607,7 @@ def check_username():
         data = request.get_json()
         name = data['name']
         email = data['email']
-        response = db_query.check_userId(mariadb_pool,name = name, email=email)
+        response = check_userId(mariadb_pool,name = name, email=email)
     except:
         response = {'error': True ,'exists': False }
 
@@ -688,7 +622,7 @@ def find_user_pwd():
         name = data['name']
         email = data['email']
         user_id = data['userId']
-        response = db_query.find_pwd(mariadb_pool,name = name, email=email,user_id=user_id)
+        response = find_pwd(mariadb_pool,name = name, email=email,user_id=user_id)
     except:
         response = {'error': True ,'exists': False }
 
@@ -702,7 +636,7 @@ def change_pwd():
         data = request.get_json()
         userId =  data['userId']
         new_pwd = data['newPwd']
-        response = db_query.change_pwd(mariadb_pool,new_pwd=new_pwd, user_id=userId)
+        response = change_pwd(mariadb_pool,new_pwd=new_pwd, user_id=userId)
     except:
         response = {'error': True ,'result': False }
 
@@ -713,17 +647,15 @@ def check_user_id():
     try:
         data = request.get_json()
         user_id = data['userId']
-        response = db_query.cheack_id(mariadb_pool,user_id=user_id)
+        response = cheack_id(mariadb_pool,user_id=user_id)
     except:
         response = {'error': True ,'result': False }
 
     return jsonify(response)
 
-if __name__ == '__main__':
-    app.run(debug=True,host = '')
 
 def getUserDict():
-    prjs = get_user_info()
+    prjs = get_user_info(mariadb_pool)
     projects = []
 
     for idx in range(len(prjs)):
@@ -731,14 +663,14 @@ def getUserDict():
     return projects
 
 def getSingleUserDict():
-    prjs = get_user_single_info()
+    prjs = get_user_single_info(mariadb_pool)
     projects = []
 
     for idx in range(len(prjs)):
         projects.append({'id': prjs[idx][0], 'name': prjs[idx][1], 'user': prjs[idx][2], 'user_pwd': prjs[idx][3], 'user_email': prjs[idx][4], 'group_index': prjs[idx][5], 'vaild': prjs[idx][6], 'admin': prjs[idx][7]})
     return projects
 
-@app.route('/project/managementUser', methods=['GET', 'POST'])
+@app.route('/project/userManagement', methods=['GET', 'POST'])
 def management_user():
     loginUserInfo = request.args.get('loginUserInfo')
     projects_info = getUserDict()
@@ -749,7 +681,7 @@ def management_user():
     # todo 프로젝트 리스트 정보 조회하는 기능 필요
 
     groups_info = getGroupDict()
-    return render_template('managementUser.html', projects=projects_info,groups = groups_info ,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup,loginUserInfo=loginUserInfo)
+    return render_template('userManagement.html', projects=projects_info,groups = groups_info ,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup,loginUserInfo=loginUserInfo)
 
 
 @app.route('/changeInfo', methods=['POST'])
@@ -760,7 +692,7 @@ def change_info():
         new_group = data['selectedGroup']
         new_valid =  str(data['isActive'])
         user = data['user']
-        response = db_query.change_Info(mariadb_pool,new_group=new_group,new_valid=new_valid,user = user)
+        response = change_Info(mariadb_pool,new_group=new_group,new_valid=new_valid,user = user)
     except:
         response = {'error': True ,'result': False }
 
@@ -768,7 +700,7 @@ def change_info():
 
 
 def user_get_info(userId):
-    userInfo = get_user_single_info(userId)
+    userInfo = get_user_single_info(userId,mariadb_pool)
 
     userIds = userInfo[0][1]
     userName = userInfo[0][2]
@@ -791,8 +723,7 @@ def add_category():
     category_name = request.form['category_name']
 
     # 저장 로직 호출
-    category = create_category(category_name)
-
+    create_category(category_name,mariadb_pool)
     return jsonify({'result': 'success'})
 
 
@@ -801,19 +732,16 @@ def delete_category():
     category_name = request.form['category_name']
 
     # 삭제 로직 호출
-    category = del_category(category_name)
-
+    del_category(category_name, mariadb_pool)
     return jsonify({'result': 'success'})
 
-if __name__ == '__main__':
-    app.run(debug=True)
 
 @app.route('/add_group', methods=['POST'])
 def add_group():
     group_name = request.form['group_name']
 
     # 저장 로직 호출
-    group = add_grp(group_name)
+    add_grp(group_name,mariadb_pool)
 
     return jsonify({'result': 'success'})
 
@@ -822,6 +750,19 @@ def delete_group():
     group_name = request.form['group_name']
 
     # 삭제 로직 호출
-    group = del_grp(group_name)
+    del_grp(group_name,mariadb_pool)
 
     return jsonify({'result': 'success'})
+
+@app.route('/exists', methods=['GET'])
+def exists():
+    project_name = request.args.get('project_name')
+    result = is_name_exists(project_name,mariadb_pool)
+    if result == True:
+        # add_table_save_prj(mariadb_pool, proj_name,data,session['userId'])
+        return 'true'
+    else:
+        return 'false'
+
+if __name__ == '__main__':
+    app.run(debug=True)

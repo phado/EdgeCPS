@@ -12,9 +12,6 @@ function subContent1(projectName, processName){
     var codec = new mxCodec(doc);
     codec.decode(doc.documentElement, graph.getModel());
     graph.addListener(mxEvent.CLICK, subContent1ClickHandler);
-    // var svg = document.getElementsByTagName('svg');
-    // svg.style.width = "70%";
-    // graph.refresh();
 }
 
 function subContent1ClickHandler(sender, evt) {
@@ -30,11 +27,6 @@ function subContent1ClickHandler(sender, evt) {
         var cellId = cell.id;
         subContent2(cellValues, cellId, cell);
     }
-    
-    // var cellId = cell.id
-    // localStorage.setItem(projectName+'_current_workflowName', cell.value.attributes[1].value)
-    
-    
 }
 
 function subContent2(cellName,cellId,cell){
@@ -87,20 +79,6 @@ function subContent2(cellName,cellId,cell){
             requirementAttributes.appendChild(requirementName);
             requirementAttributes.appendChild(requirementAttribute);
             container.appendChild(requirementAttributes);
-        }
-        
+        }   
     }
-    
-
-
-    // var xmlData = localStorage.getItem(projectName+'_'+cellId+'#'+cellName)
-    // var container = document.getElementById('graphContainer2');
-    // var graph = new Graph(container);
-    // var doc = mxUtils.parseXml(xmlData);
-    // var codec = new mxCodec(doc);
-    // codec.decode(doc.documentElement, graph.getModel());
-    // graph.refresh();
-
-    // Activity 클릭 했을 때 Activity 상태 출력
-    // intervalLogContainer2 = setInterval(() => logContainer2(false), 1000);
 }

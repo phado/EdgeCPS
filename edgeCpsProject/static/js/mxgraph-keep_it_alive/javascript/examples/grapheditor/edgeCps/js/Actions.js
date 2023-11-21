@@ -219,15 +219,15 @@ Actions.prototype.init = function()
 
 	function deleteCells(includeEdges)
 	{
-		var localStorageValue = window.localStorage.getItem(window.localStorage.getItem(projectName+'_nowWorkflow')+'_flowDict');
-		var dict = JSON.parse(localStorageValue);
+		// var localStorageValue = window.localStorage.getItem(window.localStorage.getItem(projectName+'_nowWorkflow')+'_flowDict');
+		// var dict = JSON.parse(localStorageValue);
 		var keyToDelete = graph.getSelectionCells()[0].id;
 
-		if (dict && dict.hasOwnProperty(keyToDelete)) {
-			delete dict[keyToDelete];
-		}
-		delete flowDict[keyToDelete];
-		window.localStorage.setItem(window.localStorage.getItem(projectName+'_nowWorkflow')+'_flowDict', JSON.stringify(dict));
+		// if (dict && dict.hasOwnProperty(keyToDelete)) {
+		// 	delete dict[keyToDelete];
+		// }
+		// delete flowDict[keyToDelete];
+		// window.localStorage.setItem(window.localStorage.getItem(projectName+'_nowWorkflow')+'_flowDict', JSON.stringify(dict));
 
 		// Cancels interactive operations
 		graph.escape();
@@ -240,8 +240,8 @@ Actions.prototype.init = function()
 	};
 	this.addAction('delete', function(evt)
 	{
-		// deleteCells(evt != null && mxEvent.isControlDown(evt));
-		deleteCells(true); // 순우 edge를 포함해 삭제 가능한지 테스트
+		deleteCells(evt != null && mxEvent.isControlDown(evt));
+		// deleteCells(true); // 순우 edge를 포함해 삭제 가능한지 테스트
 	}, null, null, 'Delete');
 	this.addAction('deleteAll', function()
 	{
