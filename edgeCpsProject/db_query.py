@@ -39,7 +39,7 @@ def check_userId(mariadb_pool, name, email ):
         connection = mariadb_pool.get_connection()
 
         cursor = connection.cursor()
-        cursor.execute("SELECT COUNT(*) FROM TB_USER WHERE USER_NAME = %s", (name,))
+        cursor.execute("SELECT COUNT(*) FROM TB_USER WHERE USER_NAME = %s and USER_EMAIL =%s", (name,email))
         count = cursor.fetchone()[0]
 
         if count == 1:
@@ -529,10 +529,7 @@ def add_grp(group,mariadb_pool):
         cursor.execute(sql)
         connection.commit()
         
-        # 영향을 받은 행의 수를 확인
-        affected_rows = cursor.rowcount
-
-        return affected_rows
+        return
 
     except Exception as e:
         print(str(e))
@@ -552,10 +549,7 @@ def del_grp(group,mariadb_pool):
 
         connection.commit()
         
-        # 영향을 받은 행의 수를 확인
-        affected_rows = cursor.rowcount
-
-        return affected_rows
+        return
 
     except mysql.connector.Error as e:
         print(f"MySQL Error: {e}")
