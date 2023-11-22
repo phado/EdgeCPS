@@ -132,7 +132,6 @@ def project_list():
 
     projects_info = getProjectDict2(userId)
 
-    userId= session['userId'] 
     user_info = user_get_info(userId)    
     userIds, userName, userEmail, userGroup, userAdmin = user_info
 
@@ -218,20 +217,18 @@ def save_project():
         # db에 저장하는 함수
         add_table_save_prj(mariadb_pool, proj_name,data,session['userId'])
 
-        response = {"status": "success", "message": "Project data saved successfully.", "urlFor": data['currentProcess']+'?projectName='+ data['projectNamejsonData']['projectName'] }
-        # if data['saveAsProject'] == 'True':
-        #     project_name = data['projectNamejsonData']['projectName']
-        #     userId= session['userId'] 
-        #     user_info = user_get_info(userId)    
-        #     userIds, userName, userEmail, userGroup, userAdmin = user_info
-        #     catlist = get_category(mariadb_pool)
+        response = {"status": "success", "message": "Project data saved successfully.", "urlFor": 'projectName='+ data['projectNamejsonData']['projectName'] }
+        # save as인 경우
+        if data['saveAsProject'] == 'True':
+            project_name = data['projectNamejsonData']['projectName']
+            userId= session['userId'] 
+            user_info = user_get_info(userId)    
+            userIds, userName, userEmail, userGroup, userAdmin = user_info
+            catlist = get_category(mariadb_pool)
 
-        #     # return render_template('process/'+ data['currentProcess'] +'.html',categories=catlist,  project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
-        #     return redirect('https://www.naver.com')
-        #     # return redirect(url_for('project_list',categories=catlist, project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
-        
-        # else:
-        return jsonify(response), 200
+            return jsonify(response), 200
+        else:
+            return jsonify(response), 200
     except Exception as e:
         response = {"status": "error", "message": str(e)}
         return jsonify(response), 500
@@ -254,17 +251,8 @@ def open_process(project_id,project_user,project_name):
         if project['id'] == project_id and project['name'] == project_name and project['user'] == project_user:
 
             data = load_project(project_id, mariadb_pool)
-            # data = data.replace('[[', '').replace(']]', '')
-            # session['data'] = json.dumps(data)
-            # session['data'] = data
-
-            # session['str_json'] = str_json
-            # session['project_name'] = project_name
-            # session['xml_process'] = xml_process
-            # session['workflow_xml'] = workflow_xml
 
             return redirect(url_for('overview_process', active_overview=active_overview, data = data, projectName = project_name, openProject=True))
-            # return redirect(url_for('overview_process', active_overview=active_overview, project_data = data , project_name=project_name))
 
     return redirect(url_for('project_list'))
 
@@ -315,11 +303,8 @@ def previous():
 @app.route('/process/overviewProcess', methods=['GET', 'POST'])
 def overview_process():
     catlist = get_category(mariadb_pool)
-    # catlist = ['java', 'python']
-    # active_overview = True
     pass_overview = request.form.get('pass_overview')
 
-    # userName =session['userName']
     data = request.args.get('data')
     open_project = request.args.get('openProject')# 현재 불러오기 중인 프로젝트인지 확인
     opened_project = request.args.get('openedProject')# 이미 한번 불러온 프로젝트인지 확인
@@ -328,9 +313,6 @@ def overview_process():
     user_info = user_get_info(userId)    
     userIds, userName, userEmail, userGroup, userAdmin = user_info
     
-    # if pass_overview =='True':
-    #     project_name = request.form.get('project_name')
-    #     return redirect(url_for('requirements_process', project_name=project_name, userName = userName,userIds =userIds, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
     if opened_project =='True':
         project_name = request.args.get('projectName')
         return render_template('process/overviewProcess.html',categories=catlist, opened_project=True, project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
@@ -341,11 +323,6 @@ def overview_process():
         # pass_overview = request.args.get('pass_overview')
         return render_template('process/overviewProcess.html', categories=catlist, project_data = data, open_project = 'True', project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
 
-    # if request.method == 'POST': # 프로젝트 불러오기?
-    #     project_name = request.form.get('project_name')
-    #     project_description = request.form.get('project_description')
-    #     project_category = request.form.get('project_category')
-    #     return redirect(url_for('requirements_process',categories=catlist, project_name=project_name, project_description=project_description,project_category=project_category,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup))
     # create project
     if request.method == 'GET': #최초 생성 
         # session.clear()
@@ -354,14 +331,8 @@ def overview_process():
         
         return render_template('process/overviewProcess.html', categories=catlist, new_pj=new_pj, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
         
-
-
 @app.route('/process/requirementsProcess', methods=['GET', 'POST'])
 def requirements_process():
-    # active_requirements = True
-    # pass_overview = request.args.get('pass_overview')
-    # if pass_overview =='True':
-    #      return render_template('process/requirementsProcess.html', active_requirements=active_requirements , project_name=project_name)
     project_name = request.form.get('project_name')
     userId= session['userId'] 
     user_info = user_get_info(userId)    
@@ -379,14 +350,11 @@ def requirements_process():
 
     return render_template('process/requirementsProcess.html',categories=catlist,  project_name=project_name,userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
 
-    # return render_template('process/requirementsProcess.html', active_requirements=active_requirements)
-
-
 @app.route('/process/businessProcess', methods=['GET', 'POST'])
 def business_process():
     active_process = True
     userId= session['userId'] 
-    user_info = user_get_info(userId)    
+    user_info = user_get_info(userId)
     userIds, userName, userEmail, userGroup, userAdmin = user_info
     catlist = get_category(mariadb_pool)
 
@@ -756,10 +724,13 @@ def delete_group():
 
 @app.route('/exists', methods=['GET'])
 def exists():
+    # userId= session['userId'] 
+    # user_info = user_get_info(userId)    
+    # userIds, userName, userEmail, userGroup, userAdmin = user_info
     project_name = request.args.get('project_name')
-    result = is_name_exists(project_name,mariadb_pool)
+    user_id = request.args.get('userId')
+    result = is_name_exists(project_name,mariadb_pool,user_id)
     if result == True:
-        # add_table_save_prj(mariadb_pool, proj_name,data,session['userId'])
         return 'true'
     else:
         return 'false'

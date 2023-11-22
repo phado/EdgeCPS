@@ -241,11 +241,21 @@ def add_table_save_prj(mariadb_pool, project_name, project_data, userid):
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor(prepared=True)
         
-        exist_sql = f"SELECT COUNT(*) as count FROM TB_PROJ WHERE PROJ_NAME = '{project_name}'"
-        cursor.execute(exist_sql)
-        exist_count = cursor.fetchone()
+        # exist_sql = f"SELECT COUNT(*) as count FROM TB_PROJ WHERE PROJ_NAME = '{project_name}'"
+        # cursor.execute(exist_sql)
+        sql = f"SELECT GROUP_IDX FROM TB_USER WHERE USER_ID = '{userid}'"
+        cursor.execute(sql)
+        user_group = cursor.fetchall()[0][0]
+        sql = f"SELECT TP.PROJ_IDX, TP.PROJ_NAME, TP.PROJ_CREATE_DATE, TU.USER_IDX FROM TB_PROJ TP INNER JOIN TB_USER TU ON TP.USER_IDX = TU.USER_IDX WHERE TU.GROUP_IDX = '{user_group}' AND TP.PROJ_NAME = '{project_name}'"
+        cursor.execute(sql)
+        # db_data = cursor.fetchall()
+        # if len(db_data) > 0:
+        #     return False
+        # else:
+        #     return True
+        exist_count = cursor.fetchall()
         # 최초 저장일 경우
-        if exist_count[0] == 0:
+        if len(exist_count) == 0:
 
             cursor.execute(f"SELECT `USER_IDX` FROM TB_USER WHERE USER_ID = '{userid}'")
             user_id = cursor.fetchall()[0][0]
@@ -557,14 +567,19 @@ def del_grp(group,mariadb_pool):
         cursor.close()
         connection.close()
 
-def is_name_exists(project_name,mariadb_pool):
+def is_name_exists(project_name,mariadb_pool,user_id):
     try:
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor(buffered=True)
 
-        # SQL 쿼리를 파라미터화하여 SQL 인젝션을 방지
-        sql = "SELECT PROJ_NAME FROM TB_PROJ WHERE PROJ_NAME = %s"
-        cursor.execute(sql, (project_name,))
+        # sql = "SELECT PROJ_NAME FROM TB_PROJ WHERE PROJ_NAME = %s"
+        # cursor.execute(sql, (project_name,))
+        # db_data = cursor.fetchall()
+        sql = f"SELECT GROUP_IDX FROM TB_USER WHERE USER_ID = '{user_id}'"
+        cursor.execute(sql)
+        user_group = cursor.fetchall()[0][0]
+        sql = f"SELECT TP.PROJ_IDX, TP.PROJ_NAME, TP.PROJ_CREATE_DATE, TU.USER_IDX FROM TB_PROJ TP INNER JOIN TB_USER TU ON TP.USER_IDX = TU.USER_IDX WHERE TU.GROUP_IDX = '{user_group}' AND TP.PROJ_NAME = '{project_name}'"
+        cursor.execute(sql)
         db_data = cursor.fetchall()
         if len(db_data) > 0:
             return False

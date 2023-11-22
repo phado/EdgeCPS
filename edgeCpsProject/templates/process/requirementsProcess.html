@@ -23,6 +23,7 @@
       var objValueDict = {}; //생성된 다디어그램의 값의 value(edit) 이 들어가 있는 곳
 
       let projectName = "{{ project_name }}";
+
       console.log(projectName);
     </script>
 
@@ -326,6 +327,6 @@
   </html>
     <script>
       document.getElementById('saveButton').addEventListener('click', async function() {
-    await saveAsProject(projectName);
+    await saveAsProject(projectName,"{{ userIds }}");
   });
     </script>

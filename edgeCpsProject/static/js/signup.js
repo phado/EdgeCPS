@@ -41,10 +41,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     //  3. 이름 유효성 검사
-    const nameValid = /^[가-힣a-zA-Z]+$/.test(nameInput.value);
+    const nameValid = /^[a-zA-Z]+$/.test(nameInput.value);
     if (!nameValid) {
       event.preventDefault();
-      nameErrorError.textContent = "잘못된 입력입니다";
+      nameErrorError.textContent = "영문 대소문자만 입력할 수 있습니다";
       signupFlg = false;
     } else {
       nameErrorError.textContent = "";

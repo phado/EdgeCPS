@@ -125,6 +125,7 @@ function saveAllProject(saveAsProjectName) {
     projectNamejsonData: projectNamejsonData,
     processDatajsonData: processDatajsonData,
     workflowDatajsonData: workflowDatajsonData,
+    saveAsProject : 'True'
   };
   }
   //save as인 경우
@@ -176,7 +177,6 @@ function saveAllProject(saveAsProjectName) {
     processDatajsonData: processDatajsonData,
     workflowDatajsonData: workflowDatajsonData,
     saveAsProject : 'True',
-    currentProcess :process_name
   };
   }
   
@@ -190,9 +190,17 @@ function saveAllProject(saveAsProjectName) {
   })
     .then((response) => response.json())
     .then((data) => {
-      window.location.href
-      alert(data); // 서버에서 반환된 데이터 출력
+      // alert(data); // 서버에서 반환된 데이터 출력
+      const currentUrl = window.location.href
+      const match = currentUrl.match(/projectName=[^&]*/);
 
+      if (match) {
+        const projectNameQueryParam = match[0];
+        const newUrl = currentUrl.replace(projectNameQueryParam, data["urlFor"]);
+        // 순우 saveas한 프로젝트로 이동
+        window.location.href = newUrl;
+      }
+      
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -855,10 +863,18 @@ path : ""`);
   FAcell.value.namespaceURI =''
 }
 
-async function is_name_exists(projectName) {
-  const url = `http://127.0.0.1:5000/exists?project_name=${encodeURIComponent(projectName)}`;
+async function is_name_exists(projectName,userIds) {
+  const url = `http://127.0.0.1:5000/exists?project_name=${encodeURIComponent(projectName)}&userId=${encodeURIComponent(userIds)}`;
   try {
-    const response = await fetch(url);  // await를 추가하여 비동기 처리
+    // const response = await fetch(url);  // await를 추가하여 비동기 처리
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        // 필요한 경우 다른 헤더도 추가 가능
+      },
+      // 다른 설정들...
+    });
     const data = await response.text(); // await를 추가하여 비동기 처리
 
     console.log(data);
@@ -869,7 +885,7 @@ async function is_name_exists(projectName) {
     throw error;
   }
 }
-async function saveAsProject(oldProjectName) {
+async function saveAsProject(oldProjectName,userIds) {
   var projectName = document.getElementById("project_name").value;
   var projectDescription = document.getElementById("project_description").value;
   var projectCategory = document.getElementById("project_category").value;
@@ -884,7 +900,7 @@ async function saveAsProject(oldProjectName) {
   var oldProjectName = oldProjectName;
 
   try {
-    const result = await is_name_exists(newProjectName); // await 추가
+    const result = await is_name_exists(newProjectName,userIds); // await 추가
 
     if (result === 'true') {
       const allKeys = Object.keys(localStorage);
@@ -913,6 +929,9 @@ async function saveAsProject(oldProjectName) {
         }
       }
       saveAllProject(newProjectName);
+    }
+    else{
+      alert("같은 이름의 프로젝트가 존재합니다.");
     }
   } catch (error) {
     console.error('에러 발생:', error);
