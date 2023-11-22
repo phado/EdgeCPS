@@ -709,9 +709,11 @@ def add_group():
     group_name = request.form['group_name']
 
     # 저장 로직 호출
-    add_grp(group_name,mariadb_pool)
-
-    return jsonify({'result': 'success'})
+    response = add_grp(group_name,mariadb_pool)
+    if response ==True:
+        return jsonify({'result': 'success'})
+    elif response ==False:
+        return jsonify({'result': 'fail'})
 
 @app.route('/delete_group', methods=['POST'])
 def delete_group():

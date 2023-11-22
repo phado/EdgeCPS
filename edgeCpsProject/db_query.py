@@ -216,8 +216,13 @@ def change_Info(mariadb_pool, new_group, new_valid, user):
     try:
         connection = mariadb_pool.get_connection()
 
+        sql = f"SELECT GROUP_IDX FROM TB_GROUP WHERE GROUP_NAME = '{new_group}'"
         cursor = connection.cursor()
-        cursor.execute("UPDATE TB_USER SET GROUP_IDX = %s, VALID = %s WHERE USER_IDX = %s", (new_group, new_valid, user))
+        cursor.execute(sql)
+        group_id = cursor.fetchone()
+        
+        sql = f"UPDATE TB_USER SET GROUP_IDX = '{group_id[0]}', VALID = '{new_valid}' WHERE USER_IDX = '{user}'"
+        cursor.execute(sql)
         connection.commit()
 
         response['result'] = True
@@ -518,18 +523,24 @@ def get_group_info(mariadb_pool):
         cursor.close()
         connection.close()
 
-def add_grp(group,mariadb_pool):
+def add_grp(add_group,mariadb_pool):
     code = "code"
     try:
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor(buffered=True)
-
-        sql = f"INSERT INTO TB_GROUP (GROUP_IDX, GROUP_NAME,GROUP_CODE) VALUES (DEFAULT, '{group}','{code}');"
-
+        sql = f"SELECT GROUP_IDX FROM TB_GROUP WHERE GROUP_NAME = '{add_group}'"
         cursor.execute(sql)
-        connection.commit()
+        group= cursor.fetchall()
+        group_count = len(group)
+        if(group_count==0):
+            sql = f"INSERT INTO TB_GROUP (GROUP_NAME,GROUP_CODE) VALUES ('{add_group}','{code}');"
+
+            cursor.execute(sql)
+            connection.commit()
+            return True
+        else:
+            return False
         
-        return
 
     except Exception as e:
         print(str(e))

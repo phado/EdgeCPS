@@ -182,7 +182,7 @@
   }
   function saveInfo() {
     // select 박스의 값을 가져오기
-    const selectedGroup = document.getElementById("group").value;
+    const selectedGroup = document.getElementById("group").options[document.getElementById("group").selectedIndex].text
 
     // 토글 버튼의 상태 가져오기
     const toggleSwitch = document.getElementById("toggleSwitch");
@@ -256,6 +256,7 @@
             newOption.text = groupName;
             selectElement.add(newOption);
           } else {
+            alert("같은 이름의 그룹이 이미 존재합니다.")
           }
         })
         .catch((error) => {
