@@ -712,6 +712,8 @@ mxDragSource.prototype.dragOver = function(graph, evt)
  */
 mxDragSource.prototype.drop = function(graph, evt, dropTarget, x, y) // 민수 요소 생성 하는 곳 2 
 {
+	console.log('sidebar_item_droped_ 민수')
+	createDiagramClicked = true;
 	this.dropHandler.apply(this, arguments);
 	
 	// Had to move this to after the insert because it will

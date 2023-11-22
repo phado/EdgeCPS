@@ -724,11 +724,11 @@ function getLastIndexOfShape(shapeName){ //민수 마지막숫자를 가져와�
 					 this.diagramProp == 'diagram'
 					 newIndex = getLastIndexOfShape(createDiagramSape);
 					 var idxName = createDiagramSape+newIndex.toString();
-					 this.root.classList.add(createDiagramSape, idxName); //민수 다이어그램 클래스 입력
+					 this.root.classList.add(createDiagramSape); //민수 다이어그램 클래스 입력
 					 DiagramClicked = idxName
 					 this.root.setAttribute("name", "diagram");
 					 console.log('created ==',createDiagramSape,idxName)
- 
+					 createDiagramClicked = false;
 					 
 				 }
 				 
