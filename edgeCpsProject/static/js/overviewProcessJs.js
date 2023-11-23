@@ -58,7 +58,7 @@ function deleteCategory() {
 }
 
 
-function savePorjectInfo(){
+function saveProjectInfo(){
 
   var projectName = document.getElementById("project_name").value;
   var projectDescription = document.getElementById("project_description").value;
@@ -75,6 +75,9 @@ function savePorjectInfo(){
   localStorage.setItem(projectName+'_overviewProcessXML', JSON.stringify(projectInfo));
   projectName = projectInfo['name'];
 
-  // localStorage.setItem(projectName+'_workflowXML',workflowXMLList);
+
+  window.location.href = 'http://127.0.0.1:5000/process/requirementsProcess?projectName='+projectName;
+
+
 
 }

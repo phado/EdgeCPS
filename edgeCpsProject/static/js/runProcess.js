@@ -1,3 +1,28 @@
+function submit(xmlDataKey){
+    const shouldExecute = confirm('Argo Workflow에 전송하시겠습니까?');
+    if (shouldExecute){
+      var xmlData = localStorage.getItem(xmlDataKey);
+      fetch('/submit', {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json'
+        },
+        body: content
+    })
+    // .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        // 서버 응답 처리
+        window.alert(workflowName+' 워크플로우가 실행 되었습니다.' );
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+    }else{
+        console.log('사용자가 취소함');
+    }
+}
+
 function readFileContent(file) {
     const reader = new FileReader();
     reader.onload = function(event) {
@@ -52,9 +77,9 @@ function businessProcessViewClickHandler(sender, evt) {
 			matches.push(extractedString);
 			
 			var cellName = matches;
-        var cellId = cell.id
-        localStorage.setItem(projectName+'_current_workflowName', cellName)
-        workflowProcessView(cellName,cellId,cell)
+      var cellId = cell.id
+      localStorage.setItem(projectName+'_current_workflowName', cellName)
+      workflowProcessView(cellName,cellId,cell)
     }
 }
 
@@ -85,7 +110,8 @@ function workflowProcessView(cellName,cellId,cell){
         divElement.parentNode.removeChild(divElement);
     });
 
-    var xmlData = localStorage.getItem(projectName+'_'+cellId+'#'+cellName)
+    var xmlDataKey = projectName+'_'+cellId+'#'+cellName;
+    var xmlData = localStorage.getItem(xmlDataKey);
     var container = document.getElementById('workflowProcessView');
     var graph = new Graph(container);
     var doc = mxUtils.parseXml(xmlData);
@@ -93,6 +119,9 @@ function workflowProcessView(cellName,cellId,cell){
     // graph.addListener(mxEvent.CLICK, workflowProcessViewHandler);
     codec.decode(doc.documentElement, graph.getModel());
     graph.refresh();
+
+    //argoworkflow 실행
+    // submit(xmlDataKey);
 
     // Activity 클릭 했을 때 Activity 상태 출력
     intervalLogDeploymentView = setInterval(() => deploymentView(false), 1000);
@@ -298,22 +327,7 @@ function deploymentView(actionStatusFlag,actionName,actionId) {
 //     }
 // }
 
-// function submitButton(){
-//     document.getElementById("submitButton").addEventListener("click", function(){
-//         const fileInput = document.getElementById('fileInput');
-//         const shouldExecute = confirm('Argo Workflow에 전송하시겠습니까?');
-//         if (shouldExecute){
-//             if (fileInput.files.length > 0) {
-//                 const selectedFile = fileInput.files[0];
-//                 readFileContent(selectedFile);
-//             }else {
-//                 alert('Please select a file.');
-//             }
-//         }else{
-//             console.log('사용자가 취소함');
-//         }
-//     });
-// }
+
 
 // function deleteButton(){
 //     document.getElementById("deleteButton").addEventListener("click", function(){

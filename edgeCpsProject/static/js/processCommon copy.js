@@ -80,12 +80,7 @@ function saveAllProject(saveAsProjectName) {
   ];
   if(saveAsProjectName==undefined){
     var stringWorkflowList = localStorage.getItem(projectName + "_workflowXML");
-    if(stringWorkflowList!=null){
-      var modifiedString = stringWorkflowList.replace(/'/g, '"');
-      var workflowList = JSON.parse(modifiedString);
-    }
-    
-    
+    var workflowList = JSON.parse(stringWorkflowList);
   try {
     for (var i = 0; i < workflowList.length; i++) {
       for (var j = 0; j < localStorage.length; j++) {
@@ -105,8 +100,8 @@ function saveAllProject(saveAsProjectName) {
   let data = {};
   let processData = {};
   let workflowData = {};
-  let workflowProcessList = {};
-  workflowProcessList['workflowXML']=localStorage.getItem(projectName+'_workflowXML')
+  let workflowList = {};
+  workflowList['workflowXML']=localStorage.getItem(projectName+'_workflowXML')
 
   // 프로세스 저장
   for (var i = 0; i < get_localstorage_xml_list.length; i++) {
@@ -131,7 +126,7 @@ function saveAllProject(saveAsProjectName) {
   var projectNamejsonData = data;
   var processDatajsonData = processData;
   var workflowDatajsonData = workflowData;
-  var workflowListData = workflowProcessList;
+  var workflowListData = workflowList;
 
   var dataToSend = {
     projectNamejsonData: projectNamejsonData,
@@ -144,11 +139,7 @@ function saveAllProject(saveAsProjectName) {
   //save as인 경우
   else{
     var stringWorkflowList = localStorage.getItem(saveAsProjectName + "_workflowXML");
-    if(stringWorkflowList!=null){
-      var modifiedString = stringWorkflowList.replace(/'/g, '"');
-      var workflowList = JSON.parse(modifiedString);
-    }
-    
+    var workflowList = JSON.parse(stringWorkflowList);
   try {
     for (var i = 0; i < workflowList.length; i++) {
       for (var j = 0; j < localStorage.length; j++) {
@@ -168,8 +159,8 @@ function saveAllProject(saveAsProjectName) {
   let data = {};
   let processData = {};
   let workflowData = {};
-  let workflowProcessList = {};
-  workflowProcessList['workflowXML']=localStorage.getItem(projectName+'_workflowXML')
+  let workflowList = {};
+  workflowList['workflowXML']=localStorage.getItem(projectName+'_workflowXML')
 
   // 프로세스 저장
   for (var i = 0; i < get_localstorage_xml_list.length; i++) {
@@ -185,7 +176,7 @@ function saveAllProject(saveAsProjectName) {
   if (workflowXMLValue) {
     for (var i = 0; i < workflowXMLValue.length; i++) {
       var key = workflowXMLValue[i];
-      var value = localStorage.getItem(projectName+'_'+key);
+      var value = localStorage.getItem(key);
       workflowData[key] = value;
     }
   }
@@ -194,7 +185,7 @@ function saveAllProject(saveAsProjectName) {
   var projectNamejsonData = data;
   var processDatajsonData = processData;
   var workflowDatajsonData = workflowData;
-  var workflowListData = workflowProcessList;
+  var workflowListData = workflowList;
 
   var dataToSend = {
     projectNamejsonData: projectNamejsonData,
@@ -614,7 +605,7 @@ function createWorkflowSelectBox(activityCatList) {
   selectBox.style="width: 200px;"
 
   // workflow 페이지를 최초로 열어 로컬스토리지에 nowWorkflow 값이 없는 경우 넣어줌.
-  if (localStorage.getItem(projectName + "_nowWorkflow") == ""||localStorage.getItem(projectName + "_nowWorkflow")== null) {
+  if (localStorage.getItem(projectName + "_nowWorkflow") == "") {
     localStorage.setItem(
       projectName + "_nowWorkflow",
       projectName + "_" + activityCatList[0].id + "#" + activityCatList[0].value
@@ -876,50 +867,58 @@ path : ""`);
   FAcell.value.namespaceURI =''
 }
 
-async function is_name_exists(projectName, userIds) {
+async function is_name_exists(projectName,userIds) {
   const url = `http://127.0.0.1:5000/exists?project_name=${encodeURIComponent(projectName)}&userId=${encodeURIComponent(userIds)}`;
-
   try {
-    const response = await fetch(url);
-    const data = await response.text();
+    // const response = await fetch(url);  // await를 추가하여 비동기 처리
+    const response = await fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        // 필요한 경우 다른 헤더도 추가 가능
+      },
+      // 다른 설정들...
+    });
+    const data = await response.text(); // await를 추가하여 비동기 처리
 
-    return data.trim() === 'true';
+    console.log(data);
+
+    return data === 'true' ? 'true' : 'false';
   } catch (error) {
     console.error("Error:", error);
     throw error;
   }
 }
-
-async function saveAsProject(oldProjectName, userIds) {
-  var newProjectName = document.getElementById("project_name").value;
+async function saveAsProject(oldProjectName,userIds) {
+  var projectName = document.getElementById("project_name").value;
   var projectDescription = document.getElementById("project_description").value;
   var projectCategory = document.getElementById("project_category").value;
 
   var newOverview = {
-    "name": newProjectName,
+    "name": projectName,
     "description": projectDescription,
     "category": projectCategory
   };
 
-  try {
-    const result = await is_name_exists(newProjectName, userIds);
+  var newProjectName = projectName;
+  var oldProjectName = oldProjectName;
 
-    if (result) {
+  try {
+    const result = await is_name_exists(newProjectName,userIds); // await 추가
+
+    if (result === 'true') {
       const allKeys = Object.keys(localStorage);
       const filteredKeys = allKeys.filter(key => key.includes(oldProjectName));
 
       for (let i = 0; i < filteredKeys.length; i++) {
-        const oldKey = filteredKeys[i];
-        if (oldKey.includes('nowWorkflow')){
-          continue;
-        }
-        if (oldKey.includes('overview')) {
-          localStorage.setItem(newProjectName + '_overviewProcessXML', JSON.stringify(newOverview));
+        const oldKey = filteredKeys[i]
+        if(oldKey.includes('overview')){
+          localStorage.setItem(newProjectName+'_overviewProcessXML', JSON.stringify(newOverview));
           localStorage.removeItem(oldKey);
           continue;
         }
         const oldValue = localStorage.getItem(oldKey);
-        if (oldValue == "") {
+        if(oldValue == ""){
           continue;
         }
         const regex = /[^_]+/;
@@ -934,7 +933,8 @@ async function saveAsProject(oldProjectName, userIds) {
         }
       }
       saveAllProject(newProjectName);
-    } else {
+    }
+    else{
       alert("같은 이름의 프로젝트가 존재합니다.");
     }
   } catch (error) {

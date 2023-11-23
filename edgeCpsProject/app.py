@@ -330,7 +330,7 @@ def overview_process():
         project_name = request.args.get('projectName')
         
         return render_template('process/overviewProcess.html', categories=catlist, new_pj=new_pj, userIds =userIds, userName=userName, userEmail=userEmail, userAdmin=userAdmin, userGroup=userGroup)
-        
+           
 @app.route('/process/requirementsProcess', methods=['GET', 'POST'])
 def requirements_process():
     project_name = request.form.get('project_name')
@@ -469,22 +469,7 @@ def search_local_images():
     return image_list
 
 # activity_dic
-@app.route('/submit', methods=['POST'])
-def submit_workflow():
-    try:
-        workflow_json = request.get_json()
-        print(workflow_json)
-        headers = {
-            "Content-Type": "application/json"
-        }
-        response = requests.post(f"{ARGO_SERVER_URL}/api/v1/workflows/{NAMESPACE}", headers=headers, json=workflow_json, verify=False)
-        if response.status_code == 200:
-            return "Workflow submitted successfully", 200
-        else:
-            return "Workflow submission failed", 500
-    except Exception as e:
-        error_message = str(e)
-        return f"Error: {error_message}", 500
+
 
 # @app.route('/stop', methods=['PUT'])
 # def stop_workflow():
@@ -736,6 +721,23 @@ def exists():
         return 'true'
     else:
         return 'false'
+    
+@app.route('/submit', methods=['POST'])
+def submit_workflow():
+    try:
+        workflow_json = request.get_json()
+        print(workflow_json)
+        headers = {
+            "Content-Type": "application/json"
+        }
+        response = requests.post(f"{ARGO_SERVER_URL}/api/v1/workflows/{NAMESPACE}", headers=headers, json=workflow_json, verify=False)
+        if response.status_code == 200:
+            return "Workflow submitted successfully", 200
+        else:
+            return "Workflow submission failed", 500
+    except Exception as e:
+        error_message = str(e)
+        return f"Error: {error_message}", 500
 
 if __name__ == '__main__':
     app.run(debug=True)

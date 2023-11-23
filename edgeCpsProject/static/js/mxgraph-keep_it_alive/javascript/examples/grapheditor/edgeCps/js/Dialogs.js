@@ -1809,19 +1809,36 @@ var ReqDialog = function(editorUi, ui, cell) {
 		
 		try{
 			var stepNameHtml = cell.value;
-			var start = stepNameHtml.indexOf("&gt;&gt;<br>") + "&gt;&gt;<br>".length;
-			var end = stepNameHtml.indexOf("</div>");
+
+			// label 속성 값 가져오기
+			for(var i=0 ; i<stepNameHtml.attributes.length; i++){
+				try{
+					if(stepNameHtml.attributes[i].nodeName=='label'){
+						var labelValue = stepNameHtml.attributes[i].textContent;
+					}
+				}catch{}
+				
+			}
+			
+			
+			// var start = stepNameHtml.indexOf("&gt;&gt;<br>") + "&gt;&gt;<br>".length;
+			// var end = stepNameHtml.indexOf("</div>");
 		}catch{
-			var stepNameHtml = cell.value.outerHTML;
-			var start = stepNameHtml.indexOf("&gt;&gt;<br>") + "&gt;&gt;<br>".length;
-			var end = stepNameHtml.indexOf("</div>");
+		// 	var stepNameHtml = cell.value.outerHTML;
+		// 	var start = stepNameHtml.indexOf("&gt;&gt;<br>") + "&gt;&gt;<br>".length;
+		// 	var end = stepNameHtml.indexOf("</div>");
 		}
-		
-		var stepName = stepNameHtml.substring(start, end);
+		var matchResult = labelValue.match(/&gt;&gt;<br>(.*?)<\/div>/);
+		// 찾은 문자열 출력
+		if (matchResult && matchResult[1]) {
+			var stepName = matchResult[1];
+			if(stepName.includes('['||']')){
+				stepName = stepName.substring(1,stepName.length-1);
+			}
+		}
+		// var stepName = labelValue.substring(start, end);
 		var stepId = cell.id;
-		if(stepName.includes('['||']')){
-			stepName = stepName.substring(1,stepName.length-1);
-		}
+		
 	}
 
 	var reqList = extractReq();
