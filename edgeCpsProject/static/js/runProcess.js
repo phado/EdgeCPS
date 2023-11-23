@@ -121,7 +121,7 @@ function workflowProcessView(cellName,cellId,cell){
     graph.refresh();
 
     //argoworkflow 실행
-    // submit(xmlDataKey);
+    submit(xmlDataKey);
 
     // Activity 클릭 했을 때 Activity 상태 출력
     intervalLogDeploymentView = setInterval(() => deploymentView(false), 1000);

@@ -254,7 +254,7 @@
     <div class="overviewbackground">
       <div class="createProject"><h2>Create Project</h2></div>
       <div class="container">
-        <!-- <form method="post" action="{{ url_for('requirements_process', projectName = project_name) }}" , id="formtag"> -->
+        <form method="post" action="{{ url_for('requirements_process', projectName = project_name) }}" , id="formtag">
         <!-- <form method="post" action="" id="formtag"></form> -->
           <div class="form-group">
             <label class="project_name" for="project_name">Project Name</label>
@@ -280,7 +280,7 @@
           <button type="submit" class="btn btn-primary" onclick="saveProjectInfo()">
             OK
           </button>
-        <!-- </form> -->
+        </form>
       </div>
     </div>
 

@@ -76,7 +76,7 @@ function saveProjectInfo(){
   projectName = projectInfo['name'];
 
 
-  window.location.href = 'http://127.0.0.1:5000/process/requirementsProcess?projectName='+projectName;
+  // window.location.href = 'http://127.0.0.1:5000/process/requirementsProcess?projectName='+projectName;
 
 
 
