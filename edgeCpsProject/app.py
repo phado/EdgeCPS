@@ -16,6 +16,7 @@ import base64
 import urllib.parse
 import mysql.connector.pooling
 from flask_paginate import Pagination
+from convert_from_xml import pharse_xml_to_json
 
 
 from kubernetes import client, config
@@ -721,7 +722,7 @@ def exists():
         return 'true'
     else:
         return 'false'
-    
+
 @app.route('/submit', methods=['POST'])
 def submit_workflow():
     try:
@@ -738,6 +739,62 @@ def submit_workflow():
     except Exception as e:
         error_message = str(e)
         return f"Error: {error_message}", 500
+
+import re
+@app.route('/runworkflow/run', methods=['POST'])
+def runworkflow_run():
+    data = request.get_json()
+
+    prj_name = data.get('prj_name')
+    dict_workflow = data.get('dict_workflow')
+    business_xml_val = data.get('business_xml_val')
+    # result = pharse_xml_to_json(dict_workflow["4#Activity na3me"])
+    # print(result)
+    # if data:
+    #     return True
+    # else:
+    #     return False
+    try:
+        workflow_json = request.get_json()
+        print(workflow_json)
+
+        # Iterate over keys in dict_workflow and call pharse_xml_to_json
+        for key, xml_data in dict_workflow.items():
+            new_activity_name = prj_name+key
+            # convert_activity_name = preprocess_string( new_activity_name)
+
+            result_txt_data = pharse_xml_to_json(xml_data)
+            result_json_data = json.loads(result_txt_data)
+            result_json_data['workflow']['metadata']['name'] = key.split('#')[1] if '#' in key else None
+            headers = {"Content-Type": "application/json"}
+            response = requests.post(f"{ARGO_SERVER_URL}/api/v1/workflows/{NAMESPACE}", headers=headers, json=result_json_data, verify=False)
+
+            if response.status_code == 200:
+                print(f"Workflow for {key} submitted successfully")
+                alert_data = {"message": key+"성공."}
+                # return jsonify(alert_data)
+            else:
+                print(f"Workflow submission for {key} failed")
+                alert_data = {"message": "{key}실패."}
+                # return jsonify(alert_data)
+
+        return "All workflows submitted successfully", 200
+
+    except Exception as e:
+        error_message = str(e)
+        return f"Error: {error_message}", 500
+
+def preprocess_string(input_string):
+    # 특수문자 제거 (알파벳, 숫자, 공백만 남김)
+    processed_string = re.sub(r'[^a-zA-Z0-9 ]', '', input_string)
+
+    # 대문자를 소문자로 변환
+    processed_string = processed_string.lower()
+
+    # 띄어쓰기 제거
+    processed_string = processed_string.replace(' ', '')
+
+    return processed_string
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,26 +1,49 @@
-function submit(xmlDataKey){
-    const shouldExecute = confirm('Argo Workflow에 전송하시겠습니까?');
-    if (shouldExecute){
-      var xmlData = localStorage.getItem(xmlDataKey);
-      fetch('/submit', {
-        method: 'POST',
-        headers: {
-        'Content-Type': 'application/json'
-        },
-        body: content
-    })
-    // .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        // 서버 응답 처리
-        window.alert(workflowName+' 워크플로우가 실행 되었습니다.' );
-    })
-    .catch(error => {
-        console.error('Error:', error);
+function submit(activityList){
+  const shouldExecute = confirm('Argo Workflow에 전송하시겠습니까?');
+    // if (shouldExecute){
+    //   // var xmlData = localStorage.getItem(xmlDataKey);
+    //   fetch('/submit', {
+    //     method: 'POST',
+    //     headers: {
+    //     'Content-Type': 'application/json'
+    //     },
+    //     body: content
+    // })
+    // // .then(response => response.json())
+    // .then(data => {
+    //     console.log(data);
+    //     // 서버 응답 처리
+    //     window.alert(workflowName+' 워크플로우가 실행 되었습니다.' );
+    // })
+    // .catch(error => {
+    //     console.error('Error:', error);
+    // });
+    // }else{
+    //     console.log('사용자가 취소함');
+    // }
+  if (shouldExecute){
+    activityList.forEach(processedItem => {
+     
+      localStorage.getItem(projectName+processedItem)
+      const serverEndpoint = '/submit';
+  
+    
+      fetch(serverEndpoint, {
+          method: 'POST', 
+          headers: {
+              'Content-Type': 'application/json', 
+          },
+          body: JSON.stringify({ processedItem }), 
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log('서버 응답:', data);
+      })
+      .catch(error => {
+          console.error('에러 발생:', error);
+      });
     });
-    }else{
-        console.log('사용자가 취소함');
-    }
+  }
 }
 
 function readFileContent(file) {
@@ -76,11 +99,27 @@ function businessProcessViewClickHandler(sender, evt) {
 			}
 			matches.push(extractedString);
 			
-			var cellName = matches;
+			var cellName = matches[0];
       var cellId = cell.id
-      localStorage.setItem(projectName+'_current_workflowName', cellName)
-      workflowProcessView(cellName,cellId,cell)
+
+      localStorage.setItem(projectName+'_current_workflowName', cellName);
+
+      // var workflowXMLData = localStorage.getItem('test_workflowXML');
+
+      // // 문자열 형태의 JSON을 파싱하여 배열로 변환
+      // var workflowXMLArray = JSON.parse(workflowXMLData);
+      
+      // // 정규 표현식을 이용하여 처리
+      // var processedArray = workflowXMLArray.map(function(item) {
+      //     // # 다음의 문자만 가져와서 특수 문자 제거 및 대문자를 소문자로 변환
+      //     var processedItem = item.split('#')[1].replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+      //     return processedItem;
+      // });
+
+      workflowProcessView(cellName,cellId,cell);
     }
+    // submit(processedItem);
+
 }
 
 // sub-content1
@@ -121,10 +160,10 @@ function workflowProcessView(cellName,cellId,cell){
     graph.refresh();
 
     //argoworkflow 실행
-    submit(xmlDataKey);
+    // submit(xmlDataKey);
 
     // Activity 클릭 했을 때 Activity 상태 출력
-    intervalLogDeploymentView = setInterval(() => deploymentView(false), 1000);
+    intervalLogDeploymentView = setInterval(() => deploymentView(false,cellName), 1000);
 }
 
 
@@ -379,15 +418,15 @@ function getDeployInfo(actionKeys,actionStatus){
         }
     }
 
-    var deployInfo = [
-        ['soonwoo', 'hello1', 'Succeeded'],
-        ['soonwoo', 'hello2', 'Succeeded'],
-        ['soonwoo', 'hello3', 'Succeeded'],
-        ['soonwoo1', 'hello4', 'Succeeded'],
-        ['soonwoo1', 'hello5', 'Succeeded'],
-        ['soonwoo3', 'hello6', 'Succeeded'],
-        ['poontoo', 'hello11', 'fail']
-      ];
+    // var deployInfo = [
+    //     ['soonwoo', 'hello1', 'Succeeded'],
+    //     ['soonwoo', 'hello2', 'Succeeded'],
+    //     ['soonwoo', 'hello3', 'Succeeded'],
+    //     ['soonwoo1', 'hello4', 'Succeeded'],
+    //     ['soonwoo1', 'hello5', 'Succeeded'],
+    //     ['soonwoo3', 'hello6', 'Succeeded'],
+    //     ['poontoo', 'hello11', 'fail']
+    //   ];
 
     var uniqueKeys = Array.from(new Set(deployInfo.map(item => item[0])));
     var uniqueKeyCount = uniqueKeys.length;

@@ -1362,7 +1362,12 @@ var EditDataDialog = function(ui, cell)
 	var graph = ui.editor.graph;
 	
 	var value = graph.getModel().getValue(cell);
-	value.removeAttribute('xmlns');
+	// try{
+		value.removeAttribute('xmlns');
+	// }
+	// catch(e){
+		// console.log(e);
+	// }
 	
 	// Converts the value to an XML node
 	if (!mxUtils.isNode(value))
@@ -1505,7 +1510,7 @@ var EditDataDialog = function(ui, cell)
 	
 	var temp = [];
 	var isLayer = graph.getModel().getParent(cell) == graph.getModel().getRoot();
-	// DiRoundedRectangle 일 경우 고정 값 넣기 순우
+
 	var extracted = extractObjects(id)
 	
 	
@@ -1613,7 +1618,24 @@ var EditDataDialog = function(ui, cell)
 			// Clones and updates the value
 			value = value.cloneNode(true);
 			var removeLabel = false;
-			
+			var removeLength = value.attributes.length;
+
+			if (value.attributes[0].nodeName == 'label'){
+				for (var i = 0; i < removeLength-2; i++)
+				{
+					const name = value.attributes[2].nodeName;
+					const text = value.attributes[2].textContent;
+					value.removeAttribute(name);
+				}
+            }else{
+				for (var i = 0; i < removeLength; i++)
+				{
+					const name = value.attributes[0].nodeName;
+					const text = value.attributes[0].textContent;
+					value.removeAttribute(name);
+				}
+			}
+
 			for (var i = 0; i < form.querySelectorAll('textarea').length; i++)
 			{
 				const name = form.querySelectorAll('textarea')[i].value;
@@ -1627,8 +1649,7 @@ var EditDataDialog = function(ui, cell)
 				{
 					
 					value.setAttribute(text,name);
-					removeLabel = removeLabel || (names[i] == 'placeholder' &&
-						value.getAttribute('placeholders') == '1');
+					removeLabel = removeLabel || (names[i] == 'placeholder' && value.getAttribute('placeholders') == '1');
 				}
 			}
 			

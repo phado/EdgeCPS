@@ -846,6 +846,22 @@ path : ""`);
 path : ""`);
       
       FAgraph.getModel().setValue(FAcell, objectElement);
+    }
+    }else if(FAclassName.includes('DiShape Rectangle')){
+      const parser = new DOMParser();
+      const xmlDoc = parser.parseFromString(FAvalue, 'text/html');
+      if(typeof(FAvalue)=='object'){
+        // const object = xmlDoc.querySelector('object');
+        const labelValue = FAvalue.getAttribute('label');
+        const objectElement = document.createElement('object');
+        objectElement.removeAttribute('xmlns');
+        objectElement.setAttribute('arguments.parameters', `name:""  
+value:"{{workflow.outputs.parameters.parameters-}}"`);
+        objectElement.setAttribute('arguments.artifacts',`name:"" 
+from:"{{workflow.outputs.parameters.artifacts-}}"`);
+        
+        FAgraph.getModel().setValue(FAcell, objectElement);
+      
     }else{
       const divElement = xmlDoc.querySelector('div');
         

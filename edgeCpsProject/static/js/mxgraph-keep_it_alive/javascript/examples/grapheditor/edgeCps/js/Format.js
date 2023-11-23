@@ -666,63 +666,122 @@ Format.prototype.refresh = function(arguments,id)
 				
 				// var reqAttribute = selectedCell[0].cells[2].value.attributes;
 			}
-			for(i=1 ; i<reqAttribute.length; i++){
-				if(reqAttribute[i]['value']==''){
-					continue;
-				}
-				if(reqAttribute[i].nodeName=='label'){
-					continue;
-				}
-				var attributeKey = reqAttribute[i]['name'];
-				var attributeKeyContainer = document.createElement('div');
-				attributeKeyContainer.style.marginLeft = '1px';
-				attributeKeyContainer.style.marginRight = '1px';
-				attributeKeyContainer.innerHTML = '<strong style="color: black;">'+attributeKey+'</strong>';
-				// attributeKeyContainer.style=bold;
-
-				var attributeValue = reqAttribute[i]['value'];
-				var attributeValueContainer = document.createElement('div');
-				attributeValueContainer.style.borderBottom = '1px solid #D6D6D6'; 
-				attributeValueContainer.style.marginLeft = '3px';
-				attributeValueContainer.style.marginRight = '3px';
-				attributeValueContainer.style.whiteSpace = 'pre-wrap';
-				attributeValueContainer.style.overflowWrap = 'break-word'
-
-				attributeValueContainer.innerHTML = attributeValue;
-
-				showAttribute.appendChild(attributeValueContainer);
-				var textHeight = attributeValueContainer.clientHeight;
-				// document.body.removeChild(attributeValueContainer);
-
-				// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
-				var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
-				if (textHeight > maxWidth) {
-					attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
-					attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
-				}
-
-				var empty = document.createElement('div');
-				empty.style.marginBottom = '10px';
-				showAttribute.appendChild(attributeKeyContainer);
-				showAttribute.appendChild(attributeValueContainer);
-				showAttribute.appendChild(empty);
-
-
-
-				
-				// var regex = /(\w+)\s*:\s*"([^"]*)"/g;
-				// var matches = attributeValue.matchAll(regex);
-
-				// // 추출된 결과를 객체에 저장
-				// var keyValuePairs = {};
-				// for (const match of matches) {
-				// var key = match[1];
-				// var value = match[2];
-				// keyValuePairs[key] = value;
-				// }
-
-				// attributeValueContainer.innerHTML = keyValuePairs;
+			if(reqAttribute[0].nodeName =='xmlns'){
+				reqAttribute.removeNamedItem('xmlns');
 			}
+			if(reqAttribute[0].nodeName !='label'){
+				for(i=0 ; i<reqAttribute.length; i++){
+					
+					var attributeKey = reqAttribute[i]['name'];
+					var attributeKeyContainer = document.createElement('div');
+					attributeKeyContainer.style.marginLeft = '1px';
+					attributeKeyContainer.style.marginRight = '1px';
+					attributeKeyContainer.innerHTML = '<strong style="color: black;">'+attributeKey+'</strong>';
+					// attributeKeyContainer.style=bold;
+	
+					var attributeValue = reqAttribute[i]['value'];
+					var attributeValueContainer = document.createElement('div');
+					attributeValueContainer.style.borderBottom = '1px solid #D6D6D6'; 
+					attributeValueContainer.style.marginLeft = '3px';
+					attributeValueContainer.style.marginRight = '3px';
+					attributeValueContainer.style.whiteSpace = 'pre-wrap';
+					attributeValueContainer.style.overflowWrap = 'break-word'
+	
+					attributeValueContainer.innerHTML = attributeValue;
+	
+					showAttribute.appendChild(attributeValueContainer);
+					var textHeight = attributeValueContainer.clientHeight;
+					// document.body.removeChild(attributeValueContainer);
+	
+					// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
+					var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
+					if (textHeight > maxWidth) {
+						attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
+						attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
+					}
+	
+					var empty = document.createElement('div');
+					empty.style.marginBottom = '10px';
+					showAttribute.appendChild(attributeKeyContainer);
+					showAttribute.appendChild(attributeValueContainer);
+					showAttribute.appendChild(empty);
+	
+	
+	
+					
+					// var regex = /(\w+)\s*:\s*"([^"]*)"/g;
+					// var matches = attributeValue.matchAll(regex);
+	
+					// // 추출된 결과를 객체에 저장
+					// var keyValuePairs = {};
+					// for (const match of matches) {
+					// var key = match[1];
+					// var value = match[2];
+					// keyValuePairs[key] = value;
+					// }
+	
+					// attributeValueContainer.innerHTML = keyValuePairs;
+				}
+			}else{
+				for(i=1 ; i<reqAttribute.length; i++){
+					if(reqAttribute[i]['value']==''){
+						continue;
+					}
+					if(reqAttribute[i].nodeName=='label'){
+						continue;
+					}
+					var attributeKey = reqAttribute[i]['name'];
+					var attributeKeyContainer = document.createElement('div');
+					attributeKeyContainer.style.marginLeft = '1px';
+					attributeKeyContainer.style.marginRight = '1px';
+					attributeKeyContainer.innerHTML = '<strong style="color: black;">'+attributeKey+'</strong>';
+					// attributeKeyContainer.style=bold;
+	
+					var attributeValue = reqAttribute[i]['value'];
+					var attributeValueContainer = document.createElement('div');
+					attributeValueContainer.style.borderBottom = '1px solid #D6D6D6'; 
+					attributeValueContainer.style.marginLeft = '3px';
+					attributeValueContainer.style.marginRight = '3px';
+					attributeValueContainer.style.whiteSpace = 'pre-wrap';
+					attributeValueContainer.style.overflowWrap = 'break-word'
+	
+					attributeValueContainer.innerHTML = attributeValue;
+	
+					showAttribute.appendChild(attributeValueContainer);
+					var textHeight = attributeValueContainer.clientHeight;
+					// document.body.removeChild(attributeValueContainer);
+	
+					// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
+					var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
+					if (textHeight > maxWidth) {
+						attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
+						attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
+					}
+	
+					var empty = document.createElement('div');
+					empty.style.marginBottom = '10px';
+					showAttribute.appendChild(attributeKeyContainer);
+					showAttribute.appendChild(attributeValueContainer);
+					showAttribute.appendChild(empty);
+	
+	
+	
+					
+					// var regex = /(\w+)\s*:\s*"([^"]*)"/g;
+					// var matches = attributeValue.matchAll(regex);
+	
+					// // 추출된 결과를 객체에 저장
+					// var keyValuePairs = {};
+					// for (const match of matches) {
+					// var key = match[1];
+					// var value = match[2];
+					// keyValuePairs[key] = value;
+					// }
+	
+					// attributeValueContainer.innerHTML = keyValuePairs;
+				}
+			}
+			
 			// showAttribute.innerHTML = totalAttribute;
 
 			// var lines = totalAttribute.split('<br>');

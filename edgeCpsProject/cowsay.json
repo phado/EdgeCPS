@@ -1,0 +1,53 @@
+{
+    "namespace": "argo",
+    "serverDryRun": false,
+    "workflow": {
+    "apiVersion": "argoproj.io/v1alpha1",
+    "kind": "Workflow",
+    "metadata": {
+      "generateName": "steps-"
+    },
+    "spec": {
+      "entrypoint": "hello",
+      "templates": [
+        {
+          "name": "hello",
+          "steps": [
+            [
+              {
+                "name": "hello",
+                "template": "whalesay",
+                "arguments": {
+                  "parameters": [
+                    {
+                      "name": "message",
+                      "value": "hello1"
+                    }
+                  ]
+                }
+              }
+            ]
+          ]
+        },
+        {
+          "name": "whalesay",
+          "inputs": {
+            "parameters": [
+              {
+                "name": "message"
+              }
+            ]
+          },
+          "container": {
+            "image": "docker/whalesay",
+            "command": [
+              "cowsay"
+            ],
+            "args": [
+              "{{inputs.parameters.message}}"
+            ]
+          }
+        }
+      ]
+    }
+  }}
