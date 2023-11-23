@@ -273,7 +273,7 @@
               aria-label="Close"
             ></button>
           </div>
-          <form method="post" action="" , id="formtag">
+
             <div class="modal-body">
                 <div class="form-group">
                   <label class="project_name" for="project_name">Project Name</label>
@@ -312,16 +312,14 @@
                   </select>
                 </div>
             <div class="modal-footer">
-              <button type="submit" class="btn btn-primary" style="background-color: #2E5686" id="saveButton">
+             <button type="submit" class="btn btn-primary" style="background-color: #2E5686" id="saveButton">
                 OK
             </div>
-			
           </div>
-          </form>
       </div>
     </div>
 	<script>
-		document.getElementById('saveButton').addEventListener('click', function() {
-			saveAsProject(projectName);
-		});
-	</script>
+		document.getElementById('saveButton').addEventListener('click', async function() {
+	  await saveAsProject(projectName,"{{ userIds }}");
+	});
+	  </script>

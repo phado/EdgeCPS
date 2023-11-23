@@ -80,13 +80,22 @@ function saveAllProject(saveAsProjectName) {
   ];
   if(saveAsProjectName==undefined){
     var stringWorkflowList = localStorage.getItem(projectName + "_workflowXML");
-    var workflowList = JSON.parse(stringWorkflowList);
+    if(stringWorkflowList!=null){
+      var modifiedString = stringWorkflowList.replace(/'/g, '"');
+      var workflowList = JSON.parse(modifiedString);
+    }
+    
+    
   try {
     for (var i = 0; i < workflowList.length; i++) {
       for (var j = 0; j < localStorage.length; j++) {
         const key = localStorage.key(j);
         if (key.includes(projectName + "_" + workflowList[i])) {
-          workflowXMLValue.push(key);
+
+          var result = key.split('_').slice(1).join('_');
+          workflowXMLValue.push(result);
+          
+          
         }
       }
     }
@@ -96,6 +105,8 @@ function saveAllProject(saveAsProjectName) {
   let data = {};
   let processData = {};
   let workflowData = {};
+  let workflowProcessList = {};
+  workflowProcessList['workflowXML']=localStorage.getItem(projectName+'_workflowXML')
 
   // 프로세스 저장
   for (var i = 0; i < get_localstorage_xml_list.length; i++) {
@@ -111,7 +122,7 @@ function saveAllProject(saveAsProjectName) {
   if (workflowXMLValue) {
     for (var i = 0; i < workflowXMLValue.length; i++) {
       var key = workflowXMLValue[i];
-      var value = localStorage.getItem(key);
+      var value = localStorage.getItem(projectName+'_'+key);
       workflowData[key] = value;
     }
   }
@@ -120,24 +131,34 @@ function saveAllProject(saveAsProjectName) {
   var projectNamejsonData = data;
   var processDatajsonData = processData;
   var workflowDatajsonData = workflowData;
+  var workflowListData = workflowProcessList;
 
   var dataToSend = {
     projectNamejsonData: projectNamejsonData,
     processDatajsonData: processDatajsonData,
     workflowDatajsonData: workflowDatajsonData,
+    workflowList: workflowListData,
     saveAsProject : 'True'
   };
   }
   //save as인 경우
   else{
     var stringWorkflowList = localStorage.getItem(saveAsProjectName + "_workflowXML");
-    var workflowList = JSON.parse(stringWorkflowList);
+    if(stringWorkflowList!=null){
+      var modifiedString = stringWorkflowList.replace(/'/g, '"');
+      var workflowList = JSON.parse(modifiedString);
+    }
+    
   try {
     for (var i = 0; i < workflowList.length; i++) {
       for (var j = 0; j < localStorage.length; j++) {
         const key = localStorage.key(j);
-        if (key.includes(saveAsProjectName + "_" + workflowList[i])) {
-          workflowXMLValue.push(key);
+        if (key.includes(projectName + "_" + workflowList[i])) {
+
+          var result = key.split('_').slice(1).join('_');
+          workflowXMLValue.push(result);
+          
+          
         }
       }
     }
@@ -147,6 +168,8 @@ function saveAllProject(saveAsProjectName) {
   let data = {};
   let processData = {};
   let workflowData = {};
+  let workflowProcessList = {};
+  workflowProcessList['workflowXML']=localStorage.getItem(projectName+'_workflowXML')
 
   // 프로세스 저장
   for (var i = 0; i < get_localstorage_xml_list.length; i++) {
@@ -162,7 +185,7 @@ function saveAllProject(saveAsProjectName) {
   if (workflowXMLValue) {
     for (var i = 0; i < workflowXMLValue.length; i++) {
       var key = workflowXMLValue[i];
-      var value = localStorage.getItem(key);
+      var value = localStorage.getItem(projectName+'_'+key);
       workflowData[key] = value;
     }
   }
@@ -171,11 +194,13 @@ function saveAllProject(saveAsProjectName) {
   var projectNamejsonData = data;
   var processDatajsonData = processData;
   var workflowDatajsonData = workflowData;
+  var workflowListData = workflowProcessList;
 
   var dataToSend = {
     projectNamejsonData: projectNamejsonData,
     processDatajsonData: processDatajsonData,
     workflowDatajsonData: workflowDatajsonData,
+    workflowList: workflowListData,
     saveAsProject : 'True',
   };
   }
@@ -399,22 +424,10 @@ document.addEventListener("DOMContentLoaded", function () {
  * 페이지 이동시 xml 저장 하는 함수
  */
 function getLatestXml(strXml) {
-  localStorage.setItem(
-    projectName +
-      "_" +
-      localStorage.getItem(projectName + "_current_processXml"),
-    strXml
-  ); // xml 저장
-  if (
-    localStorage.getItem(projectName + "_current_processDict") !=
-    "policyProcess"
-  ) {
+  localStorage.setItem(projectName + "_" +localStorage.getItem(projectName + "_current_processXml"),strXml); // xml 저장
+  if (localStorage.getItem(projectName + "_current_processDict") !="policyProcess") {
     //policy일 경우에는 이미지 저장 따로 안함
-    captureAndDownloadImage(
-      projectName +
-        "_" +
-        localStorage.getItem(projectName + "_current_processXml")
-    );
+    captureAndDownloadImage( projectName + "_" + localStorage.getItem(projectName + "_current_processXml"));
   }
 }
 
@@ -601,7 +614,7 @@ function createWorkflowSelectBox(activityCatList) {
   selectBox.style="width: 200px;"
 
   // workflow 페이지를 최초로 열어 로컬스토리지에 nowWorkflow 값이 없는 경우 넣어줌.
-  if (localStorage.getItem(projectName + "_nowWorkflow") == "") {
+  if (localStorage.getItem(projectName + "_nowWorkflow") == ""||localStorage.getItem(projectName + "_nowWorkflow")== null) {
     localStorage.setItem(
       projectName + "_nowWorkflow",
       projectName + "_" + activityCatList[0].id + "#" + activityCatList[0].value
@@ -863,58 +876,50 @@ path : ""`);
   FAcell.value.namespaceURI =''
 }
 
-async function is_name_exists(projectName,userIds) {
+async function is_name_exists(projectName, userIds) {
   const url = `http://127.0.0.1:5000/exists?project_name=${encodeURIComponent(projectName)}&userId=${encodeURIComponent(userIds)}`;
+
   try {
-    // const response = await fetch(url);  // await를 추가하여 비동기 처리
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        // 필요한 경우 다른 헤더도 추가 가능
-      },
-      // 다른 설정들...
-    });
-    const data = await response.text(); // await를 추가하여 비동기 처리
+    const response = await fetch(url);
+    const data = await response.text();
 
-    console.log(data);
-
-    return data === 'true' ? 'true' : 'false';
+    return data.trim() === 'true';
   } catch (error) {
     console.error("Error:", error);
     throw error;
   }
 }
-async function saveAsProject(oldProjectName,userIds) {
-  var projectName = document.getElementById("project_name").value;
+
+async function saveAsProject(oldProjectName, userIds) {
+  var newProjectName = document.getElementById("project_name").value;
   var projectDescription = document.getElementById("project_description").value;
   var projectCategory = document.getElementById("project_category").value;
 
   var newOverview = {
-    "name": projectName,
+    "name": newProjectName,
     "description": projectDescription,
     "category": projectCategory
   };
 
-  var newProjectName = projectName;
-  var oldProjectName = oldProjectName;
-
   try {
-    const result = await is_name_exists(newProjectName,userIds); // await 추가
+    const result = await is_name_exists(newProjectName, userIds);
 
-    if (result === 'true') {
+    if (result) {
       const allKeys = Object.keys(localStorage);
       const filteredKeys = allKeys.filter(key => key.includes(oldProjectName));
 
       for (let i = 0; i < filteredKeys.length; i++) {
-        const oldKey = filteredKeys[i]
-        if(oldKey.includes('overview')){
-          localStorage.setItem(newProjectName+'_overviewProcessXML', JSON.stringify(newOverview));
+        const oldKey = filteredKeys[i];
+        if (oldKey.includes('nowWorkflow')){
+          continue;
+        }
+        if (oldKey.includes('overview')) {
+          localStorage.setItem(newProjectName + '_overviewProcessXML', JSON.stringify(newOverview));
           localStorage.removeItem(oldKey);
           continue;
         }
         const oldValue = localStorage.getItem(oldKey);
-        if(oldValue == ""){
+        if (oldValue == "") {
           continue;
         }
         const regex = /[^_]+/;
@@ -929,8 +934,7 @@ async function saveAsProject(oldProjectName,userIds) {
         }
       }
       saveAllProject(newProjectName);
-    }
-    else{
+    } else {
       alert("같은 이름의 프로젝트가 존재합니다.");
     }
   } catch (error) {

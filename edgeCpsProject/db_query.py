@@ -3,6 +3,7 @@ import logging
 import traceback
 import os
 import mysql.connector.pooling
+import json
 
 # 로그 기록 함수
 logging.basicConfig(filename='./DB_Query.log', level=logging.ERROR)
@@ -39,7 +40,7 @@ def check_userId(mariadb_pool, name, email ):
         connection = mariadb_pool.get_connection()
 
         cursor = connection.cursor()
-        cursor.execute("SELECT COUNT(*) FROM TB_USER WHERE USER_NAME = %s", (name,))
+        cursor.execute("SELECT COUNT(*) FROM TB_USER WHERE USER_NAME = %s and USER_EMAIL =%s", (name,email))
         count = cursor.fetchone()[0]
 
         if count == 1:
@@ -216,8 +217,13 @@ def change_Info(mariadb_pool, new_group, new_valid, user):
     try:
         connection = mariadb_pool.get_connection()
 
+        sql = f"SELECT GROUP_IDX FROM TB_GROUP WHERE GROUP_NAME = '{new_group}'"
         cursor = connection.cursor()
-        cursor.execute("UPDATE TB_USER SET GROUP_IDX = %s, VALID = %s WHERE USER_IDX = %s", (new_group, new_valid, user))
+        cursor.execute(sql)
+        group_id = cursor.fetchone()
+        
+        sql = f"UPDATE TB_USER SET GROUP_IDX = '{group_id[0]}', VALID = '{new_valid}' WHERE USER_IDX = '{user}'"
+        cursor.execute(sql)
         connection.commit()
 
         response['result'] = True
@@ -232,10 +238,22 @@ def change_Info(mariadb_pool, new_group, new_valid, user):
 
     return response
 
+
+def process_string(input_str):
+    input_str = input_str.replace("'",'"')
+
+    # if input_str.startswith("'") and input_str.endswith("'"):
+    #     input_str = '"' + input_str[1:-1] + '"'
+
+    return input_str
+
 def add_table_save_prj(mariadb_pool, project_name, project_data, userid):
     data = project_data['processDatajsonData']
     data2 = project_data['workflowDatajsonData']
+    data3 = project_data['workflowList']
     data.update(data2)
+    data.update(data3)
+    # data = json.dumps(data)
     
     try:
         connection = mariadb_pool.get_connection()
@@ -272,8 +290,11 @@ def add_table_save_prj(mariadb_pool, project_name, project_data, userid):
                 # cursor.execute(create_project_table_sql)
 
             for key, value in data.items():
-                insert_data_sql = f"INSERT INTO `TB_PROCESS` (`PROJ_IDX`, `PROC_NAME`, `PROC_DATA`) VALUES(%s, %s, %s);"
-                cursor.execute(insert_data_sql, (project_index, key,value))
+                key = process_string(key)
+                if value!=None:
+                    value = process_string(value)
+                    insert_data_sql = f"INSERT INTO `TB_PROCESS` (`PROJ_IDX`, `PROC_NAME`, `PROC_DATA`) VALUES(%s, %s, %s);"
+                    cursor.execute(insert_data_sql, (project_index, key,value))
 
             connection.commit()
         else:
@@ -287,7 +308,7 @@ def add_table_save_prj(mariadb_pool, project_name, project_data, userid):
                 for db_row in db_data:
                     if client_row == db_row[0]:
                         if x != db_row[1]:
-                            # x = x.replace('"',"'")
+                            x = process_string(x)
                             # 수정된 내용이 있다면 업데이트 쿼리 생성
                             update_query = f"UPDATE `TB_PROCESS` SET `PROC_DATA` = %s WHERE `PROC_NAME` = %s AND `PROJ_IDX` = %s;"
                             cursor.execute(update_query, (x, client_row, project_index[0][0]))
@@ -298,6 +319,7 @@ def add_table_save_prj(mariadb_pool, project_name, project_data, userid):
                     # 추가하는 쿼리 생성
                     # x = x.replace('"',"'")
                     insert_query = f"INSERT INTO `TB_PROCESS` (`PROJ_IDX`, `PROC_NAME`, `PROC_DATA`) VALUES(%s, %s, %s);"
+                    x = process_string(x)
                     cursor.execute(insert_query, (project_index[0][0], client_row, x))
                     connection.commit()
 
@@ -518,21 +540,24 @@ def get_group_info(mariadb_pool):
         cursor.close()
         connection.close()
 
-def add_grp(group,mariadb_pool):
+def add_grp(add_group,mariadb_pool):
     code = "code"
     try:
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor(buffered=True)
-
-        sql = f"INSERT INTO TB_GROUP (GROUP_IDX, GROUP_NAME,GROUP_CODE) VALUES (DEFAULT, '{group}','{code}');"
-
+        sql = f"SELECT GROUP_IDX FROM TB_GROUP WHERE GROUP_NAME = '{add_group}'"
         cursor.execute(sql)
-        connection.commit()
-        
-        # 영향을 받은 행의 수를 확인
-        affected_rows = cursor.rowcount
+        group= cursor.fetchall()
+        group_count = len(group)
+        if(group_count==0):
+            sql = f"INSERT INTO TB_GROUP (GROUP_NAME,GROUP_CODE) VALUES ('{add_group}','{code}');"
 
-        return affected_rows
+            cursor.execute(sql)
+            connection.commit()
+            return True
+        else:
+            return False
+        
 
     except Exception as e:
         print(str(e))
@@ -552,10 +577,7 @@ def del_grp(group,mariadb_pool):
 
         connection.commit()
         
-        # 영향을 받은 행의 수를 확인
-        affected_rows = cursor.rowcount
-
-        return affected_rows
+        return
 
     except mysql.connector.Error as e:
         print(f"MySQL Error: {e}")
@@ -581,8 +603,9 @@ def is_name_exists(project_name,mariadb_pool,user_id):
         sql = f"SELECT TP.PROJ_IDX, TP.PROJ_NAME, TP.PROJ_CREATE_DATE, TU.USER_IDX FROM TB_PROJ TP INNER JOIN TB_USER TU ON TP.USER_IDX = TU.USER_IDX WHERE TU.GROUP_IDX = '{user_group}' AND TP.PROJ_NAME = '{project_name}'"
         cursor.execute(sql)
         db_data = cursor.fetchall()
-        if len(db_data) > 0:
-            return False
+        if db_data:
+            if len(db_data)>0:
+                return False
         else:
             return True
 

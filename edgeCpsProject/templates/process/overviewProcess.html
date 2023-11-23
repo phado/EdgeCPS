@@ -46,6 +46,7 @@
     let sessiondata = "{{ session['data'] }}";
 
     let userName = "{{ userName }}";
+    let xmlNameList = ['overviewProcessXML','requirementsProcessXML', 'businessProcessXML', 'workflowProcessXML', 'policyProcessXML']
 
     function decodeHTMLEntities(str) {
       // &lt;&lt;와 &gt;&gt;을 임시 문자열로 대체
@@ -64,24 +65,72 @@
 
       return str;
     }
+
+    // function convertString(inputString) {
+    //   // 정규 표현식을 사용하여 키와 값을 추출
+    //   var regex = /'([^']+)'[ ]*:[ ]*'([^']+)'|"([^"]+)"[ ]*:[ ]*"([^"]+)"/g;
+    //   var result = inputString.replace(regex, function(match, p1, p2, p3, p4) {
+    //     if (p1 !== undefined) {
+    //       // 키와 값이 ''로 감싸져 있으면 ""로 감싸기
+    //       return '"' + p1 + '": "' + p2.replace(/"/g, "'") + '"';
+    //     } else if (p3 !== undefined) {
+    //       // 키와 값이 ""로 감싸져 있고 내용이 ''로 잘 감싸져 있으면 그대로 둠
+    //       return match;
+    //     } else {
+    //       // 그 외의 경우는 ""로 감싸기
+    //       return '"' + p4.replace(/"/g, "'") + '"';
+    //     }
+    //   });
+
+    //   return result;
+    function swapQuotes(input) {
+      let result = '';
+
+      for (let i = 0; i < input.length; i++) {
+          let char = input[i];
+
+          if (char === "'") {
+              result += '"';
+          } else if (char === '"') {
+              result += "'";
+          } else {
+              result += char;
+          }
+      }
+
+      return result;
+  }
+
+      
     //파이썬에서넘어온 엔티티를 일반 문자열로 변환
     var decodedString = decodeHTMLEntities(projectData);
-    var modifiedString = "";
+    // var modifiedString = "";
+    // 키 값을 ''에서 ""로 바꾸기
+    // var updatedString = decodedString.replace(/'(\w+)'/g, '"$1"');
 
-    // 모든 문자열 하나씩 읽으면서 큰따옴표 작은따옴표 서로 바꿈
-    for (var i = 0; i < decodedString.length; i++) {
-      var currentChar = decodedString.charAt(i);
+    // 값이 ''로 감싸져 있고 내용이 있으면 ""로 감싸고 내용은 "를 '로 바꾸기
+    // updatedString = updatedString.replace(/'([^']*)'/g, function(match, p1) {
+    //   return p1 ? '"' + p1.replace(/"/g, "'") + '"' : '""';
+    // });
 
-      if (currentChar === "'") {
-        modifiedString += '"';
-      } else if (currentChar === '"') {
-        modifiedString += "'";
-      } else {
-        modifiedString += currentChar;
-      }
-    }
 
-    var result = JSON.parse(modifiedString);
+    var outputString = swapQuotes(decodedString);
+
+
+    // // 모든 문자열 하나씩 읽으면서 큰따옴표 작은따옴표 서로 바꿈
+    // for (var i = 0; i < decodedString.length; i++) {
+    //   var currentChar = decodedString.charAt(i);
+
+    //   if (currentChar === "'") {
+    //     modifiedString += '"';
+    //   } else if (currentChar === '"') {
+    //     modifiedString += "'";
+    //   } else {
+    //     modifiedString += currentChar;
+    //   }
+    // }
+
+    var result = JSON.parse(outputString);
     var keys = Object.keys(result);
     for (i = 0; i < keys.length; i++) {
       // if(keys[0]=='category'){
@@ -206,6 +255,7 @@
       <div class="createProject"><h2>Create Project</h2></div>
       <div class="container">
         <form method="post" action="{{ url_for('requirements_process', projectName = project_name) }}" , id="formtag">
+        <!-- <form method="post" action="" id="formtag"></form> -->
           <div class="form-group">
             <label class="project_name" for="project_name">Project Name</label>
             <input type="text" class="form-control" id="project_name" name="project_name" required/>
@@ -227,7 +277,7 @@
             </div>
           </div>
 
-          <button type="submit" class="btn btn-primary" onclick="savePorjectInfo()">
+          <button type="submit" class="btn btn-primary" onclick="saveProjectInfo()">
             OK
           </button>
         </form>

@@ -4607,7 +4607,16 @@ mxGraph.prototype.createVertex = function(parent, id, value,
  * target - <mxCell> that defines the target of the edge.
  * style - Optional string that defines the cell style.
  */
+mxGraph.prototype.insertEdge = function(parent, id, value, source, target, style) {
+	var edge = this.createEdge(parent, id, value, source, target, style);
 
+	console.log("Source 노드 클래스 id:", source.id);
+	console.log("Target 노드 클래스 id:", target.id);
+
+	var insertedEdge = this.addEdge(edge, parent, source, target);
+	
+	return insertedEdge;
+  };
 /**
  * Function: createEdge
  * 
