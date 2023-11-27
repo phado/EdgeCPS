@@ -53,17 +53,20 @@
   color: #fff;
   text-decoration: none;
 }
+
+
+
 .title h2{
-  /* margin-top: 10px; */
+
   font-family: Inter Extra Bold;
   font-size: 40px;
   font-weight: 800;
   line-height: 48px;
   letter-spacing: 0em;
   text-align: left;
-  width: 30%;
+  width: 100%;
   top: 14px;
-  position: fixed;
+  position: absolute;
   text-decoration: none;
 }
 .title {
@@ -217,4 +220,17 @@ input:checked + .slider:before {
   padding: 10px 20px;
   border: none;
   cursor: pointer;
+}
+
+
+@media (max-width: 800px) {
+  .userInfo {
+    display: none;
+  }
+  .title {
+    padding: 0 10px;
+  }
+  .title h2{
+    font-size: 30px;
+  }
 }

@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
- <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename='css/styles/process.css')}}"
-    />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+ href="{{ url_for('static', filename='css/styles/process.css')}}"/>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <style>
+      body {
+        min-width: 1000px; /* 최소 폭 지정 */
+        min-height: 200px; /* 최소 높이 지정 */
+      }
+    </style>
 </head>
 <body>
 
@@ -141,7 +147,7 @@
               id="confirmBtn"
               style="
                 background: #6097D9;
-                width: 550px;
+                width: 100%;
                 height: 45px;
                 padding: 10px, 167px, 10px, 167px;
                 border-radius: 999px;

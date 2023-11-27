@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resize Event Example</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    .content {
+      width: 100vw;
+      height: 100vh;
+      background-color: #f0f0f0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <h1>Resizable Content</h1>
+  </div>
+
+  <script>
+    // 스크롤 활성화 함수
+    function checkWindowSize() {
+      if (window.innerWidth < 600) {
+        document.body.style.overflow = 'auto'; // 스크롤 활성화
+      } else {
+        document.body.style.overflow = 'hidden'; // 스크롤 비활성화
+      }
+    }
+
+    // 초기 화면 크기 확인
+    checkWindowSize();
+
+    // 창 크기가 변경될 때 이벤트 리스너 등록
+    window.addEventListener('resize', checkWindowSize);
+  </script>
+</body>
+</html>
