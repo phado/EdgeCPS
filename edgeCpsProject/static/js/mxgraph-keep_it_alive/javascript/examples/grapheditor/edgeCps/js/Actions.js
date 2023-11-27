@@ -10,20 +10,7 @@ function Actions(editorUi)
 	this.actions = new Object();
 	this.init();
 };
-// Actions.prototype.clearGraphContainer = function(){
-// 	// graph = this.graph
-// 	var ui = this.editorUi;
-// 	var editor = ui.editor;
-// 	var graph = editor.graph;
-// 	graph.escape();
-	
-// 	var select = graph.deleteCells(graph.getDeletableCells(graph.getSelectionCells()), false);
-	
-// 	if (select != null)
-// 	{
-// 		graph.setSelectionCells(select);
-// 	}
-// }
+
 /**
  * Adds the default actions.
  */
@@ -982,12 +969,14 @@ Actions.prototype.init = function()
 	});
 	action.setToggleAction(true);
 	action.setSelectedCallback(function() { return graph.scrollbars; });
+	
 	action = this.addAction('pageView', mxUtils.bind(this, function()
 	{
 		ui.setPageVisible(!graph.pageVisible);
 	}));
 	action.setToggleAction(true);
 	action.setSelectedCallback(function() { return graph.pageVisible; });
+
 	action = this.addAction('connectionArrows', function()
 	{
 		graph.connectionArrowsEnabled = !graph.connectionArrowsEnabled;

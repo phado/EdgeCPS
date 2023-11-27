@@ -451,7 +451,7 @@ Menus.prototype.init = function()
 	this.put('view', new Menu(mxUtils.bind(this, function(menu, parent)
 	{
 		this.addMenuItems(menu, ((this.editorUi.format != null) ? ['formatPanel'] : []).
-			concat(['outline', 'layers', '-', 'pageView', 'pageScale', '-', 'scrollbars', 'tooltips', '-',
+			concat(['outline', '-', 'pageView', 'pageScale', '-', 'scrollbars', 'tooltips', '-',
 			        'grid', 'guides', '-', 'connectionArrows', 'connectionPoints', '-',
 			        'resetView', 'zoomIn', 'zoomOut'], parent));
 	})));
@@ -490,7 +490,7 @@ Menus.prototype.init = function()
 	this.put('edit', new Menu(mxUtils.bind(this, function(menu, parent)
 	{
 		this.addMenuItems(menu, ['undo', 'redo', '-', 'cut', 'copy', 'paste', 'delete', '-', 'duplicate', '-',
-			'editData', 'editTooltip', '-', 'editStyle', '-', 'edit', '-', 'editLink', 'openLink', '-',
+			'editData',  '-', 'edit', '-', 
 			'selectVertices', 'selectEdges', 'selectAll', 'selectNone', '-', 'lockUnlock']);
 	})));
 	this.put('extras', new Menu(mxUtils.bind(this, function(menu, parent)

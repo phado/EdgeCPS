@@ -108,28 +108,44 @@
             </div>
             <div class="row">
               <div class="col-md-6">
-                <button type="button" onclick="addGroup()">소속 추가</button>
-                <button type="button" onclick="deleteGroup()">소속 삭제</button>
+                <button type="button" onclick="addGroup()" class="action-button">소속 추가</button>
+                <button type="button" onclick="deleteGroup()" class="action-button">소속 삭제</button>
               </div>
             </div>
-            <button
-              type="button"
-              style="margin-top: 100px; float: right"
-              onclick="saveInfo()"
-            >
-              저장
-            </button>
-            <button
-              type="button"
-              style="margin-top: 100px; float: right"
-              onclick="closePopup()"
-            >
-              닫기
-            </button>
+            <button type="button" onclick="saveInfo()" class="save-close-button">저장</button>
+            <button type="button" onclick="closePopup()" class="save-close-button">닫기</button>
           </div>
         </div>
       </div>
     </div>
+    <style>
+      /* 공통 스타일 */
+      button {
+        padding: 7px 20px;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: #8cb2e0;
+        color :#fff;
+      }
+  
+       /* 추가/삭제 버튼 스타일 */
+  .action-button {
+    background-color: #4caf50; /* 초록색 */
+    color: #fff; /* 흰색 텍스트 */
+    margin-bottom: 10px; /* 간격 조절 */
+  }
+
+  /* 저장/닫기 버튼 스타일 */
+  .save-close-button {
+    background-color: #8cb2e0; /* 파란색 */
+    color: #fff; /* 흰색 텍스트 */
+    float: right;
+    margin-right: 10px;
+    margin-top: 14%;
+  }
+    </style>
   </body>
 </html>
 <script>

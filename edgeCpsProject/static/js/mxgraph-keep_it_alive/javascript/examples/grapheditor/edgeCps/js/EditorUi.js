@@ -3885,7 +3885,7 @@ EditorUi.prototype.refresh = function (sizeDidChange) {
   }
   // 민수 우측 사이드 바 생성 조건
   var fw = this.format != null ? this.formatWidth : 0;
-  this.sidebarContainer.style.top = tmp + 140 + "px"; // 순우 좌측 사이드 바 130px 만큼 내림
+  this.sidebarContainer.style.top = tmp + 170 + "px"; // 순우 좌측 사이드 바 130px 만큼 내림
   this.sidebarContainer.style.width = effHsplitPosition +"px";
   this.formatContainer.style.top = tmp + 140 + "px"; // 순우 우측 사이드 바 130px 만큼 내림
   this.formatContainer.style.width = fw + "px";

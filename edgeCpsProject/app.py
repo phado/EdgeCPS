@@ -11,7 +11,7 @@ from flask_cors import CORS
 import subprocess
 import json
 import urllib
-# import cairosvg
+import cairosvg
 import base64
 import urllib.parse
 import mysql.connector.pooling
@@ -263,6 +263,7 @@ def open_process(project_id,project_user,project_name):
 def save_to_server():
     format = request.form.get('format')
     filename = request.form.get('filename')
+    filename= filename.split('.')[0]
     pj_root_pth = 'project_file'
     referrer = request.referrer
     start_index = referrer.find('projectName=')+ len('projectName=')
@@ -270,29 +271,31 @@ def save_to_server():
     if end_index == -1:
         end_index=len(referrer)
     proj_name = referrer[start_index:end_index]
-    pj_pth = os.path.join(pj_root_pth ,proj_name +'@'+session['userid'])
-    full_pth = os.path.join(pj_pth,filename)
+    # pj_pth = os.path.join(pj_root_pth ,proj_name +'@'+session['userid'])
+    download_path = os.path.join(os.path.expanduser("~/Downloads"), filename)
+    # full_pth = os.path.join(pj_pth,filename)
     data = request.form.get('xml')
-    try:
-        os.makedirs(pj_pth)
-    except:
-        pass
+    # try:
+    #     os.makedirs(pj_pth)
+    # except:
+    #     pass
 
-    if format =='svg':
-        decoding_svg_data = urllib.parse.unquote(data) # 받아온 xml데이터 디코딩 해서 저장
+    if format == 'svg':
+        decoding_svg_data = urllib.parse.unquote(data)
         try:
-            with open(full_pth, 'w') as file:
+            with open(download_path, 'w') as file:
                 file.write(decoding_svg_data)
-            return jsonify({'message': 'Data saved successfully'})
+            return '', 204 
         except Exception as e:
             return jsonify({'message': f'Error: {str(e)}'}), 500
-    elif format =='png': # 기본 png로 저장
+    elif format == 'png':
         try:
-            decoding_svg_data = urllib.parse.unquote(data) # 받아온 xml데이터 디코딩 해서 저장
-            cairosvg.svg2png(bytestring=decoding_svg_data, write_to=full_pth +'.png')
-            return jsonify({'message': 'Data saved successfully'})
+            decoding_svg_data = urllib.parse.unquote(data)
+            cairosvg.svg2png(bytestring=decoding_svg_data, write_to=download_path + '.png')
+            return '', 204 
         except Exception as e:
             return jsonify({'message': f'Error: {str(e)}'}), 500
+
 
 """previous"""
 @app.route("/previous", methods=['GET', 'POST'])

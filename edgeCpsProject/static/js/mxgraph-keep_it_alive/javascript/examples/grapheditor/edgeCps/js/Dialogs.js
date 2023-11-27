@@ -834,22 +834,22 @@ var ExportDialog = function(editorUi)
 
 	var gifOption = document.createElement('option');
 	
-	if (ExportDialog.showGifOption)
-	{
-		gifOption.setAttribute('value', 'gif');
-		mxUtils.write(gifOption, mxResources.get('formatGif'));
-		imageFormatSelect.appendChild(gifOption);
-	}
+	// if (ExportDialog.showGifOption)
+	// {
+	// 	gifOption.setAttribute('value', 'gif');
+	// 	mxUtils.write(gifOption, mxResources.get('formatGif'));
+	// 	imageFormatSelect.appendChild(gifOption);
+	// }
 	
-	var jpgOption = document.createElement('option');
-	jpgOption.setAttribute('value', 'jpg');
-	mxUtils.write(jpgOption, mxResources.get('formatJpg'));
-	imageFormatSelect.appendChild(jpgOption);
+	// var jpgOption = document.createElement('option');
+	// jpgOption.setAttribute('value', 'jpg');
+	// mxUtils.write(jpgOption, mxResources.get('formatJpg'));
+	// imageFormatSelect.appendChild(jpgOption);
 
-	var pdfOption = document.createElement('option');
-	pdfOption.setAttribute('value', 'pdf');
-	mxUtils.write(pdfOption, mxResources.get('formatPdf'));
-	imageFormatSelect.appendChild(pdfOption);
+	// var pdfOption = document.createElement('option');
+	// pdfOption.setAttribute('value', 'pdf');
+	// mxUtils.write(pdfOption, mxResources.get('formatPdf'));
+	// imageFormatSelect.appendChild(pdfOption);
 	
 	var svgOption = document.createElement('option');
 	svgOption.setAttribute('value', 'svg');
@@ -1234,8 +1234,9 @@ var ExportDialog = function(editorUi)
 	
 	if (editorUi.editor.cancelFirst)
 	{
-		td.appendChild(cancelBtn);
 		td.appendChild(saveBtn);
+		td.appendChild(cancelBtn);
+		
 	}
 	else
 	{
@@ -1246,6 +1247,7 @@ var ExportDialog = function(editorUi)
 	row.appendChild(td);
 	tbody.appendChild(row);
 	table.appendChild(tbody);
+	table.style.margin = "10px";
 	this.container = table;
 };
 
@@ -1276,7 +1278,8 @@ ExportDialog.exportFile = function(editorUi, name, format, bg, s, b, dpi)
 	
 	if (format == 'xml')
 	{
-    	ExportDialog.saveLocalFile(editorUi, mxUtils.getXml(editorUi.editor.getGraphXml()), name, format);
+		editorUi.editor.getGraphXml(name,name)
+    	// ExportDialog.saveLocalFile(editorUi, mxUtils.getXml(editorUi.editor.getGraphXml()), name, format);
 	}
     else if (format == 'svg'||format=='png') // png일 경우도 일단 svg로 받아서 app.py에서 svg2png로 변환해서 저장
 	{

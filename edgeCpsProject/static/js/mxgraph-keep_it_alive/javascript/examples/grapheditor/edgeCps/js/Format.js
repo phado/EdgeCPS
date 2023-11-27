@@ -48,6 +48,7 @@ Format.prototype.init = function()
 	var ui = this.editorUi;
 	var editor = ui.editor;
 	var graph = editor.graph;
+	ui.setPageVisible(false); //순우 캔버스 꽉 차게 하는 부분
 	
 	this.update = mxUtils.bind(this, function(sender, evt) //민수 우측 사이드바 클릭시 evt안에 id와 mxobjectId가 고유한것같은데 확인 필요
 	{

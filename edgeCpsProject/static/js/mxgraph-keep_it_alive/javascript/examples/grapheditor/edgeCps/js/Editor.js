@@ -575,7 +575,7 @@ Editor.prototype.setGraphXml = function(node)
 var xml//순우
 
 
-Editor.prototype.getGraphXml = function(ignoreSelection)
+Editor.prototype.getGraphXml = function(ignoreSelection,filename)
 {
 	ignoreSelection = (ignoreSelection != null) ? ignoreSelection : true;
 	var node = null;
@@ -628,14 +628,14 @@ Editor.prototype.getGraphXml = function(ignoreSelection)
 	var view = new mxGraphView();
 	view.saveActivity(xml);
 
-	var fileName = 'diagram.xml'; // 순우 파일 이름 지금은 고정인데 동적으로 바꿔야 함.
+	var fileName = filename; // 순우 파일 이름 지금은 고정인데 동적으로 바꿔야 함.
 
 	var blob = new Blob([xml], {type:"text/plain;charset=utf-8"});
 	var url = URL.createObjectURL(blob);
 	var link = document.createElement("a");
 	link.href = url;
 	link.download = fileName;
-	link.innerHTML = "순우 다운로드파일"
+	link.innerHTML = "다운로드파일"
 	document.body.appendChild(link);
 	link.click();
 	document.body.removeChild(link); 
@@ -1744,6 +1744,7 @@ PageSetupDialog.addPageFormatPanel = function(div, namePostfix, pageFormat, page
 	formatDiv.style.marginLeft = '4px';
 	formatDiv.style.width = '210px';
 	formatDiv.style.height = '24px';
+	formatDiv.style.margin = '10px';
 
 	portraitCheckBox.style.marginRight = '6px';
 	formatDiv.appendChild(portraitCheckBox);
