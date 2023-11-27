@@ -1652,7 +1652,8 @@ var EditDataDialog = function(ui, cell)
 				{
 					
 					value.setAttribute(text,name);
-					removeLabel = removeLabel || (names[i] == 'placeholder' && value.getAttribute('placeholders') == '1');
+					removeLabel = removeLabel 
+					|| (names[i] == 'placeholder' && value.getAttribute('placeholders') == '1');
 				}
 			}
 			
@@ -1696,59 +1697,59 @@ var EditDataDialog = function(ui, cell)
 	buttons.id = 'editData'//순우
 	buttons.style.cssText = 'position:absolute;left:30px;right:30px;text-align:right;bottom:30px;height:40px;'
 
-	if (ui.editor.graph.getModel().isVertex(cell) || ui.editor.graph.getModel().isEdge(cell))
-	{
-		var replace = document.createElement('span');
-		replace.style.marginRight = '10px';
-		var input = document.createElement('input');
-		input.setAttribute('type', 'checkbox');
-		input.style.marginRight = '6px';
+	// if (ui.editor.graph.getModel().isVertex(cell) || ui.editor.graph.getModel().isEdge(cell))
+	// {
+	// 	var replace = document.createElement('span');
+	// 	replace.style.marginRight = '10px';
+	// 	var input = document.createElement('input');
+	// 	input.setAttribute('type', 'checkbox');
+	// 	input.style.marginRight = '6px';
 		
-		if (value.getAttribute('placeholders') == '1')
-		{
-			input.setAttribute('checked', 'checked');
-			input.defaultChecked = true;
-		}
+	// 	if (value.getAttribute('placeholders') == '1')
+	// 	{
+	// 		input.setAttribute('checked', 'checked');
+	// 		input.defaultChecked = true;
+	// 	}
 	
-		mxEvent.addListener(input, 'click', function()
-		{
-			if (value.getAttribute('placeholders') == '1')
-			{
-				value.removeAttribute('placeholders');
-			}
-			else
-			{
-				value.setAttribute('placeholders', '1');
-			}
-		});
+	// 	mxEvent.addListener(input, 'click', function()
+	// 	{
+	// 		if (value.getAttribute('placeholders') == '1')
+	// 		{
+	// 			value.removeAttribute('placeholders');
+	// 		}
+	// 		else
+	// 		{
+	// 			value.setAttribute('placeholders', '1');
+	// 		}
+	// 	});
 		
-		replace.appendChild(input);
-		mxUtils.write(replace, mxResources.get('placeholders'));
+	// 	replace.appendChild(input);
+	// 	mxUtils.write(replace, mxResources.get('placeholders'));
 		
-		if (EditDataDialog.placeholderHelpLink != null)
-		{
-			var link = document.createElement('a');
-			link.setAttribute('href', EditDataDialog.placeholderHelpLink);
-			link.setAttribute('title', mxResources.get('help'));
-			link.setAttribute('target', '_blank');
-			link.style.marginLeft = '8px';
-			link.style.cursor = 'help';
+	// 	if (EditDataDialog.placeholderHelpLink != null)
+	// 	{
+	// 		var link = document.createElement('a');
+	// 		link.setAttribute('href', EditDataDialog.placeholderHelpLink);
+	// 		link.setAttribute('title', mxResources.get('help'));
+	// 		link.setAttribute('target', '_blank');
+	// 		link.style.marginLeft = '8px';
+	// 		link.style.cursor = 'help';
 			
-			var icon = document.createElement('img');
-			mxUtils.setOpacity(icon, 50);
-			icon.style.height = '16px';
-			icon.style.width = '16px';
-			icon.setAttribute('border', '0');
-			icon.setAttribute('valign', 'middle');
-			icon.style.marginTop = (mxClient.IS_IE11) ? '0px' : '-4px';
-			icon.setAttribute('src', Editor.helpImage);
-			link.appendChild(icon);
+	// 		var icon = document.createElement('img');
+	// 		mxUtils.setOpacity(icon, 50);
+	// 		icon.style.height = '16px';
+	// 		icon.style.width = '16px';
+	// 		icon.setAttribute('border', '0');
+	// 		icon.setAttribute('valign', 'middle');
+	// 		icon.style.marginTop = (mxClient.IS_IE11) ? '0px' : '-4px';
+	// 		icon.setAttribute('src', Editor.helpImage);
+	// 		link.appendChild(icon);
 			
-			replace.appendChild(link);
-		}
+	// 		replace.appendChild(link);
+	// 	}
 		
-		buttons.appendChild(replace);
-	}
+	// 	buttons.appendChild(replace);
+	// }
 	
 	if (ui.editor.cancelFirst)
 	{
@@ -1805,12 +1806,6 @@ var ReqDialog = function(editorUi, ui, cell) {
 	if (process_name =='businessProcess'){
 		// if(typeof(cell.value)=='object'){
 		var actId = cell.id
-		// 	var actName = actId+'#'+cell.value.attributes[1].nodeValue
-		// }
-		// else{
-		// 	var actName = cell.id+'#'+cell.value; // html actName 변수에 현재 선택한 activiy가 뭔지 아이디랑 이름 저장
-		// 	var actId = cell.id
-		// }
 		var valueString = cell.value.outerHTML;
 		// var regex = /&quot;&gt;(.+?)&lt;/;
 		var regex = /&quot;>(.*?)<\/div>/;

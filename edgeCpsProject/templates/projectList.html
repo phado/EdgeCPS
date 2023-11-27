@@ -9,7 +9,13 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/projectlist.css')}}"/>
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/userManagement.js')}}"></script>
-
+    <!-- <style>
+     @media (min-width: 768px) {
+      body {
+        overflow-x: auto;
+      }
+  }
+    </style> -->
   </head>
   <script>
     let loginUserInfo = "{{ loginUserInfo }}";
@@ -27,7 +33,7 @@
       </div>
     </div>
 
-    <div class="container">
+    <div class="container"style="max-width: 1641px;!important; min-width: 768px">
       <div style="float: right">
         <div
           class="nav-links d-flex justify-content-between align-items-center mt-3"
@@ -74,7 +80,7 @@
           {% endfor %}
         </tbody>
       </table>
-      <div style="position: fixed; bottom: 0; left: 0; width: 100%; margin-bottom: 80px;"class="d-flex justify-content-center mt-4">
+      <div style="position: relative; bottom: 0; left: 0; width: 100%; margin-bottom: 80px;"class="d-flex justify-content-center mt-4">
         {{ pagination.links }}
       </div>
     </div>

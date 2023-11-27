@@ -590,8 +590,8 @@ Format.prototype.refresh = function(arguments,id)
 	// 순우 각 cell 클릭 했을 때 우측 사이드바에 속성 값 띄우는 기능
 	if (process_name=='requirementsProcesss'){
 		try{
-			// var reqAttribute = selectedCell[0].cells[0].value.attributes[1]['name']+' : '+selectedCell[0].cells[0].value.getAttribute('text');
-			// showAttribute.textContent = reqAttribute;
+			// var attribute = selectedCell[0].cells[0].value.attributes[1]['name']+' : '+selectedCell[0].cells[0].value.getAttribute('text');
+			// showAttribute.textContent = attribute;
 
 			// var attributeKey = selectedCell[0].cells[0].value.attributes[3]['nodeName']
 			var attributeKey = 'text';
@@ -626,7 +626,7 @@ Format.prototype.refresh = function(arguments,id)
 			showAttribute.appendChild(attributeValueContainer);
 			showAttribute.appendChild(empty);
 
-			// var line = reqAttribute;
+			// var line = attribute;
 			
 			// 	var parts = line.split(':');
 			// 	if (parts.length === 2) {
@@ -647,7 +647,7 @@ Format.prototype.refresh = function(arguments,id)
 		try {
 			
 			if(selectedCell[0].cells[0].value){
-				var reqAttribute = selectedCell[0].cells[0].value.attributes;
+				var attribute = selectedCell[0].cells[0].value.attributes;
 				
 			}else{
 				var keys = Object.keys(selectedCell[0].cells);
@@ -655,7 +655,7 @@ Format.prototype.refresh = function(arguments,id)
 					
 					try{
 						if(selectedCell[0].cells[key].id==id){
-							var reqAttribute = selectedCell[0].cells[key].value.attributes;
+							var attribute = selectedCell[0].cells[key].value.attributes;
 						}
 					}catch(e){
 						console.log(e);
@@ -665,22 +665,22 @@ Format.prototype.refresh = function(arguments,id)
 				// var lastKey = keys[keys.length - 1];
 
 				
-				// var reqAttribute = selectedCell[0].cells[2].value.attributes;
+				// var attribute = selectedCell[0].cells[2].value.attributes;
 			}
-			if(reqAttribute[0].nodeName =='xmlns'){
-				reqAttribute.removeNamedItem('xmlns');
+			if(attribute[0].nodeName =='xmlns'){
+				attribute.removeNamedItem('xmlns');
 			}
-			if(reqAttribute[0].nodeName !='label'){
-				for(i=0 ; i<reqAttribute.length; i++){
+			if(attribute[0].nodeName !='label'){
+				for(i=0 ; i<attribute.length; i++){
 					
-					var attributeKey = reqAttribute[i]['name'];
+					var attributeKey = attribute[i]['name'];
 					var attributeKeyContainer = document.createElement('div');
 					attributeKeyContainer.style.marginLeft = '1px';
 					attributeKeyContainer.style.marginRight = '1px';
 					attributeKeyContainer.innerHTML = '<strong style="color: black;">'+attributeKey+'</strong>';
 					// attributeKeyContainer.style=bold;
 	
-					var attributeValue = reqAttribute[i]['value'];
+					var attributeValue = attribute[i]['value'];
 					var attributeValueContainer = document.createElement('div');
 					attributeValueContainer.style.borderBottom = '1px solid #D6D6D6'; 
 					attributeValueContainer.style.marginLeft = '3px';
@@ -724,21 +724,21 @@ Format.prototype.refresh = function(arguments,id)
 					// attributeValueContainer.innerHTML = keyValuePairs;
 				}
 			}else{
-				for(i=1 ; i<reqAttribute.length; i++){
-					if(reqAttribute[i]['value']==''){
+				for(i=1 ; i<attribute.length; i++){
+					// if(attribute[i]['value']==''){
+					// 	continue;
+					// }
+					if(attribute[i].nodeName=='label'){
 						continue;
 					}
-					if(reqAttribute[i].nodeName=='label'){
-						continue;
-					}
-					var attributeKey = reqAttribute[i]['name'];
+					var attributeKey = attribute[i]['name'];
 					var attributeKeyContainer = document.createElement('div');
 					attributeKeyContainer.style.marginLeft = '1px';
 					attributeKeyContainer.style.marginRight = '1px';
 					attributeKeyContainer.innerHTML = '<strong style="color: black;">'+attributeKey+'</strong>';
 					// attributeKeyContainer.style=bold;
 	
-					var attributeValue = reqAttribute[i]['value'];
+					var attributeValue = attribute[i]['value'];
 					var attributeValueContainer = document.createElement('div');
 					attributeValueContainer.style.borderBottom = '1px solid #D6D6D6'; 
 					attributeValueContainer.style.marginLeft = '3px';
@@ -747,6 +747,7 @@ Format.prototype.refresh = function(arguments,id)
 					attributeValueContainer.style.overflowWrap = 'break-word'
 	
 					attributeValueContainer.innerHTML = attributeValue;
+					
 	
 					showAttribute.appendChild(attributeValueContainer);
 					var textHeight = attributeValueContainer.clientHeight;
@@ -765,22 +766,69 @@ Format.prototype.refresh = function(arguments,id)
 					showAttribute.appendChild(attributeValueContainer);
 					showAttribute.appendChild(empty);
 	
-	
-	
-					
-					// var regex = /(\w+)\s*:\s*"([^"]*)"/g;
-					// var matches = attributeValue.matchAll(regex);
-	
-					// // 추출된 결과를 객체에 저장
-					// var keyValuePairs = {};
-					// for (const match of matches) {
-					// var key = match[1];
-					// var value = match[2];
-					// keyValuePairs[key] = value;
-					// }
-	
-					// attributeValueContainer.innerHTML = keyValuePairs;
 				}
+				// req 내용도 우측 사이드바에 보여주는 기능
+				try{
+					
+					try{
+						var selectedCellName = parseString(selectedCell[0].cells[0].value.attributes['label'].value, process_name,selectedCell[0].cells[0].id); 
+						var reqAttirbute = localStorage.getItem(selectedCellName+'_requirement');
+					}
+					catch{
+						var keys = Object.keys(selectedCell[0].cells);
+						for (var key of Object.values(keys)) {
+							
+							try{
+								if(selectedCell[0].cells[key].id==id){
+									var attribute = selectedCell[0].cells[key].value.attributes;
+									var selectedCellName = parseString(attribute['label'].value, process_name,id);
+									var reqAttirbute = localStorage.getItem(selectedCellName+'_requirement');
+								}
+								
+							}catch(e){
+								console.log(e);
+							}
+							
+						}
+					}
+					// var attributeKey = attribute[i]['name'];
+						var attributeKeyContainer = document.createElement('div');
+						attributeKeyContainer.style.marginLeft = '1px';
+						attributeKeyContainer.style.marginRight = '1px';
+						attributeKeyContainer.innerHTML = '<strong style="color: black;">Related requirements</strong>';
+						// attributeKeyContainer.style=bold;
+		
+						var attributeValue = reqAttirbute
+						var attributeValueContainer = document.createElement('div');
+						attributeValueContainer.style.borderBottom = '1px solid #D6D6D6'; 
+						attributeValueContainer.style.marginLeft = '3px';
+						attributeValueContainer.style.marginRight = '3px';
+						attributeValueContainer.style.whiteSpace = 'pre-wrap';
+						attributeValueContainer.style.overflowWrap = 'break-word'
+		
+						attributeValueContainer.innerHTML = attributeValue;
+						
+		
+						showAttribute.appendChild(attributeValueContainer);
+						var textHeight = attributeValueContainer.clientHeight;
+						// document.body.removeChild(attributeValueContainer);
+		
+						// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
+						var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
+						if (textHeight > maxWidth) {
+							attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
+							attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
+						}
+		
+						var empty = document.createElement('div');
+						empty.style.marginBottom = '10px';
+						showAttribute.appendChild(attributeKeyContainer);
+						showAttribute.appendChild(attributeValueContainer);
+						showAttribute.appendChild(empty);
+				}catch(e){
+					console.log(e);
+				}
+				
 			}
 			
 			// showAttribute.innerHTML = totalAttribute;

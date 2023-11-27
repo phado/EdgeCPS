@@ -269,20 +269,20 @@
              
             <label class="overviewTitle" for="project_name"> 
               {% if new_pj == 'True' %}
-                Create Project
+                Create Service
               {% elif open_project == "True" %}
-                Open Project
+                Open Service
               {% endif %}
             </label>
-            <label class="project_name" for="project_name">Project Name</label>
+            <label class="project_name" for="project_name">Service Name</label>
             <input type="text" class="form-control" id="project_name" name="project_name" required/>
           </div>
           <div class="form-group">
-            <label class="project_description" for="project_description">Project Description</label>
+            <label class="project_description" for="project_description">Service Description</label>
             <textarea class="form-control" id="project_description" name="project_description" required ></textarea>
           </div>
           <div class="form-group">
-            <label class="project_category" for="project_category" style="display: inline-block; margin-right: 10px">Project Category</label>
+            <label class="project_category" for="project_category" style="display: inline-block; margin-right: 10px">Service Type</label>
            
             <div class="category-container">
               <select class="form-control" id="project_category" name="project_category" required>

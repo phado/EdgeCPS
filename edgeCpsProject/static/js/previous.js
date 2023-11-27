@@ -17,16 +17,16 @@ function subContent1(projectName, processName){
 function subContent1ClickHandler(sender, evt) {
     var cell = evt.getProperty('cell'); 
 
-    if(processName == 'requirementsProcess'){
-        var cellText = cell.value.attributes[3].nodeValue;
-        var cellId = cell.id;
-        subContent2(cellText,cellId,cell);
-    }
-    else if(processName == 'businessProcess'){
+    // if(processName == 'requirementsProcess'){
+    //     var cellText = cell.value.attributes[3].nodeValue;
+    //     var cellId = cell.id;
+    //     subContent2(cellText,cellId,cell);
+    // }
+    // else if(processName == 'businessProcess'){
         var cellValues = cell.value.attributes;
         var cellId = cell.id;
         subContent2(cellValues, cellId, cell);
-    }
+    // }
 }
 
 function subContent2(cellName,cellId,cell){
@@ -47,23 +47,23 @@ function subContent2(cellName,cellId,cell){
     var requirementAttributes = document.createElement('div');
     
 
-    if(processName == 'requirementsProcess'){
-        var cellNodeName = cell.value.attributes[3].nodeName;
-        var requirementName = document.createElement('div');
-        var requirementAttribute = document.createElement('div');
+    // if(processName == 'requirementsProcess'){
+    //     var cellNodeName = cell.value.attributes[3].nodeName;
+    //     var requirementName = document.createElement('div');
+    //     var requirementAttribute = document.createElement('div');
         
-        requirementAttribute.textContent = cellName;
-        requirementAttribute.style.cssText = 'color: #5A5A5A;font-family: Inter;font-size: 18px;font-style: normal;font-weight: 500;line-height: normal; border-bottom:1px solid rgb(214, 214, 214); margin-bottom:6%'
-        requirementName.textContent = cellNodeName;
-        requirementName.style.cssText = 'color: #222;font-family: Inter;font-size: 20px;font-style: normal;font-weight: 600;line-height: normal;'
+    //     requirementAttribute.textContent = cellName;
+    //     requirementAttribute.style.cssText = 'color: #5A5A5A;font-family: Inter;font-size: 18px;font-style: normal;font-weight: 500;line-height: normal; border-bottom:1px solid rgb(214, 214, 214); margin-bottom:6%'
+    //     requirementName.textContent = cellNodeName;
+    //     requirementName.style.cssText = 'color: #222;font-family: Inter;font-size: 20px;font-style: normal;font-weight: 600;line-height: normal;'
         
-        requirementAttributes.appendChild(requirementName);
-        requirementAttributes.appendChild(requirementAttribute);
+    //     requirementAttributes.appendChild(requirementName);
+    //     requirementAttributes.appendChild(requirementAttribute);
  
-        container.appendChild(requirementAttributes);
+    //     container.appendChild(requirementAttributes);
 
-    }
-    else if(processName == 'businessProcess'){
+    // }
+    // else if(processName == 'businessProcess'){
         
         for(i=2 ; i<cellName.length ; i++){
             var cellNodeName = cell.value.attributes[i];
@@ -79,6 +79,6 @@ function subContent2(cellName,cellId,cell){
             requirementAttributes.appendChild(requirementName);
             requirementAttributes.appendChild(requirementAttribute);
             container.appendChild(requirementAttributes);
-        }   
+        // }   
     }
 }

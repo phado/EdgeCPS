@@ -352,7 +352,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementsByClassName("previousProcess");
       try {
         previousContainer[0].appendChild(
-          createButton("Requirement Process", function () {
+          createButton("Show requirements", function () {
             var previousXML = localStorage.getItem(
               projectName + "_requirementsProcessXml"
             );
@@ -371,7 +371,7 @@ document.addEventListener("DOMContentLoaded", function () {
           process_name == "policyProcess"
         ) {
           previousContainer[0].appendChild(
-            createButton("Business Process", function () {
+            createButton("Show business process", function () {
               var previousXML = localStorage.getItem(
                 projectName + "_businessProcessXml"
               );
@@ -785,7 +785,7 @@ function forceApply(graph, cell, value, className){
       const labelValue = FAvalue.getAttribute('label');
       const objectElement = document.createElement('object');
       objectElement.setAttribute('label', labelValue);
-      objectElement.setAttribute('class',FAclassName);
+      // objectElement.setAttribute('class',FAclassName);
       objectElement.setAttribute('description', '');
       objectElement.setAttribute('input_information', '');
       objectElement.setAttribute('output_information', '');
@@ -800,7 +800,7 @@ function forceApply(graph, cell, value, className){
 
       const objectElement = document.createElement('object');
       objectElement.setAttribute('label', content);
-      objectElement.setAttribute('class',FAclassName);
+      // objectElement.setAttribute('class',FAclassName);
       objectElement.setAttribute('description', '');
       objectElement.setAttribute('input_information', '');
       objectElement.setAttribute('output_information', '');
@@ -814,8 +814,13 @@ function forceApply(graph, cell, value, className){
       const labelValue = FAvalue.getAttribute('label');
       const objectElement = document.createElement('object');
       objectElement.setAttribute('label', labelValue|| '');
-      objectElement.setAttribute('class',FAclassName|| '');
-      objectElement.setAttribute('text', '');
+      // objectElement.setAttribute('class',FAclassName|| '');
+      objectElement.setAttribute('Req.ID', '');
+      objectElement.setAttribute('Req.name', '');
+      objectElement.setAttribute('Req.definition', '');
+      objectElement.setAttribute('Detailed.description', '');
+      objectElement.setAttribute('Parent.requirements', '');
+      objectElement.setAttribute('Children.requirements', '');
       FAcell.value = labelValue;
       FAgraph.getModel().setValue(FAcell, objectElement|| '');
    
@@ -828,13 +833,13 @@ function forceApply(graph, cell, value, className){
       const objectElement = document.createElement('object');
       objectElement.removeAttribute('xmlns');
       objectElement.setAttribute('label', labelValue);
-      objectElement.setAttribute('class',FAclassName);
+      // objectElement.setAttribute('class',FAclassName);
       objectElement.setAttribute('image', '');
       objectElement.setAttribute('command', '[]');
       objectElement.setAttribute('args', '[""]');
-      objectElement.setAttribute('resource', '');
-      objectElement.setAttribute('volumeMount', '');
-      objectElement.setAttribute('environment', '');
+      // objectElement.setAttribute('resource', '');
+      // objectElement.setAttribute('volumeMount', '');
+      // objectElement.setAttribute('environment', '');
       objectElement.setAttribute('inputs.parameters', `name : ""    
 value : ""`);
       objectElement.setAttribute('inputs.artifacts', `name : ""    
@@ -869,13 +874,13 @@ from:"{{workflow.outputs.parameters.artifacts-}}"`);
 
       const objectElement = document.createElement('object');
       objectElement.setAttribute('label', content);
-      objectElement.setAttribute('class',FAclassName);
+      // objectElement.setAttribute('class',FAclassName);
       objectElement.setAttribute('image', '');
       objectElement.setAttribute('command', '[]');
       objectElement.setAttribute('args', '[""]');
-      objectElement.setAttribute('resource', '');
-      objectElement.setAttribute('volumeMount', '');
-      objectElement.setAttribute('environment', '');
+      // objectElement.setAttribute('resource', '');
+      // objectElement.setAttribute('volumeMount', '');
+      // objectElement.setAttribute('environment', '');
       objectElement.setAttribute('inputs.parameters', `name : ""    
 value : ""`);
       objectElement.setAttribute('inputs.artifacts', `name : ""    
@@ -958,3 +963,31 @@ async function saveAsProject(oldProjectName, userIds) {
   }
 }
 
+// activity, action의 이름을 가져오기 위한 함수 
+function parseString(inputString, processName,cellId) {
+  let result = '';
+
+  if (processName === 'businessProcess') {
+      // process_name이 businessProcess인 경우
+      const match = inputString.match(/bold\">([^<]*)<\/div>/);
+      if(match[1].includes('['||']')){
+        result =match[1].substring(1,match[1].length -1);
+        result = projectName+'_'+cellId+'#'+result;
+      }else{
+        result = projectName+'_'+cellId+'#'+result;
+      }
+      // return '';
+    }
+      
+  else if (processName === 'workflowProcess') {
+      // process_name이 workflowProcess인 경우
+      const match = inputString.match(/&gt;&gt;<br>(.*?)<\/div>/);
+      if(match[1].includes('['||']')){
+        result =match[1].substring(1,match[1].length -1);
+      }else{
+        result = match[1];
+      }
+    result = localStorage.getItem(projectName+'_nowWorkflow')+'_'+cellId+'#'+result;
+  }
+  return result;
+}
