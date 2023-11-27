@@ -452,7 +452,7 @@ Menus.prototype.init = function()
 	{
 		this.addMenuItems(menu, ((this.editorUi.format != null) ? ['formatPanel'] : []).
 			concat(['outline', '-', 'pageView', 'pageScale', '-', 'scrollbars', 'tooltips', '-',
-			        'grid', 'guides', '-', 'connectionArrows', 'connectionPoints', '-',
+			        'grid', '-', 'connectionArrows', 'connectionPoints', '-',
 			        'resetView', 'zoomIn', 'zoomOut'], parent));
 	})));
 	// Two special dropdowns that are only used in the toolbar
