@@ -1165,14 +1165,14 @@ Sidebar.prototype.addGeneralPaletteBusinessProcess = function(expand)
 
 	var fns = [
 	 	// this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectanglㅇㅇe', null, null, 'rect rectangle box'),
-	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '<div style="font-weight:bold;">[Activity name]</div>', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),
+	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '<div style="font-weight:bold;" >[Activity name]</div>', 'Activity', null, null, 'rounded rect rectangle box'), // 비지니스프로세스 다이어그램
 		this.createVertexTemplateEntry('ellipse;fillColor=#000000;strokeColor=none;', 30, 30, '', 'Initial state', null, null, dt + 'initial state'),
-		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Join/Fork', null, null, dt + 'join fork'),
+		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Parallel', null, null, dt + 'join fork'),
 		this.createVertexTemplateEntry('ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'Final state', null, null, dt + 'final state'),
-	 	this.createVertexTemplateEntry('rhombus;whiteSpace=wrap;html=1;', 80, 80, '', 'Diamond', null, null, 'diamond rhombus if condition decision conditional question test'),
+	 	// this.createVertexTemplateEntry('rhombus;whiteSpace=wrap;html=1;', 80, 80, '', 'Diamond', null, null, 'diamond rhombus if condition decision conditional question test'),
 	 	// this.createEdgeTemplateEntry('endArrow=none;dashed=1;html=1;', 50, 50, '', 'Dashed Line', null, lineTags + 'dashed undirected no'),
 	 	// this.createEdgeTemplateEntry('endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;', 50, 50, '', 'Dotted Line', null, lineTags + 'dotted undirected no'),
-	 	this.createEdgeTemplateEntry('endArrow=none;html=1;', 50, 50, '', 'Line', null, lineTags + 'simple undirected plain blank no'),
+	 	// this.createEdgeTemplateEntry('endArrow=none;html=1;', 50, 50, '', 'Line', null, lineTags + 'simple undirected plain blank no'),
 	 	// this.createEdgeTemplateEntry('endArrow=classic;startArrow=classic;html=1;', 50, 50, '', 'Bidirectional Connector', null, lineTags + 'bidirectional'),
 	 	this.createEdgeTemplateEntry('endArrow=classic;html=1;', 50, 50, '', 'Directional Connector', null, lineTags + 'directional directed'),
 
@@ -1239,20 +1239,20 @@ Sidebar.prototype.addGeneralPaletteWorkflow = function(expand)
 			'rounded=1;whiteSpace=wrap;html=1;',
 			120, 60,
 			'<div style="font-weight:bold;">&lt;&lt;Container&gt;&gt;<br>[name]</div>',
-			'Action Container',
+			'Container',
 			null,
 			null,
 			'rounded rect rectangle box'
 		  ),
-		  this.createVertexTemplateEntry(
-			'rounded=1;whiteSpace=wrap;html=1;',
-			120, 60,
-			'<div style="font-weight:bold;">&lt;&lt;Script&gt;&gt;<br>[name]</div>',
-			'Action Script',
-			null,
-			null,
-			'rounded rect rectangle box'
-		  ),
+		  // this.createVertexTemplateEntry(
+			// 'rounded=1;whiteSpace=wrap;html=1;',
+			// 120, 60,
+			// '<div style="font-weight:bold;">&lt;&lt;Script&gt;&gt;<br>[name]</div>',
+			// 'Script',
+			// null,
+			// null,
+			// 'rounded rect rectangle box'
+		  // ),
 		//   this.createVertexTemplateEntry(
 		// 	'rounded=1;whiteSpace=wrap;html=1;',
 		// 	120, 60,
@@ -1289,13 +1289,13 @@ Sidebar.prototype.addGeneralPaletteWorkflow = function(expand)
 		// 	null,
 		// 	'rounded rect rectangle box'
 		//   ),
-	 	this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectangle', null, null, 'rect rectangle box'),
+	 	// this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectangle', null, null, 'rect rectangle box'),
 	 	// this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),//uml꺼 훔쳐오기
 		this.createVertexTemplateEntry('ellipse;fillColor=#000000;shape=startState;strokeColor=none;', 30, 30, '', 'Initial state', null, null, dt + 'initial state'),	//uml꺼 훔쳐오기
-		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Join/Fork', null, null, dt + 'join fork'),//uml꺼 훔쳐오기
-		this.createVertexTemplateEntry('shape=sumEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;backgroundOutline=1;', 30, 30,'', 'Exit Point', null, null, dt + 'exit point'),//uml꺼 훔쳐오기
+		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Parallel', null, null, dt + 'join fork'),//uml꺼 훔쳐오기
+		// this.createVertexTemplateEntry('shape=sumEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;backgroundOutline=1;', 30, 30,'', 'Exit Point', null, null, dt + 'exit point'),//uml꺼 훔쳐오기
 		this.createVertexTemplateEntry('ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'Final state', null, null, dt + 'final state'),
-	 	this.createVertexTemplateEntry('rhombus;whiteSpace=wrap;html=1;', 80, 80, '', 'Diamond', null, null, 'diamond rhombus if condition decision conditional question test'),
+	 	// this.createVertexTemplateEntry('rhombus;whiteSpace=wrap;html=1;', 80, 80, '', 'Diamond', null, null, 'diamond rhombus if condition decision conditional question test'),
 	 	// this.createEdgeTemplateEntry('endArrow=none;dashed=1;html=1;', 50, 50, '', 'Dashed Line', null, lineTags + 'dashed undirected no'),
 	 	// this.createEdgeTemplateEntry('endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;', 50, 50, '', 'Dotted Line', null, lineTags + 'dotted undirected no'),
 	 	// this.createEdgeTemplateEntry('endArrow=none;html=1;', 50, 50, '', 'Line', null, lineTags + 'simple undirected plain blank no'),
@@ -2431,18 +2431,18 @@ Sidebar.prototype.addUmlPaletteReqirement = function(expand)
 	var dt = 'uml static class ';
 	this.setCurrentSearchEntryLibrary('uml');
 	
-	var fns = [
-		this.createEdgeTemplateEntry('endArrow=none;startArrow=circlePlus;endFill=0;startFill=0;endSize=8;html=1;', 160, 0, '', 'Inner Class', null, 'uml inner class'),
+	var fns = [ // requirements 프로세스 팝업 내용 수정
+		this.createEdgeTemplateEntry('endArrow=none;startArrow=circlePlus;endFill=0;startFill=0;endSize=8;html=1;', 160, 0, '', 'Requirement Arrow', null, 'uml inner class'),
 		
 		this.addEntry(dt + 'section subsection', function()
 		{
-			var cell = new mxCell('<<functional requirement>>\n[name]', new mxGeometry(100, 0, 200, 50));
+			var cell = new mxCell('<<functional requirement>>\n[name]', new mxGeometry(100, 0, 200, 50) ,'fillColor=#ffffc0'); // 다이어그램 색상 넣기
 			cell.vertex = true;
 			// cell.insert(field.clone());
 			// cell.insert(field.clone());
 			// cell.insert(field.clone());
 			
-			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, 'Class 2');
+			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, '<<functional requirement>>');
 		}),
 
 		this.addEntry(dt + 'section subsection', function()
@@ -2453,7 +2453,7 @@ Sidebar.prototype.addUmlPaletteReqirement = function(expand)
 			// cell.insert(field.clone());
 			// cell.insert(field.clone());
 			
-			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, 'Class 2');
+			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, '<<non functional requirement>>');
 		}),
 	];
 	
