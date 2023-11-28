@@ -969,7 +969,9 @@ function parseString(inputString, processName,cellId) {
 
   if (processName === 'businessProcess') {
       // process_name이 businessProcess인 경우
-      const match = inputString.match(/bold\">([^<]*)<\/div>/);
+      const pattern = /<div style=".*?">\[(.*?)\]<\/div>/;
+      const match = inputString.match(pattern);
+      result = match[1];
       if(match[1].includes('['||']')){
         result =match[1].substring(1,match[1].length -1);
         result = projectName+'_'+cellId+'#'+result;
