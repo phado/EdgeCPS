@@ -1,0 +1,36 @@
+# flask-deployment.yaml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: edgecps
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+      - name: flask-app
+        image: edgecps
+        volumeMounts:
+        - name: docker-socket
+          mountPath: /var/run/docker.sock
+        - name: kube-config
+          mountPath: /root/.kube/
+        securityContext:
+          privileged: true
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 5000
+      volumes:
+      - name: docker-socket
+        hostPath:
+          path: /var/run/docker.sock
+      - name: kube-config
+        hostPath:
+          path: /home/kpst/.kube

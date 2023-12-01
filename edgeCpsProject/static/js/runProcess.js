@@ -192,7 +192,7 @@ function workflowProcessView(cellName,cellId,cell){
 function logContainer(){
     //워크플로우 전체 로그 출력 순우
     workflowName = localStorage.getItem(projectName+'_current_workflowName')
-    const url = 'http://127.0.0.1:5000/log?workflow_name='+encodeURIComponent(workflowName);
+    const url = '/log?workflow_name='+encodeURIComponent(workflowName);
 
     fetch(url)
         .then(response => response.text())  // 응답의 텍스트 데이터를 받아옴
@@ -220,10 +220,9 @@ function logContainer(){
 } 
 
 function deploymentView(actionStatusFlag,actionName,actionId) {
-    // try {
         workflowName = localStorage.getItem(projectName+'_current_workflowName')
 
-        const url = `http://127.0.0.1:5000/status?workflow_name=${encodeURIComponent(workflowName)}`;
+        const url = `/status?workflow_name=${encodeURIComponent(workflowName)}`;
 
         fetch(url)
         .then(response => response.text())  // 응답의 텍스트 데이터를 받아옴
@@ -238,13 +237,8 @@ function deploymentView(actionStatusFlag,actionName,actionId) {
             const actionStatus = statusJsonData.status.nodes;
             const actionKeys = Object.keys(actionStatus);
 
-            // 순우 배포 다이어그램 그릴 때 필요한 정보 가저옴
+            // 배포 다이어그램 그릴 때 필요한 정보 가저옴
             var deployInfo = getDeployInfo(actionKeys,actionStatus)
-            // 로그 출력
-            // const logContainer2 = document.querySelector('.logContainer2');
-            // const logEntry = document.createElement('div');
-            
-
 
             var containerElement = document.getElementById('deploymentView');
             var svgElements = containerElement.querySelectorAll("svg");
@@ -270,17 +264,12 @@ function deploymentView(actionStatusFlag,actionName,actionId) {
 
             if(statusJsonData.metadata.labels["workflows.argoproj.io/completed"]=='true'){
                 clearInterval(intervalLogDeploymentView)
-                logContainer()
-                
+                logContainer()  
             }
         })
         .catch(error => {
             console.error("Error:", error);
         });
-        
-    // }catch{
-
-    // }
 }
 // async function logContainer2(actionStatusFlag,actionName,actionId) {
 //     try {
@@ -417,16 +406,6 @@ function getDeployInfo(actionKeys,actionStatus){
             deployInfo.push(array);
         }
     }
-
-    // var deployInfo = [
-    //     ['soonwoo', 'hello1', 'Succeeded'],
-    //     ['soonwoo', 'hello2', 'Succeeded'],
-    //     ['soonwoo', 'hello3', 'Succeeded'],
-    //     ['soonwoo1', 'hello4', 'Succeeded'],
-    //     ['soonwoo1', 'hello5', 'Succeeded'],
-    //     ['soonwoo3', 'hello6', 'Succeeded'],
-    //     ['poontoo', 'hello11', 'fail']
-    //   ];
 
     var uniqueKeys = Array.from(new Set(deployInfo.map(item => item[0])));
     var uniqueKeyCount = uniqueKeys.length;

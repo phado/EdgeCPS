@@ -2,7 +2,7 @@ import subprocess
 
 yaml_files = ["pv.yaml", "pvc.yaml", "secret.yaml", "configmap.yaml", "service.yaml", "mariadb.yaml"]
 
-cmd = f"kubectl create namespace edgecps"
+cmd = f"kubectl create namespace edgecps2"
 try:
     subprocess.run(cmd, shell=True, check=True)
     print(f"create namespace edgecps successfully.")

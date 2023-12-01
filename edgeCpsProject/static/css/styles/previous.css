@@ -1,3 +1,18 @@
+/* Font Styles */
+@font-face {
+  font-family: "Inter Extra Bold";
+  src: url("/static/font/Inter-ExtraBold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter Extra Light";
+  src: url("/static/font/Inter-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body, html {
     height: 100%;
     margin: 0;
@@ -33,13 +48,13 @@ body, html {
 
     #graphContainer2 h3{
       color: #000000;
-      font-family: Inter;
-      font-size: 22px;
+      font-family: Inter Extra Light;
+      font-size: 15px;
       font-style: normal;
       font-weight: 600;
       line-height: normal;
       text-align: center;
-      border-bottom: 2px solid #000000;
+      border-bottom: 2px solid #ddd;
     }
 
 

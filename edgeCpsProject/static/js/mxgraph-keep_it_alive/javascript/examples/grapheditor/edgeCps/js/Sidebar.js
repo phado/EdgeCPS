@@ -269,27 +269,27 @@ Sidebar.prototype.showTooltip = function(elt, cells, w, h, title, showLabel)
 			var show = mxUtils.bind(this, function()
 			{
 				// Lazy creation of the DOM nodes and graph instance
-				if (this.tooltip == null)
-				{
-					this.tooltip = document.createElement('div');
-					this.tooltip.className = 'geSidebarTooltip';
-					this.tooltip.style.zIndex = mxPopupMenu.prototype.zIndex - 1;
-					document.body.appendChild(this.tooltip);
+				// if (this.tooltip == null)
+				// {
+				// 	this.tooltip = document.createElement('div');
+				// 	this.tooltip.className = 'geSidebarTooltip';
+				// 	this.tooltip.style.zIndex = mxPopupMenu.prototype.zIndex - 1;
+				// 	document.body.appendChild(this.tooltip);
 					
-					this.graph2 = new Graph(this.tooltip, null, null, this.editorUi.editor.graph.getStylesheet());
-					this.graph2.resetViewOnRootChange = false;
-					this.graph2.foldingEnabled = false;
-					this.graph2.gridEnabled = false;
-					this.graph2.autoScroll = false;
-					this.graph2.setTooltips(false);
-					this.graph2.setConnectable(false);
-					this.graph2.setEnabled(false);
+				// 	this.graph2 = new Graph(this.tooltip, null, null, this.editorUi.editor.graph.getStylesheet());
+				// 	this.graph2.resetViewOnRootChange = false;
+				// 	this.graph2.foldingEnabled = false;
+				// 	this.graph2.gridEnabled = false;
+				// 	this.graph2.autoScroll = false;
+				// 	this.graph2.setTooltips(false);
+				// 	this.graph2.setConnectable(false);
+				// 	this.graph2.setEnabled(false);
 					
-					if (!mxClient.IS_SVG)
-					{
-						this.graph2.view.canvas.style.position = 'relative';
-					}
-				}
+				// 	if (!mxClient.IS_SVG)
+				// 	{
+				// 		this.graph2.view.canvas.style.position = 'relative';
+				// 	}
+				// }
 				
 				this.graph2.model.clear();
 				this.graph2.view.setTranslate(this.tooltipBorder, this.tooltipBorder);

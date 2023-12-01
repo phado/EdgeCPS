@@ -222,7 +222,7 @@ function saveAllProject(saveAsProjectName) {
       if (match) {
         const projectNameQueryParam = match[0];
         const newUrl = currentUrl.replace(projectNameQueryParam, data["urlFor"]);
-        // 순우 saveas한 프로젝트로 이동
+        //  saveas한 프로젝트로 이동
         window.location.href = newUrl;
       }
       
@@ -821,6 +821,7 @@ function forceApply(graph, cell, value, className){
       objectElement.setAttribute('Detailed.description', '');
       objectElement.setAttribute('Parent.requirements', '');
       objectElement.setAttribute('Children.requirements', '');
+      objectElement.setAttribute('nonfunctional.req.type', '');
       FAcell.value = labelValue;
       FAgraph.getModel().setValue(FAcell, objectElement|| '');
    
@@ -898,7 +899,7 @@ path : ""`);
 }
 
 async function is_name_exists(projectName, userIds) {
-  const url = `http://127.0.0.1:5000/exists?project_name=${encodeURIComponent(projectName)}&userId=${encodeURIComponent(userIds)}`;
+  const url = `/exists?project_name=${encodeURIComponent(projectName)}&userId=${encodeURIComponent(userIds)}`;
 
   try {
     const response = await fetch(url);
@@ -923,6 +924,7 @@ async function saveAsProject(oldProjectName, userIds) {
   };
 
   try {
+    // 이미존재하는 프로젝트 이름인지 확인 
     const result = await is_name_exists(newProjectName, userIds);
 
     if (result) {
@@ -969,7 +971,9 @@ function parseString(inputString, processName,cellId) {
 
   if (processName === 'businessProcess') {
       // process_name이 businessProcess인 경우
-      const match = inputString.match(/bold\">([^<]*)<\/div>/);
+      const pattern = /<div style=".*?">\[(.*?)\]<\/div>/;
+      const match = inputString.match(pattern);
+      result = match[1];
       if(match[1].includes('['||']')){
         result =match[1].substring(1,match[1].length -1);
         result = projectName+'_'+cellId+'#'+result;

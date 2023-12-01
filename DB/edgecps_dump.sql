@@ -1,0 +1,185 @@
+-- MariaDB dump 10.19  Distrib 10.7.8-MariaDB, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: EdgeCPS
+-- ------------------------------------------------------
+-- Server version	10.7.8-MariaDB-1:10.7.8+maria~ubu2004
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `TB_CATE`
+--
+
+DROP TABLE IF EXISTS `TB_CATE`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TB_CATE` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TB_CATE`
+--
+
+LOCK TABLES `TB_CATE` WRITE;
+/*!40000 ALTER TABLE `TB_CATE` DISABLE KEYS */;
+INSERT INTO `TB_CATE` VALUES
+(20,'Web'),
+(21,'Mobile'),
+(22,'Cloud'),
+(23,'Embedded system');
+/*!40000 ALTER TABLE `TB_CATE` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TB_GROUP`
+--
+
+DROP TABLE IF EXISTS `TB_GROUP`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TB_GROUP` (
+  `GROUP_IDX` bigint(20) NOT NULL AUTO_INCREMENT,
+  `GROUP_NAME` varchar(100) NOT NULL,
+  `GROUP_CODE` varchar(100) NOT NULL,
+  PRIMARY KEY (`GROUP_IDX`)
+) ENGINE=InnoDB AUTO_INCREMENT=1021 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TB_GROUP`
+--
+
+LOCK TABLES `TB_GROUP` WRITE;
+/*!40000 ALTER TABLE `TB_GROUP` DISABLE KEYS */;
+INSERT INTO `TB_GROUP` VALUES
+(1,'ETRI',''),
+(2,'KPST',''),
+(1017,'aaa','code'),
+(1018,'ddd','code'),
+(1020,'cccc','code');
+/*!40000 ALTER TABLE `TB_GROUP` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TB_PROCESS`
+--
+
+DROP TABLE IF EXISTS `TB_PROCESS`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TB_PROCESS` (
+  `PROC_IDX` bigint(20) NOT NULL AUTO_INCREMENT,
+  `PROJ_IDX` bigint(20) NOT NULL,
+  `PROC_NAME` varchar(100) NOT NULL,
+  `PROC_DATA` longtext DEFAULT NULL,
+  PRIMARY KEY (`PROC_IDX`),
+  KEY `TB_PROCESS_FK` (`PROJ_IDX`),
+  CONSTRAINT `TB_PROCESS_FK` FOREIGN KEY (`PROJ_IDX`) REFERENCES `TB_PROJ` (`PROJ_IDX`)
+) ENGINE=InnoDB AUTO_INCREMENT=842 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TB_PROCESS`
+--
+
+LOCK TABLES `TB_PROCESS` WRITE;
+/*!40000 ALTER TABLE `TB_PROCESS` DISABLE KEYS */;
+INSERT INTO `TB_PROCESS` VALUES
+(533,133,'overviewProcessXML','{\"name\":\"dd\",\"description\":\"dd\",\"category\":\"java\"}'),
+(534,133,'requirementsProcessXml','<mxGraphModel><root><mxCell id=\"0\"/><mxCell id=\"1\" parent=\"0\"/><object xmlns=\"http://www.w3.org/1999/xhtml\" label=\"&lt;&lt;functional requirement&gt;&gt;&#10;[name]\" class=\"geItem DiShape Class 2\" text=\"\" id=\"2\"><mxCell xmlns=\"\" vertex=\"1\" parent=\"1\"><mxGeometry x=\"320\" y=\"190\" width=\"200\" height=\"50\" as=\"geometry\"/></mxCell></object></root></mxGraphModel>'),
+(535,133,'businessProcessXml',''),
+(839,212,'overviewProcessXML','{\"name\":\"testSample\",\"description\":\"testSample\",\"category\":\"Web\"}'),
+(840,212,'requirementsProcessXml','<mxGraphModel><root><mxCell id=\"0\"/><mxCell id=\"1\" parent=\"0\"/><object xmlns=\"http://www.w3.org/1999/xhtml\" label=\"&lt;&lt;functional requirement&gt;&gt;&#10;[name]\" class=\"geItem DiShape Class 2\" text=\"\" id=\"2\"><mxCell parent=\"1\" xmlns=\"\" vertex=\"1\"><mxGeometry x=\"200\" y=\"160\" width=\"200\" height=\"50\" as=\"geometry\"/></mxCell></object><object xmlns=\"http://www.w3.org/1999/xhtml\" label=\"&lt;&lt;functional requirement&gt;&gt;&#10;[fff]\" req.id=\"\" req.name=\"\" req.definition=\"\" detailed.description=\"\" parent.requirements=\"\" children.requirements=\"\" id=\"3\"><mxCell xmlns=\"\" vertex=\"1\" parent=\"1\"><mxGeometry x=\"200\" y=\"260\" width=\"200\" height=\"50\" as=\"geometry\"/></mxCell></object></root></mxGraphModel>'),
+(841,212,'businessProcessXml','<mxGraphModel><root><mxCell id=\"0\"/><mxCell id=\"1\" parent=\"0\"/><object xmlns=\"http://www.w3.org/1999/xhtml\" label=\"&lt;div style=&quot;font-weight: bold&quot;&gt;[testsample]&lt;/div&gt;\" class=\"geItem DiShape Rounded Rectangle\" description=\"\" input_information=\"\" output_information=\"\" id=\"2\"><mxCell style=\"rounded=1;whiteSpace=wrap;html=1;\" parent=\"1\" xmlns=\"\" vertex=\"1\"><mxGeometry x=\"410\" y=\"190\" width=\"120\" height=\"60\" as=\"geometry\"/></mxCell></object><object xmlns=\"http://www.w3.org/1999/xhtml\" label=\"&lt;div style=&quot;font-weight: bold&quot;&gt;[aaa]&lt;/div&gt;\" class=\"geItem DiShape Rounded Rectangle\" description=\"\" input_information=\"\" output_information=\"\" id=\"3\"><mxCell style=\"rounded=1;whiteSpace=wrap;html=1;\" parent=\"1\" xmlns=\"\" vertex=\"1\"><mxGeometry x=\"360\" y=\"330\" width=\"120\" height=\"60\" as=\"geometry\"/></mxCell></object><object xmlns=\"http://www.w3.org/1999/xhtml\" label=\"&lt;div style=&quot;font-weight:bold;&quot;&gt;[Activity name]&lt;/div&gt;\" description=\"\" input_information=\"\" output_information=\"\" id=\"4\"><mxCell style=\"rounded=1;whiteSpace=wrap;html=1;\" parent=\"1\" xmlns=\"\" vertex=\"1\"><mxGeometry x=\"60\" y=\"140\" width=\"120\" height=\"60\" as=\"geometry\"/></mxCell></object></root></mxGraphModel>');
+/*!40000 ALTER TABLE `TB_PROCESS` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TB_PROJ`
+--
+
+DROP TABLE IF EXISTS `TB_PROJ`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TB_PROJ` (
+  `PROJ_IDX` bigint(20) NOT NULL AUTO_INCREMENT,
+  `PROJ_NAME` varchar(100) NOT NULL,
+  `PROJ_CREATE_DATE` varchar(100) NOT NULL,
+  `USER_IDX` bigint(20) NOT NULL,
+  PRIMARY KEY (`PROJ_IDX`),
+  KEY `TB_PROJ_FK` (`USER_IDX`),
+  CONSTRAINT `TB_PROJ_FK` FOREIGN KEY (`USER_IDX`) REFERENCES `TB_USER` (`USER_IDX`)
+) ENGINE=InnoDB AUTO_INCREMENT=213 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TB_PROJ`
+--
+
+LOCK TABLES `TB_PROJ` WRITE;
+/*!40000 ALTER TABLE `TB_PROJ` DISABLE KEYS */;
+INSERT INTO `TB_PROJ` VALUES
+(133,'dd','2023-11-22 05:26:31',10017),
+(134,'jmt','2023-11-22 05:50:26',10017),
+(212,'testSample','2023-11-30 08:04:42',10005);
+/*!40000 ALTER TABLE `TB_PROJ` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `TB_USER`
+--
+
+DROP TABLE IF EXISTS `TB_USER`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `TB_USER` (
+  `USER_IDX` bigint(20) NOT NULL AUTO_INCREMENT,
+  `USER_ID` varchar(100) NOT NULL,
+  `USER_NAME` varchar(100) NOT NULL,
+  `USER_PWD` varchar(100) NOT NULL,
+  `USER_EMAIL` varchar(100) NOT NULL,
+  `GROUP_IDX` bigint(20) NOT NULL,
+  `VALID` int(11) DEFAULT NULL,
+  `ADMIN` int(11) DEFAULT NULL,
+  PRIMARY KEY (`USER_IDX`),
+  KEY `TB_USER_FK` (`GROUP_IDX`),
+  CONSTRAINT `TB_USER_FK` FOREIGN KEY (`GROUP_IDX`) REFERENCES `TB_GROUP` (`GROUP_IDX`)
+) ENGINE=InnoDB AUTO_INCREMENT=10023 DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `TB_USER`
+--
+
+LOCK TABLES `TB_USER` WRITE;
+/*!40000 ALTER TABLE `TB_USER` DISABLE KEYS */;
+INSERT INTO `TB_USER` VALUES
+(10005,'etri','admin','1234','tmp@kpst.co.kr',1,1,1),
+(10017,'kpst1234','rnjstnsdn','kpst1234','soon@kpst.co.kr',1017,0,NULL),
+(10018,'test1234','test','test1234','test@naver.com',1,NULL,NULL);
+/*!40000 ALTER TABLE `TB_USER` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2023-11-30  8:34:22

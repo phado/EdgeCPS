@@ -27,7 +27,8 @@ urllib3.disable_warnings()
 app = Flask(__name__)
 CORS(app)
 app.secret_key = 'EdgeCPS_workflow'
-
+NAMESPACE = 'argo'
+ARGO_SERVER_URL = 'https://192.168.0.196:32416'
 
 # 임의의 프로젝트 목록 데이터
 
@@ -410,7 +411,12 @@ def get_label():
     label_dict = {}
 
     if request.method == 'GET':
-        config.load_kube_config()
+        
+        try:
+            config.load_kube_config()
+            # config.load_incluster_config()
+        except Exception as e:
+            print(f"Error: {e}")
         v1 = client.CoreV1Api()
         nodes = v1.list_node()
 
@@ -428,8 +434,7 @@ def get_label():
     return jsonify(label_dict)
 
 #############""" 아르고 """#########
-NAMESPACE = 'argo'
-ARGO_SERVER_URL = 'https://localhost:2746'
+
 activity_dic = {}
 
 def search_images(keyword):
@@ -465,12 +470,55 @@ def argo_status_workflow(workflow_name):
         return None
 
 def search_local_images():
-    output = subprocess.check_output(['docker', 'images', '--format', '{{.Repository}}']).decode().strip()
-
+    try:
+        output = subprocess.check_output(['docker', 'images', '--format', '{{.Repository}}']).decode().strip()
+    except Exception as e:
+        print(e)
     # 이미지 이름을 리스트로 변환
     image_list = output.split('\n')
 
     return image_list
+
+
+# def get_pod_info():
+#     try:
+#         # Kubernetes 클러스터 설정 로드
+#         config.load_incluster_config()
+
+#         # 현재 파드의 메타데이터 가져오기
+#         v1 = client.CoreV1Api()
+#         pod_name = v1.read_namespaced_pod(namespace="default", name=config.determine_pod_name()).metadata.name
+#         pod_namespace = v1.read_namespace(name=pod_name).metadata.name
+
+#         return pod_name, pod_namespace
+#     except Exception as e:
+#         print(f"Error: {e}")
+#         return None, None
+
+# def search_local_images():
+#     try:
+#         # 파드 정보 가져오기
+#         pod_name, pod_namespace = get_pod_info()
+
+#         if pod_name and pod_namespace:
+#             # 파드가 실행 중인 노드 이름 가져오기
+#             v1 = client.CoreV1Api()
+#             pod_info = v1.read_namespaced_pod(name=pod_name, namespace=pod_namespace)
+#             node_name = pod_info.spec.node_name
+
+#             # 노드 정보 가져오기
+#             node_info = v1.read_node(name=node_name)
+
+#             # 노드의 도커 이미지 리스트 반환
+#             return [image.image for image in node_info.status.images]
+#         else:
+#             return []
+#     except Exception as e:
+#         print(f"Error: {e}")
+#         return []
+
+
+
 
 # activity_dic
 
@@ -770,7 +818,18 @@ def runworkflow_run():
             result_json_data = json.loads(result_txt_data)
             result_json_data['workflow']['metadata']['name'] = key.split('#')[1] if '#' in key else None
             headers = {"Content-Type": "application/json"}
-            response = requests.post(f"{ARGO_SERVER_URL}/api/v1/workflows/{NAMESPACE}", headers=headers, json=result_json_data, verify=False)
+            # response = requests.post(f"{ARGO_SERVER_URL}/api/v1/workflows/{NAMESPACE}", headers=headers, json=result_json_data, verify=False)
+            try:
+                response = requests.post(f"{ARGO_SERVER_URL}/api/v1/workflows/{NAMESPACE}", headers=headers, json=result_json_data, verify=False)
+                response.raise_for_status()  # Raises HTTPError for bad responses
+            except requests.exceptions.HTTPError as errh:
+                print ("HTTP Error:",errh)
+            except requests.exceptions.ConnectionError as errc:
+                print ("Error Connecting:",errc)
+            except requests.exceptions.Timeout as errt:
+                print ("Timeout Error:",errt)
+            except requests.exceptions.RequestException as err:
+                print ("Something went wrong:",err)
 
             if response.status_code == 200:
                 print(f"Workflow for {key} submitted successfully")
@@ -800,4 +859,4 @@ def preprocess_string(input_string):
     return processed_string
 
 if __name__ == '__main__':
-    app.run(host = '0.0.0.0',debug=True)
+    app.run(host = '0.0.0.0')
