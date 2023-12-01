@@ -6,7 +6,7 @@ data:
   init.sql: |
     CREATE DATABASE IF NOT EXISTS EdgeCPS;
     
-    USE EdgeCPSs;
+    USE EdgeCPS;
 
 
     -- MariaDB dump 10.19  Distrib 10.7.8-MariaDB, for debian-linux-gnu (x86_64)
