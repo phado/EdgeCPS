@@ -312,6 +312,14 @@ document.addEventListener("DOMContentLoaded", function () {
   function processSaveClick() {
     saveAllProject();
   }
+
+  function goHome(){
+    location.href = '/project/projectsList'
+  }
+
+  var targetElement = document.querySelector(".userInfo");
+  targetElement.appendChild(createButton("Home",goHome,"homeButton","font-size:15px; background-color: #2E5686; color: #fff; border-radius: 5px; padding: 2px 8px; font-family: 'Inter Extra Light'; font-style: normal;")); // Home 버튼
+
   // 버튼을 감싸는 div
   var buttonContainer = document.createElement("div");
 

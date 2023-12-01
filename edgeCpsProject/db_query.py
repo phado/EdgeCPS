@@ -307,7 +307,7 @@ def add_table_save_prj(mariadb_pool, project_name, project_data, userid):
             for client_row, x in data.items():
                 for db_row in db_data:
                     if client_row == db_row[0]:
-                        if x != db_row[1]:
+                        if x != db_row[1]: 
                             x = process_string(x)
                             # 수정된 내용이 있다면 업데이트 쿼리 생성
                             update_query = f"UPDATE `TB_PROCESS` SET `PROC_DATA` = %s WHERE `PROC_NAME` = %s AND `PROJ_IDX` = %s;"
