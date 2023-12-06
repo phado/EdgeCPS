@@ -29,12 +29,11 @@
         <p>이메일 : {{userEmail}}</p>
         <p>소속 : {{userGroup}}</p>
         {% if userAdmin == 1 %}
-        <a class="nav-link" href="{{ url_for('management_user') }}"
-          >회원 관리</a
-        >
+            <a class="nav-link" href="{{ url_for('management_user') }}">회원 관리</a>
         {% endif %}
         <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
-      </div>
+        <a class="nav-link"  href="{{ url_for('project_list') }}">Home</a>
+    </div>
     </div>
     <div class="container">
       <div style="float: right">
@@ -67,14 +66,7 @@
             <td>{{ project.user_email }}</td>
             <td>{{ project.group_name }}</td>
             <td>
-              <button
-                style="width: 80px; border-radius: 5px"
-                type="button"
-                onclick="showPopup(this)"
-                data-group="{{ project.group_index }}"
-                data-valid="{{ project.vaild }}"
-                data-user="{{ project.id }}"
-              >
+              <button style="width: 80px; border-radius: 5px" type="button" onclick="showPopup(this)" data-group="{{ project.group_index }}" data-valid="{{ project.vaild }}" data-user="{{ project.id }}">
                 관리
               </button>
             </td>
@@ -91,6 +83,7 @@
                 <select class="form-control" id="group" name="group" required>
                   {% for group in groups %}
                   <option value="{{ group.idx }}">{{ group.name }}</option>
+{#                  <option value="{{ group.idx }}" {% if userGroup == group.name %}selected{% endif %}>{{ group.name }}</option>#}
                   {% endfor %}
                 </select>
               </div>
@@ -169,6 +162,9 @@
     } else if (group === "999") {
       // "admin" 옵션을 선택합니다.
       groupSelect.value = "999";
+    }
+    else{
+        groupSelect.value = group;
     }
 
     const valid = button.getAttribute("data-valid");

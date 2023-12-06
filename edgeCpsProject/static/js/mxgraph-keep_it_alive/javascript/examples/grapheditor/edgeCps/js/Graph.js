@@ -4796,6 +4796,10 @@ HoverIcons.prototype.getState = function(state)
  */
 HoverIcons.prototype.update = function(state, x, y)
 {
+	// 순우 다이어그램 자동 저장 (어떤 상황에서든)
+	let encoder = new mxCodec();
+	let result = encoder.encode(this.graph.getModel()); //where graph is the object you are using
+	processGraphxml = mxUtils.getXml(result); // 민수 https://stackoverflow.com/questions/56899522/how-to-get-the-xml-from-mxgrpah-diagram
 	if (!this.graph.connectionArrowsEnabled || (state != null &&
 		mxUtils.getValue(state.style, 'allowArrows', '1') == '0'))
 	{

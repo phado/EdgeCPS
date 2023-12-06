@@ -8,14 +8,14 @@
 /* Font Styles */
 @font-face {
   font-family: "Inter Extra Bold";
-  src: url("/static/font/Inter-ExtraBold.ttf") format("truetype");
+  src: url("../../font/Inter-ExtraBold.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Inter Extra Light";
-  src: url("/static/font/Inter-Regular.ttf") format("truetype");
+  src: url("../../font/Inter-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -243,19 +243,62 @@ a.home {
   color: #ffffff; /* 선택된 옵션의 텍스트색 변경 */
 }
 
+/*saveAs tag css*/
+#input-container {
+  position: relative;
+}
+/*#output-container {*/
+/*  position: absolute;*/
+/*  top: 48%;*/
+/*  left: 2%;*/
+/*}*/
+/*#output-container {*/
+/*  position: absolute;*/
+/*  top: 107%;*/
+/*  left: 2%;*/
+/*}*/
+.tag-div {
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  height: 2rem;
+  border-radius: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background: #2e5686; /* 임의의 색상 */
+  color: rgb(255, 255, 255); /* 임의의 색상 */
+  margin-right: 0.75rem;
+  transition: all 0.125s ease-in 0s;
+  cursor: pointer;
+  margin-bottom: 0.75rem;
+  animation: 0.125s ease-in-out 0s 1 normal forwards running lnHDaM;
+}
+.project_tag{
+  width:20%;
+}
 
+@keyframes fadeIn {
+  0% {
+    opacity: 0.7;
+    transform: scale3d(0.8, 0.8, 1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale3d(1, 1, 1);
+  }
+}
 
-    /* Webkit 스크롤바 */
-    ::-webkit-scrollbar {
-      width: 7px; /* 스크롤바의 너비 */
-      height: 7px;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-      background-color: #D9D9D9; /* 스크롤바 색상 */
-      border-radius: 6px; /* 스크롤바 모서리 둥글게 */
-    }
-    
-    ::-webkit-scrollbar-track {
-      background-color: #ffffff; /* 스크롤바 트랙 색상 */
-    }
+/* Webkit 스크롤바 */
+::-webkit-scrollbar {
+  width: 7px; /* 스크롤바의 너비 */
+  height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #D9D9D9; /* 스크롤바 색상 */
+  border-radius: 6px; /* 스크롤바 모서리 둥글게 */
+}
+
+::-webkit-scrollbar-track {
+  background-color: #ffffff; /* 스크롤바 트랙 색상 */
+}

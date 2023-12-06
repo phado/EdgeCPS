@@ -9,13 +9,7 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/projectlist.css')}}"/>
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/userManagement.js')}}"></script>
-    <!-- <style>
-     @media (min-width: 768px) {
-      body {
-        overflow-x: auto;
-      }
-  }
-    </style> -->
+
   </head>
   <script>
     let loginUserInfo = "{{ loginUserInfo }}";
@@ -97,6 +91,7 @@
         <a class="nav-link" href="{{ url_for('management_user') }}">회원 관리</a>
         {% endif %}
         <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
+        <a class="nav-link"  href="{{ url_for('project_list') }}">Home</a>
       </div>
     </div>
 

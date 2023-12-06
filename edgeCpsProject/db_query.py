@@ -117,16 +117,21 @@ def check_sameId(mariadb_pool, name, email ):
 
     return response
 
-def sign_up(mariadb_pool, name, userId, password, email, birthdate, group):
+def sign_up(mariadb_pool, name, userId, password, email, birthdate):
     sign_up_info = {'sign_up': False}  # 기본값으로 실패 상태 설정
 
     try:
         connection = mariadb_pool.get_connection()
         cursor = connection.cursor()
-        
+
+        # 개인 그룹 생성
+        cursor.execute("INSERT INTO TB_GROUP (GROUP_NAME, GROUP_CODE) VALUES (%s,%s)",(userId,userId+'_code'))
+        cursor.execute("SELECT GROUP_IDX FROM TB_GROUP WHERE GROUP_NAME = %s", (userId,))
+        private_group_id = cursor.fetchone()[0]
+
         cursor.execute(
             "INSERT INTO TB_USER (USER_ID, USER_NAME, USER_PWD, USER_EMAIL, GROUP_IDX) VALUES (%s, %s, %s, %s, %s)",
-            (userId, name, password, email, group)
+            (userId, name, password, email, private_group_id)
         )
         connection.commit()
 

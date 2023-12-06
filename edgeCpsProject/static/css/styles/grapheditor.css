@@ -1,12 +1,12 @@
 @font-face {
   font-family: "Inter Extra Bold";
-  src: url("/static/font/Inter-ExtraBold.ttf") format("truetype");
+  src: url("../../font/Inter-ExtraBold.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "Inter Extra Light";
-  src: url("/static/font/Inter-Regular.ttf") format("truetype");
+  src: url("../../font/Inter-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 } /*글씨체 변경 전체*/
@@ -26,7 +26,9 @@ button {
   font-size: inherit;
 }
 .geEditor input {
-  border-width: 2px;
+  /*border-width: 1px;*/
+  border-radius: 3px;
+  /*border-color: #ced4da;*/
 }
 .geEditor select {
   border-width: 1px;
@@ -81,7 +83,7 @@ button {
 .geFormatSection {
   padding-top: 0px !important;
   padding-bottom: 17px !important;
-  border-bottom: 1px solid #dadce0;
+  /*border-bottom: 1px solid #dadce0;*/
   border-color: #dadce0;
   border-top: 1px solid #dadce0;
   border-color: #dadce0;
@@ -346,20 +348,20 @@ button {
 /* Font Styles */
 @font-face {
   font-family: "Inter Extra Bold";
-  src: url("/static/font/Inter-ExtraBold.ttf") format("truetype");
+  src: url("../../font/Inter-ExtraBold.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Inter Extra Light";
-  src: url("/static/font/Inter-Regular.ttf") format("truetype");
+  src: url("../../font/Inter-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "Inter Medium";
-  src: url("/static/font/Inter-Medium.ttf") format("truetype");
+  src: url("../../font/Inter-Medium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }

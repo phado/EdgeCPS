@@ -34,3 +34,19 @@ spec:
       - name: kube-config
         hostPath:
           path: /home/kpst/.kube
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: edgecpsservice
+spec:
+  selector:
+    app: flask-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+      nodePort: 30808
+  type: NodePort

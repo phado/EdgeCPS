@@ -84,6 +84,7 @@
     <script type="text/javascript" src="{{ url_for('static', filename='js/workflowProcess.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/userManagement.js')}}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/businessProcess.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/saveas.js')}}"></script>
 
     <!-- 모달창을 위한부트스트랩 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
@@ -256,74 +257,49 @@
         <a class="nav-link" href="{{ url_for('management_user') }}">회원 관리</a>
         {% endif %}
         <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
+        <a class="nav-link"  href="{{ url_for('project_list') }}">Home</a>
       </div>
     </div>
   </body>
 </html>
 
 {#민수 모달입력 #}
-    <div
-      class="modal fade"
-      id="exampleModal"
-      tabindex="-1"
-      aria-labelledby="exampleModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"></h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
 
-            <div class="modal-body">
-                <div class="form-group">
-                  <label class="project_name" for="project_name">Project Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="project_name"
-                    name="project_name"
-                    required
-                  />
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label class="project_name" for="project_name">Service Name</label>
+                        <input type="text" class="form-control" id="project_name" name="project_name" required/>
+                    </div>
+                    <div class="form-group">
+                        <label class="project_description" for="project_description">Service Description</label>
+                        <textarea class="form-control" id="project_description" name="project_description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="project_category" for="project_category">Service Type</label>
+                        <select class="form-control" id="project_category" name="project_category" required>
+                            {% for category in categories %}
+                            <option value="{{ category }}">{{ category }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group" id="input-container">
+                        <label class="project_tag" for="project_name">Custom Tag</label>
+                        <input placeholder="태그를 입력하세요" tabindex="2" class="form-control" id="project_tag" onkeydown="handleKeyDown(event)" style="margin-bottom: 10px;"/>
+                        <div id="output-container"></div>
+                    </div>
                 </div>
-                <div class="form-group">
-                  <label class="project_description" for="project_description"
-                    >Project Description</label
-                  >
-                  <textarea
-                    class="form-control"
-                    id="project_description"
-                    name="project_description"
-                    required
-                  ></textarea>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" style="background-color: #2E5686" id="saveButton">OK </button>
                 </div>
-                <div class="form-group">
-                  <label class="project_category" for="project_category"
-                    >Project Category</label
-                  >
-                  <select
-                    class="form-control"
-                    id="project_category"
-                    name="project_category"
-                    required
-                  >
-                    {% for category in categories %}
-                    <option value="{{ category }}">{{ category }}</option>
-                    {% endfor %}
-                  </select>
-                </div>
-            <div class="modal-footer">
-              <button type="submit" class="btn btn-primary" style="background-color: #2E5686" id="saveButton">
-                OK
             </div>
-          </div>
-
       </div>
     </div>
     <script>

@@ -32,3 +32,4 @@ function previous(){
     codec.decode(doc.documentElement, graph.getModel());
 	graph.refresh();
 }
+

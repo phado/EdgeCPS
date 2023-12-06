@@ -4,6 +4,7 @@
  *
  * Constructs the actions object for the given UI.
  */
+
 function Actions(editorUi)
 {
 	this.editorUi = editorUi;
@@ -71,7 +72,10 @@ Actions.prototype.init = function()
 	//순우 save버튼 메뉴바에 이식
 	this.addAction('save', function() {saveAllProject() }, null, null, Editor.ctrlKey + '+S').isEnabled = isGraphEnabled;
 	// this.addAction('saveAs...', function() { ui.saveFile(true); }, null, null, Editor.ctrlKey + '+Shift+S').isEnabled = isGraphEnabled;
-	this.addAction('saveAs...', async function() {  await saveAsProject(projectName,userIds) }, null, null, Editor.ctrlKey + '+Shift+S').isEnabled = isGraphEnabled;
+	this.addAction('saveAs...',function(){
+		var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+  		modal.show();
+		}, null, null, Editor.ctrlKey + '+Shift+S').isEnabled = isGraphEnabled;
 	this.addAction('export...', function() { ui.showDialog(new ExportDialog(ui).container, 300, 296, true, true); });
 	this.addAction('editDiagram...', function()
 	{

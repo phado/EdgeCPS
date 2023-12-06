@@ -10,7 +10,7 @@ function Sidebar(editorUi, container)
 	this.container = container;
 	this.palettes = new Object();
 	this.taglist = new Object();
-	this.showTooltips = true;
+	// this.showTooltips = true;
 	this.graph = editorUi.createTemporaryGraph(this.editorUi.editor.graph.getStylesheet());
     this.graph.cellRenderer.minSvgStrokeWidth = this.minThumbStrokeWidth;
 	this.graph.cellRenderer.antiAlias = this.thumbAntiAlias;
@@ -92,7 +92,7 @@ Sidebar.prototype.init = function()// 순우 각 프로세스 별 불러올 좌�
 		this.addGeneralPaletteWorkflow(true);
 	}
 	else if (process_name =="requirementsProcess"){
-		this.addUmlPaletteReqirement(true);
+		this.addUmlPaletteRequirement(true);
 	}
 	else if (process_name =="policyProcess"){
 		this.processPrevious(true);
@@ -269,27 +269,27 @@ Sidebar.prototype.showTooltip = function(elt, cells, w, h, title, showLabel)
 			var show = mxUtils.bind(this, function()
 			{
 				// Lazy creation of the DOM nodes and graph instance
-				// if (this.tooltip == null)
-				// {
-				// 	this.tooltip = document.createElement('div');
-				// 	this.tooltip.className = 'geSidebarTooltip';
-				// 	this.tooltip.style.zIndex = mxPopupMenu.prototype.zIndex - 1;
-				// 	document.body.appendChild(this.tooltip);
+				if (this.tooltip == null)
+				{
+					this.tooltip = document.createElement('div');
+					this.tooltip.className = 'geSidebarTooltip';
+					this.tooltip.style.zIndex = mxPopupMenu.prototype.zIndex - 1;
+					document.body.appendChild(this.tooltip);
 					
-				// 	this.graph2 = new Graph(this.tooltip, null, null, this.editorUi.editor.graph.getStylesheet());
-				// 	this.graph2.resetViewOnRootChange = false;
-				// 	this.graph2.foldingEnabled = false;
-				// 	this.graph2.gridEnabled = false;
-				// 	this.graph2.autoScroll = false;
-				// 	this.graph2.setTooltips(false);
-				// 	this.graph2.setConnectable(false);
-				// 	this.graph2.setEnabled(false);
+					this.graph2 = new Graph(this.tooltip, null, null, this.editorUi.editor.graph.getStylesheet());
+					this.graph2.resetViewOnRootChange = false;
+					this.graph2.foldingEnabled = false;
+					this.graph2.gridEnabled = false;
+					this.graph2.autoScroll = false;
+					this.graph2.setTooltips(false);
+					this.graph2.setConnectable(false);
+					this.graph2.setEnabled(false);
 					
-				// 	if (!mxClient.IS_SVG)
-				// 	{
-				// 		this.graph2.view.canvas.style.position = 'relative';
-				// 	}
-				// }
+					if (!mxClient.IS_SVG)
+					{
+						this.graph2.view.canvas.style.position = 'relative';
+					}
+				}
 				
 				this.graph2.model.clear();
 				this.graph2.view.setTranslate(this.tooltipBorder, this.tooltipBorder);
@@ -1165,11 +1165,11 @@ Sidebar.prototype.addGeneralPaletteBusinessProcess = function(expand)
 
 	var fns = [
 	 	// this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectanglㅇㅇe', null, null, 'rect rectangle box'),
-	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '<div style="font-weight:bold;" >[Activity name]</div>', 'Activity', null, null, 'rounded rect rectangle box'), // 비지니스프로세스 다이어그램
+	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '<div style="font-weight:bold;">[Activity name]</div>', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),
 		this.createVertexTemplateEntry('ellipse;fillColor=#000000;strokeColor=none;', 30, 30, '', 'Initial state', null, null, dt + 'initial state'),
-		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Parallel', null, null, dt + 'join fork'),
+		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Join/Fork', null, null, dt + 'join fork'),
 		this.createVertexTemplateEntry('ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'Final state', null, null, dt + 'final state'),
-	 	// this.createVertexTemplateEntry('rhombus;whiteSpace=wrap;html=1;', 80, 80, '', 'Diamond', null, null, 'diamond rhombus if condition decision conditional question test'),
+	 	this.createVertexTemplateEntry('rhombus;whiteSpace=wrap;html=1;', 80, 80, '', 'Diamond', null, null, 'diamond rhombus if condition decision conditional question test'),
 	 	// this.createEdgeTemplateEntry('endArrow=none;dashed=1;html=1;', 50, 50, '', 'Dashed Line', null, lineTags + 'dashed undirected no'),
 	 	// this.createEdgeTemplateEntry('endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;', 50, 50, '', 'Dotted Line', null, lineTags + 'dotted undirected no'),
 	 	// this.createEdgeTemplateEntry('endArrow=none;html=1;', 50, 50, '', 'Line', null, lineTags + 'simple undirected plain blank no'),
@@ -1239,20 +1239,20 @@ Sidebar.prototype.addGeneralPaletteWorkflow = function(expand)
 			'rounded=1;whiteSpace=wrap;html=1;',
 			120, 60,
 			'<div style="font-weight:bold;">&lt;&lt;Container&gt;&gt;<br>[name]</div>',
-			'Container',
+			'Action Container',
 			null,
 			null,
 			'rounded rect rectangle box'
 		  ),
-		  // this.createVertexTemplateEntry(
-			// 'rounded=1;whiteSpace=wrap;html=1;',
-			// 120, 60,
-			// '<div style="font-weight:bold;">&lt;&lt;Script&gt;&gt;<br>[name]</div>',
-			// 'Script',
-			// null,
-			// null,
-			// 'rounded rect rectangle box'
-		  // ),
+		//   this.createVertexTemplateEntry(
+		// 	'rounded=1;whiteSpace=wrap;html=1;',
+		// 	120, 60,
+		// 	'<div style="font-weight:bold;">&lt;&lt;Script&gt;&gt;<br>[name]</div>',
+		// 	'Action Script',
+		// 	null,
+		// 	null,
+		// 	'rounded rect rectangle box'
+		//   ),
 		//   this.createVertexTemplateEntry(
 		// 	'rounded=1;whiteSpace=wrap;html=1;',
 		// 	120, 60,
@@ -1289,17 +1289,11 @@ Sidebar.prototype.addGeneralPaletteWorkflow = function(expand)
 		// 	null,
 		// 	'rounded rect rectangle box'
 		//   ),
-	 	// this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectangle', null, null, 'rect rectangle box'),
-	 	// this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),//uml꺼 훔쳐오기
-		this.createVertexTemplateEntry('ellipse;fillColor=#000000;shape=startState;strokeColor=none;', 30, 30, '', 'Initial state', null, null, dt + 'initial state'),	//uml꺼 훔쳐오기
-		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Parallel', null, null, dt + 'join fork'),//uml꺼 훔쳐오기
-		// this.createVertexTemplateEntry('shape=sumEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;backgroundOutline=1;', 30, 30,'', 'Exit Point', null, null, dt + 'exit point'),//uml꺼 훔쳐오기
+	 	this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectangle', null, null, 'rect rectangle box'),
+		this.createVertexTemplateEntry('ellipse;fillColor=#000000;shape=startState;strokeColor=none;', 30, 30, '', 'Initial state', null, null, dt + 'initial state'),
+		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Join/Fork', null, null, dt + 'join fork'),
 		this.createVertexTemplateEntry('ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'Final state', null, null, dt + 'final state'),
-	 	// this.createVertexTemplateEntry('rhombus;whiteSpace=wrap;html=1;', 80, 80, '', 'Diamond', null, null, 'diamond rhombus if condition decision conditional question test'),
-	 	// this.createEdgeTemplateEntry('endArrow=none;dashed=1;html=1;', 50, 50, '', 'Dashed Line', null, lineTags + 'dashed undirected no'),
-	 	// this.createEdgeTemplateEntry('endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;', 50, 50, '', 'Dotted Line', null, lineTags + 'dotted undirected no'),
-	 	// this.createEdgeTemplateEntry('endArrow=none;html=1;', 50, 50, '', 'Line', null, lineTags + 'simple undirected plain blank no'),
-	 	// this.createEdgeTemplateEntry('endArrow=classic;startArrow=classic;html=1;', 50, 50, '', 'Bidirectional Connector', null, lineTags + 'bidirectional'),
+	 	this.createVertexTemplateEntry('rhombus;whiteSpace=wrap;html=1;', 80, 80, '', 'Diamond', null, null, 'diamond rhombus if condition decision conditional question test'),
 	 	this.createEdgeTemplateEntry('endArrow=classic;html=1;', 50, 50, '', 'Directional Connector', null, lineTags + 'directional directed'),
 	];
 	
@@ -2414,15 +2408,29 @@ Sidebar.prototype.addUmlPalettePolicy = function(expand)
 };
 
 
-// 순우 좌측 사이드바 requrements
-Sidebar.prototype.addUmlPaletteReqirement = function(expand)
+// 순우 좌측 사이드바 requirements
+Sidebar.prototype.addUmlPaletteRequirement = function(expand)
 {
 	// Avoids having to bind all functions to "this"
 	var sb = this;
 	var lineTags = 'line lines connector connectors connection connections arrow arrows ';
 	// Reusable cells
-	var field = new mxCell('+ field: type', new mxGeometry(0, 0, 100, 26), 'text;strokeColor=none;fillColor=none;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;');
-	field.vertex = true;
+
+
+	var functionalReq = new mxCell('<<functional requirement>>', new mxGeometry(0, 0, 200, 26), 'text;strokeColor=black;fillColor=#ffffc0;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;editable=0;movable=0;locked=1;');
+	functionalReq.vertex = true;
+
+	var functionalReqName = new mxCell('[name]', new mxGeometry(0, 26, 200, 26), 'text;strokeColor=black;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;movable=0;');
+	functionalReqName.vertex = true;
+
+	// var functionalReqName = new mxCell('[name]', new mxGeometry(0, 50, 200, 26), 'text;strokeColor=black;fillColor=None;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;locked=0;movable=0;locked=1;');
+	// functionalReqName.vertex = true;
+	//
+	var functionalReqDescription = new mxCell('[description]', new mxGeometry(0, 52, 200, 26), 'text;strokeColor=black;fillColor=None;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;locked=0;movable=0;');
+	functionalReqDescription.vertex = true;
+
+	var nonFunctionalReq = new mxCell('<<non functional requirement>>', new mxGeometry(0, 0, 200, 26), 'text;strokeColor=black;fillColor=rgba(152, 171, 228, 0.7);align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;movable=0;editable=0;locked=1;');
+	nonFunctionalReq.vertex = true;
 
 	var divider = new mxCell('', new mxGeometry(0, 0, 140, 8), 'line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;');
 	divider.vertex = true;
@@ -2431,29 +2439,31 @@ Sidebar.prototype.addUmlPaletteReqirement = function(expand)
 	var dt = 'uml static class ';
 	this.setCurrentSearchEntryLibrary('uml');
 	
-	var fns = [ // requirements 프로세스 팝업 내용 수정
-		this.createEdgeTemplateEntry('endArrow=none;startArrow=circlePlus;endFill=0;startFill=0;endSize=8;html=1;', 160, 0, '', 'Requirement Arrow', null, 'uml inner class'),
+	var fns = [
+		this.createEdgeTemplateEntry('endArrow=none;startArrow=circlePlus;endFill=0;startFill=0;endSize=8;html=1;', 160, 0, '', 'Inner Class', null, 'uml inner class'),
 		
 		this.addEntry(dt + 'section subsection', function()
 		{
-			var cell = new mxCell('<<functional requirement>>\n[name]', new mxGeometry(100, 0, 200, 50) ,'fillColor=#ffffc0'); // 다이어그램 색상 넣기
+			// var cell = new mxCell('<<functional requirement>>\n[name]', new mxGeometry(100, 0, 200, 50),'fillColor=rgba(152, 171, 228, 0.7);');
+			var cell = new mxCell('', new mxGeometry(100, 0, 200, 78));
 			cell.vertex = true;
-			// cell.insert(field.clone());
-			// cell.insert(field.clone());
-			// cell.insert(field.clone());
+			cell.insert(functionalReq.clone());
+			cell.insert(functionalReqName.clone());
+			cell.insert(functionalReqDescription.clone());
 			
-			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, '<<functional requirement>>');
+			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, 'Class 2');
 		}),
 
 		this.addEntry(dt + 'section subsection', function()
 		{
-			var cell = new mxCell('<<non functional requirement>>\n[name]', new mxGeometry(0, 0, 200, 50));
+			var cell = new mxCell('<<non functional requirement>>\n[name]', new mxGeometry(100, 0, 200, 50),'fillColor=#ffffc0;');
+			// var cell = new mxCell('[name]', new mxGeometry(0, 0, 200, 70));
 			cell.vertex = true;
-			// cell.insert(field.clone());
+			// cell.insert(nonFunctionalReq.clone());
 			// cell.insert(field.clone());
 			// cell.insert(field.clone());
 			
-			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, '<<non functional requirement>>');
+			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, 'Class 2');
 		}),
 	];
 	
@@ -3894,7 +3904,8 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 		styleTargetParent = null;
 		activeArrow = null;
 	};
-	
+	// 드래그 생성을 위한 함수 호출 
+	forceApply(graph,  cells[0], cells[0].value,elt.className);
 	return dragSource;
 };
 
@@ -3905,7 +3916,7 @@ Sidebar.prototype.itemClicked = function(cells, ds, evt, elt) // 클릭할때 �
 {
 	var graph = this.editorUi.editor.graph;
 	graph.container.focus();
-	
+
 	// Alt+Click inserts and connects
 	if (mxEvent.isAltDown(evt) && graph.getSelectionCount() == 1 &&
 		graph.model.isVertex(graph.getSelectionCell()))
@@ -4145,6 +4156,8 @@ Sidebar.prototype.addPalette = function(id, title, expanded, onInit)
 	if (mxClient.IS_POINTER)
 	{
 		div.style.touchAction = 'none';
+		div.style.marginBottom = '8px';
+		div.style.marginTop = '8px';
 	}
 
 	if (expanded)

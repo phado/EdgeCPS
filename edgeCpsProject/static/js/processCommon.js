@@ -231,7 +231,6 @@ function saveAllProject(saveAsProjectName) {
       console.error("Error:", error);
     });
 }
-
 /**
  * 민수 메뉴바에 버튼 추가 하는 방식 다른 자바스크립트 로드 속도 때문에 시간차가 필요하다
  */
@@ -256,33 +255,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let nowPorcess = localStorage.getItem(projectName + "_current_processDict"); // 현재 프로세스 확인
 
-  function createSaveAsButton(buttonName) {
-    var newButton = document.createElement("button");
-    newButton.type = "button";
-    newButton.className = "btn btn-primary";
-    newButton.setAttribute("data-bs-toggle", "modal");
-    newButton.setAttribute("data-bs-target", "#exampleModal");
-    newButton.setAttribute(
-      "data-bs-whatever",
-      "새로운 프로젝트 이름을 입력해주세요"
-    );
-    newButton.textContent = buttonName;
-
-    // 스타일 속성 변경
-    newButton.style.backgroundColor = "#2E5686";
-    newButton.style.color = "#fff";
-    newButton.style.borderRadius = "5px";
-    newButton.style.padding = "2px 8px";
-    newButton.style.fontFamily = "'Inter Extra Light'";
-    newButton.style.fontStyle = "normal";
-    newButton.style.marginTop = "-2px";
-    newButton.style.fontSize = "15px";
-    newButton.style.height = "30px";
-
-    var buttonContainer = document.getElementById("buttonContainer");
-
-    return newButton;
-  }
+  // function createSaveAsButton(buttonName) {
+  //   var newButton = document.createElement("button");
+  //   newButton.type = "button";
+  //   newButton.className = "btn btn-primary";
+  //   newButton.setAttribute("data-bs-toggle", "modal");
+  //   newButton.setAttribute("data-bs-target", "#exampleModal");
+  //   newButton.setAttribute(
+  //     "data-bs-whatever",
+  //     "새로운 프로젝트 이름을 입력해주세요"
+  //   );
+  //   newButton.textContent = buttonName;
+  //
+  //   // 스타일 속성 변경
+  //   newButton.style.backgroundColor = "#2E5686";
+  //   newButton.style.color = "#fff";
+  //   newButton.style.borderRadius = "5px";
+  //   newButton.style.padding = "2px 8px";
+  //   newButton.style.fontFamily = "'Inter Extra Light'";
+  //   newButton.style.fontStyle = "normal";
+  //   newButton.style.marginTop = "-2px";
+  //   newButton.style.fontSize = "15px";
+  //   newButton.style.height = "30px";
+  //
+  //   var buttonContainer = document.getElementById("buttonContainer");
+  //
+  //   return newButton;
+  // }
 
   // 민수 process 버튼 생성 메뉴 버튼 생성 함수
   function createButton(text, clickFunc, className, style) {
@@ -313,12 +312,6 @@ document.addEventListener("DOMContentLoaded", function () {
     saveAllProject();
   }
 
-  function goHome(){
-    location.href = '/project/projectsList'
-  }
-
-  var targetElement = document.querySelector(".userInfo");
-  targetElement.appendChild(createButton("Home",goHome,"homeButton","font-size:15px; background-color: #2E5686; color: #fff; border-radius: 5px; padding: 2px 8px; font-family: 'Inter Extra Light'; font-style: normal;")); // Home 버튼
 
   // 버튼을 감싸는 div
   var buttonContainer = document.createElement("div");
@@ -327,7 +320,7 @@ document.addEventListener("DOMContentLoaded", function () {
   buttonContainer.style.marginRight = "10px"; // 오른쪽 여백
   // buttonContainer.style.marginTop = "5px";
 
-  buttonContainer.appendChild(createButton("Save All",processSaveClick,"saveButton","font-size:15px; background-color: #2E5686; color: #fff; border-radius: 5px; padding: 2px 8px; font-family: 'Inter Extra Light'; font-style: normal;")); // process-save 버튼
+  // buttonContainer.appendChild(createButton("Save All",processSaveClick,"saveButton","font-size:15px; background-color: #2E5686; color: #fff; border-radius: 5px; padding: 2px 8px; font-family: 'Inter Extra Light'; font-style: normal;")); // process-save 버튼
   // buttonContainer.appendChild(
   //   createButton(
   //     "Save As",
@@ -336,7 +329,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //     "background-color: #3853ff; color: #fff; border-radius: 5px; padding: 2px 8px; font-family: 'Inter Extra Light'; font-style: normal;"
   //   )
   // ); // process-save 버튼
-  buttonContainer.appendChild(createSaveAsButton("Save As")); // process-save-as 버튼
+  // buttonContainer.appendChild(createSaveAsButton("Save As")); // process-save-as 버튼
 
   // function openSaveModal() {
   //   var saveModal = document.getElementById("saveModal");
@@ -619,7 +612,9 @@ function createWorkflowSelectBox(activityCatList) {
   selectBox.multiple = true; // Enable multiple selection
   selectBox.className = "workflow-select-box";
   selectBox.style.width = "200px";
-  selectBox.style="width: 200px;"
+  // selectBox.style = "width: 200px";
+  selectBox.style.marginBottom = "4px";
+  selectBox.style.marginTop = "1px";
 
   // workflow 페이지를 최초로 열어 로컬스토리지에 nowWorkflow 값이 없는 경우 넣어줌.
   if (localStorage.getItem(projectName + "_nowWorkflow") == ""||localStorage.getItem(projectName + "_nowWorkflow")== null) {
@@ -904,73 +899,6 @@ path : ""`);
     }
   }
   FAcell.value.namespaceURI =''
-}
-
-async function is_name_exists(projectName, userIds) {
-  const url = `/exists?project_name=${encodeURIComponent(projectName)}&userId=${encodeURIComponent(userIds)}`;
-
-  try {
-    const response = await fetch(url);
-    const data = await response.text();
-
-    return data.trim() === 'true';
-  } catch (error) {
-    console.error("Error:", error);
-    throw error;
-  }
-}
-
-async function saveAsProject(oldProjectName, userIds) {
-  var newProjectName = document.getElementById("project_name").value;
-  var projectDescription = document.getElementById("project_description").value;
-  var projectCategory = document.getElementById("project_category").value;
-
-  var newOverview = {
-    "name": newProjectName,
-    "description": projectDescription,
-    "category": projectCategory
-  };
-
-  try {
-    // 이미존재하는 프로젝트 이름인지 확인 
-    const result = await is_name_exists(newProjectName, userIds);
-
-    if (result) {
-      const allKeys = Object.keys(localStorage);
-      const filteredKeys = allKeys.filter(key => key.includes(oldProjectName));
-
-      for (let i = 0; i < filteredKeys.length; i++) {
-        const oldKey = filteredKeys[i];
-        if (oldKey.includes('nowWorkflow')){
-          continue;
-        }
-        if (oldKey.includes('overview')) {
-          localStorage.setItem(newProjectName + '_overviewProcessXML', JSON.stringify(newOverview));
-          localStorage.removeItem(oldKey);
-          continue;
-        }
-        const oldValue = localStorage.getItem(oldKey);
-        if (oldValue == "") {
-          continue;
-        }
-        const regex = /[^_]+/;
-        const match = oldKey.match(regex);
-
-        if (match) {
-          const beforeUnderscore = match[0];
-          const newKey = oldKey.replace(beforeUnderscore, newProjectName);
-
-          localStorage.setItem(newKey, oldValue);
-          localStorage.removeItem(oldKey);
-        }
-      }
-      saveAllProject(newProjectName);
-    } else {
-      alert("같은 이름의 프로젝트가 존재합니다.");
-    }
-  } catch (error) {
-    console.error('에러 발생:', error);
-  }
 }
 
 // activity, action의 이름을 가져오기 위한 함수 

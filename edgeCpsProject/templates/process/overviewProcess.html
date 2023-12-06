@@ -303,7 +303,7 @@
             <label class="project_tag" for="project_name">Custom Tag</label>
             <input placeholder="태그를 입력하세요" tabindex="2" class="sc-bXTejn jfFccd" id="project_tag" onkeydown="handleKeyDown(event)" value=""/>
             <div id="output-container"></div>
-        </div>
+          </div>
             
           
           <button type="button" class="btn btn-secondary" onclick="addCategory()" style=" display: inline-block;position: fixed;
@@ -346,6 +346,7 @@
         >
         {% endif %}
         <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
+        <a class="nav-link"  href="{{ url_for('project_list') }}">Home</a>
       </div>
     </div>
   </body>
@@ -412,8 +413,8 @@
       }
 
       document.getElementById("project_name").value = jsonOverview["name"];
-      document.getElementById("project_description").value =jsonOverview["description"];
-      document.getElementById("project_category").value =jsonOverview["category"];
+      document.getElementById("project_description").value = jsonOverview["description"];
+      document.getElementById("project_category").value = jsonOverview["category"];
       // document.getElementById("project_tag").value = jsonOverview["tag"];
       loadTag(jsonOverview["tag"]);
     }

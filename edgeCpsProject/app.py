@@ -94,18 +94,14 @@ def index():
 
 
     if request.method == 'POST':
-        # session['userid'] = 'tempUser' # todo 로그인 없이 되도록
-        # # return redirect(url_for('project_list',loginUserInfo ='tempUser')) # todo 로그인 없이 되도록
-
         userid = request.form["username"]
         password = request.form["password"]
-        # userid = 'aaa'
-        # # password = 'aaa'
-        login = db_login(mariadb_pool, id = userid, pwd = password )
-        # login = {}
-        # login['login'] = True
 
-        if login['login']:
+        login = db_login(mariadb_pool, id = userid, pwd = password )
+
+        if login['user_name'][6] == 0:
+            return render_template('index.html', login_msg='계정 활성화 오류. 관리자에게 문의하세요.')
+        elif login['login']:
             session['userId'] = userid
             return redirect(url_for('project_list'))
         else:
@@ -138,7 +134,7 @@ def project_list():
     userIds, userName, userEmail, userGroup, userAdmin = user_info
 
     page = request.args.get('page', type=int, default=1)
-    per_page = 5  # 페이지당 항목 수를 설정합니다.
+    per_page = 10  # 페이지당 항목 수를 설정합니다.
     offset = (page - 1) * per_page
     total = len(projects_info)
 
@@ -190,8 +186,8 @@ def signup():
             password = request.form.get('password')
             email = request.form.get('email')
             birthdate = request.form.get('birthdate')
-            group = request.form.get('group')
-            sign_up(mariadb_pool, name = name,userId = userId,password = password,email = email,birthdate = birthdate,group =group)
+            # group = request.form.get('group')
+            sign_up(mariadb_pool, name = name,userId = userId,password = password,email = email,birthdate = birthdate)
         except:
             return render_template('index.html')
         #todo 여기서 데이터를 처리하거나 저장하는 로직을 추가하세요
@@ -718,7 +714,7 @@ def user_get_info(userId):
     elif(userInfo[0][5] == 999):
         userGroup = "공통"
     else:
-        userGroup = "!!"
+        userGroup = "개인그룹"
     userAdmin = userInfo[0][7]
 
     return userIds, userName, userEmail, userGroup, userAdmin

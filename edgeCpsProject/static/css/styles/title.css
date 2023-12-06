@@ -1,25 +1,25 @@
 @font-face {
   font-family: "Inter Extra Bold";
-  src: url("/static/font/Inter-ExtraBold.ttf") format("truetype");
+  src: url("../../font/Inter-ExtraBold.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: "Inter Extra Light";
-  src: url("/static/font/Inter-Regular.ttf") format("truetype");
+  src: url("../../font/Inter-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "Inter Medium";
-  src: url("/static/font/Inter-Medium.ttf") format("truetype");
+  src: url("../../font/Inter-Medium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 @font-face {
   font-family: "Gruppo";
-  src: url("/static/font/Gruppo-Regular.ttf") format("truetype");
+  src: url("../../font/Gruppo-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -203,8 +203,10 @@ input:checked + .slider:before {
   padding: 20px;
   border: 1px solid #888;
   width: 25%;
-  height: 36%;
+  /* height: 36%; */
   text-align: center;
+  border-radius: 3%;
+  margin-left: 73%;
 }
 
 .close {

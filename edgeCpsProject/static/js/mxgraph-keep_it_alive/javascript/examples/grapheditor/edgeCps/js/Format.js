@@ -2109,32 +2109,32 @@ ArrangePanel.prototype.addGroupOps = function(div)
 
 	if (graph.getSelectionCount() > 1)
 	{
-		btn = mxUtils.button(mxResources.get('group'), function(evt)
-		{
-			ui.actions.get('group').funct();
-		})
-		
-		btn.setAttribute('title', mxResources.get('group') + ' (' + this.editorUi.actions.get('group').shortcut + ')');
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
-		count++;
+		// btn = mxUtils.button(mxResources.get('group'), function(evt)
+		// {
+		// 	ui.actions.get('group').funct();
+		// })
+		//
+		// btn.setAttribute('title', mxResources.get('group') + ' (' + this.editorUi.actions.get('group').shortcut + ')');
+		// btn.style.width = '202px';
+		// btn.style.marginBottom = '2px';
+		// div.appendChild(btn);
+		// count++;
 	}
-	else if (graph.getSelectionCount() == 1 && !graph.getModel().isEdge(cell) && !graph.isSwimlane(cell) &&
-		!graph.isTable(cell) && !ss.row && !ss.cell && graph.getModel().getChildCount(cell) > 0)
-	{
-		btn = mxUtils.button(mxResources.get('ungroup'), function(evt)
-		{
-			ui.actions.get('ungroup').funct();
-		})
+	// else if (graph.getSelectionCount() == 1 && !graph.getModel().isEdge(cell) && !graph.isSwimlane(cell) &&
+	// 	!graph.isTable(cell) && !ss.row && !ss.cell && graph.getModel().getChildCount(cell) > 0)
+	// {
+	// 	btn = mxUtils.button(mxResources.get('ungroup'), function(evt)
+	// 	{
+	// 		ui.actions.get('ungroup').funct();
+	// 	})
 		
-		btn.setAttribute('title', mxResources.get('ungroup') + ' (' +
-			this.editorUi.actions.get('ungroup').shortcut + ')');
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
-		count++;
-	}
+	// 	btn.setAttribute('title', mxResources.get('ungroup') + ' (' +
+	// 		this.editorUi.actions.get('ungroup').shortcut + ')');
+	// 	btn.style.width = '202px';
+	// 	btn.style.marginBottom = '2px';
+	// 	div.appendChild(btn);
+	// 	count++;
+	// }
 	
 	if (ss.vertices.length > 0)
 	{
@@ -2168,21 +2168,21 @@ ArrangePanel.prototype.addGroupOps = function(div)
 	if (graph.getSelectionCount() == 1 && graph.getModel().isVertex(cell) && !ss.row &&
 		!ss.cell && graph.getModel().isVertex(graph.getModel().getParent(cell)))
 	{
-		if (count > 0)
-		{
-			mxUtils.br(div);
-		}
+		// if (count > 0)
+		// {
+		// 	mxUtils.br(div);
+		// }
 		
-		btn = mxUtils.button(mxResources.get('removeFromGroup'), function(evt)
-		{
-			ui.actions.get('removeFromGroup').funct();
-		})
+		// btn = mxUtils.button(mxResources.get('removeFromGroup'), function(evt)
+		// {
+		// 	ui.actions.get('removeFromGroup').funct();
+		// })
 		
-		btn.setAttribute('title', mxResources.get('removeFromGroup'));
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
-		count++;
+		// btn.setAttribute('title', mxResources.get('removeFromGroup'));
+		// btn.style.width = '202px';
+		// btn.style.marginBottom = '2px';
+		// div.appendChild(btn);
+		// count++;
 	}
 	else if (graph.getSelectionCount() > 0)
 	{
@@ -2286,32 +2286,32 @@ ArrangePanel.prototype.businessProcessFormat = function(div)
 
 	if (graph.getSelectionCount() > 1)
 	{
-		btn = mxUtils.button(mxResources.get('group'), function(evt)
-		{
-			ui.actions.get('group').funct();
-		})
-		
-		btn.setAttribute('title', mxResources.get('group') + ' (' + this.editorUi.actions.get('group').shortcut + ')');
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
-		count++;
+		// btn = mxUtils.button(mxResources.get('group'), function(evt)
+		// {
+		// 	ui.actions.get('group').funct();
+		// })
+		//
+		// btn.setAttribute('title', mxResources.get('group') + ' (' + this.editorUi.actions.get('group').shortcut + ')');
+		// btn.style.width = '202px';
+		// btn.style.marginBottom = '2px';
+		// div.appendChild(btn);
+		// count++;
 	}
-	else if (graph.getSelectionCount() == 1 && !graph.getModel().isEdge(cell) && !graph.isSwimlane(cell) &&
-		!graph.isTable(cell) && !ss.row && !ss.cell && graph.getModel().getChildCount(cell) > 0)
-	{
-		btn = mxUtils.button(mxResources.get('ungroup'), function(evt)
-		{
-			ui.actions.get('ungroup').funct();
-		})
+	// else if (graph.getSelectionCount() == 1 && !graph.getModel().isEdge(cell) && !graph.isSwimlane(cell) &&
+	// 	!graph.isTable(cell) && !ss.row && !ss.cell && graph.getModel().getChildCount(cell) > 0)
+	// {
+	// 	btn = mxUtils.button(mxResources.get('ungroup'), function(evt)
+	// 	{
+	// 		ui.actions.get('ungroup').funct();
+	// 	})
 		
-		btn.setAttribute('title', mxResources.get('ungroup') + ' (' +
-			this.editorUi.actions.get('ungroup').shortcut + ')');
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
-		count++;
-	}
+	// 	btn.setAttribute('title', mxResources.get('ungroup') + ' (' +
+	// 		this.editorUi.actions.get('ungroup').shortcut + ')');
+	// 	btn.style.width = '202px';
+	// 	btn.style.marginBottom = '2px';
+	// 	div.appendChild(btn);
+	// 	count++;
+	// }
 	
 	if (ss.vertices.length > 0)
 	{
@@ -2345,21 +2345,21 @@ ArrangePanel.prototype.businessProcessFormat = function(div)
 	if (graph.getSelectionCount() == 1 && graph.getModel().isVertex(cell) && !ss.row &&
 		!ss.cell && graph.getModel().isVertex(graph.getModel().getParent(cell)))
 	{
-		if (count > 0)
-		{
-			mxUtils.br(div);
-		}
+		// if (count > 0)
+		// {
+		// 	mxUtils.br(div);
+		// }
 		
-		btn = mxUtils.button(mxResources.get('removeFromGroup'), function(evt)
-		{
-			ui.actions.get('removeFromGroup').funct();
-		})
+		// btn = mxUtils.button(mxResources.get('removeFromGroup'), function(evt)
+		// {
+		// 	ui.actions.get('removeFromGroup').funct();
+		// })
 		
-		btn.setAttribute('title', mxResources.get('removeFromGroup'));
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
-		count++;
+		// btn.setAttribute('title', mxResources.get('removeFromGroup'));
+		// btn.style.width = '202px';
+		// btn.style.marginBottom = '2px';
+		// div.appendChild(btn);
+		// count++;
 	}
 	else if (graph.getSelectionCount() > 0)
 	{
@@ -2432,32 +2432,32 @@ ArrangePanel.prototype.requirementProcessFormat = function(div)
 
 	if (graph.getSelectionCount() > 1)
 	{
-		btn = mxUtils.button(mxResources.get('group'), function(evt)
-		{
-			ui.actions.get('group').funct();
-		})
-		
-		btn.setAttribute('title', mxResources.get('group') + ' (' + this.editorUi.actions.get('group').shortcut + ')');
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
-		count++;
+		// btn = mxUtils.button(mxResources.get('group'), function(evt)
+		// {
+		// 	ui.actions.get('group').funct();
+		// })
+		//
+		// btn.setAttribute('title', mxResources.get('group') + ' (' + this.editorUi.actions.get('group').shortcut + ')');
+		// btn.style.width = '202px';
+		// btn.style.marginBottom = '2px';
+		// div.appendChild(btn);
+		// count++;
 	}
-	else if (graph.getSelectionCount() == 1 && !graph.getModel().isEdge(cell) && !graph.isSwimlane(cell) &&
-		!graph.isTable(cell) && !ss.row && !ss.cell && graph.getModel().getChildCount(cell) > 0)
-	{
-		btn = mxUtils.button(mxResources.get('ungroup'), function(evt)
-		{
-			ui.actions.get('ungroup').funct();
-		})
+	// else if (graph.getSelectionCount() == 1 && !graph.getModel().isEdge(cell) && !graph.isSwimlane(cell) &&
+	// 	!graph.isTable(cell) && !ss.row && !ss.cell && graph.getModel().getChildCount(cell) > 0)
+	// {
+	// 	btn = mxUtils.button(mxResources.get('ungroup'), function(evt)
+	// 	{
+	// 		ui.actions.get('ungroup').funct();
+	// 	})
 		
-		btn.setAttribute('title', mxResources.get('ungroup') + ' (' +
-			this.editorUi.actions.get('ungroup').shortcut + ')');
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
-		count++;
-	}
+	// 	btn.setAttribute('title', mxResources.get('ungroup') + ' (' +
+	// 		this.editorUi.actions.get('ungroup').shortcut + ')');
+	// 	btn.style.width = '202px';
+	// 	btn.style.marginBottom = '2px';
+	// 	div.appendChild(btn);
+	// 	count++;
+	// }
 	
 	if (ss.vertices.length > 0)
 	{
@@ -2491,20 +2491,20 @@ ArrangePanel.prototype.requirementProcessFormat = function(div)
 	if (graph.getSelectionCount() == 1 && graph.getModel().isVertex(cell) && !ss.row &&
 		!ss.cell && graph.getModel().isVertex(graph.getModel().getParent(cell)))
 	{
-		if (count > 0)
-		{
-			mxUtils.br(div);
-		}
+		// if (count > 0)
+		// {
+		// 	mxUtils.br(div);
+		// }
 		
-		btn = mxUtils.button(mxResources.get('removeFromGroup'), function(evt)
-		{
-			ui.actions.get('removeFromGroup').funct();
-		})
+		// btn = mxUtils.button(mxResources.get('removeFromGroup'), function(evt)
+		// {
+		// 	ui.actions.get('removeFromGroup').funct();
+		// })
 		
-		btn.setAttribute('title', mxResources.get('removeFromGroup'));
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
+		// btn.setAttribute('title', mxResources.get('removeFromGroup'));
+		// btn.style.width = '202px';
+		// btn.style.marginBottom = '2px';
+		// div.appendChild(btn);
 		count++;
 	}
 	else if (graph.getSelectionCount() > 0)
@@ -2567,32 +2567,32 @@ ArrangePanel.prototype.workflowProcessformat = function(div)
 
 	if (graph.getSelectionCount() > 1)
 	{
-		btn = mxUtils.button(mxResources.get('group'), function(evt)
-		{
-			ui.actions.get('group').funct();
-		})
-		
-		btn.setAttribute('title', mxResources.get('group') + ' (' + this.editorUi.actions.get('group').shortcut + ')');
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
-		count++;
+		// btn = mxUtils.button(mxResources.get('group'), function(evt)
+		// {
+		// 	ui.actions.get('group').funct();
+		// })
+		//
+		// btn.setAttribute('title', mxResources.get('group') + ' (' + this.editorUi.actions.get('group').shortcut + ')');
+		// btn.style.width = '202px';
+		// btn.style.marginBottom = '2px';
+		// div.appendChild(btn);
+		// count++;
 	}
-	else if (graph.getSelectionCount() == 1 && !graph.getModel().isEdge(cell) && !graph.isSwimlane(cell) &&
-		!graph.isTable(cell) && !ss.row && !ss.cell && graph.getModel().getChildCount(cell) > 0)
-	{
-		btn = mxUtils.button(mxResources.get('ungroup'), function(evt)
-		{
-			ui.actions.get('ungroup').funct();
-		})
+	// else if (graph.getSelectionCount() == 1 && !graph.getModel().isEdge(cell) && !graph.isSwimlane(cell) &&
+	// 	!graph.isTable(cell) && !ss.row && !ss.cell && graph.getModel().getChildCount(cell) > 0)
+	// {
+	// 	btn = mxUtils.button(mxResources.get('ungroup'), function(evt)
+	// 	{
+	// 		ui.actions.get('ungroup').funct();
+	// 	})
 		
-		btn.setAttribute('title', mxResources.get('ungroup') + ' (' +
-			this.editorUi.actions.get('ungroup').shortcut + ')');
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
-		count++;
-	}
+	// 	btn.setAttribute('title', mxResources.get('ungroup') + ' (' +
+	// 		this.editorUi.actions.get('ungroup').shortcut + ')');
+	// 	btn.style.width = '202px';
+	// 	btn.style.marginBottom = '2px';
+	// 	div.appendChild(btn);
+	// 	count++;
+	// }
 	
 	if (ss.vertices.length > 0)
 	{
@@ -2624,20 +2624,20 @@ ArrangePanel.prototype.workflowProcessformat = function(div)
 	if (graph.getSelectionCount() == 1 && graph.getModel().isVertex(cell) && !ss.row &&
 		!ss.cell && graph.getModel().isVertex(graph.getModel().getParent(cell)))
 	{
-		if (count > 0)
-		{
-			mxUtils.br(div);
-		}
+		// if (count > 0)
+		// {
+		// 	mxUtils.br(div);
+		// }
 		
-		btn = mxUtils.button(mxResources.get('removeFromGroup'), function(evt)
-		{
-			ui.actions.get('removeFromGroup').funct();
-		})
+		// btn = mxUtils.button(mxResources.get('removeFromGroup'), function(evt)
+		// {
+		// 	ui.actions.get('removeFromGroup').funct();
+		// })
 		
-		btn.setAttribute('title', mxResources.get('removeFromGroup'));
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
+		// btn.setAttribute('title', mxResources.get('removeFromGroup'));
+		// btn.style.width = '202px';
+		// btn.style.marginBottom = '2px';
+		// div.appendChild(btn);
 		count++;
 	}
 	else if (graph.getSelectionCount() > 0)
@@ -2730,32 +2730,32 @@ ArrangePanel.prototype.policyProcessformat = function(div)
 
 	if (graph.getSelectionCount() > 1)
 	{
-		btn = mxUtils.button(mxResources.get('group'), function(evt)
-		{
-			ui.actions.get('group').funct();
-		})
-		
-		btn.setAttribute('title', mxResources.get('group') + ' (' + this.editorUi.actions.get('group').shortcut + ')');
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
-		count++;
+		// btn = mxUtils.button(mxResources.get('group'), function(evt)
+		// {
+		// 	ui.actions.get('group').funct();
+		// })
+		//
+		// btn.setAttribute('title', mxResources.get('group') + ' (' + this.editorUi.actions.get('group').shortcut + ')');
+		// btn.style.width = '202px';
+		// btn.style.marginBottom = '2px';
+		// div.appendChild(btn);
+		// count++;
 	}
-	else if (graph.getSelectionCount() == 1 && !graph.getModel().isEdge(cell) && !graph.isSwimlane(cell) &&
-		!graph.isTable(cell) && !ss.row && !ss.cell && graph.getModel().getChildCount(cell) > 0)
-	{
-		btn = mxUtils.button(mxResources.get('ungroup'), function(evt)
-		{
-			ui.actions.get('ungroup').funct();
-		})
+	// else if (graph.getSelectionCount() == 1 && !graph.getModel().isEdge(cell) && !graph.isSwimlane(cell) &&
+	// 	!graph.isTable(cell) && !ss.row && !ss.cell && graph.getModel().getChildCount(cell) > 0)
+	// {
+	// 	btn = mxUtils.button(mxResources.get('ungroup'), function(evt)
+	// 	{
+	// 		ui.actions.get('ungroup').funct();
+	// 	})
 		
-		btn.setAttribute('title', mxResources.get('ungroup') + ' (' +
-			this.editorUi.actions.get('ungroup').shortcut + ')');
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
-		count++;
-	}
+	// 	btn.setAttribute('title', mxResources.get('ungroup') + ' (' +
+	// 		this.editorUi.actions.get('ungroup').shortcut + ')');
+	// 	btn.style.width = '202px';
+	// 	btn.style.marginBottom = '2px';
+	// 	div.appendChild(btn);
+	// 	count++;
+	// }
 	
 	if (ss.vertices.length > 0)
 	{
@@ -2789,21 +2789,21 @@ ArrangePanel.prototype.policyProcessformat = function(div)
 	if (graph.getSelectionCount() == 1 && graph.getModel().isVertex(cell) && !ss.row &&
 		!ss.cell && graph.getModel().isVertex(graph.getModel().getParent(cell)))
 	{
-		if (count > 0)
-		{
-			mxUtils.br(div);
-		}
+		// if (count > 0)
+		// {
+		// 	mxUtils.br(div);
+		// }
 		
-		btn = mxUtils.button(mxResources.get('removeFromGroup'), function(evt)
-		{
-			ui.actions.get('removeFromGroup').funct();
-		})
+		// btn = mxUtils.button(mxResources.get('removeFromGroup'), function(evt)
+		// {
+		// 	ui.actions.get('removeFromGroup').funct();
+		// })
 		
-		btn.setAttribute('title', mxResources.get('removeFromGroup'));
-		btn.style.width = '202px';
-		btn.style.marginBottom = '2px';
-		div.appendChild(btn);
-		count++;
+		// btn.setAttribute('title', mxResources.get('removeFromGroup'));
+		// btn.style.width = '202px';
+		// btn.style.marginBottom = '2px';
+		// div.appendChild(btn);
+		// count++;
 	}
 	else if (graph.getSelectionCount() > 0)
 	{
