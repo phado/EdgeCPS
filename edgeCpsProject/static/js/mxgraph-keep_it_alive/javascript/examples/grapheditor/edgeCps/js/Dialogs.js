@@ -38,7 +38,7 @@ function searchDockerImage(){
         var selectBox = document.createElement('select');
 		selectBox.multiple = true;
         selectBox.className = 'docker-select-box';
-		selectBox.style.width = '400px';
+		selectBox.style.width = '540px';
 		selectBox.style.height = '200px'
 		selectBox.style.borderRadius = '10px';
 		
@@ -1352,19 +1352,78 @@ ExportDialog.saveLocalFile = function(editorUi, data, filename, format)
 /**
  * Constructs a new metadata dialog.
  */
-
+function addEditDataReqName(clickedCellId, cell, graph){
+	var reqName = '';
+	var cellDict = graph.getModel().cells;
+	var keysArray = Object.keys(cellDict);
+	for (const key of keysArray) {
+		try{
+			if(graph.getModel().cells[key].parent.parent.id == clickedCellId){
+				try{
+					if(graph.getModel().cells[key].class == 'reqName'){
+						reqName = graph.getModel().cells[key].value;
+						break;
+					}
+					else if(graph.getModel().cells[key].class == 'nonReqName'){
+						reqName = graph.getModel().cells[key].value;
+						break;
+					}
+				}catch{
+				}
+			}
+		}catch{}
+	}
+	return reqName;
+}
 var EditDataDialog = function(ui, cell)
 {
+	var graph = ui.editor.graph;
+
+	var value = graph.getModel().getValue(cell);
+	if(process_name == 'requirementsProcess') {
+		var selectedCellName = addEditDataReqName(cell.id, cell, graph);
+	}
+	if(process_name == 'businessProcess'){
+		var activityNameString = value.getAttribute('label');
+		var match = activityNameString.match(/bold;">(.*?)<\/div/g);
+		if (match) {
+			// 추출된 문자열에서 [ 나 ] 제거 (있을 경우)
+			var activityName = match[0].replace(/bold;">(.*?)<\/div/, '$1');
+			 activityName = activityName.replace(/\[|\]/g, '');
+		} else {
+			match = activityNameString.match(/bold">(.*?)<\/div/g);
+			if (match) {
+				// 추출된 문자열에서 [ 나 ] 제거 (있을 경우)
+				var activityName = match[0].replace(/bold">(.*?)<\/div/, '$1');
+				activityName = activityName.replace(/\[|\]/g, '');
+			}
+		}
+		var selectedCellName = activityName;
+	}
+	if(process_name =='workflowProcess'){
+
+		var activityNameString = value.getAttribute('label');
+		var match = activityNameString.match(/&gt;<br>(.*?)<\/div/);
+
+		if (match) {
+			var extractedString = match[1];
+
+			// [와]를 없애고 저장 (있을 경우)
+			var selectedCellName = extractedString.replace(/\[|\]/g, '');
+
+			// 결과 출력 또는 다른 작업 수행
+		}
+	}
+
 	var div = document.createElement('div');
 	var editDataTitle = document.createElement('div');
-	editDataTitle.textContent = 'EditData';
+	editDataTitle.textContent = 'EditData   ' + '('+ selectedCellName +')';
 	editDataTitle.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
 	div.appendChild(editDataTitle);
 	div.style.cssText = 'height:70px;border-radius: 5px 5px 0px 0px;background: #E8F3FF;'
 
-	var graph = ui.editor.graph;
-	
-	var value = graph.getModel().getValue(cell);
+
+
 	// try{
 		value.removeAttribute('xmlns');
 	// }
@@ -1803,6 +1862,7 @@ EditDataDialog.placeholderHelpLink = null;
 
 // 순우 req 다이어로그
 var ReqDialog = function(editorUi, ui, cell) {
+	var selectedCellName = '';
 	if (process_name =='businessProcess'){
 		// if(typeof(cell.value)=='object'){
 		var actId = cell.id
@@ -1822,7 +1882,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 		}
 		// matches.push(extractedString);
 		var actName = actId+'#'+extractedString
-
+		selectedCellName = actName;
 	}else if (process_name == 'workflowProcess'){
 		var actName = localStorage.getItem(projectName+'_nowWorkflow');
 		
@@ -1853,13 +1913,13 @@ var ReqDialog = function(editorUi, ui, cell) {
 			var stepName = matchResult[1];
 			if(stepName.includes('['||']')){
 				stepName = stepName.substring(1,stepName.length-1);
+				selectedCellName = stepName;
 			}
 		}
 		// var stepName = labelValue.substring(start, end);
 		var stepId = cell.id;
 		
 	}
-
 	var reqList = extractReq();
 	// var div = document.createElement('div');
 	
@@ -1867,7 +1927,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 	// mxUtils.write(div, mxResources.get('selectReq'));
 	var div = document.createElement('div');
 	var reqTitle = document.createElement('div');
-	reqTitle.textContent = 'Select Requirement';
+	reqTitle.textContent = 'Select Requirement   ' +'('+selectedCellName.split("#").pop()+')';
 	reqTitle.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
 	div.appendChild(reqTitle);
 	div.style.cssText = 'height:70px;border-radius: 5px 5px 0px 0px;background: #E8F3FF;'
@@ -2106,10 +2166,25 @@ var ReqDialog = function(editorUi, ui, cell) {
 
 // 순우 node selector 다이어로그
 var nodeSelectorDialog = function(editorUi, ui, cell) {
+	var graph = editorUi.editor.graph;
+	var value = graph.getModel().getValue(ui);
+	if(process_name =='policyProcess'){
+		var activityNameString = value.getAttribute('label');
+		var match = activityNameString.match(/&gt;<br>(.*?)<\/div/);
+
+		if (match) {
+			var extractedString = match[1];
+
+			// [와]를 없애고 저장 (있을 경우)
+			var selectedCellName = extractedString.replace(/\[|\]/g, '');
+
+			// 결과 출력 또는 다른 작업 수행
+		}
+	}
 	var div = document.createElement('div');
 	// mxUtils.write(div, mxResources.get('editLink') + ':');
 	var reqTitle = document.createElement('div');
-	reqTitle.textContent = 'Node Selector';
+	reqTitle.textContent = 'Node Selector   ' + '(' + selectedCellName + ')';
 	reqTitle.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
 	div.appendChild(reqTitle);
 	div.style.cssText = 'height:70px;border-radius: 5px 5px 0px 0px;background: #E8F3FF;'
@@ -2299,10 +2374,34 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 // 도커 다이어로그
 var LinkDialog = function(editorUi, initialValue, btnLabel, fn)
 {
+	if(process_name =='workflowProcess'){
+		var actName = localStorage.getItem(projectName+'_nowWorkflow');
+
+		try{
+			var stepNameHtml = btnLabel.value;
+			for(var i=0 ; i<stepNameHtml.attributes.length; i++){
+				try{
+					if(stepNameHtml.attributes[i].nodeName=='label'){
+						var labelValue = stepNameHtml.attributes[i].textContent;
+					}
+				}catch{}
+			}
+		}catch{
+		}
+		var matchResult = labelValue.match(/&gt;&gt;<br>(.*?)<\/div>/);
+		// 찾은 문자열 출력
+		if (matchResult && matchResult[1]) {
+			var stepName = matchResult[1];
+			if(stepName.includes('['||']')){
+				stepName = stepName.substring(1,stepName.length-1);
+				var selectedCellName = stepName;
+			}
+		}
+	}
 	var div = document.createElement('div');
 	// mxUtils.write(div, mxResources.get('editLink') + ':');
 	var reqTitle = document.createElement('div');
-	reqTitle.textContent = 'Edit Docker Image';
+	reqTitle.textContent = 'Docker Image   ' + '('+ selectedCellName +')';
 	reqTitle.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
 	div.appendChild(reqTitle);
 	div.style.cssText = 'height:70px;border-radius: 5px 5px 0px 0px;background: #E8F3FF;'
@@ -2326,7 +2425,7 @@ var LinkDialog = function(editorUi, initialValue, btnLabel, fn)
 	linkInput.setAttribute('placeholder', 'http://www.example.com/');
 	linkInput.setAttribute('type', 'text');
 	linkInput.style.marginTop = '6px';
-	linkInput.style.width = '400px';
+	linkInput.style.width = '540px';
 	linkInput.style.backgroundImage = 'url(\'' + Dialog.prototype.clearImage + '\')';
 	linkInput.style.backgroundRepeat = 'no-repeat';
 	linkInput.style.backgroundPosition = '100% 50%';
@@ -2359,7 +2458,7 @@ var LinkDialog = function(editorUi, initialValue, btnLabel, fn)
 	searchInput.setAttribute('type', 'text');
 	searchInput.style.marginTop = '6px';
 	searchInput.style.marginRight = '10px';
-	searchInput.style.width = '200px';
+	searchInput.style.width = '340px';
 	searchInput.style.opacity = '0.5'; // 투명도 설정
 	searchInput.className = 'keyword'; // 클래스 이름 설정
 
@@ -2450,7 +2549,7 @@ var LinkDialog = function(editorUi, initialValue, btnLabel, fn)
 		btns.appendChild(cancelBtn);
 	}
 	
-	var mainBtn = mxUtils.button(btnLabel, function()
+	var mainBtn = mxUtils.button('Apply', function()
 	{
 		editorUi.hideDialog();
 		fn(linkInput.value);

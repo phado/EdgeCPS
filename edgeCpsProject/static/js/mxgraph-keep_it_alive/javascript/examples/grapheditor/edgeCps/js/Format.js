@@ -588,60 +588,8 @@ Format.prototype.refresh = function(arguments,id)
 	showAttribute.style.overflow = 'auto';
 	
 	// 순우 각 cell 클릭 했을 때 우측 사이드바에 속성 값 띄우는 기능
-	if (process_name=='requirementsProcesss'){
-		try{
-			// var attribute = selectedCell[0].cells[0].value.attributes[1]['name']+' : '+selectedCell[0].cells[0].value.getAttribute('text');
-			// showAttribute.textContent = attribute;
 
-			// var attributeKey = selectedCell[0].cells[0].value.attributes[3]['nodeName']
-			var attributeKey = 'text';
-			var attributeKeyContainer = document.createElement('div');
-			attributeKeyContainer.style.marginLeft = '1px';
-			attributeKeyContainer.style.marginRight = '1px';
-			attributeKeyContainer.innerHTML = '<strong style="color: black;">'+attributeKey+'</strong>';
-
-			var attributeValue = selectedCell[0].cells[0].value.getAttribute('text');
-			var attributeValueContainer = document.createElement('div');
-			attributeValueContainer.style.borderBottom = '1px solid #D6D6D6'; 
-			attributeValueContainer.style.marginLeft = '3px';
-			attributeValueContainer.style.marginRight = '3px';
-			attributeValueContainer.innerHTML = attributeValue;
-			attributeValueContainer.style.whiteSpace = 'pre-wrap';
-			attributeValueContainer.style.overflowWrap = 'break-word'
-
-			showAttribute.appendChild(attributeValueContainer);
-			var textHeight = attributeValueContainer.clientHeight;
-			// document.body.removeChild(attributeValueContainer);
-
-			// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
-			var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
-			if (textHeight > maxWidth) {
-				attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
-				attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
-			}
-
-			var empty = document.createElement('div');
-			empty.style.marginBottom = '10px';
-			showAttribute.appendChild(attributeKeyContainer);
-			showAttribute.appendChild(attributeValueContainer);
-			showAttribute.appendChild(empty);
-
-			// var line = attribute;
-			
-			// 	var parts = line.split(':');
-			// 	if (parts.length === 2) {
-			// 		// 왼쪽은 볼드 스타일로, 오른쪽은 일반 스타일로 추가합니다.
-			// 		showAttribute.innerHTML += '<span style="font-weight: bold;">' + parts[0] + ':</span> ' + parts[1] + '<br>';
-			// 	} else {
-			// 		// ':' 문자가 없는 줄은 그대로 추가합니다.
-			// 		showAttribute.innerHTML += line + '<br>';
-			// 	}
-			
-			
-		}
-		catch{}
-	}
-	else if (process_name == 'businessProcess' || process_name =='workflowProcess'|| process_name =='policyProcess'||process_name=='requirementsProcess'){
+	if (process_name == 'businessProcess' || process_name =='workflowProcess'|| process_name =='policyProcess'||process_name=='requirementsProcess'){
 		var totalAttribute = '';
 		var id =id;
 		try {
@@ -662,10 +610,6 @@ Format.prototype.refresh = function(arguments,id)
 					}
 					
 				}
-				// var lastKey = keys[keys.length - 1];
-
-				
-				// var attribute = selectedCell[0].cells[2].value.attributes;
 			}
 			if(attribute[0].nodeName =='xmlns'){
 				attribute.removeNamedItem('xmlns');
@@ -723,129 +667,132 @@ Format.prototype.refresh = function(arguments,id)
 	
 					// attributeValueContainer.innerHTML = keyValuePairs;
 				}
-			}else{
-				for(i=1 ; i<attribute.length; i++){
+			}else {
+				for (i = 1; i < attribute.length; i++) {
 					// if(attribute[i]['value']==''){
 					// 	continue;
 					// }
-					if(attribute[i].nodeName=='label'){
+					if (attribute[i].nodeName == 'label') {
 						continue;
 					}
 					var attributeKey = attribute[i]['name'];
 					var attributeKeyContainer = document.createElement('div');
 					attributeKeyContainer.style.marginLeft = '1px';
 					attributeKeyContainer.style.marginRight = '1px';
-					attributeKeyContainer.innerHTML = '<strong style="color: black;">'+attributeKey+'</strong>';
+					attributeKeyContainer.innerHTML = '<strong style="color: black;">' + attributeKey + '</strong>';
 					// attributeKeyContainer.style=bold;
-	
+
 					var attributeValue = attribute[i]['value'];
 					var attributeValueContainer = document.createElement('div');
-					attributeValueContainer.style.borderBottom = '1px solid #D6D6D6'; 
+					attributeValueContainer.style.borderBottom = '1px solid #D6D6D6';
 					attributeValueContainer.style.marginLeft = '3px';
 					attributeValueContainer.style.marginRight = '3px';
 					attributeValueContainer.style.whiteSpace = 'pre-wrap';
 					attributeValueContainer.style.overflowWrap = 'break-word'
-	
+
 					attributeValueContainer.innerHTML = attributeValue;
-					
-	
+
+
 					showAttribute.appendChild(attributeValueContainer);
 					var textHeight = attributeValueContainer.clientHeight;
 					// document.body.removeChild(attributeValueContainer);
-	
+
 					// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
 					var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
 					if (textHeight > maxWidth) {
 						attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
 						attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
 					}
-	
+
 					var empty = document.createElement('div');
 					empty.style.marginBottom = '10px';
 					showAttribute.appendChild(attributeKeyContainer);
 					showAttribute.appendChild(attributeValueContainer);
 					showAttribute.appendChild(empty);
-	
+
 				}
 				// req 내용도 우측 사이드바에 보여주는 기능
-				try{
-					
-					try{
-						var selectedCellName = parseString(selectedCell[0].cells[0].value.attributes['label'].value, process_name,selectedCell[0].cells[0].id); 
-						var reqAttirbute = localStorage.getItem(selectedCellName+'_requirement');
-					}
-					catch{
-						var keys = Object.keys(selectedCell[0].cells);
-						for (var key of Object.values(keys)) {
-							
-							try{
-								if(selectedCell[0].cells[key].id==id){
-									var attribute = selectedCell[0].cells[key].value.attributes;
-									var selectedCellName = parseString(attribute['label'].value, process_name,id);
-									var reqAttirbute = localStorage.getItem(selectedCellName+'_requirement');
+				if (process_name != 'requirementsProcess') {
+					try {
+
+						try {
+							var selectedCellName = parseString(selectedCell[0].cells[0].value.attributes['label'].value, process_name, selectedCell[0].cells[0].id);
+							var reqAttirbute = localStorage.getItem(selectedCellName + '_requirement');
+						} catch {
+							var keys = Object.keys(selectedCell[0].cells);
+							for (var key of Object.values(keys)) {
+
+								try {
+									if (selectedCell[0].cells[key].id == id) {
+										var attribute = selectedCell[0].cells[key].value.attributes;
+										var selectedCellName = parseString(attribute['label'].value, process_name, id);
+										var reqAttirbute = localStorage.getItem(selectedCellName + '_requirement');
+									}
+
+								} catch (e) {
+									console.log(e);
 								}
-								
-							}catch(e){
-								console.log(e);
+
 							}
-							
 						}
-					}
-					// var attributeKey = attribute[i]['name'];
+						// var attributeKey = attribute[i]['name'];
 						var attributeKeyContainer = document.createElement('div');
 						attributeKeyContainer.style.marginLeft = '1px';
 						attributeKeyContainer.style.marginRight = '1px';
 						attributeKeyContainer.innerHTML = '<strong style="color: black;">Related requirements</strong>';
 						// attributeKeyContainer.style=bold;
-		
+
 						var attributeValue = reqAttirbute
 						var attributeValueContainer = document.createElement('div');
-						attributeValueContainer.style.borderBottom = '1px solid #D6D6D6'; 
+						attributeValueContainer.style.borderBottom = '1px solid #D6D6D6';
 						attributeValueContainer.style.marginLeft = '3px';
 						attributeValueContainer.style.marginRight = '3px';
 						attributeValueContainer.style.whiteSpace = 'pre-wrap';
 						attributeValueContainer.style.overflowWrap = 'break-word'
-		
+
 						attributeValueContainer.innerHTML = attributeValue;
-						
-		
+
+
 						showAttribute.appendChild(attributeValueContainer);
 						var textHeight = attributeValueContainer.clientHeight;
 						// document.body.removeChild(attributeValueContainer);
-		
+
 						// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
 						var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
 						if (textHeight > maxWidth) {
 							attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
 							attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
 						}
-		
+
 						var empty = document.createElement('div');
 						empty.style.marginBottom = '10px';
+
 						showAttribute.appendChild(attributeKeyContainer);
 						showAttribute.appendChild(attributeValueContainer);
 						showAttribute.appendChild(empty);
-				}catch(e){
-					console.log(e);
-				}
-				
-			}
-			
-			// showAttribute.innerHTML = totalAttribute;
 
-			// var lines = totalAttribute.split('<br>');
-			// for (var i = 0; i < lines.length; i++) {
-			// 	var line = lines[i];
-			// 	var parts = line.split(':');
-			// 	if (parts.length === 2) {
-			// 		// 왼쪽은 볼드 스타일로, 오른쪽은 일반 스타일로 추가합니다.
-			// 		showAttribute.innerHTML += '<span style="font-weight: bold;">' + parts[0] + ':</span> ' + parts[1] + '<br>';
-			// 	} else {
-			// 		// ':' 문자가 없는 줄은 그대로 추가합니다.
-			// 		showAttribute.innerHTML += line + '<br>';
-			// 	}
-			// }
-			
+
+					} catch (e) {
+						console.log(e);
+					}
+
+				}
+
+				// showAttribute.innerHTML = totalAttribute;
+
+				// var lines = totalAttribute.split('<br>');
+				// for (var i = 0; i < lines.length; i++) {
+				// 	var line = lines[i];
+				// 	var parts = line.split(':');
+				// 	if (parts.length === 2) {
+				// 		// 왼쪽은 볼드 스타일로, 오른쪽은 일반 스타일로 추가합니다.
+				// 		showAttribute.innerHTML += '<span style="font-weight: bold;">' + parts[0] + ':</span> ' + parts[1] + '<br>';
+				// 	} else {
+				// 		// ':' 문자가 없는 줄은 그대로 추가합니다.
+				// 		showAttribute.innerHTML += line + '<br>';
+				// 	}
+				// }
+			}
 		}
 		catch {}
 	}
@@ -1925,7 +1872,7 @@ ArrangePanel.prototype.init = function() // 민수  우측 메뉴Arrange 에서 
 		graph.isTableRow(ss.vertices[0]) ||
 		graph.isTableCell(ss.vertices[0]))
 	{
-		this.container.appendChild(this.addTable(this.createPanel()));
+		// this.container.appendChild(this.addTable(this.createPanel()));
 	}
 	
 	// 각 프로세스 별 우측 arrange 패널 요소 값 다르게
@@ -2848,44 +2795,44 @@ ArrangePanel.prototype.policyProcessformat = function(div)
  * 
  */
 // 순우 우측 사이드바 정렬기능
-ArrangePanel.prototype.addAlign = function(div)
-{
-	var graph = this.editorUi.editor.graph;
-	div.style.paddingTop = '6px';
-	div.style.paddingBottom = '12px';
-	div.appendChild(this.createTitle(mxResources.get('align')));
-	
-	var stylePanel = document.createElement('div');
-	stylePanel.style.position = 'relative';
-	stylePanel.style.paddingLeft = '0px';
-	stylePanel.style.borderWidth = '0px';
-	stylePanel.className = 'geToolbarContainer';
-	
-	if (mxClient.IS_QUIRKS)
-	{
-		div.style.height = '60px';
-	}
-	
-	var left = this.editorUi.toolbar.addButton('geSprite-alignleft', mxResources.get('left'),
-		function() { graph.alignCells(mxConstants.ALIGN_LEFT); }, stylePanel);
-	var center = this.editorUi.toolbar.addButton('geSprite-aligncenter', mxResources.get('center'),
-		function() { graph.alignCells(mxConstants.ALIGN_CENTER); }, stylePanel);
-	var right = this.editorUi.toolbar.addButton('geSprite-alignright', mxResources.get('right'),
-		function() { graph.alignCells(mxConstants.ALIGN_RIGHT); }, stylePanel);
-
-	var top = this.editorUi.toolbar.addButton('geSprite-aligntop', mxResources.get('top'),
-		function() { graph.alignCells(mxConstants.ALIGN_TOP); }, stylePanel);
-	var middle = this.editorUi.toolbar.addButton('geSprite-alignmiddle', mxResources.get('middle'),
-		function() { graph.alignCells(mxConstants.ALIGN_MIDDLE); }, stylePanel);
-	var bottom = this.editorUi.toolbar.addButton('geSprite-alignbottom', mxResources.get('bottom'),
-		function() { graph.alignCells(mxConstants.ALIGN_BOTTOM); }, stylePanel);
-	
-	this.styleButtons([left, center, right, top, middle, bottom]);
-	right.style.marginRight = '6px';
-	div.appendChild(stylePanel);
-	
-	return div;
-};
+// ArrangePanel.prototype.addAlign = function(div)
+// {
+// 	var graph = this.editorUi.editor.graph;
+// 	div.style.paddingTop = '6px';
+// 	div.style.paddingBottom = '12px';
+// 	div.appendChild(this.createTitle(mxResources.get('align')));
+//
+// 	var stylePanel = document.createElement('div');
+// 	stylePanel.style.position = 'relative';
+// 	stylePanel.style.paddingLeft = '0px';
+// 	stylePanel.style.borderWidth = '0px';
+// 	stylePanel.className = 'geToolbarContainer';
+//
+// 	if (mxClient.IS_QUIRKS)
+// 	{
+// 		div.style.height = '60px';
+// 	}
+//
+// 	var left = this.editorUi.toolbar.addButton('geSprite-alignleft', mxResources.get('left'),
+// 		function() { graph.alignCells(mxConstants.ALIGN_LEFT); }, stylePanel);
+// 	var center = this.editorUi.toolbar.addButton('geSprite-aligncenter', mxResources.get('center'),
+// 		function() { graph.alignCells(mxConstants.ALIGN_CENTER); }, stylePanel);
+// 	var right = this.editorUi.toolbar.addButton('geSprite-alignright', mxResources.get('right'),
+// 		function() { graph.alignCells(mxConstants.ALIGN_RIGHT); }, stylePanel);
+//
+// 	var top = this.editorUi.toolbar.addButton('geSprite-aligntop', mxResources.get('top'),
+// 		function() { graph.alignCells(mxConstants.ALIGN_TOP); }, stylePanel);
+// 	var middle = this.editorUi.toolbar.addButton('geSprite-alignmiddle', mxResources.get('middle'),
+// 		function() { graph.alignCells(mxConstants.ALIGN_MIDDLE); }, stylePanel);
+// 	var bottom = this.editorUi.toolbar.addButton('geSprite-alignbottom', mxResources.get('bottom'),
+// 		function() { graph.alignCells(mxConstants.ALIGN_BOTTOM); }, stylePanel);
+//
+// 	this.styleButtons([left, center, right, top, middle, bottom]);
+// 	right.style.marginRight = '6px';
+// 	div.appendChild(stylePanel);
+//
+// 	return div;
+// };
 
 /**
  * 

@@ -4790,7 +4790,7 @@ EditorUi.prototype.showImageDialog = function (
  */
 EditorUi.prototype.showLinkDialog = function (value, btnLabel, fn) {
   var dlg = new LinkDialog(this, value, btnLabel, fn);
-  this.showDialog(dlg.container, 480, 590, true, true);
+  this.showDialog(dlg.container, 587, 590, true, true);
   dlg.init();
 };
 
@@ -4803,7 +4803,7 @@ EditorUi.prototype.reqDialog = function (value, btnLabel, fn) {
 
 // 순우 node selector 다이어로그
 EditorUi.prototype.nodeSelectorDialog = function (value, btnLabel, fn) {
-  var dlg = new nodeSelectorDialog(this, value, btnLabel, fn);
+  var dlg = new nodeSelectorDialog(this,  btnLabel, fn);
   this.showDialog(dlg.container, 420, 590, true, true);
   dlg.init();
 };

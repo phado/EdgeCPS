@@ -153,7 +153,7 @@ function saveAllProject(saveAsProjectName) {
     for (var i = 0; i < workflowList.length; i++) {
       for (var j = 0; j < localStorage.length; j++) {
         const key = localStorage.key(j);
-        if (key.includes(projectName + "_" + workflowList[i])) {
+        if (key.includes(saveAsProjectName + "_" + workflowList[i])) {
 
           var result = key.split('_').slice(1).join('_');
           workflowXMLValue.push(result);
@@ -185,7 +185,7 @@ function saveAllProject(saveAsProjectName) {
   if (workflowXMLValue) {
     for (var i = 0; i < workflowXMLValue.length; i++) {
       var key = workflowXMLValue[i];
-      var value = localStorage.getItem(projectName+'_'+key);
+      var value = localStorage.getItem(saveAsProjectName+'_'+key);
       workflowData[key] = value;
     }
   }
@@ -813,6 +813,24 @@ function forceApply(graph, cell, value, className){
       FAgraph.getModel().setValue(FAcell, objectElement);
     }
    
+  }else if(FAclassName.includes('nonClass')){
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(FAvalue, 'text/html');
+    // if(typeof(FAvalue)=='object'){
+      const labelValue = FAvalue.getAttribute('label');
+      const objectElement = document.createElement('object');
+      objectElement.setAttribute('label', labelValue|| '');
+      // objectElement.setAttribute('class',FAclassName|| '');
+      objectElement.setAttribute('Req.ID', '');
+      // objectElement.setAttribute('Req.name', '');
+      objectElement.setAttribute('Req.definition', '');
+      // objectElement.setAttribute('Detailed.description', '');
+      objectElement.setAttribute('Parent.requirements', '');
+      objectElement.setAttribute('Children.requirements', '');
+      objectElement.setAttribute('nonfunctional.req.type', '');
+      FAcell.value = labelValue;
+      FAgraph.getModel().setValue(FAcell, objectElement|| '');
+   
   }else if(FAclassName.includes('Class')){
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(FAvalue, 'text/html');
@@ -822,15 +840,14 @@ function forceApply(graph, cell, value, className){
       objectElement.setAttribute('label', labelValue|| '');
       // objectElement.setAttribute('class',FAclassName|| '');
       objectElement.setAttribute('Req.ID', '');
-      objectElement.setAttribute('Req.name', '');
+      // objectElement.setAttribute('Req.name', '');
       objectElement.setAttribute('Req.definition', '');
-      objectElement.setAttribute('Detailed.description', '');
+      // objectElement.setAttribute('Detailed.description', '');
       objectElement.setAttribute('Parent.requirements', '');
       objectElement.setAttribute('Children.requirements', '');
-      objectElement.setAttribute('nonfunctional.req.type', '');
       FAcell.value = labelValue;
       FAgraph.getModel().setValue(FAcell, objectElement|| '');
-   
+
   }else if(FAclassName.includes('Action Container')){
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(FAvalue, 'text/html');

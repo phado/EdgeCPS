@@ -11,9 +11,30 @@ function subContent1(projectName, processName){
     var doc = mxUtils.parseXml(xmlData);
     var codec = new mxCodec(doc);
     codec.decode(doc.documentElement, graph.getModel());
-    graph.addListener(mxEvent.CLICK, subContent1ClickHandler);
-}
+    // graph.addListener(mxEvent.CLICK, subContent1ClickHandler);
+    graph.addListener(mxEvent.CLICK, function(sender, evt) {
+        var clickCell = evt.getProperty('cell');
 
+        // 최상위 부모 셀 가져오기 (req의 경우 여러 자식 노드들이 있는데 그것들을 선택 한 경우에도 부모의 정보를 가져오기위해)
+        var topmostCell = getTopmostCell(graph, clickCell);
+        subContent2(topmostCell.value.attributes, topmostCell.id, topmostCell)
+    });
+}
+// 최상위 부모 셀을 찾는 함수
+function getTopmostCell(graph, cell) {
+    var model = graph.getModel();
+
+    while (cell && cell.getParent() && cell.getParent() != model.getRoot()) {
+        // 부모 노드 중에서 특정 조건을 만족하는 object를 찾기
+        if (typeof(cell.value) == 'object') {
+            return cell
+        }
+
+        cell = cell.getParent();
+    }
+
+    return null; // 조건을 만족하는 object를 찾지 못한 경우 nbull
+}
 function subContent1ClickHandler(sender, evt) {
     var cell = evt.getProperty('cell'); 
 
