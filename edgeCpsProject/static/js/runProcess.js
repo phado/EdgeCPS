@@ -419,14 +419,14 @@ function getDeployInfo(actionKeys,actionStatus){
     // node추가
     for (var i = 0; i < uniqueKeyCount; i++) {
         if(nodeLocationX[uniqueKeys[i]]==undefined){
-            var cellCode = `<mxCell id="GmCxI74Y2WdGR4Kf1rmP-${i + 1+1}" value="&amp;lt;&amp;lt;node&amp;gt;&amp;gt;&lt;br&gt;${uniqueKeys[i]}" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;" vertex="1" parent="1"> <mxGeometry x="${(i+1) * 170}" y="240" width="120" height="80" as="geometry" /> </mxCell>`;
+            var cellCode = `<mxCell id="GmCxI74Y2WdGR4Kf1rmP-${i + 1+1}" value="&amp;lt;&amp;lt;node&amp;gt;&amp;gt;&lt;br&gt;${uniqueKeys[i]}" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;fillColor=#b0e3e6;" vertex="1" parent="1"> <mxGeometry x="${(i+1) * 170}" y="240" width="120" height="80" as="geometry" /> </mxCell>`;
             mxCells.push(cellCode);
             nodeLocationX[uniqueKeys[i]] = (i+1) * 170;
             last_diagram_x = i * 140;
             last_diagram_id = i+2;
             uniqueKeysId[uniqueKeys[i]] = i + 2
 
-            var cellCode = `<mxCell id="GmCxI74Y2WdGR4Kf1rmPedge-${i +100 }" value="&amp;lt;&amp;lt;govern&amp;gt;&amp;gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=50;entryDy=0;entryPerimeter=0;" parent="1" source="GmCxI74Y2WdGR4Kf1rmP-1" target="GmCxI74Y2WdGR4Kf1rmP-${i + 1+1}" edge="1"><mxGeometry relative="1" as="geometry" /><mxGeometry relative="1" as="geometry"><mxPoint x="${(i) *85-75}" y="50" as="offset"/></mxGeometry></mxCell>`
+            var cellCode = `<mxCell id="GmCxI74Y2WdGR4Kf1rmPedge-${i +100 }" value="&amp;lt;&amp;lt;govern&amp;gt;&amp;gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0;entryDx=50;entryDy=0;entryPerimeter=0;fillColor=#b0e3e6;" parent="1" source="GmCxI74Y2WdGR4Kf1rmP-1" target="GmCxI74Y2WdGR4Kf1rmP-${i + 1+1}" edge="1"><mxGeometry relative="1" as="geometry" /><mxGeometry relative="1" as="geometry"><mxPoint x="${(i) *85-75}" y="50" as="offset"/></mxGeometry></mxCell>`
             if(i==0){
                 cellCode = `<mxCell id="GmCxI74Y2WdGR4Kf1rmPedge-${i +100 }" value="&amp;lt;&amp;lt;govern&amp;gt;&amp;gt;" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" parent="1" source="GmCxI74Y2WdGR4Kf1rmP-1" target="GmCxI74Y2WdGR4Kf1rmP-${i + 1+1}" edge="1"> <mxGeometry relative="1" as="geometry" /> </mxCell>`
             }
@@ -463,7 +463,7 @@ function getDeployInfo(actionKeys,actionStatus){
     }
 
     // 초기 값
-    var xmlData = `<mxGraphModel dx="1433" dy="797" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /> <mxCell id="GmCxI74Y2WdGR4Kf1rmP-1" value="&amp;lt;&amp;lt;node&amp;gt;&amp;gt;&lt;br&gt;Master" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;" vertex="1" parent="1"><mxGeometry x="170" y="120" width="120" height="80" as="geometry" /></mxCell>`;
+    var xmlData = `<mxGraphModel dx="1433" dy="797" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0"><root><mxCell id="0" /><mxCell id="1" parent="0" /> <mxCell id="GmCxI74Y2WdGR4Kf1rmP-1" value="&amp;lt;&amp;lt;node&amp;gt;&amp;gt;&lt;br&gt;Master" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.05;darkOpacity2=0.1;fillColor=#b0e3e6;" vertex="1" parent="1"><mxGeometry x="170" y="120" width="120" height="80" as="geometry" /></mxCell>`;
     
     mxCells.forEach(function (cell) {
         xmlData += cell;

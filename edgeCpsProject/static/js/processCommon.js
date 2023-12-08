@@ -611,10 +611,13 @@ function createWorkflowSelectBox(activityCatList) {
   const selectBox = document.createElement("select");
   selectBox.multiple = true; // Enable multiple selection
   selectBox.className = "workflow-select-box";
-  selectBox.style.width = "200px";
+  selectBox.style.width = "224px";
   // selectBox.style = "width: 200px";
   selectBox.style.marginBottom = "4px";
   selectBox.style.marginTop = "1px";
+  selectBox.style.paddingRight = "0";
+  selectBox.style.marginLeft = "-1px";
+  selectBox.style.borderColor = 'white';
 
   // workflow 페이지를 최초로 열어 로컬스토리지에 nowWorkflow 값이 없는 경우 넣어줌.
   if (localStorage.getItem(projectName + "_nowWorkflow") == ""||localStorage.getItem(projectName + "_nowWorkflow")== null) {

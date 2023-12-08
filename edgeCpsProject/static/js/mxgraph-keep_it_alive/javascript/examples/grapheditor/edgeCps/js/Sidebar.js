@@ -2417,24 +2417,46 @@ Sidebar.prototype.addUmlPaletteRequirement = function(expand)
 	// Reusable cells
 
 
-	var functionalReq = new mxCell('<<functional requirement>>', new mxGeometry(0, 0, 200, 26), 'text;strokeColor=black;fillColor=#ffffc0;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;editable=0;movable=0;locked=1;');
+	var functionalReq = new mxCell('<<function req.>>', new mxGeometry(0, 0, 200, 26), 'text;strokeColor=black;fillColor=#ffffc0;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;editable=0;movable=0;locked=1;');
 	functionalReq.vertex = true;
 
-	var functionalReqName = new mxCell('[name]', new mxGeometry(0, 26, 200, 26), 'text;strokeColor=black;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;movable=0;');
+	var functionalReqName = new mxCell('name : ', new mxGeometry(0, 26, 200, 26), 'text;strokeColor=black;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;movable=0;');
 	functionalReqName.vertex = true;
 
 	// var functionalReqName = new mxCell('[name]', new mxGeometry(0, 50, 200, 26), 'text;strokeColor=black;fillColor=None;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;locked=0;movable=0;locked=1;');
 	// functionalReqName.vertex = true;
 	//
-	var functionalReqDescription = new mxCell('[description]', new mxGeometry(0, 52, 200, 26), 'text;strokeColor=black;fillColor=None;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;locked=0;movable=0;');
+	var functionalReqDescription = new mxCell('description : ', new mxGeometry(0, 52, 200, 26), 'text;strokeColor=black;fillColor=None;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;locked=0;movable=0;');
 	functionalReqDescription.vertex = true;
 
-	var nonFunctionalReq = new mxCell('<<non functional requirement>>', new mxGeometry(0, 0, 200, 26), 'text;strokeColor=black;fillColor=rgba(152, 171, 228, 0.7);align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;movable=0;editable=0;locked=1;');
+	// var nonFunctionalReq = new mxCell('<<nonfunction req.>>', new mxGeometry(0, 0, 200, 26), 'text;strokeColor=black;fillColor=rgba(152, 171, 228, 0.7);align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;movable=0;editable=0;locked=1;');
+	// nonFunctionalReq.vertex = true;
+
+	var nonFunctionalReq = new mxCell('', new mxGeometry(0, 0, 200, 26), 'shape=tableRow;horizontal=0;startSize=0;swimlaneHead=0;swimlaneBody=0;strokeColor=inherit;top=0;left=0;bottom=0;right=0;collapsible=0;dropTarget=0;fillColor=none;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fontSize=13;rounded=0;align=left;verticalAlign=middle;fontFamily=Helvetica;fontColor=default;html=1;');
 	nonFunctionalReq.vertex = true;
+	var nonFunctionalReqName = new mxCell('name : ', new mxGeometry(0, 26, 200, 26), 'text;strokeColor=black;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;movable=0;');
+	nonFunctionalReqName.vertex = true;
+
+	var nonFunctionalReqDescription = new mxCell('description : ', new mxGeometry(0, 52, 200, 26), 'text;strokeColor=black;fillColor=None;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;locked=0;movable=0;');
+	nonFunctionalReqDescription.vertex = true;
 
 	var divider = new mxCell('', new mxGeometry(0, 0, 140, 8), 'line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;');
 	divider.vertex = true;
-	
+
+	// 테이블 셀 생성
+    var tableCell = new mxCell('', new mxGeometry(0, 0, 270, 120), 'shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;strokeColor=#6c8ebf;fontSize=16;rounded=0;align=center;verticalAlign=middle;fontFamily=Helvetica;fillColor=#dae8fc;html=1;');
+    tableCell.vertex = true;
+
+	var nameRowCell = new mxCell('<font style="font-size: 16px;">name</font>', new mxGeometry(0, 30, 90, 33), 'shape=partialRectangle;html=1;whiteSpace=wrap;connectable=1;strokeColor=inherit;overflow=hidden;fillColor=none;top=0;left=0;bottom=0;right=0;pointerEvents=1;fontSize=16;rounded=0;align=center;verticalAlign=middle;fontFamily=Helvetica;fontColor=default;editable=0;movable=1;resizable=1;rotatable=1;deletable=1;locked=0;');
+    nameRowCell.vertex = true;
+
+
+	var descriptionRowCell = new mxCell('<font style="font-size: 16px;">description</font>', new mxGeometry(0, 63, 90, 57), 'shape=partialRectangle;html=1;...');
+    descriptionRowCell.vertex = true;
+
+    var functionCell = new mxCell('<b style="border-color: var(--border-color);"><font style="border-color: var(--border-color); font-size: 16px;">&nbsp;&lt;&lt;function req.&gt;&gt;</font></b>', new mxGeometry(12.85714285714289, 0, 244.2857142857143, 31.85840707964602), 'text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=12;fontFamily=Helvetica;fontColor=default;editable=0;movable=0;resizable=1;rotatable=1;deletable=1;locked=0;connectable=1;');
+    functionCell.vertex = true;
+
 	// Default tags
 	var dt = 'uml static class ';
 	this.setCurrentSearchEntryLibrary('uml');
@@ -2447,6 +2469,7 @@ Sidebar.prototype.addUmlPaletteRequirement = function(expand)
 			// var cell = new mxCell('<<functional requirement>>\n[name]', new mxGeometry(100, 0, 200, 50),'fillColor=rgba(152, 171, 228, 0.7);');
 			var cell = new mxCell('', new mxGeometry(100, 0, 200, 78));
 			cell.vertex = true;
+
 			cell.insert(functionalReq.clone());
 			cell.insert(functionalReqName.clone());
 			cell.insert(functionalReqDescription.clone());
@@ -2456,12 +2479,21 @@ Sidebar.prototype.addUmlPaletteRequirement = function(expand)
 
 		this.addEntry(dt + 'section subsection', function()
 		{
-			var cell = new mxCell('<<non functional requirement>>\n[name]', new mxGeometry(100, 0, 200, 50),'fillColor=#ffffc0;');
-			// var cell = new mxCell('[name]', new mxGeometry(0, 0, 200, 70));
-			cell.vertex = true;
+			// var cell = new mxCell('', new mxGeometry(100, 0, 200, 50),"shape=table;startSize=30;container=1;collapsible=0;childLayout=tableLayout;strokeColor=#6c8ebf;fontSize=16;rounded=0;align=center;verticalAlign=middle;fontFamily=Helvetica;fillColor=#dae8fc;html=1;");
+			// var cell = new mxCell('', new mxGeometry(0, 0, 200, 78));
+			// cell.vertex = true;
+			// cell.insert(nonFunctionalReq.clone());
+			// cell.insert(nonFunctionalReqName.clone());
+			// cell.insert(nonFunctionalReqDescription.clone());
 			// cell.insert(nonFunctionalReq.clone());
 			// cell.insert(field.clone());
 			// cell.insert(field.clone());
+			var cell = new mxCell('', new mxGeometry(0, 0, 1, 1), 'group');
+    		cell.vertex = true;
+			cell.insert(tableCell.clone());
+			cell.insert(nameRowCell.clone());
+			cell.insert(descriptionRowCell.clone());
+			cell.insert(functionCell.clone());
 			
 			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, 'Class 2');
 		}),

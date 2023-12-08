@@ -2162,6 +2162,7 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	// input1.value = 'kubernetes.io/hostname'; // 기본 값을 설정
 	input1.style.width = '500px';
 	input1.style.height = '200px';
+	input1.style.borderColor = 'black';
 
 	//input1에서 선택한 키 값에 따른 벨류 선택 창
 	var input2 = document.createElement('select');
@@ -2169,6 +2170,7 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	input2.multiple = 'true';
 	input2.style.width = '500px'
 	input2.style.height = '200px';
+	input2.style.borderColor = 'black';
 
 	innerInput1.appendChild(input1);
 	innerInput2.appendChild(input2);

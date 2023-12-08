@@ -3,6 +3,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  border-color: white;
 }
 
 /* Font Styles */
@@ -226,15 +227,16 @@ a.home {
 }
 
 .selectWorkflow select option {
-  font-family: 'Inter Extra Light';
-  font-style: normal;
-  font-weight: 400;
-  border-radius:5px;
-	border:1px solid #c0c0c0;
-  margin:2.5%;
+  margin:1%;
   text-align: center;
-  background-color: #666666;
-  color:#ffffff;
+  border-radius: 3px;
+  border:1px solid #d8d8d8;
+  height: 20px;
+  width: 196px;
+  color: #000000;
+  background-color: #eaeaea;
+  font-size: 12px;
+  padding-top: 1px;
 }
 
 .selectWorkflow select option.selected {
