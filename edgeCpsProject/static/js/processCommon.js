@@ -790,7 +790,7 @@ function forceApply(graph, cell, value, className){
       // const object = xmlDoc.querySelector('object');
       const labelValue = FAvalue.getAttribute('label');
       const objectElement = document.createElement('object');
-      objectElement.setAttribute('label', labelValue);
+      objectElement.setAttribute('label', '<div style="font-weight:bold;">name</div>');
       // objectElement.setAttribute('class',FAclassName);
       objectElement.setAttribute('description', '');
       objectElement.setAttribute('input_information', '');
@@ -926,16 +926,23 @@ function parseString(inputString, processName,cellId) {
   let result = '';
 
   if (processName === 'businessProcess') {
-      // process_name이 businessProcess인 경우
-      const pattern = /<div style=".*?">\[(.*?)\]<\/div>/;
+    // process_name이 businessProcess인 경우
+    const pattern = /bold">([^<]*)<\/div>|bold;">([^<]*)<\/div>/;
+    const match = inputString.match(pattern);
+    result = match[1];
+    if(result==undefined){
+      const pattern = /weight:bold;">(.*?)<\/div>/;
       const match = inputString.match(pattern);
       result = match[1];
-      if(match[1].includes('['||']')){
-        result =match[1].substring(1,match[1].length -1);
-        result = projectName+'_'+cellId+'#'+result;
-      }else{
-        result = projectName+'_'+cellId+'#'+result;
-      }
+    }
+
+
+      // if(match[1].includes('['||']')){
+      //   result =match[1].substring(1,match[1].length -1);
+      result = projectName+'_'+cellId+'#'+result;
+      // }else{
+      //   result = projectName+'_'+cellId+'#'+result;
+      // }
       // return '';
     }
       

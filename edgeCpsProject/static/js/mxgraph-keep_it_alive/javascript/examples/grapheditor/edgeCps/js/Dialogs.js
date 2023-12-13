@@ -1352,7 +1352,7 @@ ExportDialog.saveLocalFile = function(editorUi, data, filename, format)
 /**
  * Constructs a new metadata dialog.
  */
-function addEditDataReqName(clickedCellId, cell, graph){
+function addEditDataTableShapeName(clickedCellId, cell, graph){
 	var reqName = '';
 	var cellDict = graph.getModel().cells;
 	var keysArray = Object.keys(cellDict);
@@ -1380,8 +1380,8 @@ var EditDataDialog = function(ui, cell)
 	var graph = ui.editor.graph;
 
 	var value = graph.getModel().getValue(cell);
-	if(process_name == 'requirementsProcess') {
-		var selectedCellName = addEditDataReqName(cell.id, cell, graph);
+	if(process_name == 'requirementsProcess'|| process_name =='workflowProcess') {
+		var selectedCellName = addEditDataTableShapeName(cell.id, cell, graph);
 	}
 	if(process_name == 'businessProcess'){
 		var activityNameString = value.getAttribute('label');
@@ -1400,20 +1400,20 @@ var EditDataDialog = function(ui, cell)
 		}
 		var selectedCellName = activityName;
 	}
-	if(process_name =='workflowProcess'){
-
-		var activityNameString = value.getAttribute('label');
-		var match = activityNameString.match(/&gt;<br>(.*?)<\/div/);
-
-		if (match) {
-			var extractedString = match[1];
-
-			// [와]를 없애고 저장 (있을 경우)
-			var selectedCellName = extractedString.replace(/\[|\]/g, '');
-
-			// 결과 출력 또는 다른 작업 수행
-		}
-	}
+	// if(process_name =='workflowProcess'){
+	//
+	// 	var activityNameString = value.getAttribute('label');
+	// 	var match = activityNameString.match(/&gt;<br>(.*?)<\/div/);
+	//
+	// 	if (match) {
+	// 		var extractedString = match[1];
+	//
+	// 		// [와]를 없애고 저장 (있을 경우)
+	// 		var selectedCellName = extractedString.replace(/\[|\]/g, '');
+	//
+	// 		// 결과 출력 또는 다른 작업 수행
+	// 	}
+	// }
 
 	var div = document.createElement('div');
 	var editDataTitle = document.createElement('div');
@@ -1883,9 +1883,12 @@ var ReqDialog = function(editorUi, ui, cell) {
 		// matches.push(extractedString);
 		var actName = actId+'#'+extractedString
 		selectedCellName = actName;
-	}else if (process_name == 'workflowProcess'){
+	}
+	else if (process_name == 'workflowProcess'){
+		var graph = editorUi.editor.graph;
+		selectedCellName = addEditDataTableShapeName(cell.id, cell, graph)
 		var actName = localStorage.getItem(projectName+'_nowWorkflow');
-		
+		//
 		try{
 			var stepNameHtml = cell.value;
 
@@ -1896,10 +1899,10 @@ var ReqDialog = function(editorUi, ui, cell) {
 						var labelValue = stepNameHtml.attributes[i].textContent;
 					}
 				}catch{}
-				
+
 			}
-			
-			
+
+
 			// var start = stepNameHtml.indexOf("&gt;&gt;<br>") + "&gt;&gt;<br>".length;
 			// var end = stepNameHtml.indexOf("</div>");
 		}catch{
@@ -1907,18 +1910,18 @@ var ReqDialog = function(editorUi, ui, cell) {
 		// 	var start = stepNameHtml.indexOf("&gt;&gt;<br>") + "&gt;&gt;<br>".length;
 		// 	var end = stepNameHtml.indexOf("</div>");
 		}
-		var matchResult = labelValue.match(/&gt;&gt;<br>(.*?)<\/div>/);
-		// 찾은 문자열 출력
-		if (matchResult && matchResult[1]) {
-			var stepName = matchResult[1];
-			if(stepName.includes('['||']')){
-				stepName = stepName.substring(1,stepName.length-1);
-				selectedCellName = stepName;
-			}
-		}
+		// var matchResult = labelValue.match(/&gt;&gt;<br>(.*?)<\/div>/);
+		// // 찾은 문자열 출력
+		// if (matchResult && matchResult[1]) {
+		// 	var stepName = matchResult[1];
+		// 	if(stepName.includes('['||']')){
+		// 		stepName = stepName.substring(1,stepName.length-1);
+		// 		// selectedCellName = stepName;
+		// 	}
+		// }
 		// var stepName = labelValue.substring(start, end);
 		var stepId = cell.id;
-		
+		var stepName = cell.children[0].children[1].value;
 	}
 	var reqList = extractReq();
 	// var div = document.createElement('div');
@@ -2168,19 +2171,8 @@ var ReqDialog = function(editorUi, ui, cell) {
 var nodeSelectorDialog = function(editorUi, ui, cell) {
 	var graph = editorUi.editor.graph;
 	var value = graph.getModel().getValue(ui);
-	if(process_name =='policyProcess'){
-		var activityNameString = value.getAttribute('label');
-		var match = activityNameString.match(/&gt;<br>(.*?)<\/div/);
 
-		if (match) {
-			var extractedString = match[1];
-
-			// [와]를 없애고 저장 (있을 경우)
-			var selectedCellName = extractedString.replace(/\[|\]/g, '');
-
-			// 결과 출력 또는 다른 작업 수행
-		}
-	}
+	var selectedCellName = addEditDataTableShapeName(ui.id, ui, graph)
 	var div = document.createElement('div');
 	// mxUtils.write(div, mxResources.get('editLink') + ':');
 	var reqTitle = document.createElement('div');
@@ -2398,6 +2390,8 @@ var LinkDialog = function(editorUi, initialValue, btnLabel, dumpfn, fn)
 			}
 		}
 	}
+	var graph = editorUi.editor.graph
+	selectedCellName = addEditDataTableShapeName(btnLabel.id, btnLabel, graph)
 	var div = document.createElement('div');
 	// mxUtils.write(div, mxResources.get('editLink') + ':');
 	var reqTitle = document.createElement('div');

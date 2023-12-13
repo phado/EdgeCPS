@@ -965,12 +965,38 @@ mxGraphView.prototype.validateCellState = function(cell, recurse)
 				{
 					this.validateCellState(model.getParent(cell), false);
 				}
-
 				state.setVisibleTerminalState(this.validateCellState(this.getVisibleTerminal(cell, true), false), true);
 				state.setVisibleTerminalState(this.validateCellState(this.getVisibleTerminal(cell, false), false), false);
-				
+
+				try{
+					if(process_name == 'businessProcess') {
+						const newCellName = parseString(cell.value.attributes[0].nodeValue, process_name, cell.id);
+						const oldCellName = parseString(state.text.lastValue, process_name, cell.id)
+						if(newCellName != oldCellName){
+							var keys = [];
+							var targetKey = '';
+							for (var i = 0; i < localStorage.length; i++) {
+								keys.push(localStorage.key(i));
+								const key = localStorage.key(i);
+								if (key.includes(oldCellName)) {
+									targetKey = key;
+									break;
+								}
+							}
+							var tmpLocalStorageValue = localStorage.getItem(targetKey);
+							const newTargetKey = targetKey.replace(oldCellName, newCellName)
+							localStorage.setItem(newTargetKey, tmpLocalStorageValue);
+							localStorage.removeItem(targetKey);
+						}
+					}
+					else if(process_name == 'workflowProcess') {
+
+					}
+				}
+				catch {
+
+				}
 				this.updateCellState(state);
-				
 				// Repaint happens immediately after the cell is validated
 				if (cell != this.currentRoot && !state.invalid)
 				{

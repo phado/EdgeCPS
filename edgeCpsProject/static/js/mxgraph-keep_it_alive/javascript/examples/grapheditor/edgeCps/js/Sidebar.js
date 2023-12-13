@@ -1173,7 +1173,7 @@ Sidebar.prototype.addGeneralPaletteBusinessProcess = function(expand)
 
 	var fns = [
 	 	// this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectanglㅇㅇe', null, null, 'rect rectangle box'),
-	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;', 120, 60, '<div style="font-weight:bold;">[Activity name]</div>', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),
+	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;', 120, 60, '<div style="font-weight:bold;">Activity</div>', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),
 		this.createVertexTemplateEntry('ellipse;fillColor=#000000;strokeColor=none;', 30, 30, '', 'Initial state', null, null, dt + 'initial state'),
 		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Join/Fork', null, null, dt + 'join fork'),
 		this.createVertexTemplateEntry('ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'Final state', null, null, dt + 'final state'),
@@ -1243,61 +1243,46 @@ Sidebar.prototype.addGeneralPaletteWorkflow = function(expand)
 
 	var fns = [
 		
-		this.createVertexTemplateEntry(
-			'rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;',
-			120, 60,
-			'<div style="font-weight:bold;">&lt;&lt;Container&gt;&gt;<br>[name]</div>',
-			'Action Container',
-			null,
-			null,
-			'rounded rect rectangle box'
-		  ),
-		//   this.createVertexTemplateEntry(
-		// 	'rounded=1;whiteSpace=wrap;html=1;',
+		// this.createVertexTemplateEntry(
+		// 	'rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;',
 		// 	120, 60,
-		// 	'<div style="font-weight:bold;">&lt;&lt;Script&gt;&gt;<br>[name]</div>',
-		// 	'Action Script',
+		// 	'<div style="font-weight:bold;">&lt;&lt;Container&gt;&gt;<br>[name]</div>',
+		// 	'Action Container',
 		// 	null,
 		// 	null,
 		// 	'rounded rect rectangle box'
 		//   ),
-		//   this.createVertexTemplateEntry(
-		// 	'rounded=1;whiteSpace=wrap;html=1;',
-		// 	120, 60,
-		// 	'<div style="font-weight:bold;">&lt;&lt;Resource&gt;&gt;<br>[name]</div>',
-		// 	'Action Resource',
-		// 	null,
-		// 	null,
-		// 	'rounded rect rectangle box'
-		//   ),
-		//   this.createVertexTemplateEntry(
-		// 	'rounded=1;whiteSpace=wrap;html=1;',
-		// 	120, 60,
-		// 	'<div style="font-weight:bold;">&lt;&lt;Sensor&gt;&gt;<br>[name]</div>',
-		// 	'Action Sensor',
-		// 	null,
-		// 	null,
-		// 	'rounded rect rectangle box'
-		//   ),
-		//   this.createVertexTemplateEntry(
-		// 	'rounded=1;whiteSpace=wrap;html=1;',
-		// 	120, 60,
-		// 	'<div style="font-weight:bold;">&lt;&lt;Suspend&gt;&gt;<br>[name]</div>',
-		// 	'Action Suspend',
-		// 	null,
-		// 	null,
-		// 	'rounded rect rectangle box'
-		//   ),
-		//   this.createVertexTemplateEntry(
-		// 	'rounded=1;whiteSpace=wrap;html=1;',
-		// 	120, 60,
-		// 	'<div style="font-weight:bold;">&lt;&lt;Operator&gt;&gt;</div>',
-		// 	'Action Operator',
-		// 	null,
-		// 	null,
-		// 	'rounded rect rectangle box'
-		//   ),
-	 	// this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectangle', null, null, 'rect rectangle box'),
+		this.addDataEntryDecompressed('table title', 250, 150, 'Action Container', "<mxGraphModel>\n" +
+			"    <root>\n" +
+			"        <mxCell id=\"0\" />\n" +
+			"        <mxCell id=\"1\" parent=\"0\" />\n" +
+			"        <mxCell id=\"2\" value=\"Action\" style=\"shape=table;html=1;fillColor=#F8CECC;whiteSpace=wrap;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;rounded=1;locked=0;editable=0;deletable=1;\" vertex=\"1\" parent=\"1\">\n" +
+			"            <mxGeometry width=\"230\" height=\"50\" as=\"geometry\" />\n" +
+			"        </mxCell>\n" +
+			"        \n" +
+			"        <mxCell id=\"3\" value=\"\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=1;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;locked=0;editable=0;movable=0;deletable=0;\" vertex=\"1\" parent=\"2\">\n" +
+			"            <mxGeometry y=\"30\" width=\"180\" height=\"30\" as=\"geometry\" />\n" +
+			"        </mxCell>\n" +
+			"        <mxCell id=\"4\" value=\"name\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;locked=0;editable=0;movable=0;deletable=0;\" vertex=\"1\" parent=\"3\">\n" +
+			"            <mxGeometry width=\"50\" height=\"30\" as=\"geometry\" />\n" +
+			"        </mxCell>\n" +
+			"        <mxCell class = \"reqName\" id=\"5\" value=\"\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;locked=0;movable=0;editable=1;deletable=0;\" vertex=\"1\" parent=\"3\">\n" +
+			"            <mxGeometry x=\"50\" width=\"140\" height=\"30\" as=\"geometry\" />\n" +
+			"        </mxCell>\n" +
+			"        <mxCell id=\"6\" value=\"\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=0;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;locked=0;editable=0;movable=0;deletable=0;\" vertex=\"1\" parent=\"2\">\n" +
+			"            <mxGeometry y=\"60\" width=\"180\" height=\"30\" as=\"geometry\" />\n" +
+			"        </mxCell>\n" +
+			"        <mxCell id=\"7\" value=\"description\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;locked=0;editable=0;movable=0;deletable=0;\" vertex=\"1\" parent=\"6\">\n" +
+			"            <mxGeometry width=\"50\" height=\"30\" as=\"geometry\" />\n" +
+			"        </mxCell>\n" +
+			"        <mxCell class = \"reqDescription\" id=\"8\" value=\"\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;locked=0;editable=1;movable=1;deletable=0;\" vertex=\"1\" parent=\"6\">\n" +
+			"            <mxGeometry x=\"50\" width=\"140\" height=\"30\" as=\"geometry\" />\n" +
+			"        </mxCell>\n" +
+			"        \n" +
+			"\n" +
+			"    </root>\n" +
+			"</mxGraphModel>"),
+
 		this.createVertexTemplateEntry('ellipse;fillColor=#000000;shape=startState;strokeColor=none;', 30, 30, '', 'Initial state', null, null, dt + 'initial state'),
 		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Join/Fork', null, null, dt + 'join fork'),
 		this.createVertexTemplateEntry('ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'Final state', null, null, dt + 'final state'),
@@ -2473,18 +2458,18 @@ Sidebar.prototype.addUmlPaletteRequirement = function(expand)
 	var fns = [
 		this.createEdgeTemplateEntry('endArrow=none;startArrow=circlePlus;endFill=0;startFill=0;endSize=8;html=1;', 160, 0, '', 'Inner Class', null, 'uml inner class'),
 		
-		this.addEntry(dt + 'section subsection', function()
-		{
-			// var cell = new mxCell('<<functional requirement>>\n[name]', new mxGeometry(100, 0, 200, 50),'fillColor=rgba(152, 171, 228, 0.7);');
-			var cell = new mxCell('', new mxGeometry(100, 0, 200, 78));
-			cell.vertex = true;
-
-			cell.insert(functionalReq.clone());
-			cell.insert(functionalReqName.clone());
-			cell.insert(functionalReqDescription.clone());
-			
-			return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, 'Class 2');
-		}),
+		// this.addEntry(dt + 'section subsection', function()
+		// {
+		// 	// var cell = new mxCell('<<functional requirement>>\n[name]', new mxGeometry(100, 0, 200, 50),'fillColor=rgba(152, 171, 228, 0.7);');
+		// 	var cell = new mxCell('', new mxGeometry(100, 0, 200, 78));
+		// 	cell.vertex = true;
+		//
+		// 	cell.insert(functionalReq.clone());
+		// 	cell.insert(functionalReqName.clone());
+		// 	cell.insert(functionalReqDescription.clone());
+		//
+		// 	return sb.createVertexTemplateFromCells([cell], cell.geometry.width, cell.geometry.height, 'Class 2');
+		// }),
 		this.addDataEntryDecompressed('table title', 250, 150, 'Class 2', "<mxGraphModel>\n" +
 			"    <root>\n" +
 			"        <mxCell id=\"0\" />\n" +
@@ -4053,7 +4038,6 @@ Sidebar.prototype.itemClicked = function(cells, ds, evt, elt) // 클릭할때 �
 		var pt = (mxEvent.isAltDown(evt)) ? graph.getFreeInsertPoint() : // 민수 해당 함수에서 요소를 생성한다.
 			graph.getCenterInsertPoint(graph.getBoundingBoxFromGeometry(cells, true));
 
-		
 		ds.drop(graph, evt, null, pt.x, pt.y, true);
 		
 		

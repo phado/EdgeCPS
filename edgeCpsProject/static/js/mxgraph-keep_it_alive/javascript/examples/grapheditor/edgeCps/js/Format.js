@@ -589,7 +589,7 @@ Format.prototype.refresh = function(arguments,id)
 	
 	// 순우 각 cell 클릭 했을 때 우측 사이드바에 속성 값 띄우는 기능
 
-	if (process_name == 'businessProcess' || process_name =='workflowProcess'|| process_name =='policyProcess'||process_name=='requirementsProcess'){
+	if (process_name == 'businessProcess' || process_name =='workflowProcess'|| process_name=='requirementsProcess'){
 		var totalAttribute = '';
 		var id =id;
 		try {
@@ -713,67 +713,164 @@ Format.prototype.refresh = function(arguments,id)
 				}
 				// req 내용도 우측 사이드바에 보여주는 기능
 				if (process_name != 'requirementsProcess') {
-					try {
-
+					if(process_name == 'businessProcess') {
 						try {
-							var selectedCellName = parseString(selectedCell[0].cells[0].value.attributes['label'].value, process_name, selectedCell[0].cells[0].id);
-							var reqAttirbute = localStorage.getItem(selectedCellName + '_requirement');
-						} catch {
-							var keys = Object.keys(selectedCell[0].cells);
-							for (var key of Object.values(keys)) {
+							try {
+								var selectedCellName = parseString(selectedCell[0].cells[0].value.attributes['label'].value, process_name, selectedCell[0].cells[0].id);
+								var reqAttirbute = localStorage.getItem(selectedCellName + '_requirement');
+							} catch {
+								var keys = Object.keys(selectedCell[0].cells);
+								for (var key of Object.values(keys)) {
 
-								try {
-									if (selectedCell[0].cells[key].id == id) {
-										var attribute = selectedCell[0].cells[key].value.attributes;
-										var selectedCellName = parseString(attribute['label'].value, process_name, id);
-										var reqAttirbute = localStorage.getItem(selectedCellName + '_requirement');
+									try {
+										if (selectedCell[0].cells[key].id == id) {
+											var attribute = selectedCell[0].cells[key].value.attributes;
+											var selectedCellName = parseString(attribute['label'].value, process_name, id);
+											var reqAttirbute = localStorage.getItem(selectedCellName + '_requirement');
+										}
+
+									} catch (e) {
+										console.log(e);
 									}
 
-								} catch (e) {
-									console.log(e);
 								}
-
 							}
+							// var attributeKey = attribute[i]['name'];
+							var attributeKeyContainer = document.createElement('div');
+							attributeKeyContainer.style.marginLeft = '1px';
+							attributeKeyContainer.style.marginRight = '1px';
+							attributeKeyContainer.innerHTML = '<strong style="color: black;">Related requirements</strong>';
+							// attributeKeyContainer.style=bold;
+
+							var attributeValue = reqAttirbute
+							var attributeValueContainer = document.createElement('div');
+							attributeValueContainer.style.borderBottom = '1px solid #D6D6D6';
+							attributeValueContainer.style.marginLeft = '3px';
+							attributeValueContainer.style.marginRight = '3px';
+							attributeValueContainer.style.whiteSpace = 'pre-wrap';
+							attributeValueContainer.style.overflowWrap = 'break-word'
+
+							attributeValueContainer.innerHTML = attributeValue;
+
+
+							showAttribute.appendChild(attributeValueContainer);
+							var textHeight = attributeValueContainer.clientHeight;
+							// document.body.removeChild(attributeValueContainer);
+
+							// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
+							var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
+							if (textHeight > maxWidth) {
+								attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
+								attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
+							}
+
+							var empty = document.createElement('div');
+							empty.style.marginBottom = '10px';
+
+							showAttribute.appendChild(attributeKeyContainer);
+							showAttribute.appendChild(attributeValueContainer);
+							showAttribute.appendChild(empty);
+
+
+						} catch (e) {
+							console.log(e);
 						}
-						// var attributeKey = attribute[i]['name'];
-						var attributeKeyContainer = document.createElement('div');
-						attributeKeyContainer.style.marginLeft = '1px';
-						attributeKeyContainer.style.marginRight = '1px';
-						attributeKeyContainer.innerHTML = '<strong style="color: black;">Related requirements</strong>';
-						// attributeKeyContainer.style=bold;
+					}
+					if(process_name == 'workflowProcess'){
+						try {
+							try {
 
-						var attributeValue = reqAttirbute
-						var attributeValueContainer = document.createElement('div');
-						attributeValueContainer.style.borderBottom = '1px solid #D6D6D6';
-						attributeValueContainer.style.marginLeft = '3px';
-						attributeValueContainer.style.marginRight = '3px';
-						attributeValueContainer.style.whiteSpace = 'pre-wrap';
-						attributeValueContainer.style.overflowWrap = 'break-word'
+								// var selectedCellName = parseString(selectedCell[0].cells[0].value.attributes['label'].value, process_name, selectedCell[0].cells[0].id);
+								var selectedCellName = selectedCell[0].cells[0].children[0].children[1].value;
+								var reqAttirbute = localStorage.getItem(localStorage.getItem(projectName+'_nowWorkflow')+'_'+selectedCell[0].cells[0].id + '#'+selectedCellName+'_requirement');
+							} catch {
+								var selectedCellName = '';
+								var selectedCellId = ''
+								var cellDictionary = selectedCell[0].cells
+								for (var cellId in cellDictionary) {
+								  	if (cellDictionary.hasOwnProperty(cellId)) {
+										var cell = cellDictionary[cellId];
+										try{
+											if (cell.class === 'reqName') {
+												selectedCellName = cell.value;
 
-						attributeValueContainer.innerHTML = attributeValue;
+											}
+											if(typeof(cell.value)=='object'){
+												selectedCellId = cell.id
+											}
+									  		// for (var key2 in cellDictionary) {
+											// 	  if (cellDictionary.hasOwnProperty(key2)) {
+											// 		  var mxCellObject = cellDictionary[key2];
+											//
+											// 		  try{
+											// 			  if (mxCellObject.parent.id === targetParentId) {
+											// 				  selectedCellName = mxCellObject.data;
+											// 			  }
+											// 		  }
+											// 		  catch{}
+											// 	  }
+											}
+											catch{}
+
+								  	}
+								}
+								var reqAttirbute = localStorage.getItem(localStorage.getItem(projectName+'_nowWorkflow')+'_'+selectedCellId + '#'+selectedCellName+'_requirement');
+								// var keys = Object.keys(selectedCell[0].cells);
+								// for (var key of Object.values(keys)) {
+								//
+								// 	try {
+								// 		if (selectedCell[0].cells[key].id == id) {
+								// 			var attribute = selectedCell[0].cells[key].value.attributes;
+								// 			var selectedCellName = parseString(attribute['label'].value, process_name, id);
+								// 			var reqAttirbute = localStorage.getItem(selectedCellName + '_requirement');
+								// 		}
+								//
+								// 	} catch (e) {
+								// 		console.log(e);
+								// 	}
+								//
+								// }
+							}
+							// var attributeKey = attribute[i]['name'];
+							var attributeKeyContainer = document.createElement('div');
+							attributeKeyContainer.style.marginLeft = '1px';
+							attributeKeyContainer.style.marginRight = '1px';
+							attributeKeyContainer.innerHTML = '<strong style="color: black;">Related requirements</strong>';
+							// attributeKeyContainer.style=bold;
+
+							var attributeValue = reqAttirbute
+							var attributeValueContainer = document.createElement('div');
+							attributeValueContainer.style.borderBottom = '1px solid #D6D6D6';
+							attributeValueContainer.style.marginLeft = '3px';
+							attributeValueContainer.style.marginRight = '3px';
+							attributeValueContainer.style.whiteSpace = 'pre-wrap';
+							attributeValueContainer.style.overflowWrap = 'break-word'
+
+							attributeValueContainer.innerHTML = attributeValue;
 
 
-						showAttribute.appendChild(attributeValueContainer);
-						var textHeight = attributeValueContainer.clientHeight;
-						// document.body.removeChild(attributeValueContainer);
+							showAttribute.appendChild(attributeValueContainer);
+							var textHeight = attributeValueContainer.clientHeight;
+							// document.body.removeChild(attributeValueContainer);
 
-						// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
-						var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
-						if (textHeight > maxWidth) {
-							attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
-							attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
+							// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
+							var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
+							if (textHeight > maxWidth) {
+								attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
+								attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
+							}
+
+							var empty = document.createElement('div');
+							empty.style.marginBottom = '10px';
+
+							showAttribute.appendChild(attributeKeyContainer);
+							showAttribute.appendChild(attributeValueContainer);
+							showAttribute.appendChild(empty);
+
+
+						} catch (e) {
+							console.log(e);
 						}
-
-						var empty = document.createElement('div');
-						empty.style.marginBottom = '10px';
-
-						showAttribute.appendChild(attributeKeyContainer);
-						showAttribute.appendChild(attributeValueContainer);
-						showAttribute.appendChild(empty);
-
-
-					} catch (e) {
-						console.log(e);
 					}
 
 				}

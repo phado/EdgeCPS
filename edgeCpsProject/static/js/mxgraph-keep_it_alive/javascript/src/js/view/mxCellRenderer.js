@@ -974,12 +974,12 @@ mxCellRenderer.prototype.redrawLabel = function(state, forced)
 			
 			// Preserves visible state
 		   var vis = state.text.node.style.visibility;
-		   if(state.origin['x'] != 0 && state.origin['y'] != 0){
-			   if(process_name == 'businessProcess'){
-				   state.text.value = "sdfsf"
-			   }
-
-		   }
+		   // if(state.origin['x'] != 0 && state.origin['y'] != 0){
+			//    if(process_name == 'businessProcess'){
+			// 	   state.text.value = "sdfsf"
+			//    }
+		   //
+		   // }
 		   this.redrawLabelShape(state.text);
 		   state.text.node.style.visibility = vis;
 		}
