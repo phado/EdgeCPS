@@ -11,4 +11,4 @@ spec:
   accessModes:
     - ReadWriteMany
   hostPath:
-    path: "/home/kpst/Desktop/EdgeCPS/Edgecps/edgeCpsProject/db/data" 
+    path: "/home/kpst/Desktop/EdgeCPS/Edgecps/edgeCpsProject/db/data"

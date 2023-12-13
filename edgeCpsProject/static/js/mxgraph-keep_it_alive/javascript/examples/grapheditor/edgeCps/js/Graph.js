@@ -10192,12 +10192,12 @@ if (typeof mxVertexHandler != 'undefined')
 		 */
 		function createHint()
 		{
-			var hint = document.createElement('div');
-			hint.className = 'geHint';
-			hint.style.whiteSpace = 'nowrap';
-			hint.style.position = 'absolute';
-			
-			return hint;
+			// var hint = document.createElement('div');
+			// hint.className = 'geHint';
+			// hint.style.whiteSpace = 'nowrap';
+			// hint.style.position = 'absolute';
+			//
+			// return hint;
 		};
 		
 		/**

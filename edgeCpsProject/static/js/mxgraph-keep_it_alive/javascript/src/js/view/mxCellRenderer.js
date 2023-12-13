@@ -973,9 +973,15 @@ mxCellRenderer.prototype.redrawLabel = function(state, forced)
 			state.text.overflow = overflow;
 			
 			// Preserves visible state
-			var vis = state.text.node.style.visibility;
-			this.redrawLabelShape(state.text);
-			state.text.node.style.visibility = vis;
+		   var vis = state.text.node.style.visibility;
+		   if(state.origin['x'] != 0 && state.origin['y'] != 0){
+			   if(process_name == 'businessProcess'){
+				   state.text.value = "sdfsf"
+			   }
+
+		   }
+		   this.redrawLabelShape(state.text);
+		   state.text.node.style.visibility = vis;
 		}
 	}
 };

@@ -169,11 +169,11 @@ a.home {
   position: relative;
   width: 185px;
   height: 40px;
-  max-width: 100%; /* 버튼의 최대 너비를 부모 요소에 맞게 설정 */
+  max-width: 100%;
   border-radius: 10px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.3s;
-  overflow: hidden; /* 버튼 내용이 오버플로우되지 않도록 설정 */
+  overflow: hidden;
   margin-left: 2%;
   margin-right: 2%;
 }
@@ -191,10 +191,10 @@ a.home {
   transform: translateX(-50%);
   max-width: calc(
     100% - 40px
-  ); /* 버튼 내용의 최대 너비를 설정 (아이콘과 간격 고려) */
-  white-space: nowrap; /* 긴 텍스트가 줄 바꿈되지 않도록 설정 */
+  );
+  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis; /* 내용이 오버플로우될 때 말줄임(...) 표시 */
+  text-overflow: ellipsis;
 }
 
 .nav-button-policy_process_page .button-icon-policy_process_page {

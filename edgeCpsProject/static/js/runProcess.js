@@ -126,7 +126,10 @@ function businessProcessViewClickHandler(sender, evt) {
 function businessProcessView(projectName){
     var xmlData = localStorage.getItem(projectName+'_businessProcessXml')
     var container = document.getElementById('businessProcessView');
+    // container.style.width = "100%"; // 필요에 따라 조절
+    // container.style.height = "100%"; // 필요에 따라 조절
     var graph = new Graph(container);
+
     var doc = mxUtils.parseXml(xmlData);
     var codec = new mxCodec(doc);
     codec.decode(doc.documentElement, graph.getModel());
@@ -152,7 +155,10 @@ function workflowProcessView(cellName,cellId,cell){
     var xmlDataKey = projectName+'_'+cellId+'#'+cellName;
     var xmlData = localStorage.getItem(xmlDataKey);
     var container = document.getElementById('workflowProcessView');
+    // container.style.width = "100%"; // 필요에 따라 조절
+    // container.style.height = "100%"; // 필요에 따라 조절
     var graph = new Graph(container);
+    // graph.init(container);
     var doc = mxUtils.parseXml(xmlData);
     var codec = new mxCodec(doc);
     // graph.addListener(mxEvent.CLICK, workflowProcessViewHandler);
@@ -163,7 +169,7 @@ function workflowProcessView(cellName,cellId,cell){
     // submit(xmlDataKey);
 
     // Activity 클릭 했을 때 Activity 상태 출력
-    intervalLogDeploymentView = setInterval(() => deploymentView(false,cellName), 1000);
+    intervalLogDeploymentView = setInterval(() => deploymentView(false,cellName), 500);
 }
 
 
@@ -261,10 +267,10 @@ function deploymentView(actionStatusFlag,actionName,actionId) {
             // graph.addListener(mxEvent.CLICK, subContent2ClickHandler);
             codec.decode(doc.documentElement, graph.getModel());
             graph.refresh();
-
+            logContainer()
             if(statusJsonData.metadata.labels["workflows.argoproj.io/completed"]=='true'){
                 clearInterval(intervalLogDeploymentView)
-                logContainer()  
+                // logContainer()
             }
         })
         .catch(error => {

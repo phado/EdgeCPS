@@ -4788,8 +4788,8 @@ EditorUi.prototype.showImageDialog = function (
 /**
  * Hides the current menu.
  */
-EditorUi.prototype.showLinkDialog = function (value, btnLabel, fn) {
-  var dlg = new LinkDialog(this, value, btnLabel, fn);
+EditorUi.prototype.showLinkDialog = function (value, btnLabel, fn, fn2) {
+  var dlg = new LinkDialog(this, value, btnLabel, fn, fn2);
   this.showDialog(dlg.container, 587, 590, true, true);
   dlg.init();
 };

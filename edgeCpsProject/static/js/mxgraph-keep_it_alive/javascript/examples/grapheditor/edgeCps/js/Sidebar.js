@@ -1244,7 +1244,7 @@ Sidebar.prototype.addGeneralPaletteWorkflow = function(expand)
 	var fns = [
 		
 		this.createVertexTemplateEntry(
-			'rounded=1;whiteSpace=wrap;html=1;',
+			'rounded=1;whiteSpace=wrap;html=1;fillColor=#F8CECC;',
 			120, 60,
 			'<div style="font-weight:bold;">&lt;&lt;Container&gt;&gt;<br>[name]</div>',
 			'Action Container',
@@ -1297,7 +1297,7 @@ Sidebar.prototype.addGeneralPaletteWorkflow = function(expand)
 		// 	null,
 		// 	'rounded rect rectangle box'
 		//   ),
-	 	this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectangle', null, null, 'rect rectangle box'),
+	 	// this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectangle', null, null, 'rect rectangle box'),
 		this.createVertexTemplateEntry('ellipse;fillColor=#000000;shape=startState;strokeColor=none;', 30, 30, '', 'Initial state', null, null, dt + 'initial state'),
 		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Join/Fork', null, null, dt + 'join fork'),
 		this.createVertexTemplateEntry('ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'Final state', null, null, dt + 'final state'),

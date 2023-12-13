@@ -13,20 +13,20 @@ def get_pool_conn():
     try:
         config = {
 
-            'user': os.environ['root']
-            , 'password':  os.environ['pw']
-            , 'host': os.environ['ip']
-            , 'port': os.environ['port']
-            , 'database': 'EdgeCPS'
-                  }
+            'user': os.getenv("DB_USER"),
+            'password': os.getenv("DB_PASSWORD"),
+            'host': os.getenv("DB_HOST"),
+            'port': os.getenv("DB_PORT"),
+            'database': 'EdgeCPS'
+        }
         # Mariadb 커넥션 풀 설정
         mariadb_pool = mysql.connector.pooling.MySQLConnectionPool(pool_name="mypool", pool_size=10, **config)
     except :
         config = {
-            'user': 'minsoo'
-            , 'password': '1111'
-            , 'host': '10.110.122.165:3306'
-            , 'port': '3306'
+            'user': 'root'
+            , 'password': '1234'
+            , 'host': '192.168.0.196'
+            , 'port': '30102'
             , 'database': 'EdgeCPS'
         }
         # Mariadb 커넥션 풀 설정

@@ -1,4 +1,4 @@
-import glob
+import yaml
 import os
 import shutil
 import html
@@ -17,6 +17,7 @@ import urllib.parse
 import mysql.connector.pooling
 from flask_paginate import Pagination
 from convert_from_xml import pharse_xml_to_json
+import socket
 
 
 from kubernetes import client, config
@@ -28,12 +29,30 @@ app = Flask(__name__)
 CORS(app)
 app.secret_key = 'EdgeCPS_workflow'
 NAMESPACE = 'argo'
-ARGO_SERVER_URL = 'https://192.168.0.196:32416'
+host_name = socket.gethostname()
 
 # 임의의 프로젝트 목록 데이터
 
 
 mariadb_pool = get_pool_conn()
+
+def get_master_node_ip():
+    try:
+        with open('/root/.kube/config', 'r') as config_file:
+            config_data = yaml.safe_load(config_file)
+            api_server = config_data['clusters'][0]['cluster']['server']
+            master_node_ip = api_server.split('//')[1].split(':')[0]
+            return master_node_ip
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
+
+master_node_ip_address = get_master_node_ip()
+# ip_address = socket.gethostbyname(host_name)
+# ARGO_SERVER_URL = ip_address+':32416'
+# ARGO_SERVER_URL = master_node_ip_address + ':32416'
+ARGO_SERVER_URL = 'https://192.168.0.196:32416'
+print(ARGO_SERVER_URL)
 
 def sessionClear():
     session.clear()
@@ -457,9 +476,11 @@ def argo_logs_workflow(workflow_name):
 
 def argo_status_workflow(workflow_name):
     api_url = f"{ARGO_SERVER_URL}/api/v1/workflows/{NAMESPACE}/{workflow_name}"
+    # print(api_url)
     response = requests.get(api_url, verify=False)
     if response.status_code == 200:
         status = response.text
+        # print(status)
         return status
     else:
         print(f"FFailed to load status. Status code: {response.status_code}")
@@ -564,7 +585,7 @@ def logs_workflow():
     return logs
 
 @app.route('/status', methods = ['GET'])
-def staus_workflow():
+def status_workflow():
     workflow_name = request.args.get('workflow_name')
     status = argo_status_workflow(workflow_name)
     activity_dic[workflow_name+'_status'] = status

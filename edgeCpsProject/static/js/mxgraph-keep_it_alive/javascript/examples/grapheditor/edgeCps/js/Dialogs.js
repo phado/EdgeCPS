@@ -2372,7 +2372,7 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
  * Constructs a new link dialog.
  */
 // 도커 다이어로그
-var LinkDialog = function(editorUi, initialValue, btnLabel, fn)
+var LinkDialog = function(editorUi, initialValue, btnLabel, dumpfn, fn)
 {
 	if(process_name =='workflowProcess'){
 		var actName = localStorage.getItem(projectName+'_nowWorkflow');

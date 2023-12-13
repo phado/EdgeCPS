@@ -1864,7 +1864,7 @@ ArrangePanel.prototype.init = function() // 민수  우측 메뉴Arrange 에서 
 	
 	if (ss.vertices.length > 1)
 	{
-		this.container.appendChild(this.addAlign(this.createPanel()));
+		// this.container.appendChild(this.addAlign(this.createPanel()));
 		// this.container.appendChild(this.addDistribute(this.createPanel()));
 	}
 	
@@ -2264,7 +2264,7 @@ ArrangePanel.prototype.businessProcessFormat = function(div)
 	{
 		if (count > 0)
 		{
-			mxUtils.br(div);
+			// mxUtils.br(div);
 			count = 0;
 		}
 		count++;
@@ -2649,6 +2649,22 @@ ArrangePanel.prototype.workflowProcessformat = function(div)
 		{
 			mxUtils.br(div);
 		}
+
+		btn = mxUtils.button(mxResources.get('nodeSelector'), mxUtils.bind(this, function(evt)
+		{
+			this.editorUi.actions.get('nodeSelector').funct();
+		}));
+		btn.className = 'nodeSelector'
+		btn.setAttribute('title', mxResources.get('nodeSelector'));
+		btn.style.width = '202px';
+		btn.style.marginBottom = '2px';
+		div.appendChild(btn);
+		count++;
+
+	if (count > 0)// 민수 줄 버튼 띄어 쓰기
+		{
+			mxUtils.br(div);
+		}
 		// 순우 onclick
 		btn.onclick = function(){
 			console.log(objValueDict)
@@ -2795,44 +2811,44 @@ ArrangePanel.prototype.policyProcessformat = function(div)
  * 
  */
 // 순우 우측 사이드바 정렬기능
-// ArrangePanel.prototype.addAlign = function(div)
-// {
-// 	var graph = this.editorUi.editor.graph;
-// 	div.style.paddingTop = '6px';
-// 	div.style.paddingBottom = '12px';
-// 	div.appendChild(this.createTitle(mxResources.get('align')));
-//
-// 	var stylePanel = document.createElement('div');
-// 	stylePanel.style.position = 'relative';
-// 	stylePanel.style.paddingLeft = '0px';
-// 	stylePanel.style.borderWidth = '0px';
-// 	stylePanel.className = 'geToolbarContainer';
-//
-// 	if (mxClient.IS_QUIRKS)
-// 	{
-// 		div.style.height = '60px';
-// 	}
-//
-// 	var left = this.editorUi.toolbar.addButton('geSprite-alignleft', mxResources.get('left'),
-// 		function() { graph.alignCells(mxConstants.ALIGN_LEFT); }, stylePanel);
-// 	var center = this.editorUi.toolbar.addButton('geSprite-aligncenter', mxResources.get('center'),
-// 		function() { graph.alignCells(mxConstants.ALIGN_CENTER); }, stylePanel);
-// 	var right = this.editorUi.toolbar.addButton('geSprite-alignright', mxResources.get('right'),
-// 		function() { graph.alignCells(mxConstants.ALIGN_RIGHT); }, stylePanel);
-//
-// 	var top = this.editorUi.toolbar.addButton('geSprite-aligntop', mxResources.get('top'),
-// 		function() { graph.alignCells(mxConstants.ALIGN_TOP); }, stylePanel);
-// 	var middle = this.editorUi.toolbar.addButton('geSprite-alignmiddle', mxResources.get('middle'),
-// 		function() { graph.alignCells(mxConstants.ALIGN_MIDDLE); }, stylePanel);
-// 	var bottom = this.editorUi.toolbar.addButton('geSprite-alignbottom', mxResources.get('bottom'),
-// 		function() { graph.alignCells(mxConstants.ALIGN_BOTTOM); }, stylePanel);
-//
-// 	this.styleButtons([left, center, right, top, middle, bottom]);
-// 	right.style.marginRight = '6px';
-// 	div.appendChild(stylePanel);
-//
-// 	return div;
-// };
+ArrangePanel.prototype.addAlign = function(div)
+{
+	var graph = this.editorUi.editor.graph;
+	div.style.paddingTop = '6px';
+	div.style.paddingBottom = '12px';
+	// div.appendChild(this.createTitle(mxResources.get('align')));
+
+	var stylePanel = document.createElement('div');
+	stylePanel.style.position = 'relative';
+	stylePanel.style.paddingLeft = '0px';
+	stylePanel.style.borderWidth = '0px';
+	stylePanel.className = 'geToolbarContainer';
+
+	if (mxClient.IS_QUIRKS)
+	{
+		div.style.height = '60px';
+	}
+
+	var left = this.editorUi.toolbar.addButton('geSprite-alignleft', mxResources.get('left'),
+		function() { graph.alignCells(mxConstants.ALIGN_LEFT); }, stylePanel);
+	var center = this.editorUi.toolbar.addButton('geSprite-aligncenter', mxResources.get('center'),
+		function() { graph.alignCells(mxConstants.ALIGN_CENTER); }, stylePanel);
+	var right = this.editorUi.toolbar.addButton('geSprite-alignright', mxResources.get('right'),
+		function() { graph.alignCells(mxConstants.ALIGN_RIGHT); }, stylePanel);
+
+	var top = this.editorUi.toolbar.addButton('geSprite-aligntop', mxResources.get('top'),
+		function() { graph.alignCells(mxConstants.ALIGN_TOP); }, stylePanel);
+	var middle = this.editorUi.toolbar.addButton('geSprite-alignmiddle', mxResources.get('middle'),
+		function() { graph.alignCells(mxConstants.ALIGN_MIDDLE); }, stylePanel);
+	var bottom = this.editorUi.toolbar.addButton('geSprite-alignbottom', mxResources.get('bottom'),
+		function() { graph.alignCells(mxConstants.ALIGN_BOTTOM); }, stylePanel);
+
+	this.styleButtons([left, center, right, top, middle, bottom]);
+	right.style.marginRight = '6px';
+	// div.appendChild(stylePanel);
+
+	return div;
+};
 
 /**
  * 
