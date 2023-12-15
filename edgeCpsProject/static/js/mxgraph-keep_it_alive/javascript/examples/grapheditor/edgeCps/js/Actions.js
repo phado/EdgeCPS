@@ -490,6 +490,7 @@ Actions.prototype.init = function()
 		{
 			var cell = graph.getSelectionCell();
 			var value = graph.getLinkForCell(cell) || '';
+			// var value =  '';
 			
 			ui.reqDialog(value, cell, mxResources.get('apply'), function(link)
 			{

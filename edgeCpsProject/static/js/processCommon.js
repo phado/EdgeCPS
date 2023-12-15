@@ -533,71 +533,88 @@ function getWorkflowObjList(xml) {
   var parser = new DOMParser();
   var xmlDoc = parser.parseFromString(xmlString, "text/xml");
 
+  var mxCellElements = xmlDoc.querySelectorAll('mxCell');
+
+	// class가 'reqName'인 <mxCell> 엘리먼트들의 value 가져오기
+	var reqNameValues = [];
+
+	mxCellElements.forEach(function(mxCellElement) {
+		try{
+			var classAttribute = mxCellElement.getAttribute('class');
+
+			// class가 'reqName'이면 value 가져오기
+			if (classAttribute === 'reqName') {
+				var value = mxCellElement.getAttribute('value');
+                var id = mxCellElement.getAttribute('id');
+				reqNameValues.push({ id: id, value: value });
+			}
+		}
+		catch {}
+	});
+	return reqNameValues
+
   var roundedObjects = [];
 
   // Business Process에서 Edit data에 값이 추가 된 다음 workflow Process로 넘어와서 select box를 생성할 때 오류 발생해서 밑에 새로 짬
-  var mxCells = xmlDoc.documentElement.getElementsByTagName("object");
-  if (mxCells.length != 0) {
-    for (var i = 0; i < mxCells.length; i++) {
-      var mxCell = mxCells[i];
-      if (
-        mxCell
-          .getElementsByTagName("mxCell")[0]
-          .attributes[1].nodeValue.includes("rounded=1;")
-      ) {
-        var id = mxCell.getAttribute("id");
-        // var value = mxCell.getAttribute('name');
-        var valueString = mxCell.outerHTML;
-        // var regex = /\[([^\]]+)\]/g;
-        var regex = /&quot;&gt;(.+?)&lt;/;
-        var matches = [];
-        // var match;
-        var match = regex.exec(valueString);
-        var extractedString = match ? match[1] : null;
-        if (extractedString.includes("[" || "]")) {
-          extractedString = extractedString.substring(
-            1,
-            extractedString.length - 1
-          );
-        }
-        matches.push(extractedString);
+  // var mxCells = xmlDoc.documentElement.getElementsByTagName("object");
+  // if (mxCells.length != 0) {
+  //   for (var i = 0; i < mxCells.length; i++) {
+  //     var mxCell = mxCells[i];
+  //     if (mxCell.getElementsByTagName("mxCell")[0].attributes[1].nodeValue.includes("rounded=1;")){
+  //       var id = mxCell.getAttribute("id");
+  //       // var value = mxCell.getAttribute('name');
+  //       var valueString = mxCell.outerHTML;
+  //       // var regex = /\[([^\]]+)\]/g;
+  //       var regex = /&quot;&gt;(.+?)&lt;/;
+  //       var matches = [];
+  //       // var match;
+  //       var match = regex.exec(valueString);
+  //       var extractedString = match ? match[1] : null;
+  //       if (extractedString.includes("[" || "]")) {
+  //         extractedString = extractedString.substring(
+  //           1,
+  //           extractedString.length - 1
+  //         );
+  //       }
+  //       matches.push(extractedString);
+  //
+  //       var value = matches;
+  //       roundedObjects.push({ id: id, value: value });
+  //     }
+  //   }
+  // } else {
+  //   for (
+  //     var i = 0;
+  //     i < xmlDoc.documentElement.getElementsByTagName("mxCell").length;
+  //     i++
+  //   ) {
+  //     try {
+  //       if (
+  //         xmlDoc.documentElement
+  //           .getElementsByTagName("mxCell")
+  //           [i].attributes.style.textContent.includes("rounded")
+  //       ) {
+  //         var inputString =
+  //           xmlDoc.documentElement.getElementsByTagName("mxCell")[2].attributes
+  //             .value.nodeValue;
+  //         var parser = new DOMParser();
+  //         var doc = parser.parseFromString(inputString, "text/html");
+  //         var divElement = doc.querySelector("div");
+  //         var value = divElement.textContent;
+  //         if (value.includes("[" || "]")) {
+  //           value = value.substring(1, value.length - 1);
+  //         }
+  //         var id =
+  //           xmlDoc.documentElement.getElementsByTagName("mxCell")[2].attributes
+  //             .id.textContent;
+  //         roundedObjects.push({ id: id, value: value });
+  //       }
+  //     } catch {}
+  //   }
+  // }
+  //
+  // return roundedObjects;
 
-        var value = matches;
-        roundedObjects.push({ id: id, value: value });
-      }
-    }
-  } else {
-    for (
-      var i = 0;
-      i < xmlDoc.documentElement.getElementsByTagName("mxCell").length;
-      i++
-    ) {
-      try {
-        if (
-          xmlDoc.documentElement
-            .getElementsByTagName("mxCell")
-            [i].attributes.style.textContent.includes("rounded")
-        ) {
-          var inputString =
-            xmlDoc.documentElement.getElementsByTagName("mxCell")[2].attributes
-              .value.nodeValue;
-          var parser = new DOMParser();
-          var doc = parser.parseFromString(inputString, "text/html");
-          var divElement = doc.querySelector("div");
-          var value = divElement.textContent;
-          if (value.includes("[" || "]")) {
-            value = value.substring(1, value.length - 1);
-          }
-          var id =
-            xmlDoc.documentElement.getElementsByTagName("mxCell")[2].attributes
-              .id.textContent;
-          roundedObjects.push({ id: id, value: value });
-        }
-      } catch {}
-    }
-  }
-
-  return roundedObjects;
 }
 
 function getNewWorkflow(selectedKey, selectedValue) {
@@ -790,7 +807,7 @@ function forceApply(graph, cell, value, className){
       // const object = xmlDoc.querySelector('object');
       const labelValue = FAvalue.getAttribute('label');
       const objectElement = document.createElement('object');
-      objectElement.setAttribute('label', '<div style="font-weight:bold;">name</div>');
+      objectElement.setAttribute('label', labelValue);
       // objectElement.setAttribute('class',FAclassName);
       objectElement.setAttribute('description', '');
       objectElement.setAttribute('input_information', '');
@@ -821,9 +838,9 @@ function forceApply(graph, cell, value, className){
       const objectElement = document.createElement('object');
       objectElement.setAttribute('label', labelValue|| '');
       // objectElement.setAttribute('class',FAclassName|| '');
-      objectElement.setAttribute('Req.ID', '');
+      // objectElement.setAttribute('Req.ID', '');
       // objectElement.setAttribute('Req.name', '');
-      objectElement.setAttribute('Req.definition', '');
+      objectElement.setAttribute('Detailed.description', '');
       // objectElement.setAttribute('Detailed.description', '');
       objectElement.setAttribute('Parent.requirements', '');
       objectElement.setAttribute('Children.requirements', '');
@@ -839,9 +856,9 @@ function forceApply(graph, cell, value, className){
       const objectElement = document.createElement('object');
       objectElement.setAttribute('label', labelValue|| '');
       // objectElement.setAttribute('class',FAclassName|| '');
-      objectElement.setAttribute('Req.ID', '');
+      // objectElement.setAttribute('Req.ID', '');
       // objectElement.setAttribute('Req.name', '');
-      objectElement.setAttribute('Req.definition', '');
+      objectElement.setAttribute('Detailed.description', '');
       // objectElement.setAttribute('Detailed.description', '');
       objectElement.setAttribute('Parent.requirements', '');
       objectElement.setAttribute('Children.requirements', '');
@@ -856,7 +873,7 @@ function forceApply(graph, cell, value, className){
       const labelValue = FAvalue.getAttribute('label');
       const objectElement = document.createElement('object');
       objectElement.removeAttribute('xmlns');
-      objectElement.setAttribute('label', labelValue);
+      objectElement.setAttribute('label', '<div style="font-weight:bold;">name</div>');
       // objectElement.setAttribute('class',FAclassName);
       objectElement.setAttribute('image', '');
       objectElement.setAttribute('command', '[]');
@@ -873,6 +890,11 @@ valueFrom.path : ""`);
 path : ""`);
       objectElement.setAttribute('output_information', `name : ""    
 path : ""`);
+      //rectangle 속성
+      objectElement.setAttribute('arguments.parameters', `name:""  
+value:"{{workflow.outputs.parameters.parameters-}}"`);
+        objectElement.setAttribute('arguments.artifacts',`name:"" 
+from:"{{workflow.outputs.parameters.artifacts-}}"`);
       
       FAgraph.getModel().setValue(FAcell, objectElement);
     }
@@ -925,7 +947,7 @@ path : ""`);
 function parseString(inputString, processName,cellId) {
   let result = '';
 
-  if (processName === 'businessProcess') {
+  if (processName === 'workflowProcess') {
     // process_name이 businessProcess인 경우
     const pattern = /bold">([^<]*)<\/div>|bold;">([^<]*)<\/div>/;
     const match = inputString.match(pattern);
@@ -946,7 +968,7 @@ function parseString(inputString, processName,cellId) {
       // return '';
     }
       
-  else if (processName === 'workflowProcess') {
+  else if (processName === 'businessProcess') {
       // process_name이 workflowProcess인 경우
       const match = inputString.match(/&gt;&gt;<br>(.*?)<\/div>/);
       if(match[1].includes('['||']')){

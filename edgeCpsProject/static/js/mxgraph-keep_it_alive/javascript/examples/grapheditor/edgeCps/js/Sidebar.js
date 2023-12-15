@@ -1172,8 +1172,38 @@ Sidebar.prototype.addGeneralPaletteBusinessProcess = function(expand)
 	var dt = 'uml static class ';
 
 	var fns = [
+		this.addDataEntryDecompressed('table title', 250, 150, 'Rounded Rectangle', "<mxGraphModel>\n" +
+			"    <root>\n" +
+			"        <mxCell id=\"0\" />\n" +
+			"        <mxCell id=\"1\" parent=\"0\" />\n" +
+			"        <mxCell id=\"2\" value=\"Activity\" style=\"shape=table;html=1;fillColor=#F8CECC;whiteSpace=wrap;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;rounded=1;locked=0;editable=0;deletable=1;\" vertex=\"1\" parent=\"1\">\n" +
+			"            <mxGeometry width=\"230\" height=\"50\" as=\"geometry\" />\n" +
+			"        </mxCell>\n" +
+			"        \n" +
+			"        <mxCell id=\"3\" value=\"\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=1;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;locked=0;editable=0;movable=0;deletable=0;\" vertex=\"1\" parent=\"2\">\n" +
+			"            <mxGeometry y=\"30\" width=\"180\" height=\"30\" as=\"geometry\" />\n" +
+			"        </mxCell>\n" +
+			"        <mxCell id=\"4\" value=\"name\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;locked=0;editable=0;movable=0;deletable=0;\" vertex=\"1\" parent=\"3\">\n" +
+			"            <mxGeometry width=\"50\" height=\"30\" as=\"geometry\" />\n" +
+			"        </mxCell>\n" +
+			"        <mxCell class = \"reqName\" id=\"5\" value=\"\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;locked=0;movable=0;editable=1;deletable=0;\" vertex=\"1\" parent=\"3\">\n" +
+			"            <mxGeometry x=\"50\" width=\"140\" height=\"30\" as=\"geometry\" />\n" +
+			"        </mxCell>\n" +
+			"        <mxCell id=\"6\" value=\"\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=0;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;locked=0;editable=0;movable=0;deletable=0;\" vertex=\"1\" parent=\"2\">\n" +
+			"            <mxGeometry y=\"60\" width=\"180\" height=\"30\" as=\"geometry\" />\n" +
+			"        </mxCell>\n" +
+			"        <mxCell id=\"7\" value=\"description\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;locked=0;editable=0;movable=0;deletable=0;\" vertex=\"1\" parent=\"6\">\n" +
+			"            <mxGeometry width=\"50\" height=\"30\" as=\"geometry\" />\n" +
+			"        </mxCell>\n" +
+			"        <mxCell class = \"reqDescription\" id=\"8\" value=\"\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;locked=0;editable=1;movable=1;deletable=0;\" vertex=\"1\" parent=\"6\">\n" +
+			"            <mxGeometry x=\"50\" width=\"140\" height=\"30\" as=\"geometry\" />\n" +
+			"        </mxCell>\n" +
+			"        \n" +
+			"\n" +
+			"    </root>\n" +
+			"</mxGraphModel>"),
 	 	// this.createVertexTemplateEntry('rounded=0;whiteSpace=wrap;html=1;', 120, 60, '', 'Rectanglㅇㅇe', null, null, 'rect rectangle box'),
-	 	this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;', 120, 60, '<div style="font-weight:bold;">Activity</div>', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),
+	 	// this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;', 120, 60, '<div style="font-weight:bold;">Activity</div>', 'Rounded Rectangle', null, null, 'rounded rect rectangle box'),
 		this.createVertexTemplateEntry('ellipse;fillColor=#000000;strokeColor=none;', 30, 30, '', 'Initial state', null, null, dt + 'initial state'),
 		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Join/Fork', null, null, dt + 'join fork'),
 		this.createVertexTemplateEntry('ellipse;html=1;shape=endState;fillColor=#000000;strokeColor=#000000;', 30, 30, '', 'Final state', null, null, dt + 'final state'),
@@ -1183,6 +1213,8 @@ Sidebar.prototype.addGeneralPaletteBusinessProcess = function(expand)
 	 	// this.createEdgeTemplateEntry('endArrow=none;html=1;', 50, 50, '', 'Line', null, lineTags + 'simple undirected plain blank no'),
 	 	// this.createEdgeTemplateEntry('endArrow=classic;startArrow=classic;html=1;', 50, 50, '', 'Bidirectional Connector', null, lineTags + 'bidirectional'),
 	 	this.createEdgeTemplateEntry('endArrow=classic;html=1;', 50, 50, '', 'Directional Connector', null, lineTags + 'directional directed'),
+
+
 
 	 	// this.addEntry(lineTags + 'edge title', mxUtils.bind(this, function()
 		// {
@@ -1252,36 +1284,7 @@ Sidebar.prototype.addGeneralPaletteWorkflow = function(expand)
 		// 	null,
 		// 	'rounded rect rectangle box'
 		//   ),
-		this.addDataEntryDecompressed('table title', 250, 150, 'Action Container', "<mxGraphModel>\n" +
-			"    <root>\n" +
-			"        <mxCell id=\"0\" />\n" +
-			"        <mxCell id=\"1\" parent=\"0\" />\n" +
-			"        <mxCell id=\"2\" value=\"Action\" style=\"shape=table;html=1;fillColor=#F8CECC;whiteSpace=wrap;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;rounded=1;locked=0;editable=0;deletable=1;\" vertex=\"1\" parent=\"1\">\n" +
-			"            <mxGeometry width=\"230\" height=\"50\" as=\"geometry\" />\n" +
-			"        </mxCell>\n" +
-			"        \n" +
-			"        <mxCell id=\"3\" value=\"\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=1;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;locked=0;editable=0;movable=0;deletable=0;\" vertex=\"1\" parent=\"2\">\n" +
-			"            <mxGeometry y=\"30\" width=\"180\" height=\"30\" as=\"geometry\" />\n" +
-			"        </mxCell>\n" +
-			"        <mxCell id=\"4\" value=\"name\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;locked=0;editable=0;movable=0;deletable=0;\" vertex=\"1\" parent=\"3\">\n" +
-			"            <mxGeometry width=\"50\" height=\"30\" as=\"geometry\" />\n" +
-			"        </mxCell>\n" +
-			"        <mxCell class = \"reqName\" id=\"5\" value=\"\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;locked=0;movable=0;editable=1;deletable=0;\" vertex=\"1\" parent=\"3\">\n" +
-			"            <mxGeometry x=\"50\" width=\"140\" height=\"30\" as=\"geometry\" />\n" +
-			"        </mxCell>\n" +
-			"        <mxCell id=\"6\" value=\"\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=0;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;locked=0;editable=0;movable=0;deletable=0;\" vertex=\"1\" parent=\"2\">\n" +
-			"            <mxGeometry y=\"60\" width=\"180\" height=\"30\" as=\"geometry\" />\n" +
-			"        </mxCell>\n" +
-			"        <mxCell id=\"7\" value=\"description\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;overflow=hidden;locked=0;editable=0;movable=0;deletable=0;\" vertex=\"1\" parent=\"6\">\n" +
-			"            <mxGeometry width=\"50\" height=\"30\" as=\"geometry\" />\n" +
-			"        </mxCell>\n" +
-			"        <mxCell class = \"reqDescription\" id=\"8\" value=\"\" style=\"shape=partialRectangle;html=1;whiteSpace=wrap;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;locked=0;editable=1;movable=1;deletable=0;\" vertex=\"1\" parent=\"6\">\n" +
-			"            <mxGeometry x=\"50\" width=\"140\" height=\"30\" as=\"geometry\" />\n" +
-			"        </mxCell>\n" +
-			"        \n" +
-			"\n" +
-			"    </root>\n" +
-			"</mxGraphModel>"),
+		this.createVertexTemplateEntry('rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;', 120, 60, '<div style="font-weight:bold;">Action</div>', 'Action Container', null, null, 'Action Container'),
 
 		this.createVertexTemplateEntry('ellipse;fillColor=#000000;shape=startState;strokeColor=none;', 30, 30, '', 'Initial state', null, null, dt + 'initial state'),
 		this.createVertexTemplateEntry('html=1;points=[];perimeter=orthogonalPerimeter;fillColor=#000000;strokeColor=none;', 5, 80, '', 'Join/Fork', null, null, dt + 'join fork'),

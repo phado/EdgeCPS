@@ -1354,6 +1354,7 @@ ExportDialog.saveLocalFile = function(editorUi, data, filename, format)
  */
 function addEditDataTableShapeName(clickedCellId, cell, graph){
 	var reqName = '';
+	var reqId = '';
 	var cellDict = graph.getModel().cells;
 	var keysArray = Object.keys(cellDict);
 	for (const key of keysArray) {
@@ -1362,6 +1363,10 @@ function addEditDataTableShapeName(clickedCellId, cell, graph){
 				try{
 					if(graph.getModel().cells[key].class == 'reqName'){
 						reqName = graph.getModel().cells[key].value;
+						reqId = graph.getModel().cells[key].id;
+						if(process_name == 'businessProcess'){
+							reqName = reqId+'#'+reqName;
+						}
 						break;
 					}
 					else if(graph.getModel().cells[key].class == 'nonReqName'){
@@ -1380,10 +1385,11 @@ var EditDataDialog = function(ui, cell)
 	var graph = ui.editor.graph;
 
 	var value = graph.getModel().getValue(cell);
-	if(process_name == 'requirementsProcess'|| process_name =='workflowProcess') {
+	if(process_name == 'requirementsProcess'|| process_name =='businessProcess') {
 		var selectedCellName = addEditDataTableShapeName(cell.id, cell, graph);
+		selectedCellName = selectedCellName.split('#')[1];
 	}
-	if(process_name == 'businessProcess'){
+	if(process_name == 'workflowProcess'){
 		var activityNameString = value.getAttribute('label');
 		var match = activityNameString.match(/bold;">(.*?)<\/div/g);
 		if (match) {
@@ -1549,26 +1555,6 @@ var EditDataDialog = function(ui, cell)
 		}
 	};
 
-
-	//original
-	// var addTextArea = function(index, name, value)
-	// {
-	// 	names[index] = name;
-	// 	texts[index] = form.addTextarea(names[count] + ':', value, 2);
-	// 	texts[index].style.width = '100%';
-		
-	// 	if (value.indexOf('\n') > 0) //개행문자가 포함되어있다면 얼마나 늘릴지
-	// 	{
-	// 		texts[index].setAttribute('rows', '5');//순우 editdata 입력칸 높이 5로 늘리는 부분 
-	// 	}
-		
-	// 	addRemoveButton(texts[index], name);
-		
-	// 	if (meta[name] != null && meta[name].editable == false)
-	// 	{
-	// 		texts[index].setAttribute('disabled', 'disabled');
-	// 	}
-	// };
 	
 	var temp = [];
 	var isLayer = graph.getModel().getParent(cell) == graph.getModel().getRoot();
@@ -1593,26 +1579,6 @@ var EditDataDialog = function(ui, cell)
 		}
 	}
 
-	// if (id != null)
-	// {	
-	// 	var text = document.createElement('div');
-	// 	text.style.width = '100%';
-	// 	text.style.fontSize = '11px';
-	// 	text.style.textAlign = 'center';
-	// 	mxUtils.write(text, id);
-		
-	// 	// form.addField('EdgeCps Name' + ':', 'EdgeCps Porperty');
-	// 	// form.addField('ID', 'd');
-	// 	// form.addField( text, false)
-	// 	form.addField(mxResources.get('id') , text);
-	// 	console.log('민수 아이디 입력')
-	// }
-	
-	// for (var i = 0; i < temp.length; i++)
-	// {
-	// 	addTextArea(count, temp[i].name, temp[i].value);
-	// 	count++;
-	// }
 	for (var i = 0; i < temp.length; i++) {
 		addTextArea(temp[i].name, temp[i].value);
 	}
@@ -1756,70 +1722,64 @@ var EditDataDialog = function(ui, cell)
 	buttons.id = 'editData'//순우
 	buttons.style.cssText = 'position:absolute;left:30px;right:30px;text-align:right;bottom:30px;height:40px;'
 
-	// if (ui.editor.graph.getModel().isVertex(cell) || ui.editor.graph.getModel().isEdge(cell))
-	// {
-	// 	var replace = document.createElement('span');
-	// 	replace.style.marginRight = '10px';
-	// 	var input = document.createElement('input');
-	// 	input.setAttribute('type', 'checkbox');
-	// 	input.style.marginRight = '6px';
-		
-	// 	if (value.getAttribute('placeholders') == '1')
-	// 	{
-	// 		input.setAttribute('checked', 'checked');
-	// 		input.defaultChecked = true;
-	// 	}
-	
-	// 	mxEvent.addListener(input, 'click', function()
-	// 	{
-	// 		if (value.getAttribute('placeholders') == '1')
-	// 		{
-	// 			value.removeAttribute('placeholders');
-	// 		}
-	// 		else
-	// 		{
-	// 			value.setAttribute('placeholders', '1');
-	// 		}
-	// 	});
-		
-	// 	replace.appendChild(input);
-	// 	mxUtils.write(replace, mxResources.get('placeholders'));
-		
-	// 	if (EditDataDialog.placeholderHelpLink != null)
-	// 	{
-	// 		var link = document.createElement('a');
-	// 		link.setAttribute('href', EditDataDialog.placeholderHelpLink);
-	// 		link.setAttribute('title', mxResources.get('help'));
-	// 		link.setAttribute('target', '_blank');
-	// 		link.style.marginLeft = '8px';
-	// 		link.style.cursor = 'help';
-			
-	// 		var icon = document.createElement('img');
-	// 		mxUtils.setOpacity(icon, 50);
-	// 		icon.style.height = '16px';
-	// 		icon.style.width = '16px';
-	// 		icon.setAttribute('border', '0');
-	// 		icon.setAttribute('valign', 'middle');
-	// 		icon.style.marginTop = (mxClient.IS_IE11) ? '0px' : '-4px';
-	// 		icon.setAttribute('src', Editor.helpImage);
-	// 		link.appendChild(icon);
-			
-	// 		replace.appendChild(link);
-	// 	}
-		
-	// 	buttons.appendChild(replace);
-	// }
-	
+	// var applyBtn = mxUtils.button(mxResources.get('apply'), function()
+
+	var reqBtn = mxUtils.button(mxResources.get('selectReq'), mxUtils.bind(this, function(evt)
+		{
+			ui.actions.get('selectReq').funct();
+		}));
+		reqBtn.setAttribute('title', mxResources.get('selectReq'));
+		reqBtn.style.width = '100px';
+		// reqBtn.style.marginRight = '450px';
+		reqBtn.className = 'geBtn gePrimaryBtn minsoo';
+
+	var DockerBtn = mxUtils.button(mxResources.get('editLink'), mxUtils.bind(this, function(evt)
+		{
+			ui.actions.get('editLink').funct();
+		}));
+		DockerBtn.setAttribute('title', mxResources.get('editLink'));
+		DockerBtn.style.width = '100px';
+		// DockerBtn.style.marginRight = '450px';
+		DockerBtn.className = 'geBtn gePrimaryBtn minsoo';
+
+	var nodeBtn = mxUtils.button(mxResources.get('nodeSelector'), mxUtils.bind(this, function(evt)
+		{
+			ui.actions.get('nodeSelector').funct();
+		}));
+		nodeBtn.setAttribute('title', mxResources.get('nodeSelector'));
+		nodeBtn.style.width = '100px';
+		nodeBtn.style.marginRight = '234px';
+		nodeBtn.className = 'geBtn gePrimaryBtn minsoo';
+
 	if (ui.editor.cancelFirst)
 	{
+		if(process_name != 'requirementsProcess'){
+			reqBtn.style.marginRight = '450px';
+			buttons.appendChild(reqBtn);
+		}
+		if (process_name == 'workflowProcess'){
+			reqBtn.style.marginRight = '0px';
+			buttons.appendChild(DockerBtn);
+			buttons.appendChild(nodeBtn);
+		}
 		buttons.appendChild(applyBtn);
 		buttons.appendChild(cancelBtn);
-		
+
 	}
 	else
 	{
+		if(process_name != 'requirementsProcess'){
+			reqBtn.style.marginRight = '450px';
+			buttons.appendChild(reqBtn);
+		}
+		if (process_name == 'workflowProcess'){
+			reqBtn.style.marginRight = '0px';
+			buttons.appendChild(DockerBtn);
+			buttons.appendChild(nodeBtn);
+		}
 		buttons.appendChild(applyBtn);
 		buttons.appendChild(cancelBtn);
+
 	}
 
 	div.appendChild(buttons);
@@ -1864,7 +1824,47 @@ EditDataDialog.placeholderHelpLink = null;
 var ReqDialog = function(editorUi, ui, cell) {
 	var selectedCellName = '';
 	if (process_name =='businessProcess'){
-		// if(typeof(cell.value)=='object'){
+		// var actId = cell.id
+		// var valueString = cell.value.outerHTML;
+		// // var regex = /&quot;&gt;(.+?)&lt;/;
+		// var regex = /&quot;>(.*?)<\/div>/;
+		// // var matches = [];
+		// // var match;
+		// var match = regex.exec(valueString);
+		// if (match==null){
+		// 	regex = /&quot;&gt;(.+?)&lt;/;
+		// 	match = regex.exec(valueString);
+		// }
+		// var extractedString = match ? match[1] : null;
+		// if(extractedString.includes('['||']')){
+		// 	extractedString=extractedString.substring(1,extractedString.length -1);
+		// }
+		// // matches.push(extractedString);
+		// var actName = actId+'#'+extractedString
+		// selectedCellName = actName;
+
+		var graph = editorUi.editor.graph;
+		selectedCellName = addEditDataTableShapeName(cell.id, cell, graph)
+		// var actName = localStorage.getItem(projectName+'_nowWorkflow');
+		var actName = selectedCellName
+
+		try{
+			var stepNameHtml = cell.value;
+
+			// label 속성 값 가져오기
+			for(var i=0 ; i<stepNameHtml.attributes.length; i++){
+				try{
+					if(stepNameHtml.attributes[i].nodeName=='label'){
+						var labelValue = stepNameHtml.attributes[i].textContent;
+					}
+				}catch{}
+			}
+		}catch{
+		}
+
+
+	}
+	else if (process_name == 'workflowProcess'){
 		var actId = cell.id
 		var valueString = cell.value.outerHTML;
 		// var regex = /&quot;&gt;(.+?)&lt;/;
@@ -1877,57 +1877,14 @@ var ReqDialog = function(editorUi, ui, cell) {
 			match = regex.exec(valueString);
 		}
 		var extractedString = match ? match[1] : null;
-		if(extractedString.includes('['||']')){
-			extractedString=extractedString.substring(1,extractedString.length -1);
-		}
-		// matches.push(extractedString);
 		var actName = actId+'#'+extractedString
 		selectedCellName = actName;
-	}
-	else if (process_name == 'workflowProcess'){
-		var graph = editorUi.editor.graph;
-		selectedCellName = addEditDataTableShapeName(cell.id, cell, graph)
-		var actName = localStorage.getItem(projectName+'_nowWorkflow');
-		//
-		try{
-			var stepNameHtml = cell.value;
-
-			// label 속성 값 가져오기
-			for(var i=0 ; i<stepNameHtml.attributes.length; i++){
-				try{
-					if(stepNameHtml.attributes[i].nodeName=='label'){
-						var labelValue = stepNameHtml.attributes[i].textContent;
-					}
-				}catch{}
-
-			}
-
-
-			// var start = stepNameHtml.indexOf("&gt;&gt;<br>") + "&gt;&gt;<br>".length;
-			// var end = stepNameHtml.indexOf("</div>");
-		}catch{
-		// 	var stepNameHtml = cell.value.outerHTML;
-		// 	var start = stepNameHtml.indexOf("&gt;&gt;<br>") + "&gt;&gt;<br>".length;
-		// 	var end = stepNameHtml.indexOf("</div>");
-		}
-		// var matchResult = labelValue.match(/&gt;&gt;<br>(.*?)<\/div>/);
-		// // 찾은 문자열 출력
-		// if (matchResult && matchResult[1]) {
-		// 	var stepName = matchResult[1];
-		// 	if(stepName.includes('['||']')){
-		// 		stepName = stepName.substring(1,stepName.length-1);
-		// 		// selectedCellName = stepName;
-		// 	}
-		// }
-		// var stepName = labelValue.substring(start, end);
 		var stepId = cell.id;
-		var stepName = cell.children[0].children[1].value;
+		var stepName = actName
+
 	}
 	var reqList = extractReq();
-	// var div = document.createElement('div');
-	
-	// div.style = 'flex';
-	// mxUtils.write(div, mxResources.get('selectReq'));
+
 	var div = document.createElement('div');
 	var reqTitle = document.createElement('div');
 	reqTitle.textContent = 'Select Requirement   ' +'('+selectedCellName.split("#").pop()+')';
@@ -2075,7 +2032,8 @@ var ReqDialog = function(editorUi, ui, cell) {
 		}
 	}
 	else if(process_name == 'workflowProcess'){
-		var check = localStorage.getItem(actName +'_'+ stepId+'#'+stepName + '_requirement');
+		// var check = localStorage.getItem(actName +'_'+ stepId+'#'+stepName + '_requirement');
+		var check = localStorage.getItem(localStorage.getItem(projectName+'_nowWorkflow')+'_'+stepName + '_requirement');
 		if (check != null){
 			leftListOptions.forEach(function(optionText, index) {
 				if(check.includes(optionText)){
@@ -2118,7 +2076,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 			localStorage.setItem(projectName+'_' + actName + '_requirement',targetList); 
 		}
 		else if(process_name =='workflowProcess'){
-			localStorage.setItem(actName + '_' + stepId + '#' + stepName + '_requirement',targetList); 
+			localStorage.setItem( localStorage.getItem(projectName+'_nowWorkflow')+'_'+stepName +  '_requirement',targetList);
 		}
 		console.log('apply btn clicked')
 		editorUi.hideDialog();

@@ -1,8 +1,8 @@
 from kubernetes import client, config
 from kubernetes.client.rest import ApiException
 import os
-import yaml
 import subprocess
+import yaml
 import socket
 
 NAMESPACE = 'edgecps'

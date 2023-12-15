@@ -571,7 +571,18 @@ Format.prototype.refresh = function(arguments,id)
 	attributePanel.style.border = '1px solid';
 	attributePanel.style.borderColor = '#9b9b9b';
 	attributePanel.style.marginLeft = '0.8%';
-	// attributePanel.style.height = '200px';
+
+	attributePanel.style.overflowY = 'auto';
+	if(process_name =='workflowProcess'){
+		attributePanel.style.maxHeight = '550px';
+		attributePanel.style.height = '550px';
+	}else if(process_name =='businessProcess'){
+		attributePanel.style.maxHeight = '220px';
+		attributePanel.style.height = '220px';
+	}else if(process_name =='requirementsProcess'){
+		attributePanel.style.maxHeight = '220px';
+		attributePanel.style.height = '220px';
+	}
 
 	var showAttribute = document.createElement('div');
 	showAttribute.className = 'showAttribute';
@@ -630,8 +641,8 @@ Format.prototype.refresh = function(arguments,id)
 					attributeValueContainer.style.marginLeft = '3px';
 					attributeValueContainer.style.marginRight = '3px';
 					attributeValueContainer.style.whiteSpace = 'pre-wrap';
-					attributeValueContainer.style.overflowWrap = 'break-word'
-	
+					attributeValueContainer.style.overflowWrap = 'break-word';
+
 					attributeValueContainer.innerHTML = attributeValue;
 	
 					showAttribute.appendChild(attributeValueContainer);
@@ -639,17 +650,17 @@ Format.prototype.refresh = function(arguments,id)
 					// document.body.removeChild(attributeValueContainer);
 	
 					// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
-					var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
-					if (textHeight > maxWidth) {
-						attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
-						attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
-					}
-	
-					var empty = document.createElement('div');
-					empty.style.marginBottom = '10px';
+					// var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
+					// if (textHeight > maxWidth) {
+					// 	attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
+					// 	attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
+					// }
+					//
+					// var empty = document.createElement('div');
+					// empty.style.marginBottom = '10px';
 					showAttribute.appendChild(attributeKeyContainer);
 					showAttribute.appendChild(attributeValueContainer);
-					showAttribute.appendChild(empty);
+					// showAttribute.appendChild(empty);
 	
 	
 	
@@ -689,7 +700,7 @@ Format.prototype.refresh = function(arguments,id)
 					attributeValueContainer.style.marginRight = '3px';
 					attributeValueContainer.style.whiteSpace = 'pre-wrap';
 					attributeValueContainer.style.overflowWrap = 'break-word'
-
+					attributeValueContainer.style.marginBottom = '10px';
 					attributeValueContainer.innerHTML = attributeValue;
 
 
@@ -698,26 +709,32 @@ Format.prototype.refresh = function(arguments,id)
 					// document.body.removeChild(attributeValueContainer);
 
 					// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
-					var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
-					if (textHeight > maxWidth) {
-						attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
-						attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
-					}
-
-					var empty = document.createElement('div');
-					empty.style.marginBottom = '10px';
+					// var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
+					// if (textHeight > maxWidth) {
+					// 	attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
+					// 	attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
+					// }
+					//
+					// var empty = document.createElement('div');
+					// empty.style.marginBottom = '10px';
 					showAttribute.appendChild(attributeKeyContainer);
 					showAttribute.appendChild(attributeValueContainer);
-					showAttribute.appendChild(empty);
+					// showAttribute.appendChild(empty);
 
 				}
 				// req 내용도 우측 사이드바에 보여주는 기능
+
+
 				if (process_name != 'requirementsProcess') {
-					if(process_name == 'businessProcess') {
+					if(process_name == 'workflowProcess') {
 						try {
 							try {
 								var selectedCellName = parseString(selectedCell[0].cells[0].value.attributes['label'].value, process_name, selectedCell[0].cells[0].id);
-								var reqAttirbute = localStorage.getItem(selectedCellName + '_requirement');
+								var parts = selectedCellName.split('_');
+								var stepName = parts[1];
+
+								// var reqAttirbute = localStorage.getItem(selectedCellName + '_requirement');
+								var reqAttirbute = localStorage.getItem(localStorage.getItem(projectName+'_nowWorkflow')+ '_'+ stepName +'_requirement');
 							} catch {
 								var keys = Object.keys(selectedCell[0].cells);
 								for (var key of Object.values(keys)) {
@@ -726,7 +743,10 @@ Format.prototype.refresh = function(arguments,id)
 										if (selectedCell[0].cells[key].id == id) {
 											var attribute = selectedCell[0].cells[key].value.attributes;
 											var selectedCellName = parseString(attribute['label'].value, process_name, id);
-											var reqAttirbute = localStorage.getItem(selectedCellName + '_requirement');
+											var parts = selectedCellName.split('_');
+											var stepName = parts[1];
+											var reqAttirbute = localStorage.getItem(localStorage.getItem(projectName+'_nowWorkflow')+ '_'+ stepName +'_requirement');
+											// var reqAttirbute = localStorage.getItem(selectedCellName + '_requirement');
 										}
 
 									} catch (e) {
@@ -749,7 +769,7 @@ Format.prototype.refresh = function(arguments,id)
 							attributeValueContainer.style.marginRight = '3px';
 							attributeValueContainer.style.whiteSpace = 'pre-wrap';
 							attributeValueContainer.style.overflowWrap = 'break-word'
-
+							attributeValueContainer.style.marginBottom = '5px';
 							attributeValueContainer.innerHTML = attributeValue;
 
 
@@ -758,31 +778,42 @@ Format.prototype.refresh = function(arguments,id)
 							// document.body.removeChild(attributeValueContainer);
 
 							// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
-							var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
-							if (textHeight > maxWidth) {
-								attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
-								attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
-							}
-
-							var empty = document.createElement('div');
-							empty.style.marginBottom = '10px';
+							// var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
+							// if (textHeight > maxWidth) {
+							// 	attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
+							// 	attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
+							// }
+							//
+							// var empty = document.createElement('div');
+							// empty.style.marginBottom = '10px';
 
 							showAttribute.appendChild(attributeKeyContainer);
 							showAttribute.appendChild(attributeValueContainer);
-							showAttribute.appendChild(empty);
+							// showAttribute.appendChild(empty);
 
 
 						} catch (e) {
 							console.log(e);
 						}
 					}
-					if(process_name == 'workflowProcess'){
+					if(process_name == 'businessProcess'){
 						try {
 							try {
-
+								var ui = this.editorUi;
+								var graph = ui.editor.graph;
+								var cell = graph.getSelectionCell();
+								console.log(cell.id)
 								// var selectedCellName = parseString(selectedCell[0].cells[0].value.attributes['label'].value, process_name, selectedCell[0].cells[0].id);
 								var selectedCellName = selectedCell[0].cells[0].children[0].children[1].value;
-								var reqAttirbute = localStorage.getItem(localStorage.getItem(projectName+'_nowWorkflow')+'_'+selectedCell[0].cells[0].id + '#'+selectedCellName+'_requirement');
+								if(typeof(selectedCellName)== 'object'){
+									selectedCellName = cell.children[0].children[1].id +'#'+ cell.children[0].children[1].value
+
+								}else{
+									selectedCellName = selectedCell[0].cells[0].children[0].children[1].id+'#'+selectedCellName;
+								}
+
+								// var reqAttirbute = localStorage.getItem(localStorage.getItem(projectName+'_nowWorkflow')+'_'+selectedCell[0].cells[0].id + '#'+selectedCellName+'_requirement');
+								var reqAttirbute = localStorage.getItem(projectName+'_'+selectedCellName + '_requirement');
 							} catch {
 								var selectedCellName = '';
 								var selectedCellId = ''
@@ -793,6 +824,7 @@ Format.prototype.refresh = function(arguments,id)
 										try{
 											if (cell.class === 'reqName') {
 												selectedCellName = cell.value;
+												selectedCellId = cell.id
 
 											}
 											if(typeof(cell.value)=='object'){
@@ -814,7 +846,8 @@ Format.prototype.refresh = function(arguments,id)
 
 								  	}
 								}
-								var reqAttirbute = localStorage.getItem(localStorage.getItem(projectName+'_nowWorkflow')+'_'+selectedCellId + '#'+selectedCellName+'_requirement');
+								var reqAttirbute = localStorage.getItem(projectName+'_'+selectedCellId+'#'+selectedCellName + '_requirement');
+								// var reqAttirbute = localStorage.getItem(localStorage.getItem(projectName+'_nowWorkflow')+'_'+selectedCellId + '#'+selectedCellName+'_requirement');
 								// var keys = Object.keys(selectedCell[0].cells);
 								// for (var key of Object.values(keys)) {
 								//
@@ -845,7 +878,7 @@ Format.prototype.refresh = function(arguments,id)
 							attributeValueContainer.style.marginRight = '3px';
 							attributeValueContainer.style.whiteSpace = 'pre-wrap';
 							attributeValueContainer.style.overflowWrap = 'break-word'
-
+							attributeValueContainer.style.marginBottom = '5px';
 							attributeValueContainer.innerHTML = attributeValue;
 
 
@@ -854,18 +887,18 @@ Format.prototype.refresh = function(arguments,id)
 							// document.body.removeChild(attributeValueContainer);
 
 							// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
-							var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
-							if (textHeight > maxWidth) {
-								attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
-								attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
-							}
-
-							var empty = document.createElement('div');
-							empty.style.marginBottom = '10px';
+							// var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
+							// if (textHeight > maxWidth) {
+							// 	attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
+							// 	attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
+							// }
+							//
+							// var empty = document.createElement('div');
+							// empty.style.marginBottom = '10px';
 
 							showAttribute.appendChild(attributeKeyContainer);
 							showAttribute.appendChild(attributeValueContainer);
-							showAttribute.appendChild(empty);
+							// showAttribute.appendChild(empty);
 
 
 						} catch (e) {
@@ -943,12 +976,32 @@ Format.prototype.refresh = function(arguments,id)
 		// 빈 값일 때 속성 창 최소크기
 		if(showAttribute.textContent==''){
 			var textHeight = showAttribute.clientHeight; // 순우 attribete높이 동적으로 저장
-			attributePanel.style.height = '200px';
-			arrangePanel.style.top = textHeight+225+'px'; // 원하는 위치로 설정
+			// attributePanel.style.height = '500px';
+			// arrangePanel.style.top = 225+'px'; // 원하는 위치로 설정
+			if(process_name =='workflowProcess'){
+				arrangePanel.style.top = '580px';
+				arrangePanel.style.top = '580px';
+			}else if(process_name =='businessProcess'){
+				arrangePanel.style.top = '250px';
+				arrangePanel.style.top = '250px';
+			}else if(process_name =='requirementsProcess'){
+				arrangePanel.style.top = '250px';
+				arrangePanel.style.top = '250px';
+			}
 		}else{
 			var textHeight = showAttribute.clientHeight; // attribete높이 동적으로 저장
 			// attributePanel.style.height = textHeight;
-			arrangePanel.style.top = textHeight+45+'px';
+			// arrangePanel.style.top = 535+'px';
+			if(process_name =='workflowProcess'){
+				arrangePanel.style.top = '580px';
+				arrangePanel.style.top = '580px';
+			}else if(process_name =='businessProcess'){
+				arrangePanel.style.top = '250px';
+				arrangePanel.style.top = '250px';
+			}else if(process_name =='requirementsProcess'){
+				arrangePanel.style.top = '250px';
+				arrangePanel.style.top = '250px';
+			}
 		}
 
 // console.log(textHeight)
@@ -1974,13 +2027,14 @@ ArrangePanel.prototype.init = function() // 민수  우측 메뉴Arrange 에서 
 	
 	// 각 프로세스 별 우측 arrange 패널 요소 값 다르게
 	if (process_name == 'businessProcess'){
-		this.container.appendChild(this.businessProcessFormat(this.createPanel())); 
-	}else if(process_name == 'requirementsProcess'){
-		this.container.appendChild(this.requirementProcessFormat(this.createPanel())); 
-	}else if(process_name == 'policyProcess'){
-		this.container.appendChild(this.policyProcessformat(this.createPanel())); 
-	}else if(process_name == 'workflowProcess'){
-		this.container.appendChild(this.workflowProcessformat(this.createPanel()));
+		// this.container.appendChild(this.businessProcessFormat(this.createPanel()));
+		this.container.appendChild(this.requirementProcessFormat(this.createPanel()));
+	}else if(process_name == 'requirementsProcess') {
+		this.container.appendChild(this.requirementProcessFormat(this.createPanel()));
+	}
+	else if(process_name == 'workflowProcess'){
+		// this.container.appendChild(this.workflowProcessformat(this.createPanel()));
+			this.container.appendChild(this.requirementProcessFormat(this.createPanel()));
 	}
 	else{
 		this.container.appendChild(this.addGroupOps(this.createPanel())); 
@@ -2147,7 +2201,6 @@ ArrangePanel.prototype.addGroupOps = function(div)
 	var ss = this.format.getSelectionState();
 	var count = 0;
 	var btn = null;
-	
 	div.style.paddingTop = '8px';
 	div.style.paddingBottom = '6px';
 

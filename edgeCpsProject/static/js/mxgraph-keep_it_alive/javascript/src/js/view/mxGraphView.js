@@ -970,8 +970,8 @@ mxGraphView.prototype.validateCellState = function(cell, recurse)
 
 				try{
 					if(process_name == 'businessProcess') {
-						const newCellName = parseString(cell.value.attributes[0].nodeValue, process_name, cell.id);
-						const oldCellName = parseString(state.text.lastValue, process_name, cell.id)
+						const newCellName = cell.value;
+						const oldCellName = state.text.lastValue;
 						if(newCellName != oldCellName){
 							var keys = [];
 							var targetKey = '';
@@ -990,7 +990,32 @@ mxGraphView.prototype.validateCellState = function(cell, recurse)
 						}
 					}
 					else if(process_name == 'workflowProcess') {
+						var newCellName = parseString(cell.value.attributes[0].value, 'workflowProcess',cell.id);
+						var parts = newCellName.split('_');
+						var stepName = parts[1];
+						newCellName = localStorage.getItem(projectName+'_nowWorkflow')+ '_'+ stepName +'_requirement';
 
+						var oldCellName = parseString(state.text.lastValue, 'workflowProcess',cell.id);
+						var parts = oldCellName.split('_');
+						var stepName = parts[1];
+						oldCellName = localStorage.getItem(projectName+'_nowWorkflow')+ '_'+ stepName +'_requirement';
+
+						if(newCellName != oldCellName){
+							var keys = [];
+							var targetKey = '';
+							for (var i = 0; i < localStorage.length; i++) {
+								keys.push(localStorage.key(i));
+								const key = localStorage.key(i);
+								if (key.includes(oldCellName)) {
+									targetKey = key;
+									break;
+								}
+							}
+							var tmpLocalStorageValue = localStorage.getItem(targetKey);
+							const newTargetKey = targetKey.replace(oldCellName, newCellName)
+							localStorage.setItem(newTargetKey, tmpLocalStorageValue);
+							localStorage.removeItem(targetKey);
+						}
 					}
 				}
 				catch {
