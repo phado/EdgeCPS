@@ -1387,7 +1387,10 @@ var EditDataDialog = function(ui, cell)
 	var value = graph.getModel().getValue(cell);
 	if(process_name == 'requirementsProcess'|| process_name =='businessProcess') {
 		var selectedCellName = addEditDataTableShapeName(cell.id, cell, graph);
-		selectedCellName = selectedCellName.split('#')[1];
+		if(selectedCellName.includes('#')){
+			selectedCellName = selectedCellName.split('#')[1];
+		}
+
 	}
 	if(process_name == 'workflowProcess'){
 		var activityNameString = value.getAttribute('label');
@@ -2130,7 +2133,12 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	var graph = editorUi.editor.graph;
 	var value = graph.getModel().getValue(ui);
 
-	var selectedCellName = addEditDataTableShapeName(ui.id, ui, graph)
+	var labelValue = value.attributes[0].nodeValue
+	var matchResult = labelValue.match(/bold">(.*?)<\/div>/);
+		if(matchResult == null){
+			matchResult = labelValue.match(/bold;">(.*?)<\/div>/);
+		}
+	var selectedCellName = matchResult[1]
 	var div = document.createElement('div');
 	// mxUtils.write(div, mxResources.get('editLink') + ':');
 	var reqTitle = document.createElement('div');
@@ -2338,18 +2346,19 @@ var LinkDialog = function(editorUi, initialValue, btnLabel, dumpfn, fn)
 			}
 		}catch{
 		}
-		var matchResult = labelValue.match(/&gt;&gt;<br>(.*?)<\/div>/);
+		var matchResult = labelValue.match(/bold">(.*?)<\/div>/);
+		if(matchResult == null){
+			matchResult = labelValue.match(/bold;">(.*?)<\/div>/);
+		}
 		// 찾은 문자열 출력
 		if (matchResult && matchResult[1]) {
 			var stepName = matchResult[1];
-			if(stepName.includes('['||']')){
-				stepName = stepName.substring(1,stepName.length-1);
-				var selectedCellName = stepName;
-			}
+			var selectedCellName = stepName;
+
 		}
 	}
 	var graph = editorUi.editor.graph
-	selectedCellName = addEditDataTableShapeName(btnLabel.id, btnLabel, graph)
+	// selectedCellName = addEditDataTableShapeName(btnLabel.id, btnLabel, graph)
 	var div = document.createElement('div');
 	// mxUtils.write(div, mxResources.get('editLink') + ':');
 	var reqTitle = document.createElement('div');

@@ -18,8 +18,8 @@ spec:
       - name: flask-app
         image: edgecps
         volumeMounts:
-        - name: docker-socket
-          mountPath: /var/run/docker.sock
+        # - name: docker-socket
+        #   mountPath: /var/run/docker.sock
         - name: kube-config
           mountPath: /root/.kube/
         securityContext:
@@ -28,9 +28,9 @@ spec:
         ports:
         - containerPort: 5000
       volumes:
-      - name: docker-socket
-        hostPath:
-          path: /var/run/docker.sock
+      # - name: docker-socket 
+      #   hostPath:
+      #     path: /var/run/docker.sock
       - name: kube-config
         hostPath:
           path: /home/kpst/.kube
@@ -48,5 +48,5 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 5000
-      nodePort: 30808
+      nodePort: 30809
   type: NodePort

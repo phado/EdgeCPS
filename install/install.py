@@ -167,10 +167,10 @@ def create_edgecps_deployment():
                             name="flask-app",
                             image="edgecps",
                             volume_mounts=[
-                                client.V1VolumeMount(
-                                    name="docker-socket",
-                                    mount_path="/var/run/docker.sock"
-                                ),
+                                # client.V1VolumeMount(
+                                #     name="docker-socket",
+                                #     mount_path="/var/run/docker.sock"
+                                # ),
                                 client.V1VolumeMount(
                                     name="kube-config",
                                     mount_path="/root/.kube/"
@@ -184,10 +184,10 @@ def create_edgecps_deployment():
                         )
                     ],
                     volumes=[
-                        client.V1Volume(
-                            name="docker-socket",
-                            host_path=client.V1HostPathVolumeSource(path="/var/run/docker.sock")
-                        ),
+                        # client.V1Volume(
+                        #     name="docker-socket",
+                        #     host_path=client.V1HostPathVolumeSource(path="/var/run/docker.sock")
+                        # ),
                         client.V1Volume(
                             name="kube-config",
                             host_path=client.V1HostPathVolumeSource(path="/home/"+user_name+"/.kube")
@@ -225,6 +225,10 @@ def main():
 
     create_namespace("edgecps")
     create_namespace("argo")
+
+    command = "sudo ctr -n k8s.io image import edgecps.tar"
+    subprocess.run(command, shell=True)
+    print('wait for import edgecps image few second.....................T ^ T')
 
     api_instance = client.CoreV1Api()
     mariadb_pv_obj = create_mariadb_persistent_volume_object()
@@ -312,5 +316,8 @@ def main():
         subprocess.run(["kubectl", "apply", "-f", "./argo.yaml", "-n", ARGO_NAMESPCAE], check=True)
     except subprocess.CalledProcessError as e:
         print(f"argo YAML apply error: {e}")
+
+
+
 if __name__ == "__main__":
     main()
