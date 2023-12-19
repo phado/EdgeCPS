@@ -5,21 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>회원 관리</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/title.css')}}"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
     <script type="text/javascript" src="{{ url_for('static', filename='js/userManagement.js')}}"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/grapheditor.css') }}">
-
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/userManagemnet.css') }}">
 
   </head>
-  <body>
+  <body style="margin: 0px">
     <div id="title" class="title">
-      <h2><a class="home" href="/project/projectsList" style="color: #fff">EdgeCPS Service Modeler</a></h2>
+      <h2><a class="home" href="">EdgeCPS Service Modeler</a></h2>
       <div class="userInfo">
-        <button class="user-name-background" id="user-name">
-          {{ userName }}
-        </button>
+        <div class="user-name" id="user-name">
+          <button class="user-name-background">{{ userName }}</button>
+        </div>
       </div>
     </div>
+
     <div class="modal" id="userInfoModal">
       <div class="usermodal-content">
         <span class="close" id="closeModal">&times;</span>
@@ -36,30 +36,43 @@
     </div>
     </div>
     <div class="container">
-      <div style="float: right">
-        <div class="nav-links d-flex justify-content-between align-items-center mt-3"></div>
+      <div class="tableTitleArea">
+        <div class="projectListTitle">회원 관리</div>
       </div>
-
-      <div>
-        <h2 class="mt-5">회원 관리</h2>
-      </div>
-
-      <table class="table table-striped">
-        <thead>
-          <tr style="text-align: center">
-            <th>INDEX</th>
+      <table class="projectListTable">
+        <thead class="projectListTableHead">
+          <tr>
+            <th>
+              <div style="display: flex; align-items: center">
+                <img
+                  src="{{url_for('static', filename='/image/checkbox.svg')}}"
+                  alt="Image"
+                  class="img-checkbox"
+                />
+                <div style="position: relative">INDEX</div>
+              </div>
+              </th>
             <th>아이디</th>
-            <th>아름</th>
+            <th>이름</th>
             <th>비밀번호</th>
             <th>이메일</th>
             <th>소속</th>
-            <th>관리</th>
+            <th style="padding-left: 25px;width: 100px;">관리</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="projectListTableBody">
           {% for project in projects %}
-          <tr style="text-align: center">
-            <td>{{ project.id }}</td>
+          <tr >
+            <td>
+              <div style="display: flex; align-items: center">
+                <img
+                  src="{{url_for('static', filename='/image/checkbox.svg')}}"
+                  alt="Image"
+                  class="img-checkbox"
+                />
+                <div style="position: relative">{{ project.id }}</div>
+              </div>
+            </td>
             <td>{{ project.name }}</td>
             <td>{{ project.user }}</td>
             <td>{{ project.user_pwd }}</td>
@@ -74,71 +87,53 @@
           {% endfor %}
         </tbody>
       </table>
-      <div id="popupContainer" class="popup-container" style="display: none">
+        <div id="popupContainer" class="popup-container" style="display: none">
         <div id="popup" class="popup">
-          <div class="center-content">
-            <div class="row">
-              <div class="col-md-6">
-                <label for="group">소속 관리</label>
-                <select class="form-control" id="group" name="group" required>
-                  {% for group in groups %}
-                  <option value="{{ group.idx }}">{{ group.name }}</option>
-{#                  <option value="{{ group.idx }}" {% if userGroup == group.name %}selected{% endif %}>{{ group.name }}</option>#}
-                  {% endfor %}
-                </select>
-              </div>
-              <div class="col-md-6">
-                <label for="toggleSwitch">계정 활성화</label>
-                <label class="switch">
-                  <input
-                    type="checkbox"
-                    id="toggleSwitch"
-                    onclick="togglePopup()"
-                  />
-                  <span class="slider round"></span>
-                </label>
-              </div>
+          <div class="popupTitle">
+            <div class="popupTitle-1">회원 관리</div>
+            <span class="close" onclick="closePopup()">&times;</span>
+          </div>
+          <div class="popupContent">
+            <div>
+              <label for="group" class="groupManagementLabel">소속 관리</label><br>
+              <select class="form-control groupManagementSelect" id="group" name="group" required>
+                {% for group in groups %}
+                <option value="{{ group.idx }}">{{ group.name }}</option>
+                  {#<option value="{{ group.idx }}" {% if userGroup == group.name %}selected{% endif %}>{{ group.name }}</option>#}
+                {% endfor %}
+              </select>
+              <button type="button" onclick="addGroup()" class="addGroupBtn">추가</button>
+              <button type="button" onclick="deleteGroup()" class="deleteGroupBtn">삭제</button>
             </div>
-            <div class="row">
-              <div class="col-md-6">
-                <button type="button" onclick="addGroup()" class="action-button">소속 추가</button>
-                <button type="button" onclick="deleteGroup()" class="action-button">소속 삭제</button>
-              </div>
-            </div>
-            <button type="button" onclick="saveInfo()" class="save-close-button">저장</button>
-            <button type="button" onclick="closePopup()" class="save-close-button">닫기</button>
+            <div>
+              <label for="toggleSwitch" class="accountActiveLabel">계정 활성화</label>
+              <label class="switch accountActiveToggle">
+                <input
+                  type="checkbox"
+                  id="toggleSwitch"
+                  onclick="togglePopup()"
+                />
+                <span class="slider round"></span>
+              </label>
+            </div>    
+            <img
+              src="{{url_for('static', filename='/image/contour.svg')}}"
+              alt="Image"
+              class="img-contour1"
+            />
+            <img
+              src="{{url_for('static', filename='/image/contour.svg')}}"
+              alt="Image"
+              class="img-contour2"
+            />
+          </div>
+          <div class="popupBottom">
+            <button type="button" onclick="saveInfo()" class="popupSaveBtn">저장</button>
+            <button type="button" onclick="closePopup()" class="popupCancelBtn">닫기</button>
           </div>
         </div>
       </div>
     </div>
-    <style>
-      /* 공통 스타일 */
-      button {
-        padding: 7px 20px;
-        border: none;
-        cursor: pointer;
-        border-radius: 5px;
-        font-size: 16px;
-        background-color: #8cb2e0;
-        color :#fff;
-      }
-  
-       /* 추가/삭제 버튼 스타일 */
-  .action-button {
-    background-color: #4caf50; /* 초록색 */
-    color: #fff; /* 흰색 텍스트 */
-    margin-bottom: 10px; /* 간격 조절 */
-  }
-
-  /* 저장/닫기 버튼 스타일 */
-  .save-close-button {
-    background-color: #8cb2e0; /* 파란색 */
-    color: #fff; /* 흰색 텍스트 */
-    float: right;
-    margin-right: 10px;
-    margin-top: 14%;
-  }
-    </style>
   </body>
 </html>
 <script>
@@ -148,8 +143,6 @@
     const popupContainer = document.getElementById("popupContainer");
     const popup = document.getElementById("popup");
     popupContainer.style.display = "block";
-    popup.style.width = "500px"; // 가로 크기 조절
-    popup.style.height = "500px"; // 세로 크기 조절
 
     const group = button.getAttribute("data-group");
     const groupSelect = document.getElementById("group");

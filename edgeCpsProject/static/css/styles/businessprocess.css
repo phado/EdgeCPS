@@ -245,8 +245,8 @@ a.home {
   margin-bottom: 0.75rem;
   animation: 0.125s ease-in-out 0s 1 normal forwards running lnHDaM;
 }
-.project_tag{
-  width:20%;
+.project_tag {
+  width: 20%;
 }
 
 @keyframes fadeIn {
@@ -260,7 +260,6 @@ a.home {
   }
 }
 
-
 /* Webkit 스크롤바 */
 ::-webkit-scrollbar {
   width: 7px; /* 스크롤바의 너비 */
@@ -268,7 +267,7 @@ a.home {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #D9D9D9; /* 스크롤바 색상 */
+  background-color: #d9d9d9; /* 스크롤바 색상 */
   border-radius: 6px; /* 스크롤바 모서리 둥글게 */
 }
 

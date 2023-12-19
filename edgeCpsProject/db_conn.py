@@ -25,7 +25,7 @@ def get_pool_conn():
         config = {
             'user': 'root'
             , 'password': '1234'
-            , 'host': '192.168.0.196'
+            , 'host': '112.167.170.54'
             , 'port': '30102'
             , 'database': 'EdgeCPS'
         }

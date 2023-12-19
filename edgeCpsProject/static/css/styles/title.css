@@ -24,7 +24,6 @@
   font-style: normal;
 }
 
-
 .user-name-background {
   height: 30px;
   border: none;
@@ -36,12 +35,19 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s;
-  padding-top: 1px;
-  margin-top: 23px;
+  margin-top: 25px;
 }
 
 .home {
+  margin-left: 57px;
   color: white;
+  font-family: Inter;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 48px;
+  letter-spacing: 0em;
+  text-align: left;
+  text-decoration: none;
 }
 
 .home:hover {
@@ -54,28 +60,18 @@
   text-decoration: none;
 }
 
-
-
-.title h2{
-
-  font-family: Inter Extra Bold;
-  font-size: 40px;
-  font-weight: 800;
-  line-height: 48px;
-  letter-spacing: 0em;
-  text-align: left;
-  width: 80%;
-  top: 14px;
-  position: absolute;
-  text-decoration: none;
-}
 .title {
   background: #557ba9;
-  /* display: flex; */
   align-items: center;
-  height: 80px;
-  padding: 0 100px;
+  height: 84px;
+  width: 100%;
 }
+
+.title h2 {
+  position: absolute;
+  width: 600px;
+}
+
 .userInfo {
   margin-left: 95%;
 }
@@ -203,10 +199,10 @@ input:checked + .slider:before {
   padding: 20px;
   border: 1px solid #888;
   width: 25%;
-  /* height: 36%; */
+  height: 36%;
   text-align: center;
   border-radius: 3%;
-  margin-left: 73%;
+  margin-left: 72%;
 }
 
 .close {
@@ -224,7 +220,6 @@ input:checked + .slider:before {
   cursor: pointer;
 }
 
-
 @media (max-width: 800px) {
   .userInfo {
     display: none;
@@ -232,7 +227,7 @@ input:checked + .slider:before {
   .title {
     padding: 0 10px;
   }
-  .title h2{
+  .title h2 {
     font-size: 30px;
   }
 }
