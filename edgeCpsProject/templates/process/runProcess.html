@@ -197,26 +197,26 @@
 			<span class="button-text-run_process_page">Run</span></a>
 		</ul>
 	</nav>
-
-  	<div class="main-content">
-		<div style="display: flex; justify-content: space-between; width: 98%; padding-left: 1%;" >
-			<div id="businessTitle" style="width: 35.16%"><h4>BusinessProcess view</h4></div>
-			<div id="workflowTitle" style="width: 35.16%"><h4>Workflow view</h4></div>
-			<div id="deploymentTitle" style="width: 25.16%"><h4>Deployment view</h4>
-				</div><button class = "argoButton" onclick="runWorkflow()" >Run</button>
-				
+	<div class="runResultView">
+		<div class="main-content">
+			<div style="display: flex;" class="runProcessTitle">
+				<div id="businessTitle">BusinessProcess view</div>
+				<div id="workflowTitle">Workflow view</div>
+				<div id="deploymentTitle" >Deployment view</div>
+				<button class = "argoButton" onclick="runWorkflow()" >Run</button>
+			</div>
+			
+			<div id = 'businessProcessView' class="businessProcessView viewContainer">
+				<script>businessProcessView(projectName)</script>
+			</div>
+			<div id = 'workflowProcessView ' class="workflowProcessView viewContainer"></div>
+			<div id ='deploymentView ' class="deploymentView viewContainer"></div>
 		</div>
-
-    	<div id = 'businessProcessView' class="businessProcessView">
-			<script>businessProcessView(projectName)</script>
-    	</div>
-    	<div id = 'workflowProcessView' class="workflowProcessView"></div>
-   		<div id ='deploymentView' class="deploymentView"></div>
-  	</div>
-	<div class="footer">
-		<h4>Result log</h4>
+		<div class="footer">
+			Result log
+		</div>
+		<div class="logContainer"></div>
 	</div>
-	<div class="logContainer"></div>
 	
 	 <!-- 회원 정보 모달 -->
 	<div class="modal" id="userInfoModal">
@@ -295,19 +295,21 @@
 
 <style>
     /* 기본 버튼 스타일 */
-    .argoButton {
-      display: inline-block;
-      padding: 0px 60px;
-      font-size: 13px;
-      font-weight: bold;
-      text-decoration: none;
-      cursor: pointer;
-      border: 2px solid #3498db; /* 테두리 색상 */
-      border-radius: 5px; /* 테두리 모서리 둥글게 */
-      color: #3498db; /* 글자 색상 */
-      background-color: #fff; /* 배경 색상 */
-      transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-    }
+	.argoButton {
+    height: 30px;
+    display: inline-block;
+    padding: 0px 60px;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    border: 2px solid #3498db;
+    border-radius: 5px;
+    color: #3498db;
+    background-color: #fff;
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    margin-left: 1743px;
+}
 
     /* 호버 효과 */
     .argoButton:hover {

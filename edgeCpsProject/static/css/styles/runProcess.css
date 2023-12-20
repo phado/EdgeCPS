@@ -214,106 +214,69 @@ html {
   padding: 0;
   overflow: hidden;
 }
-/* .sidebar {
-  background-color: #ffffff;
-  height: 65%;
-  width: 10%;
-  position: fixed;
-  top: 17%;
-  right: 0;
-} */
 
 .main-content {
-  width: 100%;
+  margin-top: 10px;
   float: left;
-  height: 60%;
-  position: fixed;
-  top: 18%;
   margin-left: 0.5%;
   margin-right: 0.5%;
-  font-family: monospace;
-  /* overflow: auto; */
+  width: 100%;
 }
 
-.workflowProcessView {
-  width: 32%;
+#workflowTitle {
+  font-family: Inter Extra Bold;
+  font-style: normal;
+  font-weight: 700;
+  position: absolute;
+  left: 650px;
+}
+#businessTitle {
+  font-family: Inter Extra Bold;
+  font-style: normal;
+  font-weight: 700;
+  position: absolute;
+  left: 20px;
+}
+#deploymentTitle {
+  font-family: Inter Extra Bold;
+  font-style: normal;
+  font-weight: 700;
+  position: absolute;
+  left: 1285px;
+}
+.viewContainer {
+  width: 614px;
+  height: 510px;
   float: left;
-  height: 87%;
   background-color: #f0f0f0;
   border: 1px solid #ddd;
   padding: 10px;
   overflow: auto;
   margin: 0.5%;
   border-radius: 5px;
-}
-#workflowTitle h4 {
-  font-family: Inter Extra Bold;
-  font-style: normal;
-  font-weight: 700;
-}
-
-.businessProcessView {
-  width: 32%;
-  float: left;
-  height: 87%;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  padding: 10px;
-  overflow: auto;
-  margin: 0.5%;
-  border-radius: 5px;
-}
-
-#businessTitle h4 {
-  font-family: Inter Extra Bold;
-  font-style: normal;
-  font-weight: 700;
-}
-
-.deploymentView {
-  width: 32%;
-  float: left;
-  height: 87%;
-  background-color: #f0f0f0;
-  border: 1px solid #ddd;
-  padding: 10px;
-  overflow: auto;
-  margin: 0.5%;
-  border-radius: 5px;
-}
-#deploymentTitle h4 {
-  font-family: Inter Extra Bold;
-  font-style: normal;
-  font-weight: 700;
 }
 
 .logContainer {
-  /* flex: 1; */
+  margin-left: 20px;
+  margin-top: 10px;
+  width: 1879px;
+  height: 170px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
   background-color: #f0f0f0;
-  /* color: #fff; */
   font-family: monospace;
   font-size: 14px;
-  padding: 10px;
   position: fixed;
-  top: 82%;
-  width: 98%;
-  bottom: 1.5%; /* footer의 높이만큼 여백을 둡니다. */
   overflow: auto;
-  left: 1%;
   border-radius: 5px;
 }
 
 .footer {
-  height: 22%;
   color: rgb(0, 0, 0);
-  text-align: center;
-  position: fixed; /* position을 fixed로 변경합니다. */
-  bottom: 0;
-  margin-left: 1%;
   font-family: Inter Extra bold;
   font-style: normal;
   font-weight: 700;
-  /* overflow: auto; */
+  margin-left: 20px;
 }
 
 /* Webkit 스크롤바 */
@@ -329,4 +292,15 @@ html {
 
 ::-webkit-scrollbar-track {
   background-color: #ffffff; /* 스크롤바 트랙 색상 */
+}
+
+.runResultView {
+  width: 100%;
+  height: 100%;
+  font-family: Inter;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 29px;
+  letter-spacing: 0em;
+  text-align: left;
 }
