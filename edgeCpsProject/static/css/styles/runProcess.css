@@ -1,8 +1,10 @@
 /* CSS Reset */
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
+}
+
+body {
+  margin: 0px;
 }
 
 /* Font Styles */
@@ -20,7 +22,6 @@
   font-style: normal;
 }
 /* EdgeCPS */
-
 
 .nav-item-separator {
   display: flex;
@@ -263,7 +264,6 @@ html {
   border-radius: 5px;
 }
 
-
 #businessTitle h4 {
   font-family: Inter Extra Bold;
   font-style: normal;
@@ -309,7 +309,7 @@ html {
   text-align: center;
   position: fixed; /* position을 fixed로 변경합니다. */
   bottom: 0;
-  margin-left:1%;
+  margin-left: 1%;
   font-family: Inter Extra bold;
   font-style: normal;
   font-weight: 700;

@@ -91,10 +91,7 @@
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/businessprocess.css')}}"> 
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/grapheditor.css') }}">
 	<link rel="stylesheet"type="text/css"href="{{ url_for('static', filename='css/styles/title.css')}}"/>
-	<!-- info부트스트랩 -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"/>
 	{#민수 부트스트랩 모달 #}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"/>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </head>
@@ -152,15 +149,19 @@
 
 <div>
 	<div id="title" class="title">
-		<h2> <a class="home" href="/project/projectsList">EdgeCPS Service Modeler</a></h2>
+	  <h2>
+		<a class="home" href="/project/projectsList"
+		  >EdgeCPS Service Modeler</a
+		>
+	  </h2>
 
-		<div class="userInfo">
-			  <button class="user-name-background" id="user-name">
-				{{ userName }}
-			  </button>
-		</div>
+	  <div class="userInfo">
+		<button class="user-name-background" id="user-name">
+		  {{ userName }}
+		</button>
+	  </div>
 	</div>
-</div>
+  </div>
 	<nav class="navbar">
 		<ul class="nav-list">
 		  <a class="nav-button" href="{{ url_for('overview_process', projectName=project_name, openedProject = True) }}">

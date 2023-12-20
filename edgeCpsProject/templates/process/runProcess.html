@@ -7,7 +7,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 	
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/grapheditor.css') }}">
    
@@ -110,21 +109,20 @@
 
 </head>
 <body class="geEditor">
-
 	<div>
-        <div id="title" class="title">
-            <h2> <a class="home" href="/project/projectsList">EdgeCPS Service Modeler</a></h2>
-
-            <div class="userInfo">
-				<button class="user-name-background" id="user-name">
-				{{ userName }}
-				</button>
-				
-			</div>
-        </div>
-		
-		
-    </div>
+		<div id="title" class="title">
+		  <h2>
+			<a class="home" href="/project/projectsList"
+			  >EdgeCPS Service Modeler</a
+			>
+		  </h2>
+		  <div class="userInfo">
+			<button class="user-name-background" id="user-name">
+			  {{ userName }}
+			</button>
+		  </div>
+		</div>
+	  </div>
 
 	<nav class="navbar">
 		<ul class="nav-list">
