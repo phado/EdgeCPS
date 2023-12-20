@@ -6,11 +6,6 @@
     <title>회원가입</title>
     <link
       rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
-    />
-    <!-- 회원가입 페이지 스타일 효정 -->
-    <link
-      rel="stylesheet"
       type="text/css"
       href="{{ url_for('static', filename='css/styles/signup.css')}}"
     />
@@ -19,7 +14,6 @@
       type="text/css"
       href="{{ url_for('static', filename='css/styles/title.css')}}"
     />
-    <!-- 회원가입 페이지 자바스크립트 효정 -->
     <script
       type="text/javascript"
       src="{{ url_for('static', filename='js/signup.js')}}"
@@ -27,30 +21,25 @@
   </head>
   <body>
     <div id="title" class="title">
-      <h2><a class="home" href="/" style="color: white">EdgeCPS Service Modeler</a></h2>
+      <h2><a class="home" href="">EdgeCPS Service Modeler</a></h2>
     </div>
 
-    <div class="container mt-5">
-      <h1 class="text-left">회원가입</h1>
-      <form action="/signup" method="post" id="signupForm">
+    <div class="signupArea">
+      <div class="signupTitle">아이디 찾기</div>
+      <form action="/signup" method="post" id="signupForm" class="signupForm">
         <div class="form-group">
-          <label for="userId" style="padding-top: 20px" id="useridTitle"
-            >ID</label
-          >
-          <div class="input-group" style="width: 387px">
+          <label for="userId" id="useridTitle" class="label">ID</label>
+          <div class="input-group" style="display: flex; align-items: center">
             <input
               type="text"
-              class="form-control"
+              class="form-control idInput"
               id="userId"
               name="userId"
+              style="width: 300px"
               required
             />
             <div class="input-group-append">
-              <button
-                id="checkDuplicateButton"
-                class="btn btn-primary"
-                style="margin-left: 10px; background: #557ba9"
-              >
+              <button id="checkDuplicateButton" class="btn btn-primary">
                 중복확인
               </button>
             </div>
@@ -58,10 +47,10 @@
           <small id="userIdError" class="text-danger"></small>
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password" class="label">Password</label><br />
           <input
             type="password"
-            class="form-control"
+            class="form-control input"
             id="password"
             name="password"
             required
@@ -69,10 +58,10 @@
           <small id="passwordError" class="text-danger"></small>
         </div>
         <div class="form-group">
-          <label for="name">이름</label>
+          <label for="name" class="label">이름</label><br />
           <input
             type="text"
-            class="form-control"
+            class="form-control input"
             id="name"
             name="name"
             required
@@ -80,10 +69,10 @@
           <small id="nameError" class="text-danger"></small>
         </div>
         <div class="form-group">
-          <label for="birthdate">생년월일</label>
+          <label for="birthdate" class="label">생년월일</label><br />
           <input
             type="date"
-            class="form-control"
+            class="form-control input"
             id="birthdate"
             name="birthdate"
             required
@@ -91,38 +80,26 @@
           <small id="birthdateError" class="text-danger"></small>
         </div>
         <div class="form-group">
-          <label for="email">E-mail</label>
+          <label for="email" class="label">E-mail</label><br />
           <input
             type="email"
-            class="form-control"
+            class="form-control input"
             id="email"
             name="email"
             required
           />
           <small id="emailError" class="text-danger"></small>
         </div>
-
-        <!-- <div class="form-group">
-          <label for="group">소속</label>
-          <select
-            class="form-control"
-            id="group"
-            name="group"
-            required
-            style="height: 40px; width: 387px"
-          >
-            <option value="" disabled selected>소속을 선택해주세요</option>
-            <option value="1">ETRI</option>
-            <option value="2">KPST</option>
-            <option value="999">common</option>
-          </select>
-          <small id="groupError" class="text-danger"></small>
-        </div> -->
-
         <button type="submit" class="btn btn-primary" id="signupButton">
           Signup</button
         ><br />
-        <a href="/cancel" class="btn btn-secondary" id="cancelButton">Cancel</a>
+        <button
+          class="btn btn-secondary"
+          id="cancelButton"
+          onclick="location.href='/';"
+        >
+          Cancel
+        </button>
       </form>
     </div>
 

@@ -1,9 +1,11 @@
 body {
   height: 100vh;
   display: flex;
-  flex-direction: column; align-items: center; /* Center content horizontally */
-  justify-content: center; /
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
+
 input[type="text"],
 input[type="email"],
 select {
@@ -15,8 +17,8 @@ select {
   max-width: 400px;
 }
 
-.errorText{
-  color: #DD4C4C;
+.errorText {
+  color: #dd4c4c;
   font-family: Roboto;
   font-size: 10px;
   font-weight: 400;
@@ -25,7 +27,7 @@ select {
   text-align: right;
 }
 .findIdArea {
-  flex: 1;           
+  flex: 1;
 }
 .findIdTitle {
   margin-top: 41px;
@@ -46,11 +48,11 @@ select {
   letter-spacing: 0em;
   text-align: left;
 }
-.findIdForm{
+.findIdForm {
   width: 100%;
   height: 300px;
 }
-.label{
+.label {
   margin-top: 24px;
   font-family: Roboto;
   font-size: 16px;
@@ -60,8 +62,9 @@ select {
   text-align: left;
   color: #848484;
 }
-.input{
+.input {
   margin-top: 8px;
+  margin-bottom: 16px;
   font-family: Roboto;
   font-size: 16px;
   font-weight: 400;
@@ -69,12 +72,13 @@ select {
   letter-spacing: 0em;
   text-align: left;
   border-radius: 5px;
-  border: 1px solid #AFAFAF;
+  border: 1px solid #afafaf;
 
   padding-left: 15px;
   padding-right: 15px;
 }
-#confirmBtn, #cancelButton {
+#confirmBtn,
+#cancelButton {
   margin-top: 15px;
   width: 387px;
   height: 45px;
@@ -89,13 +93,12 @@ select {
   line-height: 25px;
   letter-spacing: 0em;
   text-align: center;
-
 }
-#confirmBtn{
+#confirmBtn {
   background: #6097d9;
   color: white;
 }
-#cancelButton{
-  background: #F1F1F1;
-  color: #6097D9;
+#cancelButton {
+  background: #f1f1f1;
+  color: #6097d9;
 }

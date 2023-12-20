@@ -4,8 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Find ID</title>
-
-    <!-- 아이디 찾기 페이지 스타일 효정 -->
     <link
       rel="stylesheet"
       type="text/css"
@@ -16,7 +14,6 @@
       type="text/css"
       href="{{ url_for('static', filename='css/styles/title.css')}}"
     />
-    <!-- 아이디 찾기 페이지 자바스크립트 효정 -->
     <script
       type="text/javascript"
       src="{{ url_for('static', filename='js/forgetid.js')}}"
@@ -43,7 +40,7 @@
           /><br />
           <small id="nameError" class="text-danger errorText"></small>
         </div>
-        <div class="form-group" style="margin-top: 24px">
+        <div class="form-group">
           <label for="email" class="label emailInputLabel">Email</label><br />
           <input
             type="email"
