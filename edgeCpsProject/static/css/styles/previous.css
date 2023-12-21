@@ -31,8 +31,8 @@ body, html {
     width: 30%;
     float: left;
     height: 100%;
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
+    background-color: #FFF;
+    border: 1px solid #C3C3C3;
     padding: 10px;
     overflow: auto;
     }
@@ -40,21 +40,23 @@ body, html {
     width: 70%;
     float: left;
     height: 100%;
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
+    background-color: #FFF;
+    border: 1px solid #C3C3C3;
     padding: 10px;
     overflow: auto;
     }
 
     #graphContainer2 h3{
-      color: #000000;
+      color: #2E5686;
       font-family: Inter Extra Light;
-      font-size: 15px;
+      font-size: 18px;
       font-style: normal;
       font-weight: 600;
       line-height: normal;
-      text-align: center;
-      border-bottom: 2px solid #ddd;
+      margin-bottom: 29px;
+      margin-left: 10px;
+      margin-top: 20px;
+  
     }
 
 

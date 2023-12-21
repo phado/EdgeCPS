@@ -249,9 +249,9 @@ button {
   border: 1px solid rgba(0, 0, 0, 0.7);
 }
 .geColorBtn:active {
-  background-color: #4d90fe;
-  background-image: linear-gradient(#4d90fe 0px, #357ae8 100%);
-  border: 1px solid #2f5bb7;
+  background-color: #2E5686;
+  /* background-image: linear-gradient(#2E5686 0px, #2E5686 100%); */
+  border: 1px solid #2E5686;
   color: #fff;
 }
 .geColorBtn:disabled {
@@ -259,16 +259,33 @@ button {
 }
 .gePrimaryBtn,
 .mxWindow .gePrimaryBtn {
-  background-color: #4d90fe;
-  background-image: linear-gradient(#4d90fe 0px, #4787ed 100%);
-  border: 1px solid #3079ed;
+  background-color: #2E5686;
+  /* background-image: linear-gradient(#4d90fe 0px, #4787ed 100%); */
+  border: 1px solid #2E5686;
   color: #fff;
 }
 .gePrimaryBtn:hover,
 .gePrimaryBtn:focus {
-  background-color: #357ae8;
-  background-image: linear-gradient(#4d90fe 0px, #357ae8 100%);
-  border: 1px solid #2f5bb7;
+  background-color: #2E5686;
+  background-image: linear-gradient(#2E5686 0px, #2E5686 100%);
+  border: 1px solid #2E5686;
+  color: #fff;
+}
+
+.geAddBtn {
+  width: 126px;
+  height: 40px;
+  border-radius: 5px;
+  flex-shrink: 0;
+  background-color: #3A6CA9;
+  /* background-image: linear-gradient(#4d90fe 0px, #4787ed 100%); */
+  border: 1px solid #3A6CA9;
+  color: #fff;
+}
+.geAddBtn:hover {
+  background-color: #3A6CA9;
+  background-image: linear-gradient(#3A6CA9 0px, #3A6CA9 100%);
+  border: 1px solid #3A6CA9;
   color: #fff;
 }
 .gePrimaryBtn:disabled {
@@ -572,14 +589,15 @@ div.mxWindow .geButton {
 	background:white;
 	line-height:1em;
 	overflow:hidden;
-	padding:0px;
+	padding:3px;
+    /* 순우 오픈 창 패딩주는곳*/
 	border:1px solid #acacac;
 	-webkit-box-shadow:0px 0px 2px 2px #d5d5d5;
 	-moz-box-shadow:0px 0px 2px 2px #d5d5d5;
 	box-shadow:0px 0px 2px 2px #d5d5d5;
 	_filter:progid:DXImageTransform.Microsoft.DropShadow(OffX=2, OffY=2, Color='#d5d5d5', Positive='true');
 	z-index: 2;
-	border-radius: 10px;
+	border-radius: 5px;
 }
 .geTransDialog {
   position: absolute;

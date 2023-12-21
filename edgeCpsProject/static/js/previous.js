@@ -92,10 +92,10 @@ function subContent2(cellName,cellId,cell){
             var requirementAttribute = document.createElement('div');
 
             requirementName.textContent = cellNodeName.nodeName;
-            requirementName.style.cssText = 'color: #222;font-family: Inter;font-size: 12px;font-style: normal;font-weight: 600;line-height: normal;'
+            requirementName.style.cssText = 'color: #353535;font-family: Inter Extra Light;font-size: 14px;font-style: normal;font-weight: 400;line-height: normal;    margin-left: 10px;margin-top: 20px;'
 
             requirementAttribute.textContent = cellNodeName.nodeValue;
-            requirementAttribute.style.cssText = 'color: #5A5A5A;font-family: Inter;font-size: 10px;font-style: normal;font-weight: 500;line-height: normal; border-bottom:1px solid rgb(214, 214, 214); margin-bottom:6%'
+            requirementAttribute.style.cssText = 'color: #919191; font-family: Inter Extra Light; font-size: 12px; font-style: normal; font-weight: 400; line-height: normal; border-bottom: 1px solid rgb(214, 214, 214); margin-bottom: 6%; margin-left: 10px; padding-bottom: 3px; width: 94%; overflow-wrap: break-word; word-wrap: break-word;';
     
             requirementAttributes.appendChild(requirementName);
             requirementAttributes.appendChild(requirementAttribute);

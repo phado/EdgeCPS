@@ -3,11 +3,15 @@ from kubernetes.client.rest import ApiException
 import os
 import subprocess
 import yaml
+from jinja2 import Environment, FileSystemLoader
 import socket
 
 NAMESPACE = 'edgecps'
 ARGO_NAMESPCAE = 'argo'
 user_name = os.getlogin()
+host_name = socket.gethostname()
+node_selector = {"kubernetes.io/hostname": host_name}
+tolerantion = {}
 
 def create_namespace(namespace_name):
     config.load_kube_config()
@@ -42,7 +46,9 @@ def create_mariadb_object():
             volumes=[
                 {"name": "mariadb-persistent-storage", "configMap": {"name": "mariadb-initdb-config"}},
                 {"name": "mariadb-data", "persistentVolumeClaim": {"claimName": "mariadb-pv-claim"}}
-            ]
+            ],
+            node_selector=node_selector,
+            tolerations=[{"effect": "NoSchedule", "key": "node-role.kubernetes.io/control-plane"}] 
         )
     )
     spec = client.V1DeploymentSpec(
@@ -100,7 +106,7 @@ def create_mariadb_persistent_volume_object():
             labels={"type": "local"}
         ),
         spec=client.V1PersistentVolumeSpec(
-            storage_class_name="mariadb-storage-class",
+            storage_class_name="",
             capacity={"storage": "50Gi"},
             access_modes=["ReadWriteMany"],
             host_path=client.V1HostPathVolumeSource(path=volume_path)
@@ -115,7 +121,7 @@ def create_mariadb_persistent_volume_claim_object():
         kind="PersistentVolumeClaim",
         metadata=client.V1ObjectMeta(name="mariadb-pv-claim"),
         spec=client.V1PersistentVolumeClaimSpec(
-            storage_class_name="mariadb-storage-class",
+            storage_class_name="",
             access_modes=["ReadWriteMany"],
             resources=client.V1ResourceRequirements(
                 requests={"storage": "50Gi"}
@@ -151,6 +157,7 @@ def mariadb_create_service_object():
 
 
 def create_edgecps_deployment():
+
     config.load_kube_config()
     deployment = client.V1Deployment(
         api_version="apps/v1",
@@ -192,7 +199,9 @@ def create_edgecps_deployment():
                             name="kube-config",
                             host_path=client.V1HostPathVolumeSource(path="/home/"+user_name+"/.kube")
                         )
-                    ]
+                    ],
+                    node_selector=node_selector,
+                    tolerations=[{"effect": "NoSchedule", "key": "node-role.kubernetes.io/control-plane"}]
                 )
             )
         )
@@ -222,13 +231,12 @@ def create_edgecps_service():
 
 def main():
     config.load_kube_config()
-
     create_namespace("edgecps")
     create_namespace("argo")
 
     command = "sudo ctr -n k8s.io image import edgecps.tar"
     subprocess.run(command, shell=True)
-    print('wait for import edgecps image few second.....................T ^ T')
+    print('wait for import edgecps image few second.....................')
 
     api_instance = client.CoreV1Api()
     mariadb_pv_obj = create_mariadb_persistent_volume_object()
@@ -312,10 +320,83 @@ def main():
     except client.exceptions.ApiException as e:
         print(f"Exception when creating Service: {e}")
 
+    ##########argo##########
     try:
         subprocess.run(["kubectl", "apply", "-f", "./argo.yaml", "-n", ARGO_NAMESPCAE], check=True)
+        print(f"argo resource created successfully.")
     except subprocess.CalledProcessError as e:
-        print(f"argo YAML apply error: {e}")
+        print(f"argo yaml apply error: {e}")
+
+    try:
+        current_directory = os.path.dirname(os.path.realpath(__file__))
+        env = Environment(loader=FileSystemLoader(searchpath=current_directory))
+        template = env.get_template('argoserver.yaml')
+
+        rendered_yaml = template.render(hostname = host_name)   
+        parsed_yaml = yaml.safe_load(rendered_yaml)
+
+        api_instance = client.AppsV1Api()
+        api_instance.create_namespaced_deployment(body=parsed_yaml,namespace=ARGO_NAMESPCAE)
+        print(f"Deployment argo server created successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"argo server apply error: {e}")
+
+    try:
+        current_directory = os.path.dirname(os.path.realpath(__file__))
+        env = Environment(loader=FileSystemLoader(searchpath=current_directory))
+        template = env.get_template('argohttpbin.yaml')
+
+        rendered_yaml = template.render(hostname = host_name)   
+        parsed_yaml = yaml.safe_load(rendered_yaml)
+
+        api_instance = client.AppsV1Api()
+        api_instance.create_namespaced_deployment(body=parsed_yaml,namespace=ARGO_NAMESPCAE)
+        print(f"Deployment argohttpbin created successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"argo httpbin apply error: {e}")
+
+
+    try:
+        current_directory = os.path.dirname(os.path.realpath(__file__))
+        env = Environment(loader=FileSystemLoader(searchpath=current_directory))
+        template = env.get_template('argominio.yaml')
+
+        rendered_yaml = template.render(hostname = host_name)   
+        parsed_yaml = yaml.safe_load(rendered_yaml)
+
+        api_instance = client.AppsV1Api()
+        api_instance.create_namespaced_deployment(body=parsed_yaml,namespace=ARGO_NAMESPCAE)
+        print(f"Deployment argominio created successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"argo minio apply error: {e}")
+
+    try:
+        current_directory = os.path.dirname(os.path.realpath(__file__))
+        env = Environment(loader=FileSystemLoader(searchpath=current_directory))
+        template = env.get_template('argopostgres.yaml')
+
+        rendered_yaml = template.render(hostname = host_name)   
+        parsed_yaml = yaml.safe_load(rendered_yaml)
+
+        api_instance = client.AppsV1Api()
+        api_instance.create_namespaced_deployment(body=parsed_yaml,namespace=ARGO_NAMESPCAE)
+        print(f"Deployment argo postgres created successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"argo postgres apply error: {e}")
+
+    try:
+        current_directory = os.path.dirname(os.path.realpath(__file__))
+        env = Environment(loader=FileSystemLoader(searchpath=current_directory))
+        template = env.get_template('argoworkflowctr.yaml')
+
+        rendered_yaml = template.render(hostname = host_name)   
+        parsed_yaml = yaml.safe_load(rendered_yaml)
+
+        api_instance = client.AppsV1Api()
+        api_instance.create_namespaced_deployment(body=parsed_yaml,namespace=ARGO_NAMESPCAE)
+        print(f"Deployment argo workflowctr created successfully.")
+    except subprocess.CalledProcessError as e:
+        print(f"argo workflowctr apply error: {e}")
 
 
 

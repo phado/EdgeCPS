@@ -559,7 +559,7 @@ Format.prototype.refresh = function(arguments,id)
 	
 	var attributeTitle = document.createElement('div');
 	attributeTitle.innerText = 'Information';
-	attributeTitle.style.textAlign ='center'; 
+	attributeTitle.style.cssText = 'color: #353535;font-size: 16px;font-style: normal;font-weight: 600;line-height: normal;margin-left: 13px;margin-bottom: 10px;'
 
 	div.appendChild(attributeTitle);
 
@@ -573,16 +573,10 @@ Format.prototype.refresh = function(arguments,id)
 	attributePanel.style.marginLeft = '0.8%';
 
 	attributePanel.style.overflowY = 'auto';
-	if(process_name =='workflowProcess'){
-		attributePanel.style.maxHeight = '550px';
-		attributePanel.style.height = '550px';
-	}else if(process_name =='businessProcess'){
-		attributePanel.style.maxHeight = '220px';
-		attributePanel.style.height = '220px';
-	}else if(process_name =='requirementsProcess'){
-		attributePanel.style.maxHeight = '220px';
-		attributePanel.style.height = '220px';
-	}
+
+	attributePanel.style.maxHeight = '580px';
+	attributePanel.style.height = '580px';
+
 
 	var showAttribute = document.createElement('div');
 	showAttribute.className = 'showAttribute';
@@ -630,7 +624,7 @@ Format.prototype.refresh = function(arguments,id)
 					
 					var attributeKey = attribute[i]['name'];
 					var attributeKeyContainer = document.createElement('div');
-					attributeKeyContainer.style.marginLeft = '1px';
+					attributeKeyContainer.style.marginLeft = '7px';
 					attributeKeyContainer.style.marginRight = '1px';
 					attributeKeyContainer.innerHTML = '<strong style="color: black;">'+attributeKey+'</strong>';
 					// attributeKeyContainer.style=bold;
@@ -638,10 +632,14 @@ Format.prototype.refresh = function(arguments,id)
 					var attributeValue = attribute[i]['value'];
 					var attributeValueContainer = document.createElement('div');
 					attributeValueContainer.style.borderBottom = '1px solid #D6D6D6'; 
-					attributeValueContainer.style.marginLeft = '3px';
+					// attributeValueContainer.style.marginLeft = '3px';
 					attributeValueContainer.style.marginRight = '3px';
 					attributeValueContainer.style.whiteSpace = 'pre-wrap';
 					attributeValueContainer.style.overflowWrap = 'break-word';
+					attributeValueContainer.style.marginBottom = '20px';
+					attributeValueContainer.style.paddingBottom = '20px';
+					attributeValueContainer.style.marginLeft = '7px';
+
 
 					attributeValueContainer.innerHTML = attributeValue;
 	
@@ -688,19 +686,25 @@ Format.prototype.refresh = function(arguments,id)
 					}
 					var attributeKey = attribute[i]['name'];
 					var attributeKeyContainer = document.createElement('div');
-					attributeKeyContainer.style.marginLeft = '1px';
+					attributeKeyContainer.style.marginLeft = '7px';
 					attributeKeyContainer.style.marginRight = '1px';
+
 					attributeKeyContainer.innerHTML = '<strong style="color: black;">' + attributeKey + '</strong>';
+					
 					// attributeKeyContainer.style=bold;
 
 					var attributeValue = attribute[i]['value'];
 					var attributeValueContainer = document.createElement('div');
 					attributeValueContainer.style.borderBottom = '1px solid #D6D6D6';
-					attributeValueContainer.style.marginLeft = '3px';
+					// attributeValueContainer.style.marginLeft = '3px';
 					attributeValueContainer.style.marginRight = '3px';
 					attributeValueContainer.style.whiteSpace = 'pre-wrap';
 					attributeValueContainer.style.overflowWrap = 'break-word'
 					attributeValueContainer.style.marginBottom = '10px';
+					attributeValueContainer.style.marginBottom = '20px';
+					attributeValueContainer.style.paddingBottom = '20px'
+					attributeValueContainer.style.marginLeft = '7px';
+
 					attributeValueContainer.innerHTML = attributeValue;
 
 
@@ -757,15 +761,15 @@ Format.prototype.refresh = function(arguments,id)
 							}
 							// var attributeKey = attribute[i]['name'];
 							var attributeKeyContainer = document.createElement('div');
-							attributeKeyContainer.style.marginLeft = '1px';
 							attributeKeyContainer.style.marginRight = '1px';
+							attributeKeyContainer.style.marginLeft = '7px';
 							attributeKeyContainer.innerHTML = '<strong style="color: black;">Related requirements</strong>';
 							// attributeKeyContainer.style=bold;
 
 							var attributeValue = reqAttirbute
 							var attributeValueContainer = document.createElement('div');
 							attributeValueContainer.style.borderBottom = '1px solid #D6D6D6';
-							attributeValueContainer.style.marginLeft = '3px';
+							attributeValueContainer.style.marginLeft = '7px';
 							attributeValueContainer.style.marginRight = '3px';
 							attributeValueContainer.style.whiteSpace = 'pre-wrap';
 							attributeValueContainer.style.overflowWrap = 'break-word'
@@ -866,7 +870,7 @@ Format.prototype.refresh = function(arguments,id)
 							}
 							// var attributeKey = attribute[i]['name'];
 							var attributeKeyContainer = document.createElement('div');
-							attributeKeyContainer.style.marginLeft = '1px';
+							attributeKeyContainer.style.marginLeft = '7px';
 							attributeKeyContainer.style.marginRight = '1px';
 							attributeKeyContainer.innerHTML = '<strong style="color: black;">Related requirements</strong>';
 							// attributeKeyContainer.style=bold;
@@ -874,7 +878,7 @@ Format.prototype.refresh = function(arguments,id)
 							var attributeValue = reqAttirbute
 							var attributeValueContainer = document.createElement('div');
 							attributeValueContainer.style.borderBottom = '1px solid #D6D6D6';
-							attributeValueContainer.style.marginLeft = '3px';
+							attributeValueContainer.style.marginLeft = '7px';
 							attributeValueContainer.style.marginRight = '3px';
 							attributeValueContainer.style.whiteSpace = 'pre-wrap';
 							attributeValueContainer.style.overflowWrap = 'break-word'
@@ -978,30 +982,18 @@ Format.prototype.refresh = function(arguments,id)
 			var textHeight = showAttribute.clientHeight; // 순우 attribete높이 동적으로 저장
 			// attributePanel.style.height = '500px';
 			// arrangePanel.style.top = 225+'px'; // 원하는 위치로 설정
-			if(process_name =='workflowProcess'){
-				arrangePanel.style.top = '580px';
-				arrangePanel.style.top = '580px';
-			}else if(process_name =='businessProcess'){
-				arrangePanel.style.top = '250px';
-				arrangePanel.style.top = '250px';
-			}else if(process_name =='requirementsProcess'){
-				arrangePanel.style.top = '250px';
-				arrangePanel.style.top = '250px';
-			}
+
+				arrangePanel.style.top = '630px';
+				arrangePanel.style.top = '630px';
+
 		}else{
 			var textHeight = showAttribute.clientHeight; // attribete높이 동적으로 저장
 			// attributePanel.style.height = textHeight;
 			// arrangePanel.style.top = 535+'px';
-			if(process_name =='workflowProcess'){
-				arrangePanel.style.top = '580px';
-				arrangePanel.style.top = '580px';
-			}else if(process_name =='businessProcess'){
-				arrangePanel.style.top = '250px';
-				arrangePanel.style.top = '250px';
-			}else if(process_name =='requirementsProcess'){
-				arrangePanel.style.top = '250px';
-				arrangePanel.style.top = '250px';
-			}
+
+				arrangePanel.style.top = '630px';
+				arrangePanel.style.top = '630px';
+
 		}
 
 // console.log(textHeight)

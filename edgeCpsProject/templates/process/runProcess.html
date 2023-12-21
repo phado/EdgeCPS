@@ -247,7 +247,13 @@
 		// 프로젝이름 가져기
 		var prj_name = projectName
 		// 워크플로우 딕션어리에 [key : 워크플로이름 , value : 워크플로우 xml]qwdfr_workflowXML
-		var workflowKey = JSON.parse(localStorage.getItem(projectName + '_workflowXML'))
+        try{
+            var workflowKey = JSON.parse(localStorage.getItem(projectName + '_workflowXML'))
+        }
+		catch{
+            const convertWorkflowKey = localStorage.getItem(projectName + '_workflowXML').replace(/'/g, '"');
+            var workflowKey = convertWorkflowKey
+        }
 
 		var dict_workflow = {}
 

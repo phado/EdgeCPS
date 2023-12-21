@@ -46,6 +46,7 @@ function searchDockerImage(){
             var option = document.createElement('option');
             option.value = image;
             option.text = image;
+			option.style.paddingLeft = "8px";
             selectBox.appendChild(option);
         });
 
@@ -1394,6 +1395,7 @@ var EditDataDialog = function(ui, cell)
 	}
 	if(process_name == 'workflowProcess'){
 		var activityNameString = value.getAttribute('label');
+	
 		var match = activityNameString.match(/bold;">(.*?)<\/div/g);
 		if (match) {
 			// 추출된 문자열에서 [ 나 ] 제거 (있을 경우)
@@ -1404,6 +1406,9 @@ var EditDataDialog = function(ui, cell)
 			if (match) {
 				// 추출된 문자열에서 [ 나 ] 제거 (있을 경우)
 				var activityName = match[0].replace(/bold">(.*?)<\/div/, '$1');
+				if(activityName =='<br>'){
+					activityName = '';
+				}
 				activityName = activityName.replace(/\[|\]/g, '');
 			}
 		}
@@ -1426,8 +1431,8 @@ var EditDataDialog = function(ui, cell)
 
 	var div = document.createElement('div');
 	var editDataTitle = document.createElement('div');
-	editDataTitle.textContent = 'EditData   ' + '('+ selectedCellName +')';
-	editDataTitle.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
+	editDataTitle.textContent = 'Edit Data   ' + '('+ selectedCellName +')';
+	editDataTitle.style.cssText='color: #353535;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
 	div.appendChild(editDataTitle);
 	div.style.cssText = 'height:70px;border-radius: 5px 5px 0px 0px;background: #E8F3FF;'
 
@@ -1537,21 +1542,24 @@ var EditDataDialog = function(ui, cell)
 	var addTextArea = function(name, value) {
 		var label = document.createElement('div');
 		label.textContent = name;
-		label.style.cssText = 'color: #353535;font-family: Inter Extra Bold;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal;'
+		label.style.cssText = 'color: #353535;font-size: 18px;font-style: normal;font-weight: 500;line-height: normal;'
 		form.appendChild(label);
 	
 		var textarea = document.createElement('textarea');
 		textarea.value = value;
 		// textarea.style.width = '100%';
-		textarea.style.cssText ='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal; width:100%;border-radius: 5px;border: 1px solid #9B9B9B;'
+		textarea.style.cssText ='color: #353535;font-size: 16px;font-style: normal;font-weight: 400; width:100%;border-radius: 5px;background: #F7F7F7;box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.15);    border-color:#F7F7F7;padding-top: 10px;padding-left: 10px;'
 	
 		if (value.indexOf('\n') > 0) {
 			textarea.setAttribute('rows', '5');
 		}
-	
 		form.appendChild(textarea);
+
+		var blank = document.createElement('div');
+		blank.innerHTML = '<br>';
+		form.appendChild(blank);
 	
-		addRemoveButton(textarea, label);
+		// addRemoveButton(textarea, label);
 	
 		if (meta[name] != null && meta[name].editable == false) {
 			textarea.setAttribute('disabled', 'disabled');
@@ -1726,42 +1734,53 @@ var EditDataDialog = function(ui, cell)
 	buttons.style.cssText = 'position:absolute;left:30px;right:30px;text-align:right;bottom:30px;height:40px;'
 
 	// var applyBtn = mxUtils.button(mxResources.get('apply'), function()
-
+	const svgPlusIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M15.8337 10.8317H10.8337V15.8317H9.16699V10.8317H4.16699V9.16504H9.16699V4.16504H10.8337V9.16504H15.8337V10.8317Z" fill="white"/></svg>';
+	const reqName = mxResources.get('selectReq');
+	const reqTitle = svgPlusIcon+reqName
 	var reqBtn = mxUtils.button(mxResources.get('selectReq'), mxUtils.bind(this, function(evt)
 		{
 			ui.actions.get('selectReq').funct();
-		}));
-		reqBtn.setAttribute('title', mxResources.get('selectReq'));
-		reqBtn.style.width = '100px';
-		// reqBtn.style.marginRight = '450px';
-		reqBtn.className = 'geBtn gePrimaryBtn minsoo';
 
+		}));
+		reqBtn.innerHTML = reqTitle;
+		reqBtn.setAttribute('title', mxResources.get('selectReq'));
+		reqBtn.style.width = '128px;';
+		reqBtn.style.marginRight = '10px';
+		reqBtn.className = 'geAddBtn';
+
+	const DockerName = mxResources.get('editLink');
+	const DockerTitle = svgPlusIcon+DockerName
 	var DockerBtn = mxUtils.button(mxResources.get('editLink'), mxUtils.bind(this, function(evt)
 		{
 			ui.actions.get('editLink').funct();
 		}));
+		DockerBtn.innerHTML = DockerTitle;
 		DockerBtn.setAttribute('title', mxResources.get('editLink'));
-		DockerBtn.style.width = '100px';
-		// DockerBtn.style.marginRight = '450px';
-		DockerBtn.className = 'geBtn gePrimaryBtn minsoo';
+		DockerBtn.style.width = '126px';
+		DockerBtn.style.marginRight = '10px';
+		DockerBtn.className = 'geAddBtn';
 
+	const nodeBtnName = mxResources.get('nodeSelector');
+	const nodeBtnTitle = svgPlusIcon+nodeBtnName
 	var nodeBtn = mxUtils.button(mxResources.get('nodeSelector'), mxUtils.bind(this, function(evt)
 		{
 			ui.actions.get('nodeSelector').funct();
 		}));
+		nodeBtn.innerHTML = nodeBtnTitle;
 		nodeBtn.setAttribute('title', mxResources.get('nodeSelector'));
-		nodeBtn.style.width = '100px';
-		nodeBtn.style.marginRight = '234px';
-		nodeBtn.className = 'geBtn gePrimaryBtn minsoo';
+		nodeBtn.style.width = '144px';
+		nodeBtn.style.marginRight = '139px';
+		nodeBtn.className = 'geAddBtn';
 
 	if (ui.editor.cancelFirst)
 	{
 		if(process_name != 'requirementsProcess'){
-			reqBtn.style.marginRight = '450px';
+			reqBtn.style.marginRight = '432px';
 			buttons.appendChild(reqBtn);
 		}
 		if (process_name == 'workflowProcess'){
-			reqBtn.style.marginRight = '0px';
+			reqBtn.style.width = '128px;';
+			reqBtn.style.marginRight = '10px';
 			buttons.appendChild(DockerBtn);
 			buttons.appendChild(nodeBtn);
 		}
@@ -1772,7 +1791,7 @@ var EditDataDialog = function(ui, cell)
 	else
 	{
 		if(process_name != 'requirementsProcess'){
-			reqBtn.style.marginRight = '450px';
+			reqBtn.style.marginRight = '432px';
 			buttons.appendChild(reqBtn);
 		}
 		if (process_name == 'workflowProcess'){
@@ -1891,7 +1910,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 	var div = document.createElement('div');
 	var reqTitle = document.createElement('div');
 	reqTitle.textContent = 'Select Requirement   ' +'('+selectedCellName.split("#").pop()+')';
-	reqTitle.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
+	reqTitle.style.cssText='color: #353535;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
 	div.appendChild(reqTitle);
 	div.style.cssText = 'height:70px;border-radius: 5px 5px 0px 0px;background: #E8F3FF;'
 
@@ -1910,7 +1929,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 
 	var leftListLabel = document.createElement("div");
 	leftListLabel.textContent = "Requirement pool";
-	leftListLabel.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal;    margin-bottom: 3%;'
+	leftListLabel.style.cssText='color: #353535;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal;    margin-bottom: 3%;'
 
 
 	var leftList = document.createElement("select");
@@ -1925,7 +1944,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 
 	var rightListLabel = document.createElement("div");
 	rightListLabel.textContent = "Target requirement";
-	rightListLabel.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal;margin-bottom: 3%;'
+	rightListLabel.style.cssText='color: #353535;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal;margin-bottom: 3%;'
 
 
 	var rightList = document.createElement("select");
@@ -1971,7 +1990,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 				var newOption = document.createElement("option");
 				newOption.value = selectedOption.value;
 				newOption.text = selectedOption.text;
-				newOption.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+				newOption.style.cssText='color: #353535;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
 
 				leftList.appendChild(newOption);
 			}
@@ -1991,7 +2010,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 				var newOption = document.createElement("option");
 				newOption.value = selectedOption.value; 
 				newOption.text = selectedOption.text;
-				newOption.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+				newOption.style.cssText='color: #353535;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
 
 				rightList.appendChild(newOption);
 			}
@@ -2010,7 +2029,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 					var option = document.createElement("option");
 					option.value = index; 
 					option.text = optionText;
-					option.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+					option.style.cssText='color: #353535;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;margin-left:3px;'
 					
 					rightList.appendChild(option)
 				}
@@ -2018,7 +2037,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 					var option = document.createElement("option");
 					option.value = index; 
 					option.text = optionText;
-					option.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+					option.style.cssText='color: #353535;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;margin-left:3px;'
 
 					leftList.appendChild(option);
 				}
@@ -2028,7 +2047,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 				var option = document.createElement("option");
 				option.value = index; 
 				option.text = optionText;
-				option.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+				option.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;margin-left:3px;'
 
 				leftList.appendChild(option);
 			});
@@ -2043,7 +2062,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 					var option = document.createElement("option");
 					option.value = index; 
 					option.text = optionText;
-					option.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+					option.style.cssText='color: #353535;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;margin-left:3px;'
 
 					rightList.appendChild(option)
 				}
@@ -2051,7 +2070,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 					var option = document.createElement("option");
 					option.value = index; 
 					option.text = optionText;
-					option.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+					option.style.cssText='color: #353535;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;margin-left:3px;'
 
 					leftList.appendChild(option);
 				}
@@ -2061,7 +2080,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 				var option = document.createElement("option");
 				option.value = index; 
 				option.text = optionText;
-				option.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;'
+				option.style.cssText='color: #353535;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;margin-left:3px;'
 
 				leftList.appendChild(option);
 			});
@@ -2143,7 +2162,7 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	// mxUtils.write(div, mxResources.get('editLink') + ':');
 	var reqTitle = document.createElement('div');
 	reqTitle.textContent = 'Node Selector   ' + '(' + selectedCellName + ')';
-	reqTitle.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
+	reqTitle.style.cssText='color: #353535;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
 	div.appendChild(reqTitle);
 	div.style.cssText = 'height:70px;border-radius: 5px 5px 0px 0px;background: #E8F3FF;'
 
@@ -2153,7 +2172,7 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	var innerInput1Title = document.createElement('div');
 	innerInput1Title.textContent = 'Select label key';
 	innerInput1Title.style.marginTop = '20px'; // 필요한 경우 상단 여백 추가
-	innerInput1Title.style.cssText = 'color: #353535;font-family: Inter;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal; margin-top:20px;'
+	innerInput1Title.style.cssText = 'color: #353535;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal; margin-top:20px;'
 
 	var innerInput1 = document.createElement('div');
 	innerInput1.className = 'geTitle';
@@ -2162,12 +2181,12 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	innerInput1.style.whiteSpace = 'nowrap';
 	innerInput1.style.textOverflow = 'clip';
 	innerInput1.style.cursor = 'default';
-	innerInput1.style.cssText = 'color: #353535;font-family: Inter;font-size: 15px;font-style: normal;font-weight: 500;line-height: normal;'
+	innerInput1.style.cssText = 'color: #353535;font-size: 15px;font-style: normal;font-weight: 500;line-height: normal;'
 	
 	var innerInput2Title = document.createElement('div');
 	innerInput2Title.textContent = 'Select label value';
 	innerInput2Title.style.marginTop = '10px';
-	innerInput2Title.style.cssText = 'color: #353535;font-family: Inter;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal; margin-top:20px;'
+	innerInput2Title.style.cssText = 'color: #353535;font-size: 20px;font-style: normal;font-weight: 500;line-height: normal; margin-top:20px;'
 
 	var innerInput2 = document.createElement('div');
 	innerInput2.className = 'geTitle';
@@ -2176,7 +2195,7 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	innerInput2.style.whiteSpace = 'nowrap';
 	innerInput2.style.textOverflow = 'clip';
 	innerInput2.style.cursor = 'default';
-	innerInput2.style.cssText = 'color: #353535;font-family: Inter;font-size: 15px;font-style: normal;font-weight: 500;line-height: normal;'
+	innerInput2.style.cssText = 'color: #353535;font-size: 15px;font-style: normal;font-weight: 500;line-height: normal;'
 	
 	innerInputContainer.appendChild(innerInput1Title);
 	innerInputContainer.appendChild(innerInput1);
@@ -2222,6 +2241,7 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 				var option = document.createElement('option');
 				option.value = key;
 				option.text = key;
+				option.style.marginLeft= '3px';
 				firstListBox.appendChild(option);
 			});
 	 
@@ -2237,6 +2257,7 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 						var option = document.createElement('option');
 						option.value = data[key][selectedOption];
 						option.text = data[key][selectedOption];
+						option.style.marginLeft= '3px';
 						secondListBox.appendChild(option);
 						uniqueValues.push(data[key][selectedOption]);
 					}
@@ -2363,7 +2384,7 @@ var LinkDialog = function(editorUi, initialValue, btnLabel, dumpfn, fn)
 	// mxUtils.write(div, mxResources.get('editLink') + ':');
 	var reqTitle = document.createElement('div');
 	reqTitle.textContent = 'Docker Image   ' + '('+ selectedCellName +')';
-	reqTitle.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
+	reqTitle.style.cssText='color: #353535;font-size: 24px;font-style: normal;font-weight: 500;line-height: normal; padding:20px;'
 	div.appendChild(reqTitle);
 	div.style.cssText = 'height:70px;border-radius: 5px 5px 0px 0px;background: #E8F3FF;'
 
@@ -2488,7 +2509,7 @@ var LinkDialog = function(editorUi, initialValue, btnLabel, dumpfn, fn)
 	var btns = document.createElement('div');
 	btns.style.marginTop = '18px';
 	btns.style.textAlign = 'right';
-	btns.style.paddingRight = '3%';
+	btns.style.paddingRight = '5%';
 
 	mxEvent.addListener(linkInput, 'keypress', function(e)
 	{

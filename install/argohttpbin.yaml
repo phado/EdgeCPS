@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: httpbin
+  name: httpbin
+spec:
+  selector:
+    matchLabels:
+      app: httpbin
+  template:
+    metadata:
+      labels:
+        app: httpbin
+    spec:
+      automountServiceAccountToken: false
+      nodeSelector:
+        kubernetes.io/hostname: {{ hostname }}
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/control-plane
+      containers:
+      - image: kong/httpbin
+        livenessProbe:
+          httpGet:
+            path: /get
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        name: main
+        ports:
+        - containerPort: 80
+          name: api
+        readinessProbe:
+          httpGet:
+            path: /get
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10

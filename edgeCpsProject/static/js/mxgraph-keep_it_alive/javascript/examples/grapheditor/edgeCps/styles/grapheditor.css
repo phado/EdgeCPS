@@ -208,8 +208,8 @@
 	opacity: .5;
 }
 .gePrimaryBtn, .mxWindow .gePrimaryBtn {
-	background-color: #4d90fe;
-	background-image: linear-gradient(#4d90fe 0px,#4787ed 100%);
+	background-color: #2E5686;
+	/* background-image: linear-gradient(#4d90fe 0px,#4787ed 100%); */
 	border: 1px solid #3079ed;
 	color: #fff;
 }

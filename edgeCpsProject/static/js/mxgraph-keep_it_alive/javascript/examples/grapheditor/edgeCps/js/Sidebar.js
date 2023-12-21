@@ -2413,7 +2413,7 @@ Sidebar.prototype.addUmlPaletteRequirement = function(expand)
 	// Reusable cells
 
 
-	var functionalReq = new mxCell('<<function req.>>', new mxGeometry(0, 0, 200, 26), 'text;strokeColor=black;fillColor=#ffffc0;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;editable=0;movable=0;locked=1;');
+	var functionalReq = new mxCell('function req.', new mxGeometry(0, 0, 200, 26), 'text;strokeColor=black;fillColor=#ffffc0;align=center;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;editable=0;movable=0;locked=1;');
 	functionalReq.vertex = true;
 
 	var functionalReqName = new mxCell('name : ', new mxGeometry(0, 26, 200, 26), 'text;strokeColor=black;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;movable=0;');
@@ -2477,7 +2477,7 @@ Sidebar.prototype.addUmlPaletteRequirement = function(expand)
 			"    <root>\n" +
 			"        <mxCell id=\"0\" />\n" +
 			"        <mxCell id=\"1\" parent=\"0\" />\n" +
-			"        <mxCell id=\"2\" value=\"&amp;lt;&amp;lt;function req.&amp;gt;&amp;gt;\" style=\"shape=table;html=1;fillColor=#dae8fc;whiteSpace=wrap;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;locked=0;editable=0;deletable=1;\" vertex=\"1\" parent=\"1\">\n" +
+			"        <mxCell id=\"2\" value=\"function req.\" style=\"shape=table;html=1;fillColor=#dae8fc;whiteSpace=wrap;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;locked=0;editable=0;deletable=1;\" vertex=\"1\" parent=\"1\">\n" +
 			"            <mxGeometry width=\"230\" height=\"50\" as=\"geometry\" />\n" +
 			"        </mxCell>\n" +
 			"        \n" +
@@ -2508,7 +2508,7 @@ Sidebar.prototype.addUmlPaletteRequirement = function(expand)
 			"    <root>\n" +
 			"        <mxCell id=\"0\" />\n" +
 			"        <mxCell id=\"1\" parent=\"0\" />\n" +
-			"        <mxCell id=\"2\" value=\"&amp;lt;&amp;lt;nonfunction req.&amp;gt;&amp;gt;\" style=\"shape=table;html=1;fillColor=#ffffc0;whiteSpace=wrap;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;locked=0;editable=0;deletable=1;\" vertex=\"1\" parent=\"1\">\n" +
+			"        <mxCell id=\"2\" value=\"nonfunction req.\" style=\"shape=table;html=1;fillColor=#ffffc0;whiteSpace=wrap;startSize=30;container=1;collapsible=0;childLayout=tableLayout;fixedRows=1;rowLines=0;fontStyle=1;align=center;locked=0;editable=0;deletable=1;\" vertex=\"1\" parent=\"1\">\n" +
 			"            <mxGeometry width=\"230\" height=\"50\" as=\"geometry\" />\n" +
 			"        </mxCell>\n" +
 			"        \n" +

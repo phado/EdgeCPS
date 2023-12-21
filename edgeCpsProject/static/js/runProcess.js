@@ -84,38 +84,20 @@ function executeFunctionWithFileContent(content,workflowName) {
 function businessProcessViewClickHandler(sender, evt) {
     var cell = evt.getProperty('cell'); // 클릭한 셀
     var valueString='';
-    if (cell != null && cell.style.includes('rounded=1')) { //cell이 null아니고 엣지도 아닌경우 
-        var valueString = cell.value.outerHTML;
-        if(valueString==undefined){
-            valueString = cell.value;
-        }
-        var regex = /&quot;&gt;(.+?)&lt;/;
-			var matches = [];
-			// var match;
-			var match = regex.exec(valueString);
-			var extractedString = match ? match[1] : null;
-			if(extractedString.includes('['||']')){
-				extractedString=extractedString.substring(1,extractedString.length -1);
-			}
-			matches.push(extractedString);
-			
-			var cellName = matches[0];
-      var cellId = cell.id
+    if (cell != null && cell.style.includes('partialRectangle')) { //cell이 null아니고 엣지도 아닌경우 
+			var cellName = cell.value;
+      var cellId = cell.id;
+      if(cellName ==''){
+        cellName = cell.parent.parent.children[0].children[1].value;
+        cellId = cell.parent.parent.children[0].children[1].id;
+      }
 
       localStorage.setItem(projectName+'_current_workflowName', cellName);
-
-      // var workflowXMLData = localStorage.getItem('test_workflowXML');
-
-      // // 문자열 형태의 JSON을 파싱하여 배열로 변환
-      // var workflowXMLArray = JSON.parse(workflowXMLData);
-      
-      // // 정규 표현식을 이용하여 처리
-      // var processedArray = workflowXMLArray.map(function(item) {
-      //     // # 다음의 문자만 가져와서 특수 문자 제거 및 대문자를 소문자로 변환
-      //     var processedItem = item.split('#')[1].replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
-      //     return processedItem;
-      // });
-
+      workflowProcessView(cellName,cellId,cell);
+    }else{
+      var cellName = cell.children[0].children[1].value;
+      var cellId = cell.children[0].children[1].id;
+      localStorage.setItem(projectName+'_current_workflowName', cellName);
       workflowProcessView(cellName,cellId,cell);
     }
     // submit(processedItem);

@@ -16,13 +16,26 @@
         min-width: 1000px; /* 최소 폭 지정 */
         min-height: 200px; /* 최소 높이 지정 */
       }
+
+        @font-face {
+          font-family: "Roboto";
+          src: url("../static/font/Roboto-Medium.ttf") format("truetype");
+          font-weight: normal;
+          font-style: normal;
+        }
+      @font-face {
+          font-family: "Inter";
+          src: url("../static/font/Inter-Thin.ttf") format("truetype");
+          font-weight: normal;
+          font-style: normal;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-      <div class="row">
-        <div class="col-md-6" style="position: relative;">
+      <div class="row" style = "border-radius: 5px; background: #FFF; box-shadow: 20px 20px 40px 0px rgba(0, 0, 0, 0.25);">
+        <div class="col-md-6" style="position: relative; left: -1%;">
           <img src="{{url_for('static', filename='/image/login.svg')}}" alt="Image" class="img-fluid" />
           <div style="
             position: absolute;
@@ -50,6 +63,9 @@
               letter-spacing: 0.00em;
               margin: 0;
               margin-top: 5px;
+              width: 118%;
+              margin-left: -28px;
+
             ">Welcome Back!</p>
               <img src="{{url_for('static', filename='/image/a.svg')}}" alt="Image" class="img-fluid" />
               <p style="
@@ -60,7 +76,7 @@
               line-height: 28px;
               letter-spacing: 0em;
               text-align: center;
-              margin-top: 16px;
+              margin-top: 4px;
             ">EdgeCPS</p>
           </div>
         </div>
@@ -75,6 +91,7 @@
               letter-spacing: 0em;
               text-align: center;
               padding: 40px;
+              margin-top: 61px;
             "
           >
             Login Account
@@ -91,6 +108,7 @@
                   line-height: 19px;
                   letter-spacing: 0em;
                   text-align: left;
+
                 "
                 >User Name</label
               >
@@ -100,7 +118,7 @@
                 id="username"
                 name="username"
                 required
-                style="height: 40px; background: #f1f1f1; outline: none"
+                style="height: 40px; width: 95%; background: #f1f1f1; outline: none "
               />
               <small id="usernameError" class="text-danger"></small>
             </div>
@@ -124,7 +142,7 @@
                 id="password"
                 name="password"
                 required
-                style="height: 40px; background: #f1f1f1; outline: none"
+                style="height: 40px;width: 95%; background: #f1f1f1; outline: none"
               />
               <small id="passwordError" class="text-danger"></small>
             </div>
@@ -136,7 +154,7 @@
               >
               <a
                 href="{{ url_for('forgetpw') }}"
-                style="float: right; color: #c7c7c7"
+                style="float: right; margin-right: 24px; color: #c7c7c7"
                 >Forget Password?</a
               ><br />
             </div>
@@ -147,7 +165,7 @@
               id="confirmBtn"
               style="
                 background: #6097D9;
-                width: 100%;
+                width: 94%;
                 height: 45px;
                 padding: 10px, 167px, 10px, 167px;
                 border-radius: 999px;
@@ -159,7 +177,7 @@
             {% if login_msg %}
             <div class="alert alert-danger">{{ login_msg }}</div>
             {% endif %}
-            <div style="padding-top: 80px; color: #c7c7c7">
+            <div style="padding-top: 71px;margin-left: 10px; color: #c7c7c7">
               New User? <a href="{{ url_for('signup') }}" style="color:#3853FF;
               ;">Signup</a>
             </div>
@@ -216,4 +234,6 @@
     height: 100vh;
     margin: 0;
   }
+
+
 </style>
