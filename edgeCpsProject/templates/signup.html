@@ -1,110 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>회원가입</title>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename='css/styles/signup.css')}}"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename='css/styles/title.css')}}"
-    />
-    <script
-      type="text/javascript"
-      src="{{ url_for('static', filename='js/signup.js')}}"
-    ></script>
-  </head>
-  <body>
-    <div id="title" class="title">
-      <h2><a class="home" href="">EdgeCPS Service Modeler</a></h2>
-    </div>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>회원가입</title>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='css/styles/signup.css')}}"/>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='css/styles/title.css')}}"/>
+        <script
+            type="text/javascript"
+            src="{{ url_for('static', filename='js/signup.js')}}"></script>
+    </head>
+    <body>
+        <div id="title" class="title">
+            <h2>
+                <a class="home" href="/">EdgeCPS Service Modeler</a>
+            </h2>
+        </div>
 
-    <div class="signupArea">
-      <div class="signupTitle">아이디 찾기</div>
-      <form action="/signup" method="post" id="signupForm" class="signupForm">
-    <div class="container mt-5">
-      <h1 class="text-left"  style = "font-family: Roboto; font-size: 30px; font-style: normal; font-weight: 800; line-height: normal;">회원가입</h1>
-      <form action="/signup" method="post" id="signupForm">
-        <div class="form-group">
-          <label for="userId" id="useridTitle" class="label">ID</label>
-          <div class="input-group" style="display: flex; align-items: center">
-            <input
-              type="text"
-              class="form-control idInput"
-              id="userId"
-              name="userId"
-              style="width: 300px"
-              required
-            />
-            <div class="input-group-append">
-              <button id="checkDuplicateButton" class="btn btn-primary">
-                중복확인
-              </button>
-            </div>
-          </div>
-          <small id="userIdError" class="text-danger"></small>
-        </div>
-        <div class="form-group">
-          <label for="password" class="label">Password</label><br />
-          <input
-            type="password"
-            class="form-control input"
-            id="password"
-            name="password"
-            required
-          />
-          <small id="passwordError" class="text-danger"></small>
-        </div>
-        <div class="form-group">
-          <label for="name" class="label">이름</label><br />
-          <input
-            type="text"
-            class="form-control input"
-            id="name"
-            name="name"
-            required
-          />
-          <small id="nameError" class="text-danger"></small>
-        </div>
-        <div class="form-group">
-          <label for="birthdate" class="label">생년월일</label><br />
-          <input
-            type="date"
-            class="form-control input"
-            id="birthdate"
-            name="birthdate"
-            required
-          />
-          <small id="birthdateError" class="text-danger"></small>
-        </div>
-        <div class="form-group">
-          <label for="email" class="label">E-mail</label><br />
-          <input
-            type="email"
-            class="form-control input"
-            id="email"
-            name="email"
-            required
-          />
-          <small id="emailError" class="text-danger"></small>
-        </div>
-        <button type="submit" class="btn btn-primary" id="signupButton">
-          Signup</button
-        ><br />
-        <button
-          class="btn btn-secondary"
-          id="cancelButton"
-          onclick="location.href='/';"
-        >
-          Cancel
-        </button>
-      </form>
-    </div>
-  </body>
-</html>
-
+        <div class="signupArea">
+            <form action="/signup" method="post" id="signupForm" class="signupForm">
+                <div class="container mt-5">
+                    <h1
+                        class="text-left"
+                        style="font-family: Roboto; font-size: 30px; font-style: normal; font-weight: 800; line-height: normal;">회원가입</h1>
+                    <form action="/signup" method="post" id="signupForm">
+                        <div class="form-group">
+                            <label for="userId" id="useridTitle" class="label">ID</label>
+                            <div class="input-group" style="display: flex; align-items: center">
+                                <input
+                                    type="text"
+                                    class="form-control idInput"
+                                    id="userId"
+                                    name="userId"
+                                    style="width: 300px"
+                                    required="required"/>
+                                <div class="input-group-append">
+                                    <button id="checkDuplicateButton" class="btn btn-primary">
+                                        중복확인
+                                    </button>
+                                </div>
+                            </div>
+                            <small id="userIdError" class="text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="label">Password</label><br/>
+                            <input
+                                type="password"
+                                class="form-control input"
+                                id="password"
+                                name="password"
+                                required="required"/>
+                            <small id="passwordError" class="text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="label">이름</label><br/>
+                            <input
+                                type="text"
+                                class="form-control input"
+                                id="name"
+                                name="name"
+                                required="required"/>
+                            <small id="nameError" class="text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="birthdate" class="label">생년월일</label><br/>
+                            <input
+                                type="date"
+                                class="form-control input"
+                                id="birthdate"
+                                name="birthdate"
+                                required="required"/>
+                            <small id="birthdateError" class="text-danger"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="label">E-mail</label><br/>
+                            <input
+                                type="email"
+                                class="form-control input"
+                                id="email"
+                                name="email"
+                                required="required"/>
+                            <small id="emailError" class="text-danger"></small>
+                        </div>
+                        <button type="submit" class="btn btn-primary" id="signupButton">
+                            Signup</button ><br/>
+                        <button
+                            class="btn btn-secondary"
+                            id="cancelButton"
+                            onclick="location.href='/';">
+                            Cancel
+                        </button>
+                    </form>
+                </div>
+            </body>
+        </html>

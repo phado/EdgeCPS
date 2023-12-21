@@ -2047,7 +2047,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 				var option = document.createElement("option");
 				option.value = index; 
 				option.text = optionText;
-				option.style.cssText='color: #353535;font-family: Inter Extra Bold;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;margin-left:3px;'
+				option.style.cssText='color: #353535;font-family: Inter;font-size: 18px;font-style: normal;font-weight: 400;line-height: normal;margin-left:3px;'
 
 				leftList.appendChild(option);
 			});

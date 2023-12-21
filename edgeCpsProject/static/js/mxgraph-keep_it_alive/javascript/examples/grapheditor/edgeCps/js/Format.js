@@ -1,6 +1,7 @@
 /**
  * Copyright (c) 2006-2012, JGraph Ltd
  */
+
 Format = function(editorUi, container)
 {
 	this.editorUi = editorUi;
@@ -559,7 +560,7 @@ Format.prototype.refresh = function(arguments,id)
 	
 	var attributeTitle = document.createElement('div');
 	attributeTitle.innerText = 'Information';
-	attributeTitle.style.cssText = 'color: #353535;font-size: 16px;font-style: normal;font-weight: 600;line-height: normal;margin-left: 13px;margin-bottom: 10px;'
+	attributeTitle.style.cssText = 'color: #353535;font-size: 16px;font-style: Inter;font-weight: 600;line-height: normal;margin-left: 13px;margin-bottom: 10px;'
 
 	div.appendChild(attributeTitle);
 
@@ -581,7 +582,6 @@ Format.prototype.refresh = function(arguments,id)
 	var showAttribute = document.createElement('div');
 	showAttribute.className = 'showAttribute';
 	showAttribute.style.textAlign = 'center';
-	// showAttribute.style.fontWeight = 'bold';
 	showAttribute.style.paddingTop = '8px';
 	showAttribute.style.paddingBottom = '8px';
 	showAttribute.style.fontSize = '13px';
@@ -626,7 +626,7 @@ Format.prototype.refresh = function(arguments,id)
 					var attributeKeyContainer = document.createElement('div');
 					attributeKeyContainer.style.marginLeft = '7px';
 					attributeKeyContainer.style.marginRight = '1px';
-					attributeKeyContainer.innerHTML = '<strong style="color: black;">'+attributeKey+'</strong>';
+					attributeKeyContainer.innerHTML = attributeKey;
 					// attributeKeyContainer.style=bold;
 	
 					var attributeValue = attribute[i]['value'];
@@ -642,39 +642,14 @@ Format.prototype.refresh = function(arguments,id)
 
 
 					attributeValueContainer.innerHTML = attributeValue;
+					attributeKeyContainer.style.color = 'black';
 	
 					showAttribute.appendChild(attributeValueContainer);
 					var textHeight = attributeValueContainer.clientHeight;
-					// document.body.removeChild(attributeValueContainer);
-	
-					// 컨테이너의 너비가 최대이면서 텍스트 높이를 넘어가면 높이를 조절
-					// var maxWidth = 200; // 최대 너비 설정 (원하는 값으로 변경)
-					// if (textHeight > maxWidth) {
-					// 	attributeValueContainer.style.width = maxWidth + 'px'; // 최대 너비 설정
-					// 	attributeValueContainer.style.height = textHeight + 'px'; // 텍스트 높이에 따라 동적으로 조절
-					// }
-					//
-					// var empty = document.createElement('div');
-					// empty.style.marginBottom = '10px';
+
 					showAttribute.appendChild(attributeKeyContainer);
 					showAttribute.appendChild(attributeValueContainer);
-					// showAttribute.appendChild(empty);
-	
-	
-	
-					
-					// var regex = /(\w+)\s*:\s*"([^"]*)"/g;
-					// var matches = attributeValue.matchAll(regex);
-	
-					// // 추출된 결과를 객체에 저장
-					// var keyValuePairs = {};
-					// for (const match of matches) {
-					// var key = match[1];
-					// var value = match[2];
-					// keyValuePairs[key] = value;
-					// }
-	
-					// attributeValueContainer.innerHTML = keyValuePairs;
+
 				}
 			}else {
 				for (i = 1; i < attribute.length; i++) {
@@ -689,9 +664,8 @@ Format.prototype.refresh = function(arguments,id)
 					attributeKeyContainer.style.marginLeft = '7px';
 					attributeKeyContainer.style.marginRight = '1px';
 
-					attributeKeyContainer.innerHTML = '<strong style="color: black;">' + attributeKey + '</strong>';
-					
-					// attributeKeyContainer.style=bold;
+					attributeKeyContainer.innerHTML = attributeKey ;
+					attributeKeyContainer.style.color = 'black';
 
 					var attributeValue = attribute[i]['value'];
 					var attributeValueContainer = document.createElement('div');

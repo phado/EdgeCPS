@@ -1,17 +1,16 @@
 @font-face {
-  font-family: "Inter Extra Bold";
-  src: url("../../font/Inter-ExtraBold.ttf") format("truetype");
+  font-family: "Inter";
+  src: url("../../font/Inter-Medium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
+} 
+
+.showAttribute{
+  font-family : 'Inter';
 }
-@font-face {
-  font-family: "Inter Extra Light";
-  src: url("../../font/Inter-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-} /*글씨체 변경 전체*/
+/*글씨체 변경 전체*/
 .geEditor {
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-size: 14px;
   border: none;
   margin: 0px;
@@ -362,27 +361,6 @@ button {
   border-bottom: none;
 }
 
-/* Font Styles */
-@font-face {
-  font-family: "Inter Extra Bold";
-  src: url("../../font/Inter-ExtraBold.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Inter Extra Light";
-  src: url("../../font/Inter-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Inter Medium";
-  src: url("../../font/Inter-Medium.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
 .geSidebarContainer button {
   /*text-overflow: ellipsis;*/
   /*overflow: hidden;*/
@@ -391,7 +369,7 @@ button {
   border:1px solid #d8d8d8;
   /*height: 30px;*/
   width: 196px;
-  /*font-family: "Inter Extra Light";*/
+  /*font-family: "Inter";*/
   /*font-weight: 700;*/
   /*color: #f5f5f5;*/
   font-size: 12px;
@@ -1114,7 +1092,7 @@ html table.mxPopupMenu {
 html td.mxPopupMenuItem {
   padding: 7px 30px 7px 30px;
   /* font-family:Helvetica Neue,Helvetica,Arial Unicode MS,Arial; */
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-size: 10pt;
 }
 html td.mxPopupMenuIcon {
@@ -1150,7 +1128,7 @@ table.mxPopupMenu tr {
 }
 html td.mxWindowTitle {
   /* font-family:Helvetica Neue,Helvetica,Arial Unicode MS,Arial; */
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   text-align: left;
   font-size: 12px;
   color: rgb(112, 112, 112);
@@ -1248,7 +1226,7 @@ html td.mxWindowTitle {
   border-radius: 3px;
   float: right;
   /* font-family:Arial,Helvetica,sans-serif; */
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-size: 15px;
   line-height: 36px;
   margin: 11px 36px 0 0;
@@ -1288,7 +1266,7 @@ html td.mxWindowTitle {
   background-color: #f5f5f5;
   text-align: right;
   /* font-family: Helvetica; */
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-size: 14px;
   line-height: 17px;
   padding-top: 11px;
@@ -1333,7 +1311,7 @@ html td.mxWindowTitle {
   height: 17px;
   color: #333333;
   /* font-family: Helvetica; */
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-size: 14px;
   font-weight: bold;
   line-height: 17px;
@@ -1350,7 +1328,7 @@ html td.mxWindowTitle {
   height: 17px;
   color: #6d6d6d;
   /* font-family: Helvetica; */
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-size: 14px;
   font-weight: bold;
   line-height: 17px;
@@ -1361,7 +1339,7 @@ html td.mxWindowTitle {
   height: 17px;
   color: #3d72ad;
   /* font-family: Helvetica; */
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-size: 14px;
   line-height: 17px;
   margin: 12px 0 0 20px;
@@ -1376,7 +1354,7 @@ html td.mxWindowTitle {
   height: 17px;
   color: #ffffff;
   /* font-family: Helvetica; */
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-size: 14px;
   font-weight: bold;
   line-height: 17px;
@@ -1402,7 +1380,7 @@ html td.mxWindowTitle {
   text-align: center;
   color: #dddddd;
   /* font-family: Helvetica; */
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-size: 14px;
   line-height: 17px;
   padding: 4px;
@@ -1438,7 +1416,7 @@ html td.mxWindowTitle {
   width: 100%;
   color: #ffffff;
   /* font-family: Helvetica; */
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-size: 14px;
   line-height: 17px;
   text-align: center;
@@ -1466,7 +1444,7 @@ html td.mxWindowTitle {
   height: 17px;
   color: #666666;
   /* font-family: Helvetica; */
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-size: 14px;
   font-weight: bold;
   line-height: 17px;
@@ -1486,7 +1464,7 @@ html td.mxWindowTitle {
   display: inline-block;
   color: #ffffff;
   /* font-family: Helvetica; */
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-size: 14px;
   line-height: 17px;
   text-align: center;
@@ -1622,7 +1600,7 @@ html td.mxWindowTitle {
   width: 100%;
   color: #333333;
   /* font-family: Helvetica; */
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-size: 14px;
   line-height: 17px;
   text-align: center;

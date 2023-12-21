@@ -1,298 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>회원 관리</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/title.css')}}"/>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/userManagement.js')}}"></script>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/grapheditor.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles/userManagemnet.css') }}">
-
-  </head>
-  <body style="margin: 0px">
-    <div id="title" class="title">
-      <h2><a class="home" href="">EdgeCPS Service Modeler</a></h2>
-      <div class="userInfo">
-        <div class="user-name" id="user-name">
-          <button class="user-name-background">{{ userName }}</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="modal" id="userInfoModal">
-      <div class="usermodal-content">
-        <span class="close" id="closeModal">&times;</span>
-        <h2>내 정보</h2>
-        <p>아이디 : {{userIds}}</p>
-        <p>이름 : {{userName}}</p>
-        <p>이메일 : {{userEmail}}</p>
-        <p>소속 : {{userGroup}}</p>
-        {% if userAdmin == 1 %}
-            <a class="nav-link" href="{{ url_for('management_user') }}">회원 관리</a>
-        {% endif %}
-        <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
-        <a class="nav-link"  href="{{ url_for('project_list') }}">Home</a>
-    </div>
-    </div>
-    <div class="container">
-      <div class="tableTitleArea">
-        <div class="projectListTitle">회원 관리</div>
-      </div>
-      <table class="projectListTable">
-        <thead class="projectListTableHead">
-          <tr>
-            <th>
-              <div style="display: flex; align-items: center">
-                <img
-                  src="{{url_for('static', filename='/image/checkbox.svg')}}"
-                  alt="Image"
-                  class="img-checkbox"
-                />
-                <div style="position: relative">INDEX</div>
-              </div>
-              </th>
-            <th>아이디</th>
-            <th>이름</th>
-            <th>비밀번호</th>
-            <th>이메일</th>
-            <th>소속</th>
-            <th style="padding-left: 25px;width: 100px;">관리</th>
-          </tr>
-        </thead>
-        <tbody class="projectListTableBody">
-          {% for project in projects %}
-          <tr >
-            <td>
-              <div style="display: flex; align-items: center">
-                <img
-                  src="{{url_for('static', filename='/image/checkbox.svg')}}"
-                  alt="Image"
-                  class="img-checkbox"
-                />
-                <div style="position: relative">{{ project.id }}</div>
-              </div>
-            </td>
-            <td>{{ project.name }}</td>
-            <td>{{ project.user }}</td>
-            <td>{{ project.user_pwd }}</td>
-            <td>{{ project.user_email }}</td>
-            <td>{{ project.group_name }}</td>
-            <td>
-              <button style="width: 80px; border-radius: 5px" type="button" onclick="showPopup(this)" data-group="{{ project.group_index }}" data-valid="{{ project.vaild }}" data-user="{{ project.id }}">
-                관리
-              </button>
-            </td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-        <div id="popupContainer" class="popup-container" style="display: none">
-        <div id="popup" class="popup">
-          <div class="popupTitle">
-            <div class="popupTitle-1">회원 관리</div>
-            <span class="close" onclick="closePopup()">&times;</span>
-          </div>
-          <div class="popupContent">
-            <div>
-              <label for="group" class="groupManagementLabel">소속 관리</label><br>
-              <select class="form-control groupManagementSelect" id="group" name="group" required>
-                {% for group in groups %}
-                <option value="{{ group.idx }}">{{ group.name }}</option>
-                  {#<option value="{{ group.idx }}" {% if userGroup == group.name %}selected{% endif %}>{{ group.name }}</option>#}
-                {% endfor %}
-              </select>
-              <button type="button" onclick="addGroup()" class="addGroupBtn">추가</button>
-              <button type="button" onclick="deleteGroup()" class="deleteGroupBtn">삭제</button>
+    <head>
+        <meta charset="UTF-8"/>
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <title>회원 관리</title>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='css/styles/title.css')}}"/>
+        <script
+            type="text/javascript"
+            src="{{ url_for('static', filename='js/userManagement.js')}}"></script>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='css/styles/grapheditor.css') }}">
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='css/styles/userManagemnet.css') }}">
+    </head>
+    <body style="margin: 0px">
+        <div id="title" class="title">
+            <h2>
+                <a class="home" href="/project/projectsList">EdgeCPS Service Modeler</a>
+            </h2>
+            <div class="userInfo">
+                <div class="user-name" id="user-name">
+                    <button class="user-name-background">{{ userName }}</button>
+                </div>
             </div>
-            <div>
-              <label for="toggleSwitch" class="accountActiveLabel">계정 활성화</label>
-              <label class="switch accountActiveToggle">
-                <input
-                  type="checkbox"
-                  id="toggleSwitch"
-                  onclick="togglePopup()"
-                />
-                <span class="slider round"></span>
-              </label>
-            </div>    
-            <img
-              src="{{url_for('static', filename='/image/contour.svg')}}"
-              alt="Image"
-              class="img-contour1"
-            />
-            <img
-              src="{{url_for('static', filename='/image/contour.svg')}}"
-              alt="Image"
-              class="img-contour2"
-            />
-          </div>
-          <div class="popupBottom">
-            <button type="button" onclick="saveInfo()" class="popupSaveBtn">저장</button>
-            <button type="button" onclick="closePopup()" class="popupCancelBtn">닫기</button>
-          </div>
         </div>
-      </div>
-    </div>
-  </body>
+
+        <div class="modal" id="userInfoModal">
+            <div class="usermodal-content">
+                <span class="close" id="closeModal">&times;</span>
+                <h2>내 정보</h2>
+                <p>아이디 :
+                    {{userIds}}</p>
+                <p>이름 :
+                    {{userName}}</p>
+                <p>이메일 :
+                    {{userEmail}}</p>
+                <p>소속 :
+                    {{userGroup}}</p>
+                {% if userAdmin == 1 %}
+                    <a class="nav-link" href="{{ url_for('management_user') }}">회원 관리</a>
+                {% endif %}
+                <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
+                <a class="nav-link" href="{{ url_for('project_list') }}">Home</a>
+            </div>
+        </div>
+        <div class="container">
+            <div class="tableTitleArea">
+                <div class="projectListTitle">회원 관리</div>
+            </div>
+            <table class="projectListTable">
+                <thead class="projectListTableHead">
+                    <tr>
+                        <th>
+                            <div style="display: flex; align-items: center">
+                                <img
+                                    src="{{url_for('static', filename='/image/checkbox.svg')}}"
+                                    alt="Image"
+                                    class="img-checkbox"/>
+                                <div style="position: relative">INDEX</div>
+                            </div>
+                        </th>
+                        <th>아이디</th>
+                        <th>이름</th>
+                        <th>비밀번호</th>
+                        <th>이메일</th>
+                        <th>소속</th>
+                        <th style="padding-left: 25px;width: 100px;">관리</th>
+                    </tr>
+                </thead>
+                <tbody class="projectListTableBody">
+                    {% for project in projects %}
+                        <tr >
+                            <td>
+                                <div style="display: flex; align-items: center">
+                                    <img
+                                        src="{{url_for('static', filename='/image/checkbox.svg')}}"
+                                        alt="Image"
+                                        class="img-checkbox"/>
+                                    <div style="position: relative">{{ project.id }}</div>
+                                </div>
+                            </td>
+                            <td>{{ project.name }}</td>
+                            <td>{{ project.user }}</td>
+                            <td>{{ project.user_pwd }}</td>
+                            <td>{{ project.user_email }}</td>
+                            <td>{{ project.group_name }}</td>
+                            <td>
+                                <button
+                                    style="width: 80px; border-radius: 5px"
+                                    type="button"
+                                    onclick="showPopup(this)"
+                                    data-group="{{ project.group_index }}"
+                                    data-valid="{{ project.vaild }}"
+                                    data-user="{{ project.id }}">
+                                    관리
+                                </button>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div id="popupContainer" class="popup-container" style="display: none">
+                <div id="popup" class="popup">
+                    <div class="popupTitle">
+                        <div class="popupTitle-1">회원 관리</div>
+                        <span class="close" onclick="closePopup()">&times;</span>
+                    </div>
+                    <div class="popupContent">
+                        <div>
+                            <label for="group" class="groupManagementLabel">소속 관리</label><br>
+                            <select
+                                class="form-control groupManagementSelect"
+                                id="group"
+                                name="group"
+                                required="required">
+                                {% for group in groups %}
+                                    <option value="{{ group.idx }}">{{ group.name }}</option>
+                                    {#<option value="{{ group.idx }}" {% if userGroup == group.name %}selected{% endif %}>{{ group.name }}</option>#}
+                                {% endfor %}
+                            </select>
+                            <button type="button" onclick="addGroup()" class="addGroupBtn">추가</button>
+                            <button type="button" onclick="deleteGroup()" class="deleteGroupBtn">삭제</button>
+                        </div>
+                        <div>
+                            <label for="toggleSwitch" class="accountActiveLabel">계정 활성화</label>
+                            <label class="switch accountActiveToggle">
+                                <input type="checkbox" id="toggleSwitch" onclick="togglePopup()"/>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <img
+                            src="{{url_for('static', filename='/image/contour.svg')}}"
+                            alt="Image"
+                            class="img-contour1"/>
+                        <img
+                            src="{{url_for('static', filename='/image/contour.svg')}}"
+                            alt="Image"
+                            class="img-contour2"/>
+                    </div>
+                    <div class="popupBottom">
+                        <button type="button" onclick="saveInfo()" class="popupSaveBtn">저장</button>
+                        <button type="button" onclick="closePopup()" class="popupCancelBtn">닫기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
 </html>
 <script>
-  // "관리" 버튼을 클릭했을 때 팝업을 표시하는 함수
-  let currentUser = null;
-  function showPopup(button) {
-    const popupContainer = document.getElementById("popupContainer");
-    const popup = document.getElementById("popup");
-    popupContainer.style.display = "block";
+    // "관리" 버튼을 클릭했을 때 팝업을 표시하는 함수
+    let currentUser = null;
+    function showPopup(button) {
+        const popupContainer = document.getElementById("popupContainer");
+        const popup = document.getElementById("popup");
+        popupContainer.style.display = "block";
 
-    const group = button.getAttribute("data-group");
-    const groupSelect = document.getElementById("group");
-    if (group === "1") {
-      // "tmp" 옵션을 선택합니다.
-      groupSelect.value = "1";
-    } else if (group === "2") {
-      // "admin" 옵션을 선택합니다.
-      groupSelect.value = "2";
-    } else if (group === "999") {
-      // "admin" 옵션을 선택합니다.
-      groupSelect.value = "999";
-    }
-    else{
-        groupSelect.value = group;
-    }
-
-    const valid = button.getAttribute("data-valid");
-    if (valid === "1") {
-      toggleSwitch.checked = true;
-    } else {
-      toggleSwitch.checked = false;
-    }
-
-    const user = button.getAttribute("data-user");
-    currentUser = user;
-  }
-
-  // 팝업을 닫는 함수
-  function closePopup() {
-    const popupContainer = document.getElementById("popupContainer");
-    popupContainer.style.display = "none";
-  }
-
-  function togglePopup() {
-    const popupContainer = document.getElementById("popupContainer");
-    const toggleSwitch = document.getElementById("toggleSwitch");
-
-    if (toggleSwitch.checked) {
-    } else {
-    }
-  }
-  function saveInfo() {
-    // select 박스의 값을 가져오기
-    const selectedGroup = document.getElementById("group").options[document.getElementById("group").selectedIndex].text
-
-    // 토글 버튼의 상태 가져오기
-    const toggleSwitch = document.getElementById("toggleSwitch");
-    if (toggleSwitch.checked) {
-      isActive = 1;
-    } else {
-      isActive = 0;
-    }
-
-    // 사용자 정보를 업데이트합니다.
-    fetch("/changeInfo", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ selectedGroup, isActive, user: currentUser }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        if (data.error) {
-          alert("시스템 에러");
-        } else if (data.result) {
-          alert("정보 변경 완료");
-          // 정보를 업데이트한 후 화면을 다시 로드합니다.
-          window.location.reload();
-        } else if (!data.result) {
-          alert("정보 변경 실패.");
-        }
-      });
-  }
-
-  // 버튼 클릭 시 모달 표시
-  const modalButton = document.getElementById("user-name");
-  const modal = document.getElementById("userInfoModal");
-  const closeModalButton = document.getElementById("closeModal");
-  const logoutButton = document.getElementById("logoutButton");
-
-  modalButton.addEventListener("click", function () {
-    modal.style.display = "block";
-  });
-
-  // 모달 닫기 버튼 클릭 시 모달 숨김
-  closeModalButton.addEventListener("click", function () {
-    modal.style.display = "none";
-  });
-
-  // 모달 외부 클릭 시 모달 숨김
-  window.addEventListener("click", function (event) {
-    if (event.target === modal) {
-      modal.style.display = "none";
-    }
-  });
-
-  function addGroup() {
-    var groupName = prompt("새 그룹을 입력하세요:");
-    if (groupName) {
-      fetch("/add_group", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-        body: "group_name=" + encodeURIComponent(groupName),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.result === "success") {
-            var selectElement = document.getElementById("group");
-            var newOption = document.createElement("option");
-            newOption.value = "new";
-            newOption.text = groupName;
-            selectElement.add(newOption);
-          } else {
-            alert("같은 이름의 그룹이 이미 존재합니다.")
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    }
-  }
-
-  function deleteGroup() {
-    var selectElement = document.getElementById("group");
-    var selectedOption = selectElement.options[selectElement.selectedIndex];
-    var textContent = selectedOption.innerText;
-    fetch("/delete_group", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-      body: "group_name=" + encodeURIComponent(textContent),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.result === "success") {
-          console.log("그룹을 성공적으로 삭제했습니다.");
-          selectElement.remove(selectElement.selectedIndex);
+        const group = button.getAttribute("data-group");
+        const groupSelect = document.getElementById("group");
+        if (group === "1") {
+            // "tmp" 옵션을 선택합니다.
+            groupSelect.value = "1";
+        } else if (group === "2") {
+            // "admin" 옵션을 선택합니다.
+            groupSelect.value = "2";
+        } else if (group === "999") {
+            // "admin" 옵션을 선택합니다.
+            groupSelect.value = "999";
         } else {
-          alert("그룹 삭제에 실패했습니다.");
+            groupSelect.value = group;
         }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }
-</script>
 
+        const valid = button.getAttribute("data-valid");
+        if (valid === "1") {
+            toggleSwitch.checked = true;
+        } else {
+            toggleSwitch.checked = false;
+        }
+
+        const user = button.getAttribute("data-user");
+        currentUser = user;
+    }
+
+    // 팝업을 닫는 함수
+    function closePopup() {
+        const popupContainer = document.getElementById("popupContainer");
+        popupContainer.style.display = "none";
+    }
+
+    function togglePopup() {
+        const popupContainer = document.getElementById("popupContainer");
+        const toggleSwitch = document.getElementById("toggleSwitch");
+
+        if (toggleSwitch.checked) {} else {}
+    }
+    function saveInfo() {
+        // select 박스의 값을 가져오기
+        const selectedGroup = document
+            .getElementById("group")
+            .options[
+                document
+                    .getElementById("group")
+                    .selectedIndex
+            ]
+            .text
+
+        // 토글 버튼의 상태 가져오기
+        const toggleSwitch = document.getElementById("toggleSwitch");
+        if (toggleSwitch.checked) {
+            isActive = 1;
+        } else {
+            isActive = 0;
+        }
+
+        // 사용자 정보를 업데이트합니다.
+        fetch("/changeInfo", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({selectedGroup, isActive, user: currentUser})
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                if (data.error) {
+                    alert("시스템 에러");
+                } else if (data.result) {
+                    alert("정보 변경 완료");
+                    // 정보를 업데이트한 후 화면을 다시 로드합니다.
+                    window
+                        .location
+                        .reload();
+                } else if (!data.result) {
+                    alert("정보 변경 실패.");
+                }
+            });
+    }
+
+    // 버튼 클릭 시 모달 표시
+    const modalButton = document.getElementById("user-name");
+    const modal = document.getElementById("userInfoModal");
+    const closeModalButton = document.getElementById("closeModal");
+    const logoutButton = document.getElementById("logoutButton");
+
+    modalButton.addEventListener("click", function () {
+        modal.style.display = "block";
+    });
+
+    // 모달 닫기 버튼 클릭 시 모달 숨김
+    closeModalButton.addEventListener("click", function () {
+        modal.style.display = "none";
+    });
+
+    // 모달 외부 클릭 시 모달 숨김
+    window.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            modal.style.display = "none";
+        }
+    });
+
+    function addGroup() {
+        var groupName = prompt("새 그룹을 입력하세요:");
+        if (groupName) {
+            fetch("/add_group", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/x-www-form-urlencoded"
+                },
+                body: "group_name=" + encodeURIComponent(groupName)
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.result === "success") {
+                        var selectElement = document.getElementById("group");
+                        var newOption = document.createElement("option");
+                        newOption.value = "new";
+                        newOption.text = groupName;
+                        selectElement.add(newOption);
+                    } else {
+                        alert("같은 이름의 그룹이 이미 존재합니다.")
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
+        }
+    }
+
+    function deleteGroup() {
+        var selectElement = document.getElementById("group");
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var textContent = selectedOption.innerText;
+        fetch("/delete_group", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "group_name=" + encodeURIComponent(textContent)
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.result === "success") {
+                    console.log("그룹을 성공적으로 삭제했습니다.");
+                    selectElement.remove(selectElement.selectedIndex);
+                } else {
+                    alert("그룹 삭제에 실패했습니다.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    }
+</script>

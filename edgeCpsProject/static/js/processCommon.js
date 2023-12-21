@@ -272,7 +272,7 @@ document.addEventListener("DOMContentLoaded", function () {
   //   newButton.style.color = "#fff";
   //   newButton.style.borderRadius = "5px";
   //   newButton.style.padding = "2px 8px";
-  //   newButton.style.fontFamily = "'Inter Extra Light'";
+  //   newButton.style.fontFamily = "'Inter'";
   //   newButton.style.fontStyle = "normal";
   //   newButton.style.marginTop = "-2px";
   //   newButton.style.fontSize = "15px";
@@ -320,13 +320,13 @@ document.addEventListener("DOMContentLoaded", function () {
   buttonContainer.style.marginRight = "10px"; // 오른쪽 여백
   // buttonContainer.style.marginTop = "5px";
 
-  // buttonContainer.appendChild(createButton("Save All",processSaveClick,"saveButton","font-size:15px; background-color: #2E5686; color: #fff; border-radius: 5px; padding: 2px 8px; font-family: 'Inter Extra Light'; font-style: normal;")); // process-save 버튼
+  // buttonContainer.appendChild(createButton("Save All",processSaveClick,"saveButton","font-size:15px; background-color: #2E5686; color: #fff; border-radius: 5px; padding: 2px 8px; font-family: 'Inter'; font-style: normal;")); // process-save 버튼
   // buttonContainer.appendChild(
   //   createButton(
   //     "Save As",
   //     openSaveModal,
   //     "saveButton",
-  //     "background-color: #3853ff; color: #fff; border-radius: 5px; padding: 2px 8px; font-family: 'Inter Extra Light'; font-style: normal;"
+  //     "background-color: #3853ff; color: #fff; border-radius: 5px; padding: 2px 8px; font-family: 'Inter'; font-style: normal;"
   //   )
   // ); // process-save 버튼
   // buttonContainer.appendChild(createSaveAsButton("Save As")); // process-save-as 버튼

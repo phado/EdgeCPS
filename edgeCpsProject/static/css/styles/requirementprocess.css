@@ -5,14 +5,8 @@ body {
   margin: 0px;
 }
 @font-face {
-  font-family: "Inter Extra Bold";
-  src: url("../../font/Inter-ExtraBold.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Inter Extra Light";
-  src: url("../../font/Inter-Regular.ttf") format("truetype");
+  font-family: "Inter";
+  src: url("../../font/Inter-Medium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -91,7 +85,7 @@ a.home {
 .button-text {
   color: #a4a4a4;
   font-size: 15px;
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -166,7 +160,7 @@ a.home {
 .nav-button-requirements_process_page .button-text-requirements_process_page {
   color: #ffffff;
   font-size: 15px;
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   line-height: normal;

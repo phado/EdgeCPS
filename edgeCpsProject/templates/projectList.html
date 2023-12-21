@@ -1,148 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Project List</title>
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename='css/styles/title.css')}}"
-    />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{{ url_for('static', filename='css/styles/projectlist.css')}}"
-    />
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Project List</title>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='css/styles/title.css')}}"/>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static', filename='css/styles/projectlist.css')}}"/>
 
-    <script
-      type="text/javascript"
-      src="{{ url_for('static', filename='js/userManagement.js')}}"
-    ></script>
-  </head>
-  <script>
-    let loginUserInfo = "{{ loginUserInfo }}";
-    if (loginUserInfo) {
-      localStorage.setItem("loginUserInfo", loginUserInfo);
-    }
-  </script>
-  <body style="margin: 0px">
-    <div id="title" class="title">
-      <h2><a class="home" href="">EdgeCPS Service Modeler</a></h2>
-      <div class="userInfo">
-        <div class="user-name" id="user-name">
-          <button class="user-name-background">{{ userName }}</button>
-        </div>
-      </div>
-    </div>
-
-    <div class="container">
-      <div class="tableTitleArea">
-        <div class="projectListTitle">Project List</div>
-        <a
-          href="{{ url_for('overview_process', newPj=true)}}"
-          class="btn btn-primary projectListCreateBtn"
-          >+ Create Project</a
-        >
-      </div>
-      <div class="tableArea">
-        <table class="projectListTable">
-          <thead class="projectListTableHead">
-            <tr>
-              <th>
-                <div style="display: flex; align-items: center">
-                  <img
-                    src="{{url_for('static', filename='/image/checkbox.svg')}}"
-                    alt="Image"
-                    class="img-checkbox"
-                  />
-                  <div style="position: relative">ID</div>
+        <script
+            type="text/javascript"
+            src="{{ url_for('static', filename='js/userManagement.js')}}"></script>
+    </head>
+    <script>
+        let loginUserInfo = "{{ loginUserInfo }}";
+        if (loginUserInfo) {
+            localStorage.setItem("loginUserInfo", loginUserInfo);
+        }
+    </script>
+    <body style="margin: 0px">
+        <div id="title" class="title">
+            <h2>
+                <a class="home" href="">EdgeCPS Service Modeler</a>
+            </h2>
+            <div class="userInfo">
+                <div class="user-name" id="user-name">
+                    <button class="user-name-background">{{ userName }}</button>
                 </div>
-              </th>
-              <th>Project Name</th>
-              <th>작성자</th>
-              <th>수정 날짜</th>
-              <th style="text-align: center">삭 제</th>
-              <th style="text-align: center">열 기</th>
-            </tr>
-          </thead>
-          <tbody class="projectListTableBody">
-            {% for project in projects %}
-            <tr>
-              <td>
-                <div style="display: flex; align-items: center">
-                  <img
-                    src="{{url_for('static', filename='/image/checkbox.svg')}}"
-                    alt="Image"
-                    class="img-checkbox"
-                  />
-                  <div style="position: relative">{{ project.id }}</div>
-                </div>
-              </td>
-              <td>{{ project.name }}</td>
-              <td>{{ project.user }}</td>
-              <td>{{ project.create_date }}</td>
-              <td style="text-align: center">
-                <form
-                  method="post"
-                  action="{{ url_for('delete_project', project_id=project.id) }}"
-                >
-                  <button
-                    type="submit"
-                    style="border: none; outline: none; background: none"
-                  >
-                    <img
-                      src="{{url_for('static', filename='/image/delete.svg')}}"
-                      alt="Image"
-                      class="img-fluid"
-                    />
-                  </button>
-                </form>
-              </td>
-              <td style="text-align: center">
-                <form
-                  method="post"
-                  action="{{ url_for('open_process', project_id=project.id, project_name=project.name,project_user=project.user ) }}"
-                >
-                  <button type="submit" class="projectListOpenBtn">OPEN</button>
-                </form>
-              </td>
-            </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-
-        <div
-          style="
-            position: relative;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            margin-bottom: 80px;
-          "
-          class="d-flex justify-content-center mt-4"
-        >
-          {{ pagination.links }}
+            </div>
         </div>
-      </div>
+
+        <div class="container">
+            <div class="tableTitleArea">
+                <div class="projectListTitle">Project List</div>
+                <a
+                    href="{{ url_for('overview_process', newPj=true)}}"
+                    class="btn btn-primary projectListCreateBtn">+ Create Project</a >
+            </div>
+            <div class="tableArea">
+                <table class="projectListTable">
+                    <thead class="projectListTableHead">
+                        <tr>
+                            <th>
+                                <div style="display: flex; align-items: center">
+                                    <img
+                                        src="{{url_for('static', filename='/image/checkbox.svg')}}"
+                                        alt="Image"
+                                        class="img-checkbox"/>
+                                    <div style="position: relative">ID</div>
+                                </div>
+                            </th>
+                            <th>Project Name</th>
+                            <th>작성자</th>
+                            <th>수정 날짜</th>
+                            <th style="text-align: center">삭 제</th>
+                            <th style="text-align: center">열 기</th>
+                        </tr>
+                    </thead>
+                    <tbody class="projectListTableBody">
+                        {% for project in projects %}
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center">
+                                        <img
+                                            src="{{url_for('static', filename='/image/checkbox.svg')}}"
+                                            alt="Image"
+                                            class="img-checkbox"/>
+                                        <div style="position: relative">{{ project.id }}</div>
+                                    </div>
+                                </td>
+                                <td>{{ project.name }}</td>
+                                <td>{{ project.user }}</td>
+                                <td>{{ project.create_date }}</td>
+                                <td style="text-align: center">
+                                    <form
+                                        method="post"
+                                        action="{{ url_for('delete_project', project_id=project.id) }}">
+                                        <button type="submit" style="border: none; outline: none; background: none">
+                                            <img
+                                                src="{{url_for('static', filename='/image/delete.svg')}}"
+                                                alt="Image"
+                                                class="img-fluid"/>
+                                        </button>
+                                    </form>
+                                </td>
+                                <td style="text-align: center">
+                                    <form
+                                        method="post"
+                                        action="{{ url_for('open_process', project_id=project.id, project_name=project.name,project_user=project.user ) }}">
+                                        <button type="submit" class="projectListOpenBtn">OPEN</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <div
+                    style="position: relative;bottom: 0;left: 0;width: 100%;margin-bottom: 80px;"
+                    class="d-flex justify-content-center mt-4">
+                    {{ pagination.links }}
+                </div>
+            </div>
+        </div>
+    </body>
+    <div class="modal" id="userInfoModal">
+        <div class="usermodal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>내 정보</h2>
+            <p>아이디 :
+                {{userIds}}</p>
+            <p>이름 :
+                {{userName}}</p>
+            <p>이메일 :
+                {{userEmail}}</p>
+            <p>소속 :
+                {{userGroup}}</p>
+            {% if userAdmin == 1 %}
+                <a class="nav-link" href="{{ url_for('management_user') }}">회원 관리</a>
+            {% endif %}
+            <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
+            <a class="nav-link" href="{{ url_for('project_list') }}">Home</a>
+        </div>
     </div>
-  </body>
-  <div class="modal" id="userInfoModal">
-    <div class="usermodal-content">
-      <span class="close" id="closeModal">&times;</span>
-      <h2>내 정보</h2>
-      <p>아이디 : {{userIds}}</p>
-      <p>이름 : {{userName}}</p>
-      <p>이메일 : {{userEmail}}</p>
-      <p>소속 : {{userGroup}}</p>
-      {% if userAdmin == 1 %}
-      <a class="nav-link" href="{{ url_for('management_user') }}">회원 관리</a>
-      {% endif %}
-      <a class="nav-link" href="{{ url_for('logout') }}">로그아웃</a>
-      <a class="nav-link" href="{{ url_for('project_list') }}">Home</a>
-    </div>
-  </div>
 </html>
 <script>
-  window.localStorage.clear();
+    window.localStorage.clear();
 </script>

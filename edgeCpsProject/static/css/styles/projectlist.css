@@ -1,19 +1,5 @@
-/* Font Styles */
 @font-face {
-  font-family: "Inter Extra Bold";
-  src: url("../../font/Inter-ExtraBold.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Inter Extra Light";
-  src: url("../../font/Inter-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Inter Medium";
+  font-family: "Inter";
   src: url("../../font/Inter-Medium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
@@ -54,13 +40,13 @@
 }
 
 .projectListCreateBtn {
+  font-family: "Inter";
   width: 156px;
   height: 32px;
   border-radius: 5px;
   color: white;
   text-decoration: none;
   background-color: #2e5686;
-  font-family: Roboto;
   font-size: 16px;
   font-weight: 500;
   line-height: 32px;
@@ -127,12 +113,12 @@
 }
 
 .projectListTableHead {
+  font-family: "Inter";
   height: 58px;
 }
 .projectListTableHead th {
+  font-family: "Inter";
   border-bottom: 1px solid #737373;
-
-  font-family: Roboto;
   font-size: 16px;
   font-weight: 500;
   line-height: 19px;
@@ -140,6 +126,7 @@
   text-align: left;
 }
 .projectListTableBody td {
+  font-family: "Inter";
   height: 64px;
   border-bottom: 1px solid #c5c5c5;
 }

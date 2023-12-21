@@ -9,18 +9,12 @@ body {
 }
 
 @font-face {
-  font-family: "Inter Extra Bold";
-  src: url("../../font/Inter-ExtraBold.ttf") format("truetype");
+  font-family: "Inter";
+  src: url("../../font/Inter-Medium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
-@font-face {
-  font-family: "Inter Extra Light";
-  src: url("../../font/Inter-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
 
 .user-image {
   position: fixed;
@@ -96,7 +90,7 @@ body {
 .button-text {
   color: #a4a4a4;
   font-size: 15px;
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -165,7 +159,7 @@ body {
 .nav-button-Overview_page .button-text-Overview_page {
   color: #ffffff;
   font-size: 15px;
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -234,7 +228,7 @@ body {
   top: 202px;
   left: 75px;
 
-  font-family: "Inter-ExtraBold", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 800;
   color: #353535;
   position: fixed;
@@ -252,7 +246,7 @@ body {
 .project_name {
   position: absolute;
   top: 30px;
-  font-family: "Inter-Medium", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 500;
   color: #353535;
   font-size: 20px;
@@ -276,7 +270,7 @@ body {
 .project_description {
   position: absolute;
   top: 130px;
-  font-family: "Inter-Medium", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 500;
   color: #353535;
   font-size: 20px;
@@ -300,7 +294,7 @@ body {
 .project_category {
   position: absolute;
   top: 360px;
-  font-family: "Inter-Medium", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 500;
   color: #353535;
   font-size: 20px;
@@ -366,14 +360,14 @@ body {
   width: 130px;
   height: 30px;
   border-radius: 5px;
-  background: white;
+  background: #eaeaea;
   color: #3a6ca9;
   border: none;
 }
 .project_tag {
   position: absolute;
   top: 480px;
-  font-family: "Inter-Medium", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 500;
   color: #353535;
   font-size: 20px;
@@ -400,7 +394,7 @@ body {
   left: 1622px;
   background-color: #6097d9;
   border-radius: 5px;
-  font-family: "Inter-Medium", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 500;
   color: #ffffff;
   letter-spacing: 0;
@@ -425,6 +419,7 @@ body {
 }
 
 .tag-div {
+  font-family: "Inter";
   font-size: 1rem;
   display: inline-flex;
   align-items: center;
