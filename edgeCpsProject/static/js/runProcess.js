@@ -87,7 +87,15 @@ function businessProcessViewClickHandler(sender, evt) {
     if (cell != null && cell.style.includes('partialRectangle')) { //cell이 null아니고 엣지도 아닌경우 
 			var cellName = cell.value;
       var cellId = cell.id;
-      if(cellName ==''){
+      if(cell.value =='description'){
+        var cellName = cell.parent.parent.children[0].children[1].value;
+        var cellId = cell.parent.parent.children[0].children[1].id;
+      }
+      else if(cell.value =='name'){
+        var cellName = cell.parent.children[1].value;
+        var cellId = cell.parent.children[1].id;
+      }
+      else if(cellName ==''){
         cellName = cell.parent.parent.children[0].children[1].value;
         cellId = cell.parent.parent.children[0].children[1].id;
       }
@@ -121,7 +129,9 @@ function businessProcessView(projectName){
 var intervalLogDeploymentView = '';
 // sub-content2
 function workflowProcessView(cellName,cellId,cell){
-    var containerElement = document.getElementById("workflowProcessView");
+  try{
+    var containerElement = document.getElementsByClassName('workflowProcessView');
+    containerElement = containerElement[0];
     var svgElements = containerElement.querySelectorAll("svg");
     var divElements = containerElement.querySelectorAll("div");
     // 선택한 각 SVG 요소를 순회하면서 삭제
@@ -133,13 +143,15 @@ function workflowProcessView(cellName,cellId,cell){
     divElements.forEach(function(divElement) {
         divElement.parentNode.removeChild(divElement);
     });
+  }catch{}
+    
 
     var xmlDataKey = projectName+'_'+cellId+'#'+cellName;
     var xmlData = localStorage.getItem(xmlDataKey);
-    var container = document.getElementById('workflowProcessView');
+    var container = document.getElementsByClassName('workflowProcessView');
     // container.style.width = "100%"; // 필요에 따라 조절
     // container.style.height = "100%"; // 필요에 따라 조절
-    var graph = new Graph(container);
+    var graph = new Graph(container[0]);
     // graph.init(container);
     var doc = mxUtils.parseXml(xmlData);
     var codec = new mxCodec(doc);
@@ -228,7 +240,8 @@ function deploymentView(actionStatusFlag,actionName,actionId) {
             // 배포 다이어그램 그릴 때 필요한 정보 가저옴
             var deployInfo = getDeployInfo(actionKeys,actionStatus)
 
-            var containerElement = document.getElementById('deploymentView');
+            var containerElement = document.getElementsByClassName('deploymentView');
+            containerElement = containerElement[0];
             var svgElements = containerElement.querySelectorAll("svg");
             var divElements = containerElement.querySelectorAll("div");
             // 선택한 각 SVG 요소를 순회하면서 삭제
@@ -242,7 +255,8 @@ function deploymentView(actionStatusFlag,actionName,actionId) {
             });
 
             var xmlData = deployInfo;
-            var container = document.getElementById('deploymentView');
+            var container = document.getElementsByClassName('deploymentView');
+            container = container[0];
             var graph = new Graph(container);
             var doc = mxUtils.parseXml(xmlData);
             var codec = new mxCodec(doc);

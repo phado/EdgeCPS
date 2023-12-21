@@ -9,15 +9,8 @@ body {
 
 /* Font Styles */
 @font-face {
-  font-family: "Inter Extra Bold";
-  src: url("../../font/Inter-ExtraBold.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Inter Extra Light";
-  src: url("../../font/Inter-Regular.ttf") format("truetype");
+  font-family: "Inter";
+  src: url("../../font/Inter-Medium.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -87,7 +80,7 @@ body {
 .button-text {
   color: #a4a4a4;
   font-size: 15px;
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -162,7 +155,7 @@ body {
 .nav-button-run_process_page .button-text-run_process_page {
   color: #ffffff;
   font-size: 15px;
-  font-family: "Inter Extra Light";
+  font-family: "Inter";
   font-style: normal;
   font-weight: 400;
   line-height: normal;
@@ -224,21 +217,21 @@ html {
 }
 
 #workflowTitle {
-  font-family: Inter Extra Bold;
+  font-family: Inter;
   font-style: normal;
   font-weight: 700;
   position: absolute;
   left: 650px;
 }
 #businessTitle {
-  font-family: Inter Extra Bold;
+  font-family: Inter;
   font-style: normal;
   font-weight: 700;
   position: absolute;
   left: 20px;
 }
 #deploymentTitle {
-  font-family: Inter Extra Bold;
+  font-family: Inter;
   font-style: normal;
   font-weight: 700;
   position: absolute;
@@ -273,7 +266,7 @@ html {
 
 .footer {
   color: rgb(0, 0, 0);
-  font-family: Inter Extra bold;
+  font-family: Inter;
   font-style: normal;
   font-weight: 700;
   margin-left: 20px;

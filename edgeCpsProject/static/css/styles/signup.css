@@ -1,133 +1,146 @@
+@font-face {
+    font-family: "Roboto";
+    src: url("../../font/Roboto-Medium.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: "Inter";
+    src: url("../../font/Inter-Medium.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
 body {
-  margin: 0px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 form {
-  color: #848484;
+    color: #848484;
 }
 
 label {
-  color: #848484;
+    color: #848484;
 }
 
 .text-danger {
-  color: #848484;
+    color: #848484;
 }
 input[type="text"],
 input[type="password"],
 input[type="date"],
 input[type="email"],
 select {
-  height: 40px;
-  width: 387px;
+    height: 40px;
+    width: 387px;
 }
 
 .container,
 .container-sm {
-  max-width: 400px;
+    max-width: 400px;
 }
 .signupArea {
-  flex: 1;
+    flex: 1;
 }
 .signupTitle {
-  margin-top: 41px;
-  margin-bottom: 36px;
-  font-family: Roboto;
-  font-size: 30px;
-  font-weight: 800;
-  line-height: 35px;
-  letter-spacing: 0em;
-  text-align: left;
+    margin-top: 41px;
+    margin-bottom: 36px;
+    font-family: Roboto;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 35px;
+    letter-spacing: 0;
+    text-align: left;
 }
 .signupForm {
-  width: 100%;
-  height: 500px;
+    width: 100%;
+    height: 500px;
 }
 
 .label {
-  margin-top: 24px;
-  font-family: Roboto;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 19px;
-  letter-spacing: 0em;
-  text-align: left;
-  color: #848484;
+    margin-top: 24px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0;
+    text-align: left;
+    color: #848484;
 }
 .idInput {
-  flex: 1;
+    flex: 1;
 
-  margin-top: 8px;
-  margin-bottom: 16px;
-  font-family: Roboto;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 19px;
-  letter-spacing: 0em;
-  text-align: left;
-  border-radius: 5px;
-  border: 1px solid #afafaf;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0;
+    text-align: left;
+    border-radius: 5px;
+    border: 1px solid #afafaf;
 
-  padding-left: 15px;
-  padding-right: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .input {
-  margin-top: 8px;
-  margin-bottom: 16px;
-  font-family: Roboto;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 19px;
-  letter-spacing: 0em;
-  text-align: left;
-  border-radius: 5px;
-  border: 1px solid #afafaf;
+    margin-top: 8px;
+    margin-bottom: 16px;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 19px;
+    letter-spacing: 0;
+    text-align: left;
+    border-radius: 5px;
+    border: 1px solid #afafaf;
 
-  padding-left: 15px;
-  padding-right: 15px;
+    padding-left: 15px;
+    padding-right: 15px;
 }
-#signupButton,
-#cancelButton {
-  margin-top: 15px;
-  width: 419px;
-  height: 45px;
-  top: 765px;
-  padding: 10px, 167px, 10px, 167px;
-  border-radius: 999px;
-  gap: 10px;
-  border: none;
-  font-family: Roboto;
-  font-size: 21px;
-  font-weight: 500;
-  line-height: 25px;
-  letter-spacing: 0em;
-  text-align: center;
+#cancelButton,
+#signupButton {
+    margin-top: 15px;
+    width: 419px;
+    height: 45px;
+    top: 765px;
+    padding: 10px, 167px, 10px, 167px;
+    border-radius: 999px;
+    gap: 10px;
+    border: none;
+    font-family: Roboto;
+    font-size: 21px;
+    font-weight: 500;
+    line-height: 25px;
+    letter-spacing: 0;
+    text-align: center;
 }
 #signupButton {
-  background: #6097d9;
-  color: white;
+    background: #6097d9;
+    color: white;
 }
 #cancelButton {
-  background: #f1f1f1;
-  color: #6097d9;
+    background: #f1f1f1;
+    color: #6097d9;
 }
 
 #checkDuplicateButton {
-  height: 40px;
-  margin-left: 10px;
-  margin-bottom: 8px;
-  border-radius: 5px;
-  border: none;
-  font-family: Roboto;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 19px;
-  letter-spacing: 0em;
-  text-align: center;
-  background: #557ba9;
-  color: white;
+    height: 40px;
+    margin-left: 10px;
+    margin-bottom: 8px;
+    border-radius: 5px;
+    border: none;
+    font-family: Roboto;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 19px;
+    letter-spacing: 0;
+    text-align: center;
+    background: #557ba9;
+    color: white;
 }

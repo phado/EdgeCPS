@@ -1734,7 +1734,8 @@ var EditDataDialog = function(ui, cell)
 	buttons.style.cssText = 'position:absolute;left:30px;right:30px;text-align:right;bottom:30px;height:40px;'
 
 	// var applyBtn = mxUtils.button(mxResources.get('apply'), function()
-	const svgPlusIcon = '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M15.8337 10.8317H10.8337V15.8317H9.16699V10.8317H4.16699V9.16504H9.16699V4.16504H10.8337V9.16504H15.8337V10.8317Z" fill="white"/></svg>';
+	const svgPlusIcon = '<svg style = "vertical-align :sub", xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M15.8337 10.8317H10.8337V15.8317H9.16699V10.8317H4.16699V9.16504H9.16699V4.16504H10.8337V9.16504H15.8337V10.8317Z" fill="white"/></svg>';
+	// svgPlusIcon.style.verticalAlign = 'text-top';
 	const reqName = mxResources.get('selectReq');
 	const reqTitle = svgPlusIcon+reqName
 	var reqBtn = mxUtils.button(mxResources.get('selectReq'), mxUtils.bind(this, function(evt)

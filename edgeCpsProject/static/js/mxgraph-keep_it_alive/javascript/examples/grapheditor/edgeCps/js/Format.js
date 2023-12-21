@@ -737,7 +737,8 @@ Format.prototype.refresh = function(arguments,id)
 							var attributeKeyContainer = document.createElement('div');
 							attributeKeyContainer.style.marginRight = '1px';
 							attributeKeyContainer.style.marginLeft = '7px';
-							attributeKeyContainer.innerHTML = '<strong style="color: black;">Related requirements</strong>';
+							attributeKeyContainer.innerHTML = 'Related requirements';
+							attributeKeyContainer.style.color = 'black';
 							// attributeKeyContainer.style=bold;
 
 							var attributeValue = reqAttirbute
@@ -748,6 +749,7 @@ Format.prototype.refresh = function(arguments,id)
 							attributeValueContainer.style.whiteSpace = 'pre-wrap';
 							attributeValueContainer.style.overflowWrap = 'break-word'
 							attributeValueContainer.style.marginBottom = '5px';
+							attributeValueContainer.style.paddingBottom = "20px";
 							attributeValueContainer.innerHTML = attributeValue;
 
 
@@ -846,8 +848,8 @@ Format.prototype.refresh = function(arguments,id)
 							var attributeKeyContainer = document.createElement('div');
 							attributeKeyContainer.style.marginLeft = '7px';
 							attributeKeyContainer.style.marginRight = '1px';
-							attributeKeyContainer.innerHTML = '<strong style="color: black;">Related requirements</strong>';
-							// attributeKeyContainer.style=bold;
+							attributeKeyContainer.innerHTML = 'Related requirements';
+							attributeKeyContainer.style.color = 'black';
 
 							var attributeValue = reqAttirbute
 							var attributeValueContainer = document.createElement('div');
@@ -857,6 +859,7 @@ Format.prototype.refresh = function(arguments,id)
 							attributeValueContainer.style.whiteSpace = 'pre-wrap';
 							attributeValueContainer.style.overflowWrap = 'break-word'
 							attributeValueContainer.style.marginBottom = '5px';
+							attributeValueContainer.style.paddingBottom = "20px";
 							attributeValueContainer.innerHTML = attributeValue;
 
 

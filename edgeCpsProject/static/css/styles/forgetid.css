@@ -1,3 +1,17 @@
+@font-face {
+  font-family: "Roboto";
+  src: url("../../font/Roboto-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../../font/Inter-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 body {
   height: 100vh;
   display: flex;

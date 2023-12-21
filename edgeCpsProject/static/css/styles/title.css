@@ -1,25 +1,6 @@
 @font-face {
-  font-family: "Inter Extra Bold";
-  src: url("../../font/Inter-ExtraBold.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: "Inter Extra Light";
-  src: url("../../font/Inter-Regular.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Inter Medium";
+  font-family: "Inter";
   src: url("../../font/Inter-Medium.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "Gruppo";
-  src: url("../../font/Gruppo-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -31,7 +12,7 @@
   padding: 4px 20px;
   background-color: #fff;
   color: #557ba9;
-  font-family: "Inter Medium", Helvetica;
+  font-family: "Inter", Helvetica;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.3s;
@@ -49,13 +30,35 @@
   text-align: left;
   text-decoration: none;
 }
-
 .home:hover {
   color: #fff;
   text-decoration: none;
 }
 
 .home:active {
+  color: #fff;
+  text-decoration: none;
+}
+
+
+.btshome{
+  margin-left: 57px;
+  color: white;
+  font-family: Inter;
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 48px;
+  letter-spacing: 0em;
+  text-align: left;
+  text-decoration: none;
+}
+
+.btshome:hover {
+  color: #fff;
+  text-decoration: none;
+}
+
+.btshome:active {
   color: #fff;
   text-decoration: none;
 }
@@ -80,7 +83,7 @@
   margin: 0;
   color: #557ba9;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
-  font-family: "Inter Extra Bold";
+  font-family: "Inter";
   margin-left: 30px;
   font-style: normal;
   line-height: normal;
@@ -194,6 +197,7 @@ input:checked + .slider:before {
 }
 
 .usermodal-content {
+  font-family: "Inter";
   background-color: #fff;
   margin: 2.9% 75%;
   padding: 20px;
