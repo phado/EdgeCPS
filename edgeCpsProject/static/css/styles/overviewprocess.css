@@ -1,4 +1,13 @@
-/* Font Styles */
+body {
+  min-width: 1000px;
+  min-height: 200px;
+  margin: 0px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 @font-face {
   font-family: "Inter Extra Bold";
   src: url("../../font/Inter-ExtraBold.ttf") format("truetype");
@@ -198,11 +207,12 @@
 
 .container {
   position: absolute;
-  width: 91%;
-  height: 88%;
-  top: 51%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  width: 1770px;
+  height: 680px;
+  top: 280px;
+  left: 75px;
+
+  transform: translate(0%, -30%);
   background-color: #f9f9f9;
   border-radius: 5px;
   box-shadow: 4px 4px 6px #00000040;
@@ -220,13 +230,14 @@
 }
 
 .overviewTitle {
+  position: absolute;
+  top: 202px;
+  left: 75px;
+
   font-family: "Inter-ExtraBold", Helvetica;
   font-weight: 800;
   color: #353535;
   position: fixed;
-  top: 2%;
-  left: 2%;
-  right: 2%;
   font-size: 26px;
   letter-spacing: 0;
   line-height: normal;
@@ -235,13 +246,12 @@
 
 .form-group {
   margin-bottom: 20px;
+  padding-left: 28px;
 }
 
 .project_name {
-  position: fixed;
-  top: 11%;
-  left: 2%;
-  right: 2%;
+  position: absolute;
+  top: 30px;
   font-family: "Inter-Medium", Helvetica;
   font-weight: 500;
   color: #353535;
@@ -252,12 +262,10 @@
 }
 
 #project_name {
-  position: fixed;
-  width: 96%;
-  height: 7%;
-  top: 15%;
-  left: 2%;
-  right: 2%;
+  position: absolute;
+  top: 60px;
+  width: 1714px;
+  height: 50px;
   border-radius: 5px;
   border: 1px solid;
   border-color: #9b9b9b;
@@ -266,10 +274,8 @@
 }
 
 .project_description {
-  position: fixed;
-  top: 24%;
-  left: 2%;
-  right: 2%;
+  position: absolute;
+  top: 130px;
   font-family: "Inter-Medium", Helvetica;
   font-weight: 500;
   color: #353535;
@@ -280,12 +286,10 @@
 }
 
 #project_description {
-  position: fixed;
-  width: 96%;
-  height: 29%;
-  top: 28%;
-  left: 2%;
-  right: 2%;
+  position: absolute;
+  width: 1714px;
+  height: 180px;
+  top: 160px;
   border-radius: 5px;
   border: 1px solid;
   border-color: #9b9b9b;
@@ -294,10 +298,8 @@
 }
 
 .project_category {
-  position: fixed;
-  top: 59%;
-  left: 2%;
-  right: 2%;
+  position: absolute;
+  top: 360px;
   font-family: "Inter-Medium", Helvetica;
   font-weight: 500;
   color: #353535;
@@ -308,12 +310,10 @@
 }
 
 #project_category {
-  position: fixed;
-  width: 96%;
-  height: 7%;
-  top: 63%;
-  left: 2%;
-  right: 2%;
+  position: absolute;
+  width: 1714px;
+  height: 50px;
+  top: 390px;
   border-radius: 5px;
   border: 1px solid;
   border-color: #9b9b9b;
@@ -321,11 +321,58 @@
   padding-left: 10px;
 }
 
+.categoryAddBtn {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: center;
+
+  display: inline-block;
+  position: absolute;
+  top: 450px;
+  left: 28px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+  min-width: 130px;
+
+  width: 130px;
+  height: 30px;
+  border-radius: 5px;
+  background: #3a6ca9;
+  color: white;
+  border: none;
+}
+
+.categoryDeleteBtn {
+  font-family: Inter;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: center;
+
+  display: inline-block;
+  position: absolute;
+  top: 450px;
+  left: 168px;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+  min-width: 130px;
+
+  width: 130px;
+  height: 30px;
+  border-radius: 5px;
+  background: white;
+  color: #3a6ca9;
+  border: none;
+}
 .project_tag {
-  position: fixed;
-  top: 79%;
-  left: 2%;
-  right: 2%;
+  position: absolute;
+  top: 480px;
   font-family: "Inter-Medium", Helvetica;
   font-weight: 500;
   color: #353535;
@@ -336,12 +383,10 @@
 }
 
 #project_tag {
-  position: fixed;
-  width: 84%;
-  height: 7%;
-  top: 83%;
-  left: 2%;
-  right: 2%;
+  position: absolute;
+  width: 1714px;
+  height: 50px;
+  top: 510px;
   border-radius: 5px;
   border: 1px solid;
   border-color: #9b9b9b;
@@ -350,20 +395,21 @@
 }
 
 .btn.btn-primary {
+  position: absolute;
+  top: 610px;
+  left: 1622px;
   background-color: #6097d9;
   border-radius: 5px;
-
   font-family: "Inter-Medium", Helvetica;
   font-weight: 500;
   color: #ffffff;
-  position: fixed;
-  top: 92%;
-  left: 88%;
-  right: 2%;
   letter-spacing: 0;
   line-height: normal;
   white-space: nowrap;
-  width: 10%;
+  width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  border: none;
 }
 .btn.btn-primary:hover {
   background-color: #2e5686;
@@ -373,9 +419,9 @@
   position: relative;
 }
 #output-container {
-  position: fixed;
-  top: 84%;
-  left: 3%;
+  position: absolute;
+  top: 520px;
+  left: 40px;
 }
 
 .tag-div {

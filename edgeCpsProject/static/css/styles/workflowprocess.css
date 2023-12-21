@@ -1,11 +1,12 @@
 /* CSS Reset */
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
   /*border-color: white;*/
 }
 
+body {
+  margin: 0px;
+}
 /* Font Styles */
 @font-face {
   font-family: "Inter Extra Bold";
@@ -227,12 +228,11 @@ a.home {
   color: #0075ff;
 }
 
-
 .selectWorkflow select option {
-  margin:1%;
+  margin: 1%;
   text-align: center;
   border-radius: 3px;
-  border:1px solid #d8d8d8;
+  border: 1px solid #d8d8d8;
   height: 20px;
   width: 196px;
   color: #000000;
@@ -275,8 +275,8 @@ a.home {
   margin-bottom: 0.75rem;
   animation: 0.125s ease-in-out 0s 1 normal forwards running lnHDaM;
 }
-.project_tag{
-  width:20%;
+.project_tag {
+  width: 20%;
 }
 
 @keyframes fadeIn {
@@ -297,7 +297,7 @@ a.home {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #D9D9D9; /* 스크롤바 색상 */
+  background-color: #d9d9d9; /* 스크롤바 색상 */
   border-radius: 6px; /* 스크롤바 모서리 둥글게 */
 }
 

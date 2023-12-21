@@ -14,7 +14,6 @@
       type="text/css"
       href="{{ url_for('static', filename='css/styles/title.css')}}"
     />
-    <!-- 모달창을 위한 부트스트랩 -->
 
     <!-- <script
       type="text/javascript"
@@ -172,12 +171,19 @@
     let data = "{{ project_data }}";
   </script>
 
-  <body style="overflow-x: hidden; margin: 0px">
-    <div id="title" class="title">
-      <h2><a class="home" href="">EdgeCPS Service Modeler</a></h2>
-      <div class="userInfo">
-        <div class="user-name" id="user-name">
-          <button class="user-name-background">{{ userName }}</button>
+  <body style="overflow-x: hidden">
+    <div>
+      <div id="title" class="title">
+        <h2>
+          <a class="home" href="/project/projectsList"
+            >EdgeCPS Service Modeler</a
+          >
+        </h2>
+
+        <div class="userInfo">
+          <button class="user-name-background" id="user-name">
+            {{ userName }}
+          </button>
         </div>
       </div>
     </div>
@@ -313,6 +319,10 @@
     </nav>
 
     <div class="overviewbackground">
+      <label class="overviewTitle" for="project_name">
+        {% if new_pj == 'True' %} Create Service {% elif open_project == "True"
+        %} Open Service {% else %} Servive Overview {% endif %}
+      </label>
       <div class="container">
         <form
           method="post"
@@ -322,10 +332,6 @@
         >
           <!-- <form method="post" action="" id="formtag"></form> -->
           <div class="form-group">
-            <label class="overviewTitle" for="project_name">
-              {% if new_pj == 'True' %} Create Service {% elif open_project ==
-              "True" %} Open Service {% else %} Servive Overview {% endif %}
-            </label>
             <label class="project_name" for="project_name">Service Name</label>
             <input
               type="text"
@@ -387,39 +393,15 @@
 
           <button
             type="button"
-            class="btn btn-secondary"
+            class="btn btn-secondary categoryAddBtn"
             onclick="addCategory()"
-            style="
-              display: inline-block;
-              position: fixed;
-              top: 71%;
-              left: 2%;
-              right: 2%;
-              letter-spacing: 0;
-              line-height: normal;
-              white-space: nowrap;
-              min-width: 130px;
-              width: 10%;
-            "
           >
             카테고리 추가
           </button>
           <button
             type="button"
-            class="btn btn-danger"
+            class="btn btn-danger categoryDeleteBtn"
             onclick="deleteCategory()"
-            style="
-              display: inline-block;
-              position: fixed;
-              top: 71%;
-              left: 170px;
-              right: 2%;
-              letter-spacing: 0;
-              line-height: normal;
-              white-space: nowrap;
-              min-width: 130px;
-              width: 10%;
-            "
           >
             카테고리 삭제
           </button>
