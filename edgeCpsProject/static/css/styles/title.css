@@ -5,6 +5,10 @@
   font-style: normal;
 }
 
+* {
+  box-sizing: revert-layer;
+}
+
 .user-name-background {
   height: 30px;
   border: none;
@@ -22,7 +26,7 @@
 .home {
   margin-left: 57px;
   color: white;
-  font-family: Inter;
+  /* font-family: "Inter"; */
   font-size: 40px;
   font-weight: 800;
   line-height: 48px;
@@ -42,9 +46,11 @@
 
 
 .btshome{
+  position: absolute;
+  top: 15px;
   margin-left: 57px;
   color: white;
-  font-family: Inter;
+  /* font-family: "Inter"; */
   font-size: 40px;
   font-weight: 800;
   line-height: 48px;
@@ -187,6 +193,7 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 .modal {
+  z-index: 1050; /* KPST 타이틀 회원 정보 모달  */
   display: none;
   position: absolute; /* 위치 변경 */
   top: 0;
@@ -197,6 +204,8 @@ input:checked + .slider:before {
 }
 
 .usermodal-content {
+  /* z-index: 100000;
+  position: static; */
   font-family: "Inter";
   background-color: #fff;
   margin: 2.9% 75%;
@@ -228,10 +237,10 @@ input:checked + .slider:before {
   .userInfo {
     display: none;
   }
-  .title {
+  /* .title {
     padding: 0 10px;
   }
   .title h2 {
     font-size: 30px;
-  }
+  } */
 }

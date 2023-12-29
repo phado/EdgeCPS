@@ -1,4 +1,6 @@
-data
 __pycache__
 .vscode
 DB_Query.log
+*.tar
+.idea
+./edgeCpsProject/db/data/mysql

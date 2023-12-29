@@ -305,7 +305,7 @@ body {
 
 #project_category {
   position: absolute;
-  width: 1714px;
+  width: 1726px;
   height: 50px;
   top: 390px;
   border-radius: 5px;
@@ -379,6 +379,7 @@ body {
 #project_tag {
   position: absolute;
   width: 1714px;
+  max-width: 1714px;
   height: 50px;
   top: 510px;
   border-radius: 5px;
@@ -386,6 +387,7 @@ body {
   border-color: #9b9b9b;
   font-size: 20px;
   padding-left: 10px;
+  box-sizing: border-box;
 }
 
 .btn.btn-primary {

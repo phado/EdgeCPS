@@ -899,14 +899,13 @@ function forceApply(graph, cell, value, className) {
             objectElement.setAttribute('output_information.path', "");
             //rectangle 속성
             objectElement.setAttribute('arguments.parameters.name',"");
-            objectElement.setAttribute('arguments.parameters.value',"{{workflow.outputs.parameters.parameters-}}");
+            objectElement.setAttribute('arguments.parameters.value',"");
 
             objectElement.setAttribute('arguments.artifacts.name',"");
-            objectElement.setAttribute('arguments.artifacts.from',"{{workflow.outputs.parameters.parameters-}}");
+            objectElement.setAttribute('arguments.artifacts.from',"");
+            objectElement.setAttribute('node.selector',"");
 
-            FAgraph
-                .getModel()
-                .setValue(FAcell, objectElement);
+            FAgraph.getModel().setValue(FAcell, objectElement);
         }
     } else if (FAclassName.includes('DiShape Rectangle')) {
         const parser = new DOMParser();

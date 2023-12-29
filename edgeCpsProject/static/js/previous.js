@@ -11,6 +11,9 @@ function subContent1(projectName, processName){
     var doc = mxUtils.parseXml(xmlData);
     var codec = new mxCodec(doc);
     codec.decode(doc.documentElement, graph.getModel());
+    
+    var processView = document.getElementById('graphContainer');
+    var svg = processView.querySelector('svg');
     // graph.addListener(mxEvent.CLICK, subContent1ClickHandler);
     graph.addListener(mxEvent.CLICK, function(sender, evt) {
         var clickCell = evt.getProperty('cell');
@@ -19,6 +22,52 @@ function subContent1(projectName, processName){
         var topmostCell = getTopmostCell(graph, clickCell);
         subContent2(topmostCell.value.attributes, topmostCell.id, topmostCell)
     });
+
+    function calculateViewBox() {
+        var cells = graph.getModel().cells;
+        var minX = Infinity;
+        var minY = Infinity;
+        var maxX = -Infinity;
+        var maxY = -Infinity;
+    
+        for (var id in cells) {
+          if (cells.hasOwnProperty(id)) {
+            var cell = cells[id];
+            if (cell.isVertex()) {
+              var geometry = cell.getGeometry();
+              if (geometry) {
+                minX = Math.min(minX, geometry.x);
+                minY = Math.min(minY, geometry.y);
+                maxX = Math.max(maxX, geometry.x + geometry.width);
+                maxY = Math.max(maxY, geometry.y + geometry.height);
+              }
+            }
+          }
+        }
+    
+        return { minX: minX, minY: minY, width: maxX - minX, height: maxY - minY };
+    }
+  
+    mxEvent.addListener(graph.container, 'mousewheel', function(event) {
+        if (event.ctrlKey) {
+          var delta = event.wheelDelta || -event.detail;
+          var scale = graph.view.scale;
+  
+          //휠 방향별로
+          if (delta > 0) {
+            scale *= 1.1;
+          } else {
+            scale /= 1.1;
+          }
+  
+          graph.zoomTo(scale);
+          mxEvent.consume(event);
+        }
+      });
+  
+      var viewBox = calculateViewBox();
+      var viewBoxValues =viewBox.minX + " "+ viewBox.minY + " " + viewBox.width + " " + viewBox.height;
+      svg.setAttribute('viewBox', viewBoxValues);
 }
 // 최상위 부모 셀을 찾는 함수
 function getTopmostCell(graph, cell) {

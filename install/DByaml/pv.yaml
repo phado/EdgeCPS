@@ -5,7 +5,7 @@ metadata:
   labels:
     type: local
 spec:
-  storageClassName: mariadb-storage-class
+  storageClassName: ""
   capacity:
     storage: 50Gi
   accessModes:

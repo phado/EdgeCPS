@@ -50,8 +50,8 @@ def get_master_node_ip():
 master_node_ip_address = get_master_node_ip()
 # ip_address = socket.gethostbyname(host_name)
 # ARGO_SERVER_URL = ip_address+':32416'
-# ARGO_SERVER_URL = master_node_ip_address + ':32416'
-ARGO_SERVER_URL = 'https://192.168.0.196:32416'
+ARGO_SERVER_URL = 'argo-server' + ':32416'
+# ARGO_SERVER_URL = 'https://192.168.0.196:32416'
 print(ARGO_SERVER_URL)
 
 def sessionClear():
@@ -118,13 +118,14 @@ def index():
 
         login = db_login(mariadb_pool, id = userid, pwd = password )
 
-        if login['user_name'][6] == 0:
+        if  login['login'] ==False:
+            return render_template('index.html',login_msg='로그인 실패. 일치하는 회원이 없습니다.' )
+        elif login['user_name'][6] == 0:
             return render_template('index.html', login_msg='계정 활성화 오류. 관리자에게 문의하세요.')
         elif login['login']:
             session['userId'] = userid
             return redirect(url_for('project_list'))
-        else:
-            return render_template('index.html',login_msg='로그인 실패. 일치하는 회원이 없습니다.' )
+        
 
     return render_template('index.html', login_msg='')
 @app.route('/logout', methods=['GET'])

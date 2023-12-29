@@ -1548,7 +1548,7 @@ var EditDataDialog = function(ui, cell)
 		var textarea = document.createElement('textarea');
 		textarea.value = value;
 		// textarea.style.width = '100%';
-		textarea.style.cssText ='color: #353535;font-size: 16px;font-style: normal;font-weight: 400; width:100%;border-radius: 5px;background: #F7F7F7;box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.15);    border-color:#F7F7F7;padding-top: 10px;padding-left: 10px;'
+		textarea.style.cssText ='color: #353535;font-size: 16px;font-style: normal;font-weight: 400; width:100%;border-radius: 5px;background: #F7F7F7;box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.15);    border-color:#F7F7F7;padding-top: 10px;padding-left: 10px;width: 679px;'
 	
 		if (value.indexOf('\n') > 0) {
 			textarea.setAttribute('rows', '5');
@@ -1595,7 +1595,7 @@ var EditDataDialog = function(ui, cell)
 	}
 	
 	var top = document.createElement('div');
-	top.style.cssText = 'position:absolute;left:30px;right:30px;overflow-y:auto;top:40px;bottom:80px;';
+	top.style.cssText = 'position:absolute;left:30px;right:30px;overflow-y:auto;top:40px;bottom:80px;overflow-x:hidden;';
 	// 순우 editdata css반영
 	top.className = 'editDataDialog';
 	top.style.borderRadius = '10px';
@@ -2149,7 +2149,7 @@ var ReqDialog = function(editorUi, ui, cell) {
 };
 
 // 순우 node selector 다이어로그
-var nodeSelectorDialog = function(editorUi, ui, cell) {
+var nodeSelectorDialog = function(editorUi, ui, cell,fn) {
 	var graph = editorUi.editor.graph;
 	var value = graph.getModel().getValue(ui);
 
@@ -2277,11 +2277,12 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 				return [...new Set(keys)];
 			}
 
+			var cellId = ui.id;
 			// 입력했던 Node Selector 다시 불러오기
 			if (localStorage.getItem(localStorage.getItem(projectName + '_nowWorkflow') + '_nodeSelector') != null) {
 				
 				var selectedData = JSON.parse(localStorage.getItem(localStorage.getItem(projectName + '_nowWorkflow') + '_nodeSelector'));
-				var selectedKey = cell.id;
+				var selectedKey = cellId;
 				var arrKey = selectedData[selectedKey][0]
 				var arrValue = selectedData[selectedKey][1];
 
@@ -2311,18 +2312,20 @@ var nodeSelectorDialog = function(editorUi, ui, cell) {
 	var innerButtons = document.createElement('div');
 	innerButtons.style.marginLeft = '7%';
 	innerButtons.style.marginTop = '3%';
-
+	
+	var cellId = ui.id;
 	// 저장버튼
 	var applyBtn = mxUtils.button(mxResources.get('apply'), function(ui)
 	{
-		var diagram_id = cell.id;
+		var diagram_id = cellId;
 		var now_workflow = localStorage.getItem(projectName+'_nowWorkflow');
 		var data = JSON.parse(localStorage.getItem(now_workflow+'_nodeSelector')) || {};
 
 		data[diagram_id] = [input1.value, input2.value];
+		var cellNodeInfo = input1.value+ ' : ' +input2.value;
 		localStorage.setItem(now_workflow+'_nodeSelector', JSON.stringify(data));
-
 		editorUi.hideDialog();
+		fn(cellNodeInfo);
 	});
 	applyBtn.className = 'geBtn gePrimaryBtn minsoo'; // 민수 property입력 버튼 
 

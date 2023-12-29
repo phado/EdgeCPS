@@ -511,7 +511,7 @@ Actions.prototype.init = function()
 			ui.nodeSelectorDialog(value, cell, mxResources.get('apply'), function(link)
 			{
 				link = mxUtils.trim(link);
-    			graph.setLinkForCell(cell, (link.length > 0) ? link : null);
+    			graph.setNodeSelectorForCell(cell, (link.length > 0) ? link : null);
 			});
 		}
 	}, null, null, 'Alt+Shift+L');

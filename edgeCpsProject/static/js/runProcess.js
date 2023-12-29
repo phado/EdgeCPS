@@ -82,6 +82,7 @@ function executeFunctionWithFileContent(content,workflowName) {
 
 // 불러온 다이어그램 클릭 이벤트 함수 
 function businessProcessViewClickHandler(sender, evt) {
+    clearInterval(intervalLogDeploymentView)
     var cell = evt.getProperty('cell'); // 클릭한 셀
     var valueString='';
     if (cell != null && cell.style.includes('partialRectangle')) { //cell이 null아니고 엣지도 아닌경우 
@@ -120,11 +121,127 @@ function businessProcessView(projectName){
     // container.style.height = "100%"; // 필요에 따라 조절
     var graph = new Graph(container);
 
+
+  //   graph.sizeDidChange = function() {
+  //   var bounds = graph.getGraphBounds();
+
+  //   // 일정 조건을 만족할 때만 setTranslate 호출
+  //   if (bounds.x !== 0 || bounds.y !== 0) {
+  //       graph.view.setTranslate(-bounds.x, -bounds.y);
+  //       container.style.width = '593px';
+  //       container.style.height = '510px';
+  //   }
+  // };
     var doc = mxUtils.parseXml(xmlData);
     var codec = new mxCodec(doc);
     codec.decode(doc.documentElement, graph.getModel());
     graph.addListener(mxEvent.CLICK, businessProcessViewClickHandler);
-    graph.refresh();
+    var businessProcessView = document.getElementById('businessProcessView');
+    var svg = businessProcessView.querySelector('svg');
+
+    function calculateViewBox() {
+      var cells = graph.getModel().cells;
+      var minX = Infinity;
+      var minY = Infinity;
+      var maxX = -Infinity;
+      var maxY = -Infinity;
+  
+      for (var id in cells) {
+        if (cells.hasOwnProperty(id)) {
+          var cell = cells[id];
+          if (cell.isVertex()) {
+            var geometry = cell.getGeometry();
+            if (geometry) {
+              minX = Math.min(minX, geometry.x);
+              minY = Math.min(minY, geometry.y);
+              maxX = Math.max(maxX, geometry.x + geometry.width);
+              maxY = Math.max(maxY, geometry.y + geometry.height);
+            }
+          }
+        }
+      }
+  
+      return { minX: minX, minY: minY, width: maxX - minX, height: maxY - minY };
+    }
+
+    mxEvent.addListener(graph.container, 'mousewheel', function(event) {
+      if (event.ctrlKey) {
+        var delta = event.wheelDelta || -event.detail;
+        var scale = graph.view.scale;
+
+        //휠 방향별로
+        if (delta > 0) {
+          scale *= 1.1;
+        } else {
+          scale /= 1.1;
+        }
+
+        graph.zoomTo(scale);
+        mxEvent.consume(event);
+      }
+      // mxEvent.consume(event);
+    });
+
+    var viewBox = calculateViewBox();
+    var viewBoxValues =viewBox.minX + " "+ viewBox.minY + " " + viewBox.width + " " + viewBox.height;
+    svg.setAttribute('viewBox', viewBoxValues);
+
+
+    // function getGroupDimensions(businessProcessViewG) {
+    //   var group = businessProcessViewG
+  
+    //   // 초기값 설정
+    //   var minX = Infinity;
+    //   var minY = Infinity;
+    //   var maxX = -Infinity;
+    //   var maxY = -Infinity;
+  
+    //   // <g> 태그 내의 모든 자식 요소를 반복하여 위치와 크기를 고려
+    //   var elements = group.children;
+    //   for (var i = 0; i < elements.length; i++) {
+    //     var element = elements[i];
+    //     var bbox = element.getBBox(); // 기본 그래픽 요소에 대해서만 사용 가능
+    //     minX = Math.min(minX, bbox.x);
+    //     minY = Math.min(minY, bbox.y);
+    //     maxX = Math.max(maxX, bbox.x + bbox.width);
+    //     maxY = Math.max(maxY, bbox.y + bbox.height);
+    //   }
+    //   var width = maxX - minX;
+    //   var height = maxY - minY;
+
+    //   return { width: width, height: height };
+    // }
+    // var groupDimensions = getGroupDimensions(businessProcessViewG);
+    // console.log('Group Width:', groupDimensions.width);
+    // console.log('Group Height:', groupDimensions.height);
+  
+
+
+    // var leftmostX = Infinity;
+    // var topmostY = Infinity;
+    
+    // var elements = svg.querySelectorAll('*');
+    // elements.forEach(function(element) {
+    //   var x = element.getAttribute('x');
+    //   var y = element.getAttribute('y');
+      
+    //   if (x !== null && !isNaN(x) && parseFloat(x) < leftmostX) {
+    //     leftmostX = parseFloat(x);
+    //   }
+
+    //   if (y !== null && !isNaN(y) && parseFloat(y) < topmostY) {
+    //     topmostY = parseFloat(y);
+    //   }
+    // });
+
+    // var viewBoxValues = leftmostX+" " +topmostY+ " "+(leftmostX+leftmostX*-2+1000)+" "+(topmostY+topmostY*-2+1000); 
+
+
+    // var viewBoxValues ="-900 -300 "+ groupDimensions.width+" "+groupDimensions.height;
+    // svg.setAttribute('viewBox', viewBoxValues);
+
+    // graph.refresh();
+    // graph.sizeDidChange();
 }
 var intervalLogDeploymentView = '';
 // sub-content2
@@ -157,12 +274,80 @@ function workflowProcessView(cellName,cellId,cell){
     var codec = new mxCodec(doc);
     // graph.addListener(mxEvent.CLICK, workflowProcessViewHandler);
     codec.decode(doc.documentElement, graph.getModel());
-    graph.refresh();
+    var workflowProcessView = document.getElementById('workflowProcessView');
+    var svg = workflowProcessView.querySelector('svg');
+
+    // var leftmostX = Infinity;
+    // var topmostY = Infinity;
+    
+    // var elements = svg.querySelectorAll('*');
+    // elements.forEach(function(element) {
+    //   var x = element.getAttribute('x');
+    //   var y = element.getAttribute('y');
+      
+    //   if (x !== null && !isNaN(x) && parseFloat(x) < leftmostX) {
+    //     leftmostX = parseFloat(x);
+    //   }
+
+    //   if (y !== null && !isNaN(y) && parseFloat(y) < topmostY) {
+    //     topmostY = parseFloat(y);
+    //   }
+    // });
+
+    // var viewBoxValues = leftmostX+" " +topmostY+ " "+(leftmostX+leftmostX*-2+1000)+" "+(topmostY+topmostY*-2+1000); 
+    // svg.setAttribute('viewBox', viewBoxValues);
+    // graph.refresh();
 
     //argoworkflow 실행
     // submit(xmlDataKey);
 
     // Activity 클릭 했을 때 Activity 상태 출력
+    function calculateViewBox() {
+      var cells = graph.getModel().cells;
+      var minX = Infinity;
+      var minY = Infinity;
+      var maxX = -Infinity;
+      var maxY = -Infinity;
+  
+      for (var id in cells) {
+        if (cells.hasOwnProperty(id)) {
+          var cell = cells[id];
+          if (cell.isVertex()) {
+            var geometry = cell.getGeometry();
+            if (geometry) {
+              minX = Math.min(minX, geometry.x);
+              minY = Math.min(minY, geometry.y);
+              maxX = Math.max(maxX, geometry.x + geometry.width);
+              maxY = Math.max(maxY, geometry.y + geometry.height);
+            }
+          }
+        }
+      }
+  
+      return { minX: minX, minY: minY, width: maxX - minX, height: maxY - minY };
+    }
+    mxEvent.addListener(graph.container, 'mousewheel', function(event) {
+      if (event.ctrlKey) {
+        var delta = event.wheelDelta || -event.detail;
+        var scale = graph.view.scale;
+
+        //휠 방향별로
+        if (delta > 0) {
+          scale *= 1.1;
+        } else {
+          scale /= 1.1;
+        }
+
+        graph.zoomTo(scale);
+        mxEvent.consume(event);
+      }
+      // mxEvent.consume(event);
+    });
+
+    var viewBox = calculateViewBox();
+    var viewBoxValues =viewBox.minX + " "+ viewBox.minY + " " + viewBox.width + " " + viewBox.height;
+    svg.setAttribute('viewBox', viewBoxValues);
+
     intervalLogDeploymentView = setInterval(() => deploymentView(false,cellName), 500);
 }
 
@@ -208,14 +393,35 @@ function logContainer(){
     console.log = function(message) {
         var logEntry = document.createElement('div');
 
+        try{
+          var jsonObjects = message.trim().split('\n').map(JSON.parse);
+          var output = ""
+          // 각 객체의 "result" 키 내부의 "content" 값을 가져와 출력
+          for(var i=0; i<jsonObjects.length; i++){
+            var contentValue = jsonObjects[i].result.content;
+            output+=contentValue;
+            output+='\n';
+          }
+          output = output.replace(/ /g, '&nbsp;'); // 공백문자-> &nbsp;로
+          output = output.replace(/\n/g, '<br>'); // 개행문자-> <br>로 
+          logEntry.innerHTML = output; 
+          logContainer.appendChild(logEntry);
+        }catch{
+          // var dataObject = JSON.parse(message);
+          //   var messageValue = dataObject.status.phase;
+          //   // if (messageValue !== undefined) {
+          //     message = message.replace(/ /g, '&nbsp;'); // 공백문자-> &nbsp;로
+          //     message = message.replace(/\n/g, '<br>'); // 개행문자-> <br>로 
+      
+          //     logEntry.innerHTML = message; 
+      
+          //     logContainer.appendChild(logEntry);
+            // }
+        }
+       
         // 공백 문자 변환 하는 곳
-        message = message.replace(/ /g, '&nbsp;'); // 공백문자-> &nbsp;로
-        message = message.replace(/\n/g, '<br>'); // 개행문자-> <br>로 
-
-        logEntry.innerHTML = message; // HTML을 해석
-
-        logContainer.appendChild(logEntry);
-        logContainer.scrollTop = logContainer.scrollHeight; // 스크롤 맨 아래로 이동
+       
+        // logContainer.scrollTop = logContainer.scrollHeight; // 스크롤 맨 아래로 이동
     };
 } 
 
@@ -262,12 +468,36 @@ function deploymentView(actionStatusFlag,actionName,actionId) {
             var codec = new mxCodec(doc);
             // graph.addListener(mxEvent.CLICK, subContent2ClickHandler);
             codec.decode(doc.documentElement, graph.getModel());
-            graph.refresh();
+            var deploymentView = document.getElementById('deploymentView');
+            var svg = deploymentView.querySelector('svg');
+            var deploymentViewSvgWidth = svg.style.minWidth;
+            var deploymentViewSvgHeight = svg.style.minHeight;
+            var viewBoxValues =  "0 0 "+deploymentViewSvgWidth.split('px')[0]+ " "+ deploymentViewSvgHeight.split('px')[0];
+            svg.setAttribute('viewBox', viewBoxValues);
+            mxEvent.addListener(graph.container, 'mousewheel', function(event) {
+              if (event.ctrlKey) {
+                var delta = event.wheelDelta || -event.detail;
+                var scale = graph.view.scale;
+        
+                //휠 방향별로
+                if (delta > 0) {
+                  scale *= 1.1;
+                } else {
+                  scale /= 1.1;
+                }
+        
+                graph.zoomTo(scale);
+                mxEvent.consume(event);
+              }
+              // mxEvent.consume(event);
+            });
+            // graph.refresh();
             logContainer()
             if(statusJsonData.metadata.labels["workflows.argoproj.io/completed"]=='true'){
                 clearInterval(intervalLogDeploymentView)
                 // logContainer()
             }
+            
         })
         .catch(error => {
             console.error("Error:", error);
@@ -408,6 +638,15 @@ function getDeployInfo(actionKeys,actionStatus){
             deployInfo.push(array);
         }
     }
+    // var deployInfo = [
+    //   ['soonwoo', 'hello1', 'Succeeded'],
+    //   ['soonwoo', 'hello2', 'Succeeded'],
+    //   ['soonwoo', 'hello3', 'Succeeded'],
+    //   ['soonwoo1', 'hello4', 'Succeeded'],
+    //   ['soonwoo1', 'hello5', 'Succeeded'],
+    //   ['soonwoo3', 'hello6', 'Succeeded'],
+    //   ['poontoo', 'hello11', 'fail']
+    // ];
 
     var uniqueKeys = Array.from(new Set(deployInfo.map(item => item[0])));
     var uniqueKeyCount = uniqueKeys.length;

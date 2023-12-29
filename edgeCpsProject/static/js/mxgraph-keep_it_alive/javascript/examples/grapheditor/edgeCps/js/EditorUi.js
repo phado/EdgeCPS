@@ -3886,7 +3886,7 @@ EditorUi.prototype.refresh = function (sizeDidChange) {
   // 민수 우측 사이드 바 생성 조건
   var fw = this.format != null ? this.formatWidth : 0;
   this.sidebarContainer.style.top = tmp + 170 + "px"; // 순우 좌측 사이드 바 130px 만큼 내림
-  this.sidebarContainer.style.width = effHsplitPosition +"px";
+  this.sidebarContainer.style.width = effHsplitPosition +6+"px";
   this.formatContainer.style.top = tmp + 140 + "px"; // 순우 우측 사이드 바 130px 만큼 내림
   this.formatContainer.style.width = fw + "px";
   this.formatContainer.style.display = this.format != null ? "" : "none";
@@ -4802,8 +4802,8 @@ EditorUi.prototype.reqDialog = function (value, btnLabel, fn) {
 };
 
 // 순우 node selector 다이어로그
-EditorUi.prototype.nodeSelectorDialog = function (value, btnLabel, fn) {
-  var dlg = new nodeSelectorDialog(this,  btnLabel, fn);
+EditorUi.prototype.nodeSelectorDialog = function (value, btnLabel, fn, fn2) {
+  var dlg = new nodeSelectorDialog(this,  btnLabel, fn,fn2);
   this.showDialog(dlg.container, 420, 590, true, true);
   dlg.init();
 };

@@ -7583,7 +7583,29 @@ if (typeof mxVertexHandler != 'undefined')
 		 */
 		Graph.prototype.setLinkForCell = function(cell, link)
 		{
-			this.setAttributeForCell(cell, 'link', link);
+			this.setAttributeForCell(cell, 'image', link);
+			// cell.setAttribute('image', link)
+			var apps = document.querySelectorAll('.properties');
+			for(i =0 ; i <apps[0].childNodes.length; i++){
+				if(apps[0].childNodes[i].innerHTML == 'image'){
+					apps[0].childNodes[i+1].value = link;
+					break;
+				}
+			}
+			
+		};
+		Graph.prototype.setNodeSelectorForCell = function(cell, link)
+		{
+			this.setAttributeForCell(cell, 'node.selector', link);
+			// cell.setAttribute('image', link)
+			var apps = document.querySelectorAll('.properties');
+			for(i =0 ; i <apps[0].childNodes.length; i++){
+				if(apps[0].childNodes[i].innerHTML == 'node.selector'){
+					apps[0].childNodes[i+1].value = link;
+					break;
+				}
+			}
+			
 		};
 		
 		/**

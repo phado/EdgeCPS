@@ -1,6 +1,6 @@
 @font-face {
   font-family: "Inter";
-  src: url("../../font/Inter-Medium.ttf") format("truetype");
+  src: url("../../font/Inter-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 } 
@@ -374,7 +374,7 @@ button {
   /*color: #f5f5f5;*/
   font-size: 12px;
    margin-left:1px;
-  /*margin-bottom: 3px;*/
+  margin-bottom: 3px;
 }
 
 .geToolbar {

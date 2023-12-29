@@ -560,7 +560,7 @@ Format.prototype.refresh = function(arguments,id)
 	
 	var attributeTitle = document.createElement('div');
 	attributeTitle.innerText = 'Information';
-	attributeTitle.style.cssText = 'color: #353535;font-size: 16px;font-style: Inter;font-weight: 600;line-height: normal;margin-left: 13px;margin-bottom: 10px;'
+	attributeTitle.style.cssText = 'color: #353535;font-size: 16px;font-style: Inter;font-weight: 500;line-height: normal;margin-left: 13px;margin-bottom: 10px;'
 
 	div.appendChild(attributeTitle);
 

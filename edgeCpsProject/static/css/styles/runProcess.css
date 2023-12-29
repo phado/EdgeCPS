@@ -46,7 +46,7 @@ body {
   /* margin: 0 50px; */
 }
 
-.nav-list {
+/* .nav-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -55,9 +55,21 @@ body {
   width: 100%;
   box-sizing: border-box;
   align-items: center;
-  /* border-bottom: 2px solid #d9d9d9; */
-  margin-left: -1%;
-  /* margin-right:-1%; */
+  margin-left: 1%;
+  margin-right:1%;
+} */
+.nav-list {
+  margin-top: -15px;
+  list-style: none;
+  margin: 0;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  align-items: center;
+  border-bottom: 2px solid #d9d9d9;
+  margin-right:2%;
 }
 
 /* 기본 버튼 스타일 */
@@ -148,8 +160,8 @@ body {
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
   transition: all 0.3s;
   overflow: hidden; /* 버튼 내용이 오버플로우되지 않도록 설정 */
-  margin-left: 2%;
-  /* margin-right: 1%; */
+  margin-left: 1%;
+  margin-right: 1%;
 }
 
 .nav-button-run_process_page .button-text-run_process_page {
@@ -238,7 +250,7 @@ html {
   left: 1285px;
 }
 .viewContainer {
-  width: 614px;
+  width: 593px;
   height: 510px;
   float: left;
   background-color: #f0f0f0;
@@ -247,13 +259,14 @@ html {
   overflow: auto;
   margin: 0.5%;
   border-radius: 5px;
+  /* direction: rtl; */
 }
 
 .logContainer {
   margin-left: 20px;
   margin-top: 10px;
   width: 1879px;
-  height: 170px;
+  height: 135px;
   background: #f0f0f0;
   border: 1px solid #ddd;
   background-color: #f0f0f0;

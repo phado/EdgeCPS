@@ -28,7 +28,7 @@ def create_namespace(namespace_name):
 def create_mariadb_object():
     container = client.V1Container(
         image="mariadb",
-        name="mariadb",
+        name="edgecpsmariadb",
         ports=[client.V1ContainerPort(container_port=3306)],
         volume_mounts=[
             {"name": "mariadb-persistent-storage", "mountPath": "/docker-entrypoint-initdb.d"},
@@ -52,7 +52,7 @@ def create_mariadb_object():
         )
     )
     spec = client.V1DeploymentSpec(
-        replicas=3,
+        replicas=1,
         selector={"matchLabels": {"app": "mariadb"}},
         template=template,
         strategy={"type": "Recreate"}
@@ -420,10 +420,10 @@ def main():
     config.load_kube_config()
     create_namespace("edgecps")
     create_namespace("argo")
+    print('wait for import edgecps image a few seconds.....................')
+    # command = "sudo ctr -n k8s.io image import edgecps.tar"
+    # subprocess.run(command, shell=True)
 
-    command = "sudo ctr -n k8s.io image import edgecps.tar"
-    subprocess.run(command, shell=True)
-    print('wait for import edgecps image few second.....................')
 
     api_instance = client.CoreV1Api()
     mariadb_pv_obj = create_mariadb_persistent_volume_object()
